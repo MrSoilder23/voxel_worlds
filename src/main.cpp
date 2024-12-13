@@ -46,6 +46,11 @@ void Input() {
         }
     }
 
+    const Uint8* state = SDL_GetKeyboardState(NULL);
+    if(state[SDL_SCANCODE_ESCAPE]) {
+        gQuit = true;
+    }
+
 }
 
 void MainLoop() {
