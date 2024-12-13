@@ -1,5 +1,4 @@
 #include "shader.hpp"
-#include <iostream>
 
 namespace {
     std::string LoadShaderAsString(const std::string& src) {
