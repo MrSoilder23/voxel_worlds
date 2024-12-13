@@ -3,6 +3,10 @@
 
 // Third_party libraries
 #include <SDL2/SDL.h>
+#include <glad/glad.h>
+
+// Own libraries
+#include "utility.hpp"
 
 SDL_GLContext gOpenGLContext = nullptr;
 SDL_Window* gWindow = nullptr;
@@ -12,13 +16,20 @@ int gScreenHeight = 580;
 
 bool gQuit = false;
 
-
 void InitializeProgram() {
 
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cerr << "Could not initialize window" << std::endl;
         exit(1);
     }
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+
 
     gWindow = SDL_CreateWindow("OpenGL project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gScreenWidth, gScreenHeight, SDL_WINDOW_OPENGL);
 
@@ -33,6 +44,13 @@ void InitializeProgram() {
         std::cerr << "SDL opengl context was not able to initialize" << std::endl;
         exit(1);
     }
+
+    if(!gladLoadGLLoader(SDL_GL_GetProcAddress)) {
+        std::cerr << "Glad was not initialized" << std::endl;
+        exit(1);
+    }
+
+    utility::GetOpenGlVersionInfo();
 
 }
 
