@@ -8,13 +8,17 @@
 // Own libraries
 #include "utility.hpp"
 
-SDL_GLContext gOpenGLContext = nullptr;
-SDL_Window* gWindow = nullptr;
+struct App {
+    SDL_GLContext mOpenGLContext = nullptr;
+    SDL_Window* mWindow = nullptr;
 
-int gScreenWidth = 640;
-int gScreenHeight = 580;
+    int mScreenWidth = 640;
+    int mScreenHeight = 480;
 
-bool gQuit = false;
+    bool mQuit = false;
+};
+
+App gApp;
 
 void InitializeProgram() {
 
@@ -31,16 +35,16 @@ void InitializeProgram() {
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
 
-    gWindow = SDL_CreateWindow("OpenGL project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gScreenWidth, gScreenHeight, SDL_WINDOW_OPENGL);
+    gApp.mWindow = SDL_CreateWindow("OpenGL project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gApp.mScreenWidth, gApp.mScreenHeight, SDL_WINDOW_OPENGL);
 
-    if(gWindow == nullptr) {
+    if(gApp.mWindow == nullptr) {
         std::cerr << "SDL window was not able to initialize" << std::endl;
         exit(1);
     }
 
-    gOpenGLContext = SDL_GL_CreateContext(gWindow);
+    gApp.mOpenGLContext = SDL_GL_CreateContext(gApp.mWindow);
 
-    if(gOpenGLContext == nullptr) {
+    if(gApp.mOpenGLContext == nullptr) {
         std::cerr << "SDL opengl context was not able to initialize" << std::endl;
         exit(1);
     }
@@ -60,38 +64,38 @@ void Input() {
 
     while(SDL_PollEvent(&e) != 0) {
         if(e.type == SDL_QUIT) {
-            gQuit = true;
+            gApp.mQuit = true;
         }
     }
 
     const Uint8* state = SDL_GetKeyboardState(NULL);
     if(state[SDL_SCANCODE_ESCAPE]) {
-        gQuit = true;
+        gApp.mQuit = true;
     }
 
 }
 
 void MainLoop() {
 
-    while (!gQuit) {
+    while (!gApp.mQuit) {
         Input();
 
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_CULL_FACE);
 
-        glViewport(0,0, gScreenWidth, gScreenHeight);
+        glViewport(0,0, gApp.mScreenWidth, gApp.mScreenHeight);
         glClearColor(0.0510f, 0.1255f, 0.1490f, 1.0f);
 
         glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-        SDL_GL_SwapWindow(gWindow);
+        SDL_GL_SwapWindow(gApp.mWindow);
     }
     
 }
 
 void CleanUp() {
-    SDL_DestroyWindow(gWindow);
-    gWindow = nullptr;
+    SDL_DestroyWindow(gApp.mWindow);
+    gApp.mWindow = nullptr;
 
     SDL_Quit();
 }
