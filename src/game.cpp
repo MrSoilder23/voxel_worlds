@@ -1,6 +1,8 @@
 #include "game.hpp"
 
-Game::Game() : mOpenGLContext(nullptr), mWindow(nullptr), mScreenWidth(640) , mScreenHeight(480), r(0.0510f), g(0.1255f), b(0.1490f) {
+Game::Game() :  mOpenGLContext(nullptr), mWindow(nullptr), mScreenWidth(640), mScreenHeight(480), 
+                r(0.0510f),g(0.1255f),b(0.1490f), 
+                mEventCallback([](){}), mUpdateCallback([](){}) {
 
 }
 Game::~Game() {
@@ -55,10 +57,10 @@ void Game::SetBackgroundColor(uint8_t _r, uint8_t _g, uint8_t _b) {
     g = (float)_g/255;
     b = (float)_b/255;
 }
-void Game::SetEventCallback(std::function<void(void)> func) {
+void Game::SetEventCallback(const std::function<void(void)>& func) {
     mEventCallback = func;
 }
-void Game::SetUpdateCallback(std::function<void(void)> func) {
+void Game::SetUpdateCallback(const std::function<void(void)>& func) {
     mUpdateCallback = func;
 }
 

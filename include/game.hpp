@@ -18,8 +18,8 @@ class Game {
         void InitializeProgram(std::string name, int x, int y, int w, int h);
         
         void SetBackgroundColor(uint8_t _r, uint8_t _g, uint8_t _b);
-        void SetEventCallback(std::function<void(void)> func);
-        void SetUpdateCallback(std::function<void(void)> func);
+        void SetEventCallback(const std::function<void(void)>& func);
+        void SetUpdateCallback(const std::function<void(void)>& func);
 
         void RunLoop();
 
