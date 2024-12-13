@@ -76,6 +76,14 @@ void MainLoop() {
     while (!gQuit) {
         Input();
 
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_CULL_FACE);
+
+        glViewport(0,0, gScreenWidth, gScreenHeight);
+        glClearColor(0.0510f, 0.1255f, 0.1490f, 1.0f);
+
+        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+
         SDL_GL_SwapWindow(gWindow);
     }
     
