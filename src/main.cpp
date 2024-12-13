@@ -1,5 +1,6 @@
 // C++ Standard libraries
 #include <iostream>
+#include <string>
 
 // Third_party libraries
 #include <SDL2/SDL.h>
@@ -7,10 +8,13 @@
 
 // Own libraries
 #include "utility.hpp"
+#include "shader.hpp"
 
 struct App {
     SDL_GLContext mOpenGLContext = nullptr;
     SDL_Window* mWindow = nullptr;
+
+    GLuint mGraphicsShaderProgram = 0;
 
     int mScreenWidth = 640;
     int mScreenHeight = 480;
@@ -103,6 +107,8 @@ void CleanUp() {
 int main(int argc, char* argv[]) {
 
     InitializeProgram();
+
+    shader::CreateGraphicsPipeline(gApp.mGraphicsShaderProgram, "./shaders/vert.glsl", "./shaders/frag.glsl");
 
     MainLoop();
 
