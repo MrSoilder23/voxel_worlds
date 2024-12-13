@@ -11,7 +11,7 @@
 #include "shader.hpp"
 #include "game.hpp"
 
-struct App {
+struct Settings {
     GLuint mGraphicsShaderProgram = 0;
 
     int mScreenWidth = 640;
@@ -19,7 +19,7 @@ struct App {
 
 };
 
-App gApp;
+Settings gSettings;
 Game gGame;
 
 void Input() {
@@ -45,9 +45,9 @@ void MainLoop() {
 
 int main(int argc, char* argv[]) {
 
-    gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gApp.mScreenWidth, gApp.mScreenHeight);
+    gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gSettings.mScreenWidth, gSettings.mScreenHeight);
 
-    shader::CreateGraphicsPipeline(gApp.mGraphicsShaderProgram, "./shaders/vert.glsl", "./shaders/frag.glsl");
+    shader::CreateGraphicsPipeline(gSettings.mGraphicsShaderProgram, "./shaders/vert.glsl", "./shaders/frag.glsl");
 
     gGame.SetEventCallback(Input);
     gGame.SetUpdateCallback(MainLoop);
