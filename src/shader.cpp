@@ -49,8 +49,8 @@ namespace {
 }
 
 void shader::CreateGraphicsPipeline(GLuint& shaderProgram, const std::string& _vertexShaderSource, const std::string& _fragmentShaderSource) {
-    std::string vertexShaderSource = LoadShaderAsString(vertexShaderSource);
-    std::string fragmentShaderSource = LoadShaderAsString(fragmentShaderSource);
+    std::string vertexShaderSource = LoadShaderAsString(_vertexShaderSource);
+    std::string fragmentShaderSource = LoadShaderAsString(_fragmentShaderSource);
 
     shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
 }
