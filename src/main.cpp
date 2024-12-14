@@ -43,9 +43,19 @@ void InitializeModels() {
          0.5f, -0.5f,  0.5f, // BotRightVertex
         -0.5f,  0.5f,  0.5f, // TopLeftVertex
          0.5f,  0.5f,  0.5f, // TopRightVertex
+    
+        -0.5f, -0.5f, -0.5f, // BackBotLeft
+         0.5f, -0.5f, -0.5f, // BackBotRight
+        -0.5f,  0.5f, -0.5f, // BackTopLeft
+         0.5f,  0.5f, -0.5f, // BackTopRight
     };
     gBlock->indexBufferData = {
-        0,1,2, 3,2,1, // Front Face
+        0,1,2, 3,2,1, // FrontFace
+        0,4,5, 1,0,5, // BottomFace
+        6,7,4, 7,5,4, // BackFace
+        6,2,7, 3,7,2, // TopFace
+        3,1,7, 5,7,1, // RightFace
+        6,4,2, 0,2,4, // LeftFace
     };
 
     gModelManager.CreateNewModel("block", gBlock);
@@ -53,10 +63,15 @@ void InitializeModels() {
 
 void MeshCreate(std::shared_ptr<MeshData> mesh, std::shared_ptr<Model> model) {
     const std::vector<GLfloat> vertexColors {
-        1.0f,  0.0f, 0.0f,
-        0.0f,  1.0f, 0.0f,
-        0.0f,  0.0f, 1.0f,
-        0.0f,  0.0f, 1.0f,
+         1.0f,  0.0f, 0.0f,
+         0.0f,  1.0f, 0.0f,
+         0.0f,  0.0f, 1.0f,
+         0.0f,  0.0f, 1.0f,
+
+         1.0f,  0.0f, 0.0f,
+         0.0f,  0.0f, 1.0f,
+         0.0f,  1.0f, 0.0f,
+         1.0f,  0.0f, 0.0f,
     };
 
     glGenVertexArrays(1, &mesh->mVertexArrayObject);
@@ -101,7 +116,7 @@ void MeshDraw(std::shared_ptr<MeshData> mesh) {
     GLint uProjectionLocation = shader::FindUniformLocation(mesh->mPipeline, "uProjectionMatrix");
     glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
 
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)0);
 }
 
 void MeshDelete(std::shared_ptr<MeshData> mesh) {
@@ -145,7 +160,7 @@ int main(int argc, char* argv[]) {
 
     MeshCreate(gMesh1, gModelManager.GetModel("block"));
     utility::MeshTranslate(gMesh1, 0.0f, 0.0f, -10.0f);
-    // utility::MeshRotate(gMesh1, 45, glm::vec3(0.0f, 1.0f, 0.0f));
+    utility::MeshRotate(gMesh1, 45, glm::vec3(0.0f, 1.0f, 0.0f));
 
     gGame.SetEventCallback(Input);
     gGame.SetUpdateCallback(MainLoop);
