@@ -14,6 +14,7 @@
 #include "game.hpp"
 #include "model.hpp"
 #include "model_manager.hpp"
+#include "transform.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
@@ -30,6 +31,8 @@ struct Mesh {
 
     GLuint mIndexBufferObject = 0;
     GLuint mPipeline = 0;
+
+    Transform mTransform;
 };
 
 ModelManager& gModelManager = ModelManager::GetInstance();
@@ -50,9 +53,8 @@ void InitializeModels() {
     gBlock->indexBufferData = {
         0,1,2, 3,2,1, // Front Face
     };
+
     gModelManager.CreateNewModel("block", gBlock);
-
-
 }   
 
 void MeshCreate() {
@@ -89,10 +91,23 @@ void MeshCreate() {
     glDisableVertexAttribArray(1);
 }
 
+int FindUniformLocation(GLuint pipeline, const GLchar* name) {
+    GLint uniformLocation = glGetUniformLocation(pipeline,name);
+    if(uniformLocation < 0) {
+        std::cerr << "Could not find location of: " << name << std::endl;
+        exit(1); // Change to exit failure
+    }
+
+    return uniformLocation;
+}
+
 void MeshDraw() {
     glUseProgram(mesh1.mPipeline);
 
     glBindVertexArray(mesh1.mVertexArrayObject);
+
+    GLint uModelMatrixLocation = FindUniformLocation(mesh1.mPipeline, "uModelMatrix");
+    glUniformMatrix4fv(uModelMatrixLocation, 1, false, &mesh1.mTransform.mModelMatrix[0][0]);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
 }
