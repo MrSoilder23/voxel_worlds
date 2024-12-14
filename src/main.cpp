@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 // Third_party libraries
 #include <SDL2/SDL.h>
@@ -11,6 +12,8 @@
 #include "utility.hpp"
 #include "shader.hpp"
 #include "game.hpp"
+#include "model.hpp"
+#include "model_manager.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
@@ -29,28 +32,35 @@ struct Mesh {
     GLuint mPipeline = 0;
 };
 
+ModelManager& gModelManager = ModelManager::GetInstance();
+std::shared_ptr<Model> gBlock = std::make_shared<Model>();
+
 Settings gSettings;
 Game gGame;
 
 Mesh mesh1;
 
-void MeshCreate() {
-    const std::vector<GLfloat> vertexPositions {
+void InitializeModels() {
+    gBlock->vertexPositions = {
         0.0f, 0.0f, 0.0f, // BotLeftVertex
         1.0f, 0.0f, 0.0f, // BotRightVertex
         0.0f, 1.0f, 0.0f, // TopLeftVertex
         1.0f, 1.0f, 0.0f, // TopRightVertex
     };
+    gBlock->indexBufferData = {
+        0,1,2, 3,2,1, // Front Face
+    };
+    gModelManager.CreateNewModel("block", gBlock);
 
+
+}   
+
+void MeshCreate() {
     const std::vector<GLfloat> vertexColors {
         1.0f,  0.0f, 0.0f,
         0.0f,  1.0f, 0.0f,
         0.0f,  0.0f, 1.0f,
         0.0f,  0.0f, 1.0f,
-    };
-    
-    const std::vector<GLuint> indexBufferData {
-        0,1,2, 3,2,1, // Front Face
     };
 
     glGenVertexArrays(1, &mesh1.mVertexArrayObject);
@@ -58,14 +68,14 @@ void MeshCreate() {
 
     glGenBuffers(1, &mesh1.mVertexBufferObject);
     glBindBuffer(GL_ARRAY_BUFFER, mesh1.mVertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, vertexPositions.size()*sizeof(GLfloat), vertexPositions.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, gModelManager.GetModel("block")->vertexPositions.size()*sizeof(GLfloat), gModelManager.GetModel("block")->vertexPositions.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, (void*)0);
 
     glGenBuffers(1, &mesh1.mIndexBufferObject);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh1.mIndexBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBufferData.size()*sizeof(GLuint), indexBufferData.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, gModelManager.GetModel("block")->indexBufferData.size()*sizeof(GLuint), gModelManager.GetModel("block")->indexBufferData.data(), GL_STATIC_DRAW);
 
     glGenBuffers(1, &mesh1.mVertexBufferObjectColor);
     glBindBuffer(GL_ARRAY_BUFFER, mesh1.mVertexBufferObjectColor);
@@ -116,6 +126,8 @@ void MainLoop() {
 }
 
 int main(int argc, char* argv[]) {
+
+    InitializeModels();
 
     gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gSettings.mScreenWidth, gSettings.mScreenHeight);
 
