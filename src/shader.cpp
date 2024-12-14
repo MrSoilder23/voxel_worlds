@@ -53,3 +53,13 @@ void shader::CreateGraphicsPipeline(GLuint& shaderProgram, const std::string& _v
 
     shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
 }
+
+int shader::FindUniformLocation(GLuint pipeline, const GLchar* name) {
+    GLint uniformLocation = glGetUniformLocation(pipeline,name);
+    if(uniformLocation < 0) {
+        std::cerr << "Could not find location of: " << name << std::endl;
+        exit(1); // Change to exit failure
+    }
+
+    return uniformLocation;
+}

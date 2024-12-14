@@ -15,8 +15,11 @@
 #include "model.hpp"
 #include "model_manager.hpp"
 #include "transform.hpp"
+#include "camera.hpp"
 
 struct Settings {
+    Camera mCamera;
+
     GLuint mGraphicsShaderProgram = 0;
 
     int mScreenWidth = 640;
@@ -37,11 +40,10 @@ struct Mesh {
 
 ModelManager& gModelManager = ModelManager::GetInstance();
 std::shared_ptr<Model> gBlock = std::make_shared<Model>();
+Mesh mesh1;
 
 Settings gSettings;
 Game gGame;
-
-Mesh mesh1;
 
 void InitializeModels() {
     gBlock->vertexPositions = {
@@ -91,23 +93,21 @@ void MeshCreate() {
     glDisableVertexAttribArray(1);
 }
 
-int FindUniformLocation(GLuint pipeline, const GLchar* name) {
-    GLint uniformLocation = glGetUniformLocation(pipeline,name);
-    if(uniformLocation < 0) {
-        std::cerr << "Could not find location of: " << name << std::endl;
-        exit(1); // Change to exit failure
-    }
-
-    return uniformLocation;
-}
-
 void MeshDraw() {
     glUseProgram(mesh1.mPipeline);
 
     glBindVertexArray(mesh1.mVertexArrayObject);
 
-    GLint uModelMatrixLocation = FindUniformLocation(mesh1.mPipeline, "uModelMatrix");
+    GLint uModelMatrixLocation = shader::FindUniformLocation(mesh1.mPipeline, "uModelMatrix");
     glUniformMatrix4fv(uModelMatrixLocation, 1, false, &mesh1.mTransform.mModelMatrix[0][0]);
+
+    glm::mat4 view = gSettings.mCamera.GetViewMatrix();
+    GLint uViewLocation = shader::FindUniformLocation(mesh1.mPipeline, "uViewMatrix");
+    glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
+
+    glm::mat4 perspective = gSettings.mCamera.GetProjectionMatrix();
+    GLint uProjectionLocation = shader::FindUniformLocation(mesh1.mPipeline, "uProjectionMatrix");
+    glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
 }
@@ -144,6 +144,7 @@ int main(int argc, char* argv[]) {
 
     InitializeModels();
 
+    gSettings.mCamera.SetProjectionMatrix(glm::radians(45.0f), (float)gSettings.mScreenWidth/(float)gSettings.mScreenHeight, 0.1f);
     gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gSettings.mScreenWidth, gSettings.mScreenHeight);
 
     shader::CreateGraphicsPipeline(gSettings.mGraphicsShaderProgram, "./shaders/vert.glsl", "./shaders/frag.glsl");
