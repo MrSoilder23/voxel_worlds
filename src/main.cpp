@@ -7,6 +7,8 @@
 // Third_party libraries
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 // Own libraries
 #include "utility.hpp"
@@ -16,6 +18,7 @@
 #include "model_manager.hpp"
 #include "transform.hpp"
 #include "camera.hpp"
+#include "mesh_data.hpp"
 
 struct Settings {
     Camera mCamera;
@@ -27,30 +30,19 @@ struct Settings {
 
 };
 
-struct Mesh {
-    GLuint mVertexArrayObject = 0;
-    GLuint mVertexBufferObject = 0;
-    GLuint mVertexBufferObjectColor = 0;
-
-    GLuint mIndexBufferObject = 0;
-    GLuint mPipeline = 0;
-
-    Transform mTransform;
-};
-
 ModelManager& gModelManager = ModelManager::GetInstance();
 std::shared_ptr<Model> gBlock = std::make_shared<Model>();
-Mesh mesh1;
+std::shared_ptr<MeshData> gMesh1 = std::make_shared<MeshData>(); 
 
 Settings gSettings;
 Game gGame;
 
 void InitializeModels() {
     gBlock->vertexPositions = {
-        0.0f, 0.0f, 0.0f, // BotLeftVertex
-        1.0f, 0.0f, 0.0f, // BotRightVertex
-        0.0f, 1.0f, 0.0f, // TopLeftVertex
-        1.0f, 1.0f, 0.0f, // TopRightVertex
+        -0.5f, -0.5f,  0.5f, // BotLeftVertex
+         0.5f, -0.5f,  0.5f, // BotRightVertex
+        -0.5f,  0.5f,  0.5f, // TopLeftVertex
+         0.5f,  0.5f,  0.5f, // TopRightVertex
     };
     gBlock->indexBufferData = {
         0,1,2, 3,2,1, // Front Face
@@ -59,7 +51,7 @@ void InitializeModels() {
     gModelManager.CreateNewModel("block", gBlock);
 }   
 
-void MeshCreate() {
+void MeshCreate(std::shared_ptr<MeshData> mesh, std::shared_ptr<Model> model) {
     const std::vector<GLfloat> vertexColors {
         1.0f,  0.0f, 0.0f,
         0.0f,  1.0f, 0.0f,
@@ -67,22 +59,22 @@ void MeshCreate() {
         0.0f,  0.0f, 1.0f,
     };
 
-    glGenVertexArrays(1, &mesh1.mVertexArrayObject);
-    glBindVertexArray(mesh1.mVertexArrayObject);
+    glGenVertexArrays(1, &mesh->mVertexArrayObject);
+    glBindVertexArray(mesh->mVertexArrayObject);
 
-    glGenBuffers(1, &mesh1.mVertexBufferObject);
-    glBindBuffer(GL_ARRAY_BUFFER, mesh1.mVertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, gModelManager.GetModel("block")->vertexPositions.size()*sizeof(GLfloat), gModelManager.GetModel("block")->vertexPositions.data(), GL_STATIC_DRAW);
+    glGenBuffers(1, &mesh->mVertexBufferObject);
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->mVertexBufferObject);
+    glBufferData(GL_ARRAY_BUFFER, model->vertexPositions.size()*sizeof(GLfloat), model->vertexPositions.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, (void*)0);
 
-    glGenBuffers(1, &mesh1.mIndexBufferObject);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh1.mIndexBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, gModelManager.GetModel("block")->indexBufferData.size()*sizeof(GLuint), gModelManager.GetModel("block")->indexBufferData.data(), GL_STATIC_DRAW);
+    glGenBuffers(1, &mesh->mIndexBufferObject);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->mIndexBufferObject);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->indexBufferData.size()*sizeof(GLuint), model->indexBufferData.data(), GL_STATIC_DRAW);
 
-    glGenBuffers(1, &mesh1.mVertexBufferObjectColor);
-    glBindBuffer(GL_ARRAY_BUFFER, mesh1.mVertexBufferObjectColor);
+    glGenBuffers(1, &mesh->mVertexBufferObjectColor);
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->mVertexBufferObjectColor);
     glBufferData(GL_ARRAY_BUFFER, vertexColors.size()*sizeof(GLfloat), vertexColors.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(1);
@@ -93,30 +85,30 @@ void MeshCreate() {
     glDisableVertexAttribArray(1);
 }
 
-void MeshDraw() {
-    glUseProgram(mesh1.mPipeline);
+void MeshDraw(std::shared_ptr<MeshData> mesh) {
+    glUseProgram(mesh->mPipeline);
 
-    glBindVertexArray(mesh1.mVertexArrayObject);
+    glBindVertexArray(mesh->mVertexArrayObject);
 
-    GLint uModelMatrixLocation = shader::FindUniformLocation(mesh1.mPipeline, "uModelMatrix");
-    glUniformMatrix4fv(uModelMatrixLocation, 1, false, &mesh1.mTransform.mModelMatrix[0][0]);
+    GLint uModelMatrixLocation = shader::FindUniformLocation(mesh->mPipeline, "uModelMatrix");
+    glUniformMatrix4fv(uModelMatrixLocation, 1, false, &mesh->mTransform.mModelMatrix[0][0]);
 
     glm::mat4 view = gSettings.mCamera.GetViewMatrix();
-    GLint uViewLocation = shader::FindUniformLocation(mesh1.mPipeline, "uViewMatrix");
+    GLint uViewLocation = shader::FindUniformLocation(mesh->mPipeline, "uViewMatrix");
     glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
 
     glm::mat4 perspective = gSettings.mCamera.GetProjectionMatrix();
-    GLint uProjectionLocation = shader::FindUniformLocation(mesh1.mPipeline, "uProjectionMatrix");
+    GLint uProjectionLocation = shader::FindUniformLocation(mesh->mPipeline, "uProjectionMatrix");
     glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
 }
 
-void MeshDelete() {
-    glDeleteBuffers(1, &mesh1.mVertexArrayObject);
-    glDeleteBuffers(1, &mesh1.mVertexBufferObjectColor);
-    glDeleteBuffers(1, &mesh1.mIndexBufferObject);
-    glDeleteVertexArrays(1, &mesh1.mVertexArrayObject);
+void MeshDelete(std::shared_ptr<MeshData> mesh) {
+    glDeleteBuffers(1, &mesh->mVertexArrayObject);
+    glDeleteBuffers(1, &mesh->mVertexBufferObjectColor);
+    glDeleteBuffers(1, &mesh->mIndexBufferObject);
+    glDeleteVertexArrays(1, &mesh->mVertexArrayObject);
 }
 
 void Input() {
@@ -137,7 +129,7 @@ void Input() {
 }
 
 void MainLoop() {
-    MeshDraw();
+    MeshDraw(gMesh1);
 }
 
 int main(int argc, char* argv[]) {
@@ -149,16 +141,18 @@ int main(int argc, char* argv[]) {
 
     shader::CreateGraphicsPipeline(gSettings.mGraphicsShaderProgram, "./shaders/vert.glsl", "./shaders/frag.glsl");
     
-    mesh1.mPipeline = gSettings.mGraphicsShaderProgram;
+    gMesh1->mPipeline = gSettings.mGraphicsShaderProgram;
 
-    MeshCreate();
+    MeshCreate(gMesh1, gModelManager.GetModel("block"));
+    utility::MeshTranslate(gMesh1, 0.0f, 0.0f, -10.0f);
+    // utility::MeshRotate(gMesh1, 45, glm::vec3(0.0f, 1.0f, 0.0f));
 
     gGame.SetEventCallback(Input);
     gGame.SetUpdateCallback(MainLoop);
     
     gGame.RunLoop();
 
-    MeshDelete();
+    MeshDelete(gMesh1);
 
     return 0;
 }
