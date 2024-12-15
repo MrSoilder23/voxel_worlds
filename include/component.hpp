@@ -1,5 +1,6 @@
 #pragma once
 
 class IComponent {
-    virtual void Update();
+    public:
+        virtual void Update();
 };
