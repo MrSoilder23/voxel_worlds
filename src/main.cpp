@@ -38,6 +38,7 @@ Settings gSettings;
 Game gGame;
 
 void InitializeModels() {
+    
     gBlock->vertexPositions = {
         -0.5f, -0.5f,  0.5f, // BotLeftVertex
          0.5f, -0.5f,  0.5f, // BotRightVertex
@@ -59,9 +60,11 @@ void InitializeModels() {
     };
 
     gModelManager.CreateNewModel("block", gBlock);
+    
 }   
 
 void MeshCreate(std::shared_ptr<MeshData> mesh, std::shared_ptr<Model> model) {
+    /*
     const std::vector<GLfloat> vertexColors {
          1.0f,  0.0f, 0.0f,
          0.0f,  1.0f, 0.0f,
@@ -98,9 +101,11 @@ void MeshCreate(std::shared_ptr<MeshData> mesh, std::shared_ptr<Model> model) {
     glBindVertexArray(0);
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+    */
 }
 
 void MeshDraw(std::shared_ptr<MeshData> mesh) {
+    /*
     glUseProgram(mesh->mPipeline);
 
     glBindVertexArray(mesh->mVertexArrayObject);
@@ -117,13 +122,11 @@ void MeshDraw(std::shared_ptr<MeshData> mesh) {
     glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
 
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)0);
+    */
 }
 
 void MeshDelete(std::shared_ptr<MeshData> mesh) {
-    glDeleteBuffers(1, &mesh->mVertexArrayObject);
-    glDeleteBuffers(1, &mesh->mVertexBufferObjectColor);
-    glDeleteBuffers(1, &mesh->mIndexBufferObject);
-    glDeleteVertexArrays(1, &mesh->mVertexArrayObject);
+
 }
 
 void Input() {

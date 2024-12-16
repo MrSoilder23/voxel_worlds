@@ -2,5 +2,5 @@
 
 class IComponent {
     public:
-        virtual void Update();
+        virtual void Initialize();
 };

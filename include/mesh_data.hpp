@@ -3,7 +3,8 @@
 #include <glad/glad.h>
 
 // Own libraries
-#include <transform.hpp>
+#include "transform.hpp"
+#include "camera.hpp"
 
 struct MeshData {
     GLuint mVertexArrayObject = 0;
@@ -11,7 +12,6 @@ struct MeshData {
     GLuint mVertexBufferObjectColor = 0;
 
     GLuint mIndexBufferObject = 0;
-    GLuint mPipeline = 0;
 
     Transform mTransform;
 };
