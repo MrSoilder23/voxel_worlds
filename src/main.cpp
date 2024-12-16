@@ -19,10 +19,12 @@
 #include "transform.hpp"
 #include "camera.hpp"
 #include "mesh_data.hpp"
+#include "graphics.hpp"
+#include "model_component.hpp"
+#include "entity_manager.hpp"
+#include "renderer_system.hpp"
 
 struct Settings {
-    Camera mCamera;
-
     GLuint mGraphicsShaderProgram = 0;
 
     int mScreenWidth = 640;
@@ -34,8 +36,12 @@ ModelManager& gModelManager = ModelManager::GetInstance();
 std::shared_ptr<Model> gBlock = std::make_shared<Model>();
 std::shared_ptr<MeshData> gMesh1 = std::make_shared<MeshData>(); 
 
+EntityManager& gEntityManager = EntityManager::GetInstance();
+RendererSystem& gRendererSystem = RendererSystem::GetInstance();
+
 Settings gSettings;
 Game gGame;
+std::shared_ptr<GraphicsApp> gGraphicsApp;
 
 void InitializeModels() {
     
@@ -147,23 +153,32 @@ void Input() {
 }
 
 void MainLoop() {
-    MeshDraw(gMesh1);
+    gRendererSystem.DrawAll();
 }
 
 int main(int argc, char* argv[]) {
 
     InitializeModels();
 
-    gSettings.mCamera.SetProjectionMatrix(glm::radians(45.0f), (float)gSettings.mScreenWidth/(float)gSettings.mScreenHeight, 0.1f);
     gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gSettings.mScreenWidth, gSettings.mScreenHeight);
+    gGraphicsApp->mCamera.SetProjectionMatrix(glm::radians(45.0f), (float)gSettings.mScreenWidth/(float)gSettings.mScreenHeight, 0.1f);
 
     shader::CreateGraphicsPipeline(gSettings.mGraphicsShaderProgram, "./shaders/vert.glsl", "./shaders/frag.glsl");
+    gGraphicsApp->mGraphicsPipeline = gSettings.mGraphicsShaderProgram;
     
-    gMesh1->mPipeline = gSettings.mGraphicsShaderProgram;
+    // MeshCreate(gMesh1, gModelManager.GetModel("block"));
+    // utility::MeshTranslate(gMesh1, 0.0f, 0.0f, -10.0f);
+    // utility::MeshRotate(gMesh1, 45, glm::vec3(0.0f, 1.0f, 0.0f));
 
-    MeshCreate(gMesh1, gModelManager.GetModel("block"));
-    utility::MeshTranslate(gMesh1, 0.0f, 0.0f, -10.0f);
-    utility::MeshRotate(gMesh1, 45, glm::vec3(0.0f, 1.0f, 0.0f));
+    int block = gEntityManager.CreateEntity();
+    gEntityManager.AddComponent<ModelComponent>(block);
+    ModelComponent& blockData = gEntityManager.GetComponent<ModelComponent>(block);
+
+    blockData.AddModel(gModelManager.GetModel("block"));
+    utility::MeshTranslate(blockData.GetMeshData(), 0.0f, 0.0f, -10.0f);
+    utility::MeshRotate(blockData.GetMeshData(), 45, glm::vec3(0.0f, 1.0f, 0.0f));
+
+    gRendererSystem.AddGraphicsApp(gGraphicsApp);
 
     gGame.SetEventCallback(Input);
     gGame.SetUpdateCallback(MainLoop);

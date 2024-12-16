@@ -20,13 +20,13 @@ namespace utility {
         std::cout << "Shading Language: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
     }
 
-    inline void MeshTranslate(std::shared_ptr<MeshData> mesh, float x, float y, float z) {
-        mesh->mTransform.mModelMatrix = glm::translate(mesh->mTransform.mModelMatrix, glm::vec3(x,y,z));
+    inline void MeshTranslate(MeshData& mesh, float x, float y, float z) {
+        mesh.mTransform.mModelMatrix = glm::translate(mesh.mTransform.mModelMatrix, glm::vec3(x,y,z));
     }
-    inline void MeshRotate(std::shared_ptr<MeshData> mesh, float angle, glm::vec3 axis) {
-        mesh->mTransform.mModelMatrix = glm::rotate(mesh->mTransform.mModelMatrix, angle, axis);
+    inline void MeshRotate(MeshData& mesh, float angle, glm::vec3 axis) {
+        mesh.mTransform.mModelMatrix = glm::rotate(mesh.mTransform.mModelMatrix, angle, axis);
     }
-    inline void MeshScale(std::shared_ptr<MeshData> mesh, float x, float y, float z) {
-        mesh->mTransform.mModelMatrix = glm::scale(mesh->mTransform.mModelMatrix, glm::vec3(x,y,z));
+    inline void MeshScale(MeshData& mesh, float x, float y, float z) {
+        mesh.mTransform.mModelMatrix = glm::scale(mesh.mTransform.mModelMatrix, glm::vec3(x,y,z));
     }
 }

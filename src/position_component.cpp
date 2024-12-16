@@ -10,7 +10,7 @@ void PositionComponent::SetPosition(float _x, float _y, float _z) {
     z = _z;
 }
 
-glm::vec3&& PositionComponent::GetPosition() {
+glm::vec3 PositionComponent::GetPosition() {
     return glm::vec3(x,y,z);
 }
 float& PositionComponent::GetPositionX() {

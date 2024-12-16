@@ -21,10 +21,12 @@ class EntityManager {
         template <typename ComponentType>
         ComponentType& GetComponent(int entityId);
 
+        std::unordered_map<int, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& GetEntities();
+
         static EntityManager& GetInstance();
 
     private:
-        std::unordered_map<int, std::unordered_map<std::type_index, std::unique_ptr<IComponent>>> mEntityComponents;
+        std::unordered_map<int, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>> mEntityComponents;
         
         unsigned int mNextEntityId = 0;
 };

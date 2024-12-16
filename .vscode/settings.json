@@ -70,6 +70,8 @@
         "string_view": "cpp",
         "numbers": "cpp",
         "cinttypes": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "span": "cpp",
+        "variant": "cpp"
     }
 }
