@@ -26,8 +26,6 @@ void RendererSystem::DrawAll() {
 
             glBindVertexArray(componentPointer->GetMeshData().mVertexArrayObject);
 
-            std::cout << "Generated VAO ID: " << componentPointer->GetMeshData().mVertexArrayObject << std::endl;
-
             glDrawElements(GL_TRIANGLES, componentPointer->GetModel()->indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);
         } else {
             std::cerr << "No ModelComponent" << std::endl;
