@@ -2,7 +2,8 @@
 
 Game::Game() :  mOpenGLContext(nullptr), mWindow(nullptr), mScreenWidth(640), mScreenHeight(480), 
                 r(0.0510f),g(0.1255f),b(0.1490f), 
-                mEventCallback([](){}), mUpdateCallback([](){}) {
+                mEventCallback([](float deltaTime){}), mUpdateCallback([](float deltaTime){}),
+                lastTime(0) {
 
 }
 Game::~Game() {
@@ -57,10 +58,10 @@ void Game::SetBackgroundColor(uint8_t _r, uint8_t _g, uint8_t _b) {
     g = (float)_g/255;
     b = (float)_b/255;
 }
-void Game::SetEventCallback(const std::function<void(void)>& func) {
+void Game::SetEventCallback(const std::function<void(float)>& func) {
     mEventCallback = func;
 }
-void Game::SetUpdateCallback(const std::function<void(void)>& func) {
+void Game::SetUpdateCallback(const std::function<void(float)>& func) {
     mUpdateCallback = func;
 }
 
@@ -70,8 +71,12 @@ void GLAPIENTRY GLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum se
 
 void Game::RunLoop() {
 
-        while (!mQuit) {
-        mEventCallback();
+    while (!mQuit) {
+        Uint32 currentTime = SDL_GetTicks();
+        float deltaTime = (SDL_GetTicks() - lastTime) / 1000.0f;
+        lastTime = currentTime;        
+
+        mEventCallback(deltaTime);
 
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_CULL_FACE);
@@ -85,7 +90,7 @@ void Game::RunLoop() {
 
         glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-        mUpdateCallback();
+        mUpdateCallback(deltaTime);
 
         SDL_GL_SwapWindow(mWindow);
     }

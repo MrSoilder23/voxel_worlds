@@ -2,7 +2,6 @@
 // Third_party libraries
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <SDL2/SDL.h>
 
 class Camera {
     public:

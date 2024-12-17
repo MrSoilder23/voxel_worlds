@@ -69,9 +69,7 @@ void InitializeModels() {
     
 }   
 
-void Input() {
-    Uint32 start = SDL_GetTicks();
-    float deltaTime = (SDL_GetTicks() - start) / 1000.0f;
+void Input(float deltaTime) {
     SDL_Event e;
 
     while(SDL_PollEvent(&e) != 0) {
@@ -100,7 +98,7 @@ void Input() {
 
 }
 
-void MainLoop() {
+void MainLoop(float deltaTime) {
     gRendererSystem.DrawAll();
 }
 
