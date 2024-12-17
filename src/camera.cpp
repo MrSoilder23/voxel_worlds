@@ -19,15 +19,15 @@ glm::mat4 Camera::GetViewMatrix() const{
 }
 
 void Camera::MoveForward(float speed, float deltaTime) {
-    mEye += (mViewDirection * speed);
+    mEye += (mViewDirection * speed) * deltaTime;
 }
 void Camera::MoveBackward(float speed, float deltaTime) {
-    mEye -= (mViewDirection * speed);
+    mEye -= (mViewDirection * speed) * deltaTime;
 }
 void Camera::MoveLeft(float speed, float deltaTime) {
     glm::vec3 rightVector = glm::cross(mViewDirection, mUpVector);
     rightVector = glm::normalize(rightVector);
-    mEye -= (rightVector * speed);
+    mEye -= (rightVector * speed) * deltaTime;
 }
 void Camera::MoveRight(float speed, float deltaTime) {
     glm::vec3 rightVector = glm::cross(mViewDirection, mUpVector);
