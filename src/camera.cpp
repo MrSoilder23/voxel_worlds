@@ -17,3 +17,20 @@ glm::mat4 Camera::GetProjectionMatrix() const{
 glm::mat4 Camera::GetViewMatrix() const{
     return glm::lookAt(mEye, mEye + mViewDirection, mUpVector);
 }
+
+void Camera::MoveForward(float speed, float deltaTime) {
+    mEye += (mViewDirection * speed);
+}
+void Camera::MoveBackward(float speed, float deltaTime) {
+    mEye -= (mViewDirection * speed);
+}
+void Camera::MoveLeft(float speed, float deltaTime) {
+    glm::vec3 rightVector = glm::cross(mViewDirection, mUpVector);
+    rightVector = glm::normalize(rightVector);
+    mEye -= (rightVector * speed);
+}
+void Camera::MoveRight(float speed, float deltaTime) {
+    glm::vec3 rightVector = glm::cross(mViewDirection, mUpVector);
+    rightVector = glm::normalize(rightVector);
+    mEye += (rightVector * speed) * deltaTime;
+}

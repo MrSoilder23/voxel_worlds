@@ -70,7 +70,8 @@ void InitializeModels() {
 }   
 
 void Input() {
-
+    Uint32 start = SDL_GetTicks();
+    float deltaTime = (SDL_GetTicks() - start) / 1000.0f;
     SDL_Event e;
 
     while(SDL_PollEvent(&e) != 0) {
@@ -83,6 +84,19 @@ void Input() {
     if(state[SDL_SCANCODE_ESCAPE]) {
         gGame.StopLoop();
     }
+    if(state[SDL_SCANCODE_W]) {
+        gGraphicsApp->mCamera.MoveForward(1.0f, deltaTime);
+    }
+    if(state[SDL_SCANCODE_S]) {
+        gGraphicsApp->mCamera.MoveBackward(1.0f, deltaTime);
+    }
+    if(state[SDL_SCANCODE_A]) {
+        gGraphicsApp->mCamera.MoveLeft(1.0f, deltaTime);
+    }
+    if(state[SDL_SCANCODE_D]) {
+        gGraphicsApp->mCamera.MoveRight(10.0f, deltaTime);
+    }
+
 
 }
 
