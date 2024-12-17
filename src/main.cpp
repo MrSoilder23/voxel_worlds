@@ -118,7 +118,9 @@ int main(int argc, char* argv[]) {
 
     int block = gEntityManager.CreateEntity();
     int block1 = gEntityManager.CreateEntity();
+
     std::cout << "Block: " << block << std::endl;
+    
     gEntityManager.AddComponent<ModelComponent>(block);
     gEntityManager.AddComponent<ModelComponent>(block1);
     ModelComponent& blockData = *gEntityManager.GetComponent<ModelComponent>(block);
