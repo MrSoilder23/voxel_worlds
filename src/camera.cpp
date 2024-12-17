@@ -35,18 +35,18 @@ void Camera::MouseLook(float mouseDeltaX, float mouseDeltaY, float sensitivity, 
 }
 
 void Camera::MoveForward(float speed, float deltaTime) {
-    mEye += (mViewDirection * speed) * deltaTime;
+    mEye += mViewDirection * speed * deltaTime;
 }
 void Camera::MoveBackward(float speed, float deltaTime) {
-    mEye -= (mViewDirection * speed) * deltaTime;
+    mEye -= mViewDirection * speed * deltaTime;
 }
 void Camera::MoveLeft(float speed, float deltaTime) {
     glm::vec3 rightVector = glm::cross(mViewDirection, mUpVector);
     rightVector = glm::normalize(rightVector);
-    mEye -= (rightVector * speed) * deltaTime;
+    mEye -= rightVector * speed * deltaTime;
 }
 void Camera::MoveRight(float speed, float deltaTime) {
     glm::vec3 rightVector = glm::cross(mViewDirection, mUpVector);
     rightVector = glm::normalize(rightVector);
-    mEye += (rightVector * speed) * deltaTime;
+    mEye += rightVector * speed * deltaTime;
 }
