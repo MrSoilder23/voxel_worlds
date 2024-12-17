@@ -30,6 +30,8 @@ struct Settings {
     int mScreenWidth = 640;
     int mScreenHeight = 480;
 
+    float mSpeed = 10.0f;
+    float sensitivity = 10.0f;
 };
 
 ModelManager& gModelManager = ModelManager::GetInstance();
@@ -76,6 +78,12 @@ void Input(float deltaTime) {
         if(e.type == SDL_QUIT) {
             gGame.StopLoop();
         }
+        if(e.type == SDL_MOUSEMOTION) {
+            int mouseX = e.motion.xrel;
+            int mouseY = e.motion.yrel;
+
+            gGraphicsApp->mCamera.MouseLook(mouseX, mouseY, gSettings.sensitivity, deltaTime);
+        }
     }
 
     const Uint8* state = SDL_GetKeyboardState(NULL);
@@ -83,16 +91,16 @@ void Input(float deltaTime) {
         gGame.StopLoop();
     }
     if(state[SDL_SCANCODE_W]) {
-        gGraphicsApp->mCamera.MoveForward(10.0f, deltaTime);
+        gGraphicsApp->mCamera.MoveForward(gSettings.mSpeed, deltaTime);
     }
     if(state[SDL_SCANCODE_S]) {
-        gGraphicsApp->mCamera.MoveBackward(10.0f, deltaTime);
+        gGraphicsApp->mCamera.MoveBackward(gSettings.mSpeed, deltaTime);
     }
     if(state[SDL_SCANCODE_A]) {
-        gGraphicsApp->mCamera.MoveLeft(10.0f, deltaTime);
+        gGraphicsApp->mCamera.MoveLeft(gSettings.mSpeed, deltaTime);
     }
     if(state[SDL_SCANCODE_D]) {
-        gGraphicsApp->mCamera.MoveRight(10.0f, deltaTime);
+        gGraphicsApp->mCamera.MoveRight(gSettings.mSpeed, deltaTime);
     }
 
 
@@ -120,7 +128,7 @@ int main(int argc, char* argv[]) {
     int block1 = gEntityManager.CreateEntity();
 
     std::cout << "Block: " << block << std::endl;
-    
+
     gEntityManager.AddComponent<ModelComponent>(block);
     gEntityManager.AddComponent<ModelComponent>(block1);
     ModelComponent& blockData = *gEntityManager.GetComponent<ModelComponent>(block);

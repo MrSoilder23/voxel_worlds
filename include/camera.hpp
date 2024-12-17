@@ -1,7 +1,8 @@
 #pragma once
 // Third_party libraries
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 class Camera {
     public:
@@ -13,6 +14,8 @@ class Camera {
         
         glm::mat4 GetViewMatrix() const;
 
+        void MouseLook(float mouseDeltaX, float mouseDeltaY,float sensitivity, float deltaTime);
+
         void MoveForward(float speed, float deltaTime);
         void MoveBackward(float speed, float deltaTime);
         void MoveLeft(float speed, float deltaTime);
@@ -20,6 +23,8 @@ class Camera {
 
     private:
         glm::mat4 mProjectionMatrix;
+    
+        glm::quat mOrientation;
 
         glm::vec3 mEye;
         glm::vec3 mViewDirection;

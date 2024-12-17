@@ -18,6 +18,22 @@ glm::mat4 Camera::GetViewMatrix() const{
     return glm::lookAt(mEye, mEye + mViewDirection, mUpVector);
 }
 
+void Camera::MouseLook(float mouseDeltaX, float mouseDeltaY, float sensitivity, float deltaTime) {
+    float yaw = -glm::radians(mouseDeltaX * sensitivity * deltaTime);
+    float pitch = -glm::radians(mouseDeltaY * sensitivity * deltaTime);
+
+    glm::quat yawRotation = glm::angleAxis(yaw, glm::vec3(0.0f, 1.0f, 0.0f));
+
+    glm::quat pitchRotation = glm::angleAxis(pitch, glm::vec3(1.0f, 0.0f, 0.0f));
+
+    mOrientation = yawRotation * mOrientation;
+    mOrientation = mOrientation * pitchRotation;
+
+    mOrientation = glm::normalize(mOrientation);
+
+    mViewDirection = glm::rotate(mOrientation, glm::vec3(0.0f, 0.0f, -1.0f));
+}
+
 void Camera::MoveForward(float speed, float deltaTime) {
     mEye += (mViewDirection * speed) * deltaTime;
 }

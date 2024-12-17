@@ -70,6 +70,8 @@ void GLAPIENTRY GLDebugCallback(GLenum source, GLenum type, GLuint id, GLenum se
 }
 
 void Game::RunLoop() {
+    SDL_WarpMouseInWindow(mWindow, mScreenWidth/2, mScreenHeight/2);
+    SDL_SetRelativeMouseMode(SDL_TRUE);
 
     while (!mQuit) {
         Uint32 currentTime = SDL_GetTicks();
