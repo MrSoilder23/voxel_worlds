@@ -11,15 +11,16 @@
 class RendererSystem {
     public:
         void DrawAll();
+        ~RendererSystem();
 
         void AddGraphicsApp(std::shared_ptr<GraphicsApp> graphicsApp);
 
         static RendererSystem& GetInstance();
 
     private:
-        RendererSystem();
-        ~RendererSystem();
-        RendererSystem operator=(RendererSystem const& rhs);
+        // RendererSystem();
+        // ~RendererSystem();
+        // RendererSystem operator=(RendererSystem const& rhs);
 
     private:
         std::shared_ptr<GraphicsApp> mGraphicsApp;

@@ -41,7 +41,7 @@ RendererSystem& gRendererSystem = RendererSystem::GetInstance();
 
 Settings gSettings;
 Game gGame;
-std::shared_ptr<GraphicsApp> gGraphicsApp;
+std::shared_ptr<GraphicsApp> gGraphicsApp = std::make_shared<GraphicsApp>();
 
 void InitializeModels() {
     
@@ -68,72 +68,6 @@ void InitializeModels() {
     gModelManager.CreateNewModel("block", gBlock);
     
 }   
-
-void MeshCreate(std::shared_ptr<MeshData> mesh, std::shared_ptr<Model> model) {
-    /*
-    const std::vector<GLfloat> vertexColors {
-         1.0f,  0.0f, 0.0f,
-         0.0f,  1.0f, 0.0f,
-         0.0f,  0.0f, 1.0f,
-         0.0f,  0.0f, 1.0f,
-
-         1.0f,  0.0f, 0.0f,
-         0.0f,  0.0f, 1.0f,
-         0.0f,  1.0f, 0.0f,
-         1.0f,  0.0f, 0.0f,
-    };
-
-    glGenVertexArrays(1, &mesh->mVertexArrayObject);
-    glBindVertexArray(mesh->mVertexArrayObject);
-
-    glGenBuffers(1, &mesh->mVertexBufferObject);
-    glBindBuffer(GL_ARRAY_BUFFER, mesh->mVertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, model->vertexPositions.size()*sizeof(GLfloat), model->vertexPositions.data(), GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, (void*)0);
-
-    glGenBuffers(1, &mesh->mIndexBufferObject);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->mIndexBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->indexBufferData.size()*sizeof(GLuint), model->indexBufferData.data(), GL_STATIC_DRAW);
-
-    glGenBuffers(1, &mesh->mVertexBufferObjectColor);
-    glBindBuffer(GL_ARRAY_BUFFER, mesh->mVertexBufferObjectColor);
-    glBufferData(GL_ARRAY_BUFFER, vertexColors.size()*sizeof(GLfloat), vertexColors.data(), GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, (void*)0);
-
-    glBindVertexArray(0);
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    */
-}
-
-void MeshDraw(std::shared_ptr<MeshData> mesh) {
-    /*
-    glUseProgram(mesh->mPipeline);
-
-    glBindVertexArray(mesh->mVertexArrayObject);
-
-    GLint uModelMatrixLocation = shader::FindUniformLocation(mesh->mPipeline, "uModelMatrix");
-    glUniformMatrix4fv(uModelMatrixLocation, 1, false, &mesh->mTransform.mModelMatrix[0][0]);
-
-    glm::mat4 view = gSettings.mCamera.GetViewMatrix();
-    GLint uViewLocation = shader::FindUniformLocation(mesh->mPipeline, "uViewMatrix");
-    glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
-
-    glm::mat4 perspective = gSettings.mCamera.GetProjectionMatrix();
-    GLint uProjectionLocation = shader::FindUniformLocation(mesh->mPipeline, "uProjectionMatrix");
-    glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
-
-    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)0);
-    */
-}
-
-void MeshDelete(std::shared_ptr<MeshData> mesh) {
-
-}
 
 void Input() {
 
@@ -171,21 +105,28 @@ int main(int argc, char* argv[]) {
     // utility::MeshRotate(gMesh1, 45, glm::vec3(0.0f, 1.0f, 0.0f));
 
     int block = gEntityManager.CreateEntity();
+    int block1 = gEntityManager.CreateEntity();
+    std::cout << "Block: " << block << std::endl;
     gEntityManager.AddComponent<ModelComponent>(block);
-    ModelComponent& blockData = gEntityManager.GetComponent<ModelComponent>(block);
+    gEntityManager.AddComponent<ModelComponent>(block1);
+    ModelComponent& blockData = *gEntityManager.GetComponent<ModelComponent>(block);
+    ModelComponent& blockData1 = *gEntityManager.GetComponent<ModelComponent>(block1);
 
     blockData.AddModel(gModelManager.GetModel("block"));
-    utility::MeshTranslate(blockData.GetMeshData(), 0.0f, 0.0f, -10.0f);
+    utility::MeshTranslate(blockData.GetMeshData(), 2.0f, 0.0f, -10.0f);
     utility::MeshRotate(blockData.GetMeshData(), 45, glm::vec3(0.0f, 1.0f, 0.0f));
+    
+    blockData1.AddModel(gModelManager.GetModel("block"));
+    utility::MeshTranslate(blockData1.GetMeshData(), 0.0f, 0.0f, -10.0f);
+    utility::MeshRotate(blockData1.GetMeshData(), 45, glm::vec3(1.0f, 0.0f, 0.0f));
 
+    gEntityManager.InitializeAllComponents();
     gRendererSystem.AddGraphicsApp(gGraphicsApp);
 
     gGame.SetEventCallback(Input);
     gGame.SetUpdateCallback(MainLoop);
     
     gGame.RunLoop();
-
-    MeshDelete(gMesh1);
 
     return 0;
 }

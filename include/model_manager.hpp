@@ -11,6 +11,7 @@
 class ModelManager {
     public:
         static ModelManager& GetInstance();
+        ~ModelManager();
         
         void CreateNewModel(const std::string& name, const std::shared_ptr<Model>& model);
 

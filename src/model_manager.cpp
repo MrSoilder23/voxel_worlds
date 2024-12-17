@@ -13,10 +13,12 @@ ModelManager ModelManager::operator=(ModelManager const& rhs) {
 
 ModelManager& ModelManager::GetInstance() {
     static ModelManager sInstance;
-
     return sInstance;
 }
-        
+ModelManager::~ModelManager() {
+    std::cout << "ModelManager bye bye" << std::endl;
+}
+
 void ModelManager::CreateNewModel(const std::string& name, const std::shared_ptr<Model>& model) {
     mModels[name] = model;
 }

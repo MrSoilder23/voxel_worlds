@@ -1,4 +1,5 @@
 #include "model_component.hpp"
+#include <iostream>
 
 ModelComponent::ModelComponent() {
     // Default textures
@@ -16,31 +17,14 @@ ModelComponent::ModelComponent() {
          
 }
 ModelComponent::~ModelComponent() {
-    glDeleteVertexArrays(1, &mMeshData.mVertexArrayObject);
-
+    std::cout << "ASDADA1" << std::endl;
     glDeleteBuffers(1, &mMeshData.mVertexArrayObject);
     glDeleteBuffers(1, &mMeshData.mVertexBufferObjectColor);
     glDeleteBuffers(1, &mMeshData.mIndexBufferObject);
+
+    glDeleteVertexArrays(1, &mMeshData.mVertexArrayObject);
 }
 
-// void ModelComponent::Update() {
-//     glUseProgram(mMeshData.mPipeline);
-
-//     glBindVertexArray(mMeshData->mVertexArrayObject);
-
-//     GLint uModelMatrixLocation = shader::FindUniformLocation(mMeshData->mPipeline, "uModelMatrix");
-//     glUniformMatrix4fv(uModelMatrixLocation, 1, false, &mMeshData->mTransform.mModelMatrix[0][0]);
-
-//     glm::mat4 view = gSettings.mCamera.GetViewMatrix();
-//     GLint uViewLocation = shader::FindUniformLocation(mMeshData->mPipeline, "uViewMatrix");
-//     glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
-
-//     glm::mat4 perspective = gSettings.mCamera.GetProjectionMatrix();
-//     GLint uProjectionLocation = shader::FindUniformLocation(mMeshData->mPipeline, "uProjectionMatrix");
-//     glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
-
-//     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)0);
-// }
 void ModelComponent::Initialize() {
 
     glGenVertexArrays(1, &mMeshData.mVertexArrayObject);

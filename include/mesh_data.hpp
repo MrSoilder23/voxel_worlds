@@ -4,7 +4,6 @@
 
 // Own libraries
 #include "transform.hpp"
-#include "camera.hpp"
 
 struct MeshData {
     GLuint mVertexArrayObject = 0;

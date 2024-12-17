@@ -1,30 +1,29 @@
 #include "entity_manager.hpp"
+#include <iostream>
 
 int EntityManager::CreateEntity() {
+    mEntityComponents[mNextEntityId] = {};
     return mNextEntityId++;
 }
 void EntityManager::DeleteEntity(int entityId) {
     mEntityComponents.erase(entityId);
 }
 
-template <typename ComponentType>
-void EntityManager::AddComponent(int entityId) {
-    std::type_index index = std::type_index(typeid(ComponentType));
-    mEntityComponents[entityId][index] = std::make_unique<ComponentType>();
-}
-
-template <typename ComponentType>
-void EntityManager::DeleteComponent(int entityId) {
-    mEntityComponents[entityId].erase(std::type_index(typeid(ComponentType)));
-}
-
-template <typename ComponentType>
-ComponentType& EntityManager::GetComponent(int entityId) {
-    return mEntityComponents[entityId][std::type_index(typeid(ComponentType))];
-}
-
 std::unordered_map<int, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& EntityManager::GetEntities() {
     return mEntityComponents;
+}
+EntityManager::~EntityManager() {
+    std::cout << "EntityManager bye bye" << std::endl;
+}
+
+void EntityManager::InitializeAllComponents() {
+    for(auto it = mEntityComponents.begin(); it != mEntityComponents.end(); ++it) {
+        for(auto jt = it->second.begin(); jt != it->second.end(); ++jt) {
+            if(jt->second) {
+                jt->second->Initialize();
+            }
+        }
+    }
 }
 
 EntityManager& EntityManager::GetInstance() {
