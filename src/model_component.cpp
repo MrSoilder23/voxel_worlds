@@ -17,7 +17,7 @@ ModelComponent::ModelComponent() {
          
 }
 ModelComponent::~ModelComponent() {
-    std::cout << "ASDADA1" << std::endl;
+    std::cout << "ModelComponent bye bye" << std::endl;
     glDeleteBuffers(1, &mMeshData.mVertexArrayObject);
     glDeleteBuffers(1, &mMeshData.mVertexBufferObjectColor);
     glDeleteBuffers(1, &mMeshData.mIndexBufferObject);
