@@ -1,7 +1,14 @@
 #include "position_component.hpp"
 
-void PositionComponent::Initialize() {
+PositionComponent::PositionComponent() : x(0), y(0), z(0) {
+}
+PositionComponent::PositionComponent(float _x, float _y, float _z) {
+    x = _x;
+    y = _y;
+    z = _z;
+}
 
+void PositionComponent::Initialize() {
 }
 
 void PositionComponent::SetPosition(float _x, float _y, float _z) {
