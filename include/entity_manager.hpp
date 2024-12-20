@@ -29,6 +29,8 @@ class EntityManager {
             return std::dynamic_pointer_cast<ComponentType>(mEntityComponents[entityName][std::type_index(typeid(ComponentType))]);
         }
 
+        std::unordered_map<std::type_index, std::shared_ptr<IComponent>>& GetEntity(std::string entityName);
+
         std::unordered_map<std::string, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& GetEntities();
 
         void InitializeAllComponents();

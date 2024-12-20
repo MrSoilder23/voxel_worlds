@@ -8,6 +8,10 @@ void EntityManager::DeleteEntity(std::string entityName) {
     mEntityComponents.erase(entityName);
 }
 
+std::unordered_map<std::type_index, std::shared_ptr<IComponent>>& EntityManager::GetEntity(std::string entityName) {
+    return mEntityComponents[entityName];
+}
+
 std::unordered_map<std::string, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& EntityManager::GetEntities() {
     return mEntityComponents;
 }

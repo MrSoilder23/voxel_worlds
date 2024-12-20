@@ -14,6 +14,8 @@
 #include "graphics.hpp"
 #include "renderer_system.hpp"
 #include "blocks.hpp"
+#include "chunk_manager.hpp"
+#include "chunk_renderer_system.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
@@ -28,7 +30,11 @@ Settings gSettings;
 Game gGame;
 
 std::shared_ptr<GraphicsApp> gGraphicsApp = std::make_shared<GraphicsApp>();
+EntityManager& gEntityManager = EntityManager::GetInstance();
+
 RendererSystem& gRendererSystem = RendererSystem::GetInstance();
+ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
+ChunkManager& gChunkManager = ChunkManager::GetInstance();
 
 void Input(float deltaTime) {
     SDL_Event e;
@@ -66,7 +72,9 @@ void Input(float deltaTime) {
 }
 
 void MainLoop(float deltaTime) {
-    gRendererSystem.DrawAll();
+    // gRendererSystem.DrawAll();
+    auto chunk = gChunkManager.GetChunk(0,0,0);
+    gChunkRendererSystem.DrawChunk(chunk);
 }
 
 int main(int argc, char* argv[]) {
@@ -79,8 +87,20 @@ int main(int argc, char* argv[]) {
     
     InitializeModels();
     InitializeBlocks();
+
+    auto chunk = gChunkManager.CreateChunk(0,0,0);
+    auto grass_block = gEntityManager.GetEntity("grass_block");
+    for(float i = 0; i <= 32; i++) {
+        for(float j = 0; j <= 32; j++) {
+            for(float k = 0; k <= 32; k++) {
+                gChunkManager.InsertToChunk(chunk, grass_block, i, k, j);
+
+            }
+        }
+    }
     
-    gRendererSystem.AddGraphicsApp(gGraphicsApp);
+    // gRendererSystem.AddGraphicsApp(gGraphicsApp);
+    gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);
 
     gGame.SetEventCallback(Input);
     gGame.SetUpdateCallback(MainLoop);

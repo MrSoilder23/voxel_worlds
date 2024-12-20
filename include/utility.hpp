@@ -23,9 +23,14 @@ namespace utility {
     inline void MeshTranslate(MeshData& mesh, float x, float y, float z) {
         mesh.mTransform.mModelMatrix = glm::translate(mesh.mTransform.mModelMatrix, glm::vec3(x,y,z));
     }
+    inline void MeshTranslate(MeshData& mesh, glm::vec3 transform) {
+        mesh.mTransform.mModelMatrix = glm::translate(mesh.mTransform.mModelMatrix, transform);
+    }
+
     inline void MeshRotate(MeshData& mesh, float angle, glm::vec3 axis) {
         mesh.mTransform.mModelMatrix = glm::rotate(mesh.mTransform.mModelMatrix, angle, axis);
     }
+
     inline void MeshScale(MeshData& mesh, float x, float y, float z) {
         mesh.mTransform.mModelMatrix = glm::scale(mesh.mTransform.mModelMatrix, glm::vec3(x,y,z));
     }
