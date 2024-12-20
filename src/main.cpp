@@ -1,26 +1,17 @@
 // C++ Standard libraries
 #include <iostream>
 #include <string>
-#include <vector>
 #include <memory>
 
 // Third_party libraries
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 // Own libraries
-#include "utility.hpp"
 #include "shader.hpp"
 #include "game.hpp"
-#include "model.hpp"
-#include "model_manager.hpp"
-#include "transform.hpp"
-#include "camera.hpp"
 #include "graphics.hpp"
-#include "model_component.hpp"
-#include "entity_manager.hpp"
 #include "renderer_system.hpp"
 #include "blocks.hpp"
 
@@ -33,18 +24,11 @@ struct Settings {
     float mSpeed = 10.0f;
     float sensitivity = 10.0f;
 };
-
-ModelManager& gModelManager = ModelManager::GetInstance();
-std::shared_ptr<Model> gBlock = std::make_shared<Model>();
-std::shared_ptr<MeshData> gMesh1 = std::make_shared<MeshData>(); 
-
-EntityManager& gEntityManager = EntityManager::GetInstance();
-RendererSystem& gRendererSystem = RendererSystem::GetInstance();
-
 Settings gSettings;
 Game gGame;
-std::shared_ptr<GraphicsApp> gGraphicsApp = std::make_shared<GraphicsApp>();
 
+std::shared_ptr<GraphicsApp> gGraphicsApp = std::make_shared<GraphicsApp>();
+RendererSystem& gRendererSystem = RendererSystem::GetInstance();
 
 void Input(float deltaTime) {
     SDL_Event e;

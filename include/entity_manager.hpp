@@ -3,39 +3,38 @@
 #include <unordered_map>
 #include <typeindex>
 #include <memory>
+#include <string>
 
 // Own libraries
 #include "component.hpp"
 
 class EntityManager {
     public:
-        int CreateEntity();
-        void DeleteEntity(int entityId);
+        void CreateEntity(std::string entityName);
+        void DeleteEntity(std::string entityName);
         ~EntityManager();
 
         template <typename ComponentType>
-        void AddComponent(int entityId) {
-            mEntityComponents[entityId][std::type_index(typeid(ComponentType))] = std::make_shared<ComponentType>();
+        void AddComponent(std::string entityName) {
+            mEntityComponents[entityName][std::type_index(typeid(ComponentType))] = std::make_shared<ComponentType>();
         }
 
         template <typename ComponentType>
-        void DeleteComponent(int entityId) {
-            mEntityComponents[entityId].erase(std::type_index(typeid(ComponentType)));
+        void DeleteComponent(std::string entityName) {
+            mEntityComponents[entityName].erase(std::type_index(typeid(ComponentType)));
         }
 
         template <typename ComponentType>
-        std::shared_ptr<ComponentType> GetComponent(int entityId) {
-            return std::dynamic_pointer_cast<ComponentType>(mEntityComponents[entityId][std::type_index(typeid(ComponentType))]);
+        std::shared_ptr<ComponentType> GetComponent(std::string entityName) {
+            return std::dynamic_pointer_cast<ComponentType>(mEntityComponents[entityName][std::type_index(typeid(ComponentType))]);
         }
 
-        std::unordered_map<int, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& GetEntities();
+        std::unordered_map<std::string, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& GetEntities();
 
         void InitializeAllComponents();
 
         static EntityManager& GetInstance();
 
     private:
-        std::unordered_map<int, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>> mEntityComponents;
-        
-        unsigned int mNextEntityId = 0;
+        std::unordered_map<std::string, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>> mEntityComponents;
 };

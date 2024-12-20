@@ -33,7 +33,8 @@ void InitializeBlocks() {
     EntityManager& entityManager = EntityManager::GetInstance();
     ModelManager& modelManager = ModelManager::GetInstance();
 
-    int grassBlock = entityManager.CreateEntity();
+    std::string grassBlock = "grass_block";
+    entityManager.CreateEntity(grassBlock);
 
     entityManager.AddComponent<ModelComponent>(grassBlock);
     entityManager.AddComponent<PositionComponent>(grassBlock);

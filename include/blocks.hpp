@@ -1,4 +1,7 @@
 #pragma once
+// C++ standard libraries
+#include <string>
+
 // Own libraries
 #include "entity_manager.hpp"
 #include "model_manager.hpp"
