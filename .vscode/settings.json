@@ -72,6 +72,13 @@
         "cinttypes": "cpp",
         "typeindex": "cpp",
         "span": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "condition_variable": "cpp",
+        "ratio": "cpp",
+        "semaphore": "cpp",
+        "shared_mutex": "cpp",
+        "stop_token": "cpp",
+        "hash_set": "cpp",
+        "bitset": "cpp"
     }
 }
