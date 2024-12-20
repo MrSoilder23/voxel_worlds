@@ -22,7 +22,7 @@ struct Settings {
     int mScreenHeight = 480;
 
     float mSpeed = 10.0f;
-    float sensitivity = 10.0f;
+    float mSensitivity = 10.0f;
 };
 Settings gSettings;
 Game gGame;
@@ -41,7 +41,7 @@ void Input(float deltaTime) {
             int mouseX = e.motion.xrel;
             int mouseY = e.motion.yrel;
 
-            gGraphicsApp->mCamera.MouseLook(mouseX, mouseY, gSettings.sensitivity, deltaTime);
+            gGraphicsApp->mCamera.MouseLook(mouseX, mouseY, gSettings.mSensitivity, deltaTime);
         }
     }
 
