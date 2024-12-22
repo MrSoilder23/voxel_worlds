@@ -1,16 +1,35 @@
 #pragma once
+// C++ standard libraries
+#include <memory>
+
 // Third_party libraries
 #include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // Own libraries
-#include "transform.hpp"
+#include "model.hpp"
+#include "texture.hpp"
 
-struct MeshData {
-    GLuint mVertexArrayObject = 0;
-    GLuint mVertexBufferObject = 0;
-    GLuint mVertexBufferObjectColor = 0;
+class MeshData {
+    public:
+        MeshData();
+        ~MeshData();
 
-    GLuint mIndexBufferObject = 0;
+        void Initialize(const std::shared_ptr<Model>& model, const std::shared_ptr<Texture>& texture);
+        void Initialize(const std::shared_ptr<Model>& model, const std::shared_ptr<Texture>& texture, GLfloat position[]);
 
-    Transform mTransform;
+        void Bind();
+        void UnBind();
+
+        void BindVBOPosition();
+
+    private:
+        GLuint mVertexArrayObject = 0;
+
+        GLuint mVertexBufferObject = 0;
+        GLuint mVertexBufferObjectColor = 0;
+        GLuint mVertexBufferObjectPosition = 0;
+
+        GLuint mIndexBufferObject = 0;
 };

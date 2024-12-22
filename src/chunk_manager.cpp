@@ -47,7 +47,8 @@ void ChunkManager::InsertToChunk(std::shared_ptr<Chunk>& chunk, BlockData& block
     auto modelComponent = std::dynamic_pointer_cast<ModelComponent>(modelComponentLocation->second);
 
     positionComponent->SetPosition(x,y,z);
-    utility::MeshTranslate(modelComponent->GetMeshData(), positionComponent->GetPosition());
+
+    utility::MeshTranslate(modelComponent->GetTransform(), positionComponent->GetPosition());
 
     chunk->blocks.push_back(blockComponents);
 }

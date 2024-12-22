@@ -33,6 +33,8 @@ void InitializeBlocks() {
     EntityManager& entityManager = EntityManager::GetInstance();
     ModelManager& modelManager = ModelManager::GetInstance();
 
+    GLfloat defaultPos[] = {0.0f,0.0f,0.0f};
+
     std::string grassBlock = "grass_block";
     entityManager.CreateEntity(grassBlock);
 
@@ -42,7 +44,8 @@ void InitializeBlocks() {
     ModelComponent& grassModel = *entityManager.GetComponent<ModelComponent>(grassBlock);
 
     grassModel.AddModel(modelManager.GetModel("cube"));
-
+    
+    grassModel.GetMeshData().Initialize(grassModel.GetModel(), grassModel.GetTexture());
     
     
     entityManager.InitializeAllComponents();

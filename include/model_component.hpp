@@ -3,6 +3,7 @@
 #include <memory>
 
 // Own libraries
+#include "transform.hpp"
 #include "component.hpp"
 #include "model.hpp"
 #include "texture.hpp"
@@ -12,7 +13,6 @@
 class ModelComponent : public IComponent {
     public: 
         ModelComponent();
-        ~ModelComponent();
 
         void Initialize() override;
         
@@ -22,10 +22,12 @@ class ModelComponent : public IComponent {
         std::shared_ptr<Model>& GetModel();
         std::shared_ptr<Texture>& GetTexture();
         MeshData& GetMeshData();
+        Transform& GetTransform();
 
     private:
         std::shared_ptr<Model> mModel;
         std::shared_ptr<Texture> mTextures;
         MeshData mMeshData;
+        Transform mTransform;
 
 };

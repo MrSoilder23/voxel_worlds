@@ -1,6 +1,10 @@
 #pragma once
 // C++ standard libraries
 #include <memory>
+#include <vector>
+
+// Third_party libraries
+#include <glm/glm.hpp>
 
 // Own libraries
 #include "graphics.hpp"

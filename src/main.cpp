@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
     gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gSettings.mScreenWidth, gSettings.mScreenHeight);
     gGraphicsApp->mCamera.SetProjectionMatrix(glm::radians(45.0f), (float)gSettings.mScreenWidth/(float)gSettings.mScreenHeight, 0.1f);
 
-    shader::CreateGraphicsPipeline(gSettings.mGraphicsShaderProgram, "./shaders/vert.glsl", "./shaders/frag.glsl");
+    shader::CreateGraphicsPipeline(gSettings.mGraphicsShaderProgram, "./shaders/vert2.glsl", "./shaders/frag.glsl");
     gGraphicsApp->mGraphicsPipeline = gSettings.mGraphicsShaderProgram;
     
     InitializeModels();
