@@ -40,6 +40,7 @@ void Camera::MoveForward(float speed, float deltaTime) {
 void Camera::MoveBackward(float speed, float deltaTime) {
     mEye -= mViewDirection * speed * deltaTime;
 }
+
 void Camera::MoveLeft(float speed, float deltaTime) {
     glm::vec3 rightVector = glm::cross(mViewDirection, mUpVector);
     rightVector = glm::normalize(rightVector);
@@ -49,4 +50,11 @@ void Camera::MoveRight(float speed, float deltaTime) {
     glm::vec3 rightVector = glm::cross(mViewDirection, mUpVector);
     rightVector = glm::normalize(rightVector);
     mEye += rightVector * speed * deltaTime;
+}
+
+void Camera::MoveUp(float speed, float deltaTime) {
+    mEye += mUpVector * speed * deltaTime;
+}
+void Camera::MoveDown(float speed, float deltaTime) {
+    mEye -= mUpVector * speed * deltaTime;
 }

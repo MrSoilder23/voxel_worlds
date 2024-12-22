@@ -18,8 +18,12 @@ class Camera {
 
         void MoveForward(float speed, float deltaTime);
         void MoveBackward(float speed, float deltaTime);
+
         void MoveLeft(float speed, float deltaTime);
         void MoveRight(float speed, float deltaTime);
+        
+        void MoveUp(float speed, float deltaTime);
+        void MoveDown(float speed, float deltaTime);
 
     private:
         glm::mat4 mProjectionMatrix;

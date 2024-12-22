@@ -67,6 +67,12 @@ void Input(float deltaTime) {
     if(state[SDL_SCANCODE_D]) {
         gGraphicsApp->mCamera.MoveRight(gSettings.mSpeed, deltaTime);
     }
+    if(state[SDL_SCANCODE_SPACE]) {
+        gGraphicsApp->mCamera.MoveUp(gSettings.mSpeed, deltaTime);
+    }
+    if(state[SDL_SCANCODE_LSHIFT]) {
+        gGraphicsApp->mCamera.MoveDown(gSettings.mSpeed, deltaTime);
+    }
 
 
 }
