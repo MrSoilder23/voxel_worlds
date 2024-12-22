@@ -21,6 +21,7 @@ static bool GLCheckErrorStatus(const char* function, int line) {
 void ChunkRendererSystem::DrawChunk(std::shared_ptr<Chunk>& chunk) {
     
     std::vector<glm::mat4> modelMatrices;
+    modelMatrices.reserve(chunk->blocks.size());
     for(auto it = chunk->blocks.begin(); it != chunk->blocks.end(); ++it) {
         auto modelComponentLocation = it->find(std::type_index(typeid(ModelComponent)));
         if (modelComponentLocation == it->end()) {
@@ -76,8 +77,11 @@ void ChunkRendererSystem::DrawChunk(std::shared_ptr<Chunk>& chunk) {
     glDisableVertexAttribArray(3);
     glDisableVertexAttribArray(4);
     glDisableVertexAttribArray(5);
+    glDeleteBuffers(1, &instanceBuffer);
 
     GLCheck(modelComponent->GetMeshData().UnBind();)
+
+    modelMatrices.clear();
 }
 
 void ChunkRendererSystem::AddGraphicsApp(std::shared_ptr<GraphicsApp>& graphicsApp) {
