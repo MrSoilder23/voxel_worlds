@@ -72,6 +72,9 @@ void Input(float deltaTime) {
 }
 
 void MainLoop(float deltaTime) {
+    float fps = 1.0f/deltaTime;
+    std::cout << "FPS: " << fps << std::endl;
+
     // gRendererSystem.DrawAll();
     auto chunk = gChunkManager.GetChunk(0,0,0);
     gChunkRendererSystem.DrawChunk(chunk);

@@ -21,6 +21,8 @@ class Game {
         void SetEventCallback(const std::function<void(float)>& func);
         void SetUpdateCallback(const std::function<void(float)>& func);
 
+        void TurnDebug();
+
         void RunLoop();
 
         void StopLoop();
@@ -40,4 +42,5 @@ class Game {
         float r,g,b;
 
         bool mQuit;
+        bool mDebug;
 };
