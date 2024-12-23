@@ -7,10 +7,10 @@ layout(location = 2) in mat4 modelMatrix;
 uniform mat4 uViewMatrix;
 uniform mat4 uProjectionMatrix;
 
-out vec3 oVertexColors;
+out vec3 oPosition;
 
 void main() {
-    oVertexColors = position;
+    oPosition = position;
 
     vec4 newPosition = uProjectionMatrix * uViewMatrix * modelMatrix * vec4(position, 1.0f);
 
