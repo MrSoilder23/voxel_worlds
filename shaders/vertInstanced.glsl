@@ -10,7 +10,7 @@ uniform mat4 uProjectionMatrix;
 out vec3 oVertexColors;
 
 void main() {
-    oVertexColors = vertexColors;
+    oVertexColors = position;
 
     vec4 newPosition = uProjectionMatrix * uViewMatrix * modelMatrix * vec4(position, 1.0f);
 

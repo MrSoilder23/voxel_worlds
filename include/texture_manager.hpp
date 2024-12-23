@@ -5,17 +5,17 @@
 #include <unordered_map>
 #include <iostream>
 
-// Own libraries
-#include "texture.hpp"
+// Third_party libraries
+#include <SDL2/SDL_image.h>
 
 class TextureManager {
     public:
         static TextureManager& GetInstance();
         ~TextureManager();
         
-        void CreateNewTexture(const std::string& name, const std::shared_ptr<Texture>& texture);
+        void CreateNewTexture(const std::string& name, SDL_Surface* texture);
 
-        std::shared_ptr<Texture> GetTexture(const std::string& name);
+        SDL_Surface* GetTexture(const std::string& name);
 
     private:
         TextureManager();
@@ -23,5 +23,5 @@ class TextureManager {
         TextureManager operator=(TextureManager const& rhs);
 
     private:
-        std::unordered_map<std::string, std::shared_ptr<Texture>> mTextures;
+        std::unordered_map<std::string, SDL_Surface*> mTextures;
 };

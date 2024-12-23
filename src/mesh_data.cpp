@@ -29,9 +29,13 @@ void MeshData::Initialize(const std::shared_ptr<Model>& model, const std::shared
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBufferObject);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->indexBufferData.size()*sizeof(GLuint), model->indexBufferData.data(), GL_STATIC_DRAW);
 
-    glGenBuffers(1, &mVertexBufferObjectColor);
-    glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferObjectColor);
-    glBufferData(GL_ARRAY_BUFFER, texture->colorPositions.size()*sizeof(GLfloat), texture->colorPositions.data(), GL_STATIC_DRAW);
+    if(texture->textureID) {
+        glBindTexture(GL_TEXTURE_2D, texture->textureID);
+    } else {
+        glGenBuffers(1, &mVertexBufferObjectColor);
+        glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferObjectColor);
+        glBufferData(GL_ARRAY_BUFFER, texture->colorPositions.size()*sizeof(GLfloat), texture->colorPositions.data(), GL_STATIC_DRAW);
+    }
 
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, (void*)0);

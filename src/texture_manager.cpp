@@ -12,13 +12,16 @@ TextureManager& TextureManager::GetInstance() {
 }
 TextureManager::~TextureManager() {
     std::cout << "TextureManager bye bye" << std::endl;
+    for(auto [name, image] : mTextures) {
+        SDL_FreeSurface(image);
+    }
 }
 
-void TextureManager::CreateNewTexture(const std::string& name, const std::shared_ptr<Texture>& texture) {
+void TextureManager::CreateNewTexture(const std::string& name, SDL_Surface* texture) {
     mTextures[name] = texture;
 }
 
-std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& name) {
+SDL_Surface* TextureManager::GetTexture(const std::string& name) {
     auto search = mTextures.find(name);
     if(search != mTextures.end()) {
         return search->second;

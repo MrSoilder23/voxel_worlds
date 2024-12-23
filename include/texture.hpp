@@ -22,10 +22,6 @@ struct Texture {
         };
     }
 
-    inline ~Texture() {
-        SDL_FreeSurface(img);
-    }
-
     std::vector<GLfloat> colorPositions;  
-    SDL_Surface* img;
+    unsigned int textureID;
 };

@@ -31,18 +31,34 @@ void InitializeModels() {
 
 void InitializeTextures() {
     TextureManager& textureManager = TextureManager::GetInstance();
+    BlockTextureCreator& blockTextureCreator = BlockTextureCreator::GetInstance();
 
-    std::shared_ptr<Texture> testTexture = std::make_shared<Texture>();
-    testTexture->img = IMG_Load("./assets/test.png");
+    // std::shared_ptr<Texture> testTexture = std::make_shared<Texture>();
+    SDL_Surface* grassTop = IMG_Load("./assets/grass_top.png");
+    SDL_Surface* grassSide = IMG_Load("./assets/grass_side.png");
+    SDL_Surface* grassBottom = IMG_Load("./assets/grass_bottom.png");
 
-    textureManager.CreateNewTexture("test", testTexture);
+    textureManager.CreateNewTexture("grassTop", grassTop);
+    textureManager.CreateNewTexture("grassSide", grassSide);
+    textureManager.CreateNewTexture("grassBottom", grassBottom);
+
+    std::vector<SDL_Surface*> faces;
+    faces.reserve(6); // Right Left Top Bottom Back Front
+    faces.push_back(textureManager.GetTexture("grassSide"));
+    faces.push_back(textureManager.GetTexture("grassSide"));
+    faces.push_back(textureManager.GetTexture("grassTop"));
+    faces.push_back(textureManager.GetTexture("grassBottom"));
+    faces.push_back(textureManager.GetTexture("grassSide"));
+    faces.push_back(textureManager.GetTexture("grassSide"));
+
+    blockTextureCreator.CreateTexture("test_block", faces);
 
 }
 
 void InitializeBlocks() {
     EntityManager& entityManager = EntityManager::GetInstance();
     ModelManager& modelManager = ModelManager::GetInstance();
-    TextureManager& TextureManager = TextureManager::GetInstance();
+    BlockTextureCreator& blockTextureCreator = BlockTextureCreator::GetInstance();
 
     GLfloat defaultPos[] = {0.0f,0.0f,0.0f};
 
@@ -55,7 +71,10 @@ void InitializeBlocks() {
     ModelComponent& grassModel = *entityManager.GetComponent<ModelComponent>(grassBlock);
 
     grassModel.AddModel(modelManager.GetModel("cube"));
-    grassModel.AddTextures(TextureManager.GetTexture("test"));
+
+    std::shared_ptr<Texture> grassBlockTexture = std::make_shared<Texture>();
+    grassBlockTexture->textureID = blockTextureCreator.GetTexture("test_block");
+    grassModel.AddTextures(grassBlockTexture);
     
     grassModel.GetMeshData().Initialize(grassModel.GetModel(), grassModel.GetTexture());
     
