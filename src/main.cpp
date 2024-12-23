@@ -95,6 +95,7 @@ int main(int argc, char* argv[]) {
     gGraphicsApp->mGraphicsPipeline = gSettings.mGraphicsShaderProgram;
     
     InitializeModels();
+    InitializeTextures();
     InitializeBlocks();
 
     auto chunk = gChunkManager.CreateChunk(0,0,0);

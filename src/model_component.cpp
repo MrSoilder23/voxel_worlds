@@ -2,19 +2,6 @@
 #include <iostream>
 
 ModelComponent::ModelComponent() {
-    // Default textures
-    mTextures = std::make_shared<Texture>(std::vector<GLfloat>{
-         1.0f,  0.0f, 0.0f,
-         0.0f,  1.0f, 0.0f,
-         0.0f,  0.0f, 1.0f,
-         0.0f,  0.0f, 1.0f,
-
-         1.0f,  0.0f, 0.0f,
-         0.0f,  0.0f, 1.0f,
-         0.0f,  1.0f, 0.0f,
-         1.0f,  0.0f, 0.0f,
-    });
-         
 }
 
 void ModelComponent::Initialize() {

@@ -29,9 +29,20 @@ void InitializeModels() {
     
 }
 
+void InitializeTextures() {
+    TextureManager& textureManager = TextureManager::GetInstance();
+
+    std::shared_ptr<Texture> testTexture = std::make_shared<Texture>();
+    testTexture->img = IMG_Load("./assets/test.png");
+
+    textureManager.CreateNewTexture("test", testTexture);
+
+}
+
 void InitializeBlocks() {
     EntityManager& entityManager = EntityManager::GetInstance();
     ModelManager& modelManager = ModelManager::GetInstance();
+    TextureManager& TextureManager = TextureManager::GetInstance();
 
     GLfloat defaultPos[] = {0.0f,0.0f,0.0f};
 
@@ -44,6 +55,7 @@ void InitializeBlocks() {
     ModelComponent& grassModel = *entityManager.GetComponent<ModelComponent>(grassBlock);
 
     grassModel.AddModel(modelManager.GetModel("cube"));
+    grassModel.AddTextures(TextureManager.GetTexture("test"));
     
     grassModel.GetMeshData().Initialize(grassModel.GetModel(), grassModel.GetTexture());
     

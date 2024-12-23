@@ -10,6 +10,7 @@ Game::~Game() {
     SDL_DestroyWindow(mWindow);
     mWindow = nullptr;
 
+    IMG_Quit();
     SDL_Quit();
 }
 
@@ -47,6 +48,11 @@ void Game::InitializeProgram(std::string name, int x, int y, int w, int h) {
 
     if(!gladLoadGLLoader(SDL_GL_GetProcAddress)) {
         std::cerr << "Glad was not initialized" << std::endl;
+        exit(1);
+    }
+
+    if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) == 0) {
+        printf("Failed to initialize SDL_image: %s\n", IMG_GetError());
         exit(1);
     }
 
