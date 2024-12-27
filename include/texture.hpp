@@ -9,19 +9,38 @@
 
 struct Texture {
     inline Texture() {
-        colorPositions = {
-            1.0f,  0.0f, 0.0f,
-            0.0f,  1.0f, 0.0f,
-            0.0f,  0.0f, 1.0f,
-            0.0f,  0.0f, 1.0f,
+        texturePositions = {
+            1.0f,  0.0f,
+            0.0f,  1.0f,
+            0.0f,  0.0f,
+            0.0f,  0.0f,
 
-            1.0f,  0.0f, 0.0f,
-            0.0f,  0.0f, 1.0f,
-            0.0f,  1.0f, 0.0f,
-            1.0f,  0.0f, 0.0f,
+            1.0f,  0.0f,
+            0.0f,  0.0f,
+            0.0f,  1.0f,
+            1.0f,  0.0f,
+
+            1.0f,  0.0f,
+            0.0f,  1.0f,
+            0.0f,  0.0f,
+            0.0f,  0.0f,
+
+            1.0f,  0.0f,
+            0.0f,  0.0f,
+            0.0f,  1.0f,
+            1.0f,  0.0f,
+
+            1.0f,  0.0f,
+            0.0f,  1.0f,
+            0.0f,  0.0f,
+            0.0f,  0.0f,
+
+            1.0f,  0.0f,
+            0.0f,  0.0f,
+            0.0f,  1.0f,
+            1.0f,  0.0f,
         };
     }
 
-    std::vector<GLfloat> colorPositions;  
-    unsigned int textureID;
+    std::vector<GLfloat> texturePositions;
 };

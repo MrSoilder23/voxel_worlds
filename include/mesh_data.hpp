@@ -10,6 +10,8 @@
 // Own libraries
 #include "model.hpp"
 #include "texture.hpp"
+#include "graphics.hpp"
+#include "shader.hpp"
 
 class MeshData {
     public:
@@ -17,7 +19,6 @@ class MeshData {
         ~MeshData();
 
         void Initialize(const std::shared_ptr<Model>& model, const std::shared_ptr<Texture>& texture);
-        void Initialize(const std::shared_ptr<Model>& model, const std::shared_ptr<Texture>& texture, GLfloat position[]);
 
         void Bind();
         void UnBind();

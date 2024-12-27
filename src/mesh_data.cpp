@@ -29,55 +29,16 @@ void MeshData::Initialize(const std::shared_ptr<Model>& model, const std::shared
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBufferObject);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->indexBufferData.size()*sizeof(GLuint), model->indexBufferData.data(), GL_STATIC_DRAW);
 
-    if(texture->textureID) {
-        glBindTexture(GL_TEXTURE_2D, texture->textureID);
-    } else {
-        glGenBuffers(1, &mVertexBufferObjectColor);
-        glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferObjectColor);
-        glBufferData(GL_ARRAY_BUFFER, texture->colorPositions.size()*sizeof(GLfloat), texture->colorPositions.data(), GL_STATIC_DRAW);
-    }
-
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, (void*)0);
-
-    glBindVertexArray(0);
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-}
-void MeshData::Initialize(const std::shared_ptr<Model>& model, const std::shared_ptr<Texture>& texture, GLfloat position[]) {
-    glGenVertexArrays(1, &mVertexArrayObject);
-    glBindVertexArray(mVertexArrayObject);
-
-    glGenBuffers(1, &mVertexBufferObject);
-    glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, model->vertexPositions.size()*sizeof(GLfloat), model->vertexPositions.data(), GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, (void*)0);
-
-    glGenBuffers(1, &mIndexBufferObject);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->indexBufferData.size()*sizeof(GLuint), model->indexBufferData.data(), GL_STATIC_DRAW);
-
     glGenBuffers(1, &mVertexBufferObjectColor);
     glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferObjectColor);
-    glBufferData(GL_ARRAY_BUFFER, texture->colorPositions.size()*sizeof(GLfloat), texture->colorPositions.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, texture->texturePositions.size()*sizeof(GLfloat), texture->texturePositions.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, (void*)0);
-
-    glGenBuffers(1, &mVertexBufferObjectPosition);
-    glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferObjectPosition);
-    glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(GLfloat), position, GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 3, GL_FLOAT, false, 0, (void*)0);
+    glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, (void*)0);
 
     glBindVertexArray(0);
-
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(2);
 }
 
 void MeshData::Bind() {

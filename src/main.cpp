@@ -93,17 +93,27 @@ int main(int argc, char* argv[]) {
 
     shader::CreateGraphicsPipeline(gSettings.mGraphicsShaderProgram, "./shaders/vertInstanced.glsl", "./shaders/frag.glsl");
     gGraphicsApp->mGraphicsPipeline = gSettings.mGraphicsShaderProgram;
-    
+
     InitializeModels();
     InitializeTextures();
     InitializeBlocks();
 
+    // gGame.TurnDebug();
+
     auto chunk = gChunkManager.CreateChunk(0,0,0);
     auto grass_block = gEntityManager.GetEntity("grass_block");
+    auto dirt_block = gEntityManager.GetEntity("dirt_block");
     for(float i = 0; i <= 32; i++) {
         for(float j = 0; j <= 32; j++) {
             for(float k = 0; k <= 32; k++) {
-                gChunkManager.InsertToChunk(chunk, grass_block, i, k, j);
+                if(k == 32) {
+                    gChunkManager.InsertToChunk(chunk, grass_block, i, k, j);
+                } else {
+                    // gChunkManager.InsertToChunk(chunk, dirt_block, i, k, j);
+
+                }
+            
+                
 
             }
         }
