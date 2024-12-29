@@ -1,12 +1,18 @@
-#version 410 core
+#version 450 core
+#extension GL_ARB_gpu_shader_int64 : enable
+#extension GL_ARB_bindless_texture : require
+
+layout(std430, binding = 0) buffer TextureHandles {
+    uint64_t textureHandles[];
+};
 
 in vec3 oPosition;
-in vec2 oTexCoord;
+flat in int instanceID;
 
-uniform sampler2D uTextureAtlas;
-
-out vec4 color;
+out vec4 color; 
 
 void main() { 
-    color = texture(uTextureAtlas, oTexCoord);
+    samplerCube myCubeTexture = samplerCube(textureHandles[instanceID]);
+
+    color = texture(myCubeTexture, oPosition);
 }

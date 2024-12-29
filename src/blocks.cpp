@@ -65,38 +65,40 @@ void InitializeTextures() {
     TextureManager& textureManager = TextureManager::GetInstance();
     BlockTextureCreator& blockTextureCreator = BlockTextureCreator::GetInstance();
 
-    SDL_Surface* textureAtlas = IMG_Load("./assets/atlas.png");
+    SDL_Surface* grassTop = IMG_Load("./assets/grass_top.png");
+    SDL_Surface* grassSide = IMG_Load("./assets/grass_side.png");
+    SDL_Surface* grassBottom = IMG_Load("./assets/grass_bottom.png");
 
-    textureManager.CreateNewTexture("atlas", textureAtlas);
-    blockTextureCreator.CreateTexture("atlas", textureAtlas);
+    textureManager.CreateNewTexture("grassTop", grassTop);
+    textureManager.CreateNewTexture("grassSide", grassSide);
+    textureManager.CreateNewTexture("grassBottom", grassBottom);
 
-    // Front,Back,Left,Right,Top,Bot
-    std::vector<GLfloat> grassCoordinates = {
-        0.0f,32.0f, 32.0f,64.0f, // Side
-        0.0f,32.0f, 32.0f,64.0f, // Side
-        0.0f,32.0f, 32.0f,64.0f, // Side
-        0.0f,32.0f, 32.0f,64.0f, // Side
-        0.0f,32.0f, 0.0f,32.0f,  // Top
-        0.0f,32.0f, 64.0f,96.0f, // Bot
-    };
-    std::vector<GLfloat> dirtCoordinates = {
-        0.0f,32.0f, 64.0f,96.0f,
-        0.0f,32.0f, 64.0f,96.0f,
-        0.0f,32.0f, 64.0f,96.0f,
-        0.0f,32.0f, 64.0f,96.0f,
-        0.0f,32.0f, 64.0f,96.0f,
-        0.0f,32.0f, 64.0f,96.0f,
-    };
+    std::vector<SDL_Surface*> grassBlockFaces;
+    grassBlockFaces.reserve(6); // Right Left Top Bottom Back Front
+    grassBlockFaces.push_back(textureManager.GetTexture("grassSide"));
+    grassBlockFaces.push_back(textureManager.GetTexture("grassSide"));
+    grassBlockFaces.push_back(textureManager.GetTexture("grassTop"));
+    grassBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
+    grassBlockFaces.push_back(textureManager.GetTexture("grassSide"));
+    grassBlockFaces.push_back(textureManager.GetTexture("grassSide"));
 
-    blockTextureCreator.CreateBlockFromAtlas("grass_block", "atlas", grassCoordinates);
-    blockTextureCreator.CreateBlockFromAtlas("dirt_block", "atlas", dirtCoordinates);
+    std::vector<SDL_Surface*> dirtBlockFaces;
+    dirtBlockFaces.reserve(6); // Right Left Top Bottom Back Front
+    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
+    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
+    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
+    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
+    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
+    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
+
+    blockTextureCreator.CreateTexture("grass_block", grassBlockFaces);
+    blockTextureCreator.CreateTexture("dirt_block", dirtBlockFaces);
 }
 
 void InitializeBlocks() {
     EntityManager& entityManager = EntityManager::GetInstance();
     ModelManager& modelManager = ModelManager::GetInstance();
     BlockTextureCreator& blockTextureCreator = BlockTextureCreator::GetInstance();
-    TextureManager& textureManager = TextureManager::GetInstance();
 
     GLfloat defaultPos[] = {0.0f,0.0f,0.0f};
 
@@ -110,7 +112,7 @@ void InitializeBlocks() {
     grassModel.AddModel(modelManager.GetModel("cube"));
 
     std::shared_ptr<Texture> grassBlockTexture = std::make_shared<Texture>();
-    grassBlockTexture->texturePositions = blockTextureCreator.GetBlockFromAtlas("grass_block");
+    grassBlockTexture->textureHandle = blockTextureCreator.GetTexture("grass_block");
     grassModel.AddTextures(grassBlockTexture);
 
 
@@ -124,7 +126,7 @@ void InitializeBlocks() {
     dirtModel.AddModel(modelManager.GetModel("cube"));
 
     std::shared_ptr<Texture> dirtBlockTexture = std::make_shared<Texture>();
-    dirtBlockTexture->texturePositions = blockTextureCreator.GetBlockFromAtlas("dirt_block");
+    dirtBlockTexture->textureHandle = blockTextureCreator.GetTexture("dirt_block");
     dirtModel.AddTextures(dirtBlockTexture);
 
 

@@ -98,8 +98,6 @@ int main(int argc, char* argv[]) {
     InitializeTextures();
     InitializeBlocks();
 
-    // gGame.TurnDebug();
-
     auto chunk = gChunkManager.CreateChunk(0,0,0);
     auto grass_block = gEntityManager.GetEntity("grass_block");
     auto dirt_block = gEntityManager.GetEntity("dirt_block");
@@ -109,8 +107,8 @@ int main(int argc, char* argv[]) {
                 if(k == 32) {
                     gChunkManager.InsertToChunk(chunk, grass_block, i, k, j);
                 } else {
-                    // gChunkManager.InsertToChunk(chunk, dirt_block, i, k, j);
-
+                    gChunkManager.InsertToChunk(chunk, dirt_block, i, k, j);
+                    
                 }
             
                 
