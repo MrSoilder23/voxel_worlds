@@ -48,12 +48,12 @@ void InitializeModels() {
 
     };
     block->indexBufferData = {
-        0,1,2, 3,2,1, // FrontFace
-        6,7,4, 7,5,4, // BackFace
-        8,9,10, 11,8,10, // LeftFace
+        0,1,2, 3,2,1,       // FrontFace
+        6,7,4, 7,5,4,       // BackFace
+        8,9,10, 11,8,10,    // LeftFace
         12,13,14, 15,12,14, // RightFace
         16,17,18, 19,16,18, // TopFace
-        22,21,20, 22,20,23 // BotFace
+        22,21,20, 22,20,23  // BotFace
 
     };
 
