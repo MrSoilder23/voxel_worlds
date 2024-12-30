@@ -8,57 +8,29 @@ void InitializeModels() {
     std::shared_ptr<Model> block = std::make_shared<Model>();
 
     block->vertexPositions = {
-
         // FrontFace
-        -0.5f, -0.5f,  0.5f, // BotLeftVertex       0
-         0.5f, -0.5f,  0.5f, // BotRightVertex      1
-        -0.5f,  0.5f,  0.5f, // TopLeftVertex       2
-         0.5f,  0.5f,  0.5f, // TopRightVertex      3
+        -0.5f, -0.5f,  0.5f, // BotLeftVertex
+         0.5f, -0.5f,  0.5f, // BotRightVertex
+        -0.5f,  0.5f,  0.5f, // TopLeftVertex
+         0.5f,  0.5f,  0.5f, // TopRightVertex
 
         // BackFace
-        -0.5f, -0.5f, -0.5f, // BackBotLeft         4
-         0.5f, -0.5f, -0.5f, // BackBotRight        5
-        -0.5f,  0.5f, -0.5f, // BackTopLeft         6
-         0.5f,  0.5f, -0.5f, // BackTopRight        7
-
-        // LeftFace
-        -0.5f,  0.5f, -0.5f, //                     8
-        -0.5f, -0.5f, -0.5f, //                     9
-        -0.5f, -0.5f,  0.5f, //                     10
-        -0.5f,  0.5f,  0.5f, //                     11
-
-        // RightFace
-         0.5f,  0.5f,  0.5f, //                     12
-         0.5f, -0.5f,  0.5f, //                     13
-         0.5f, -0.5f, -0.5f, //                     14
-         0.5f,  0.5f, -0.5f, //                     15
-
-        // TopFace
-        -0.5f,  0.5f, -0.5f, //                     16
-        -0.5f,  0.5f,  0.5f, //                     17
-         0.5f,  0.5f,  0.5f, //                     18
-         0.5f,  0.5f, -0.5f, //                     19
-
-        // BotFace
-        -0.5f, -0.5f, -0.5f, //                     20
-        -0.5f, -0.5f,  0.5f, //                     21
-         0.5f, -0.5f,  0.5f, //                     22
-         0.5f, -0.5f, -0.5f, //                     23
-
-
+        -0.5f, -0.5f, -0.5f, // BackBotLeft
+         0.5f, -0.5f, -0.5f, // BackBotRight
+        -0.5f,  0.5f, -0.5f, // BackTopLeft
+         0.5f,  0.5f, -0.5f, // BackTopRight
     };
-    block->indexBufferData = {
-        0,1,2, 3,2,1,       // FrontFace
-        6,7,4, 7,5,4,       // BackFace
-        8,9,10, 11,8,10,    // LeftFace
-        12,13,14, 15,12,14, // RightFace
-        16,17,18, 19,16,18, // TopFace
-        22,21,20, 22,20,23  // BotFace
 
+    block->indexBufferData = {
+        0,1,2, 3,2,1, // FrontFace
+        0,4,5, 1,0,5, // BottomFace
+        6,7,4, 7,5,4, // BackFace
+        6,2,7, 3,7,2, // TopFace
+        3,1,7, 5,7,1, // RightFace
+        6,4,2, 0,2,4, // LeftFace
     };
 
     modelManager.CreateNewModel("cube", block);
-    
 }
 
 void InitializeTextures() {
