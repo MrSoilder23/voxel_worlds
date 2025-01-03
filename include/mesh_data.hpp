@@ -18,10 +18,12 @@ class MeshData {
         MeshData();
         ~MeshData();
 
-        void Initialize(const std::shared_ptr<Model>& model, const std::shared_ptr<Texture>& texture);
+        void Initialize(const Model& model);
 
         void Bind();
         void UnBind();
+
+        GLuint& GetVAO();
 
         void BindVBOPosition();
 

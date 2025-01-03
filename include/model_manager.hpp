@@ -13,9 +13,9 @@ class ModelManager {
         static ModelManager& GetInstance();
         ~ModelManager();
         
-        void CreateNewModel(const std::string& name, const std::shared_ptr<Model>& model);
+        void CreateNewModel(const std::string& name, const Model& model);
 
-        std::shared_ptr<Model> GetModel(const std::string& name);
+        Model GetModel(const std::string& name);
 
     private:
         ModelManager();
@@ -23,5 +23,5 @@ class ModelManager {
         ModelManager operator=(ModelManager const& rhs);
 
     private:
-        std::unordered_map<std::string, std::shared_ptr<Model>> mModels;
+        std::unordered_map<std::string, Model> mModels;
 };

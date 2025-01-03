@@ -14,6 +14,7 @@ class RendererSystem {
         ~RendererSystem();
 
         void AddGraphicsApp(std::shared_ptr<GraphicsApp> graphicsApp);
+        void DrawChunk();
 
         static RendererSystem& GetInstance();
 

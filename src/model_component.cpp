@@ -7,14 +7,14 @@ ModelComponent::ModelComponent() {
 void ModelComponent::Initialize() {
 }
 
-void ModelComponent::AddModel(const std::shared_ptr<Model>& model) {
+void ModelComponent::AddModel(const Model& model) {
     mModel = model;
 }
 void ModelComponent::AddTextures(const std::shared_ptr<Texture>& textures) {
     mTextures = textures;
 }
 
-std::shared_ptr<Model>& ModelComponent::GetModel() {
+Model& ModelComponent::GetModel() {
     return mModel;
 }
 std::shared_ptr<Texture>& ModelComponent::GetTexture() {

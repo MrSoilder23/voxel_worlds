@@ -26,7 +26,10 @@ class ChunkManager {
         std::shared_ptr<Chunk>& CreateChunk(int x, int y, int z);
         std::shared_ptr<Chunk> GetChunk(int x, int y, int z);
         
-        void InsertToChunk(std::shared_ptr<Chunk>& chunk, BlockData& block, float x, float y, float z);
+        void InsertToChunk(std::shared_ptr<Chunk>& chunk, BlockData& block, int x, int y, int z);
+        void InitializeChunk(int x, int y, int z);
+
+        BlockData GetBlock(std::shared_ptr<Chunk>& chunk, int x, int y, int z);
 
         static ChunkManager& GetInstance();
 

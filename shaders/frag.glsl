@@ -7,12 +7,13 @@ layout(std430, binding = 0) buffer TextureHandles {
 };
 
 in vec3 oPosition;
-flat in int instanceID;
+flat in uint oTexID;
+in vec3 oTexCoords;
 
 out vec4 color; 
 
 void main() { 
-    samplerCube myCubeTexture = samplerCube(textureHandles[instanceID]);
+    samplerCube cubeTexture = samplerCube(textureHandles[oTexID]);
 
-    color = texture(myCubeTexture, oPosition);
+    color = texture(cubeTexture, oTexCoords);
 }

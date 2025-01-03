@@ -19,6 +19,7 @@ class BlockTextureCreator {
         void CreateTexture(std::string name, std::vector<SDL_Surface*> faces);
 
         GLuint64& GetTexture(std::string name);
+        std::unordered_map<std::string, GLuint64>& GetTextures();
 
         static BlockTextureCreator& GetInstance();
         

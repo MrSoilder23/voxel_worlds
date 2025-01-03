@@ -19,16 +19,16 @@ ModelManager::~ModelManager() {
     std::cout << "ModelManager bye bye" << std::endl;
 }
 
-void ModelManager::CreateNewModel(const std::string& name, const std::shared_ptr<Model>& model) {
+void ModelManager::CreateNewModel(const std::string& name, const Model& model) {
     mModels[name] = model;
 }
 
-std::shared_ptr<Model> ModelManager::GetModel(const std::string& name) {
+Model ModelManager::GetModel(const std::string& name) {
     auto search = mModels.find(name);
     if(search != mModels.end()) {
         return search->second;
     } else {
         std::cerr << "Could not find the model: " << name << std::endl;
-        return nullptr;
+        return Model();
     }
 }

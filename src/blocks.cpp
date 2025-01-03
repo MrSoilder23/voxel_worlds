@@ -5,30 +5,32 @@
 void InitializeModels() {
     ModelManager& modelManager = ModelManager::GetInstance();
 
-    std::shared_ptr<Model> block = std::make_shared<Model>();
+    Model block;
 
-    block->vertexPositions = {
+    block.vertexPositions = {
         // FrontFace
-        -0.5f, -0.5f,  0.5f, // BotLeftVertex
-         0.5f, -0.5f,  0.5f, // BotRightVertex
-        -0.5f,  0.5f,  0.5f, // TopLeftVertex
-         0.5f,  0.5f,  0.5f, // TopRightVertex
+        glm::vec3(-0.5f, -0.5f,  0.5f), // BotLeftVertex
+        glm::vec3( 0.5f, -0.5f,  0.5f), // BotRightVertex
+        glm::vec3(-0.5f,  0.5f,  0.5f), // TopLeftVertex
+        glm::vec3( 0.5f,  0.5f,  0.5f), // TopRightVertex
 
         // BackFace
-        -0.5f, -0.5f, -0.5f, // BackBotLeft
-         0.5f, -0.5f, -0.5f, // BackBotRight
-        -0.5f,  0.5f, -0.5f, // BackTopLeft
-         0.5f,  0.5f, -0.5f, // BackTopRight
+        glm::vec3(-0.5f, -0.5f, -0.5f), // BackBotLeft
+        glm::vec3( 0.5f, -0.5f, -0.5f), // BackBotRight
+        glm::vec3(-0.5f,  0.5f, -0.5f), // BackTopLeft
+        glm::vec3( 0.5f,  0.5f, -0.5f), // BackTopRight
     };
 
-    block->indexBufferData = {
-        0,1,2, 3,2,1, // FrontFace
-        0,4,5, 1,0,5, // BottomFace
-        6,7,4, 7,5,4, // BackFace
-        6,2,7, 3,7,2, // TopFace
-        3,1,7, 5,7,1, // RightFace
-        6,4,2, 0,2,4, // LeftFace
-    };
+    // block.indexBufferData = {
+    //     0,1,2, 3,2,1, // FrontFace
+    //     0,4,5, 1,0,5, // BottomFace
+    //     6,7,4, 7,5,4, // BackFace
+    //     6,2,7, 3,7,2, // TopFace
+    //     3,1,7, 5,7,1, // RightFace
+    //     6,4,2, 0,2,4, // LeftFace
+    // };
+
+    block.indexBufferData = {};
 
     modelManager.CreateNewModel("cube", block);
 }
@@ -102,8 +104,8 @@ void InitializeBlocks() {
     dirtModel.AddTextures(dirtBlockTexture);
 
 
-    grassModel.GetMeshData().Initialize(grassModel.GetModel(), grassModel.GetTexture());
-    dirtModel.GetMeshData().Initialize(dirtModel.GetModel(), dirtModel.GetTexture());
+    grassModel.GetMeshData().Initialize(grassModel.GetModel());
+    dirtModel.GetMeshData().Initialize(dirtModel.GetModel());
     
     entityManager.InitializeAllComponents();
 }

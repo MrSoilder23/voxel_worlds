@@ -81,7 +81,7 @@ void MainLoop(float deltaTime) {
     float fps = 1.0f/deltaTime;
     std::cout << "FPS: " << fps << std::endl;
 
-    // gRendererSystem.DrawAll();
+    // gRendererSystem.DrawChunk();
     auto chunk = gChunkManager.GetChunk(0,0,0);
     gChunkRendererSystem.DrawChunk(chunk);
 }
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
     gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gSettings.mScreenWidth, gSettings.mScreenHeight);
     gGraphicsApp->mCamera.SetProjectionMatrix(glm::radians(45.0f), (float)gSettings.mScreenWidth/(float)gSettings.mScreenHeight, 0.1f);
 
-    shader::CreateGraphicsPipeline(gSettings.mGraphicsShaderProgram, "./shaders/vertInstanced.glsl", "./shaders/frag.glsl");
+    shader::CreateGraphicsPipeline(gSettings.mGraphicsShaderProgram, "./shaders/vert.glsl", "./shaders/frag.glsl");
     gGraphicsApp->mGraphicsPipeline = gSettings.mGraphicsShaderProgram;
 
     InitializeModels();
@@ -114,7 +114,9 @@ int main(int argc, char* argv[]) {
             }
         }
     }
-    
+
+    // utility::MeshTranslate(gChunkManager.GetChunk(0,0,0)->GetTransform(), glm::vec3(0.0f,0.0f,-32.0f));
+    gChunkManager.InitializeChunk(0,0,0);
     // gRendererSystem.AddGraphicsApp(gGraphicsApp);
     gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);
 

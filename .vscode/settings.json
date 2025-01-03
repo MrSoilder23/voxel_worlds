@@ -79,6 +79,10 @@
         "shared_mutex": "cpp",
         "stop_token": "cpp",
         "hash_set": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "sstream": "cpp",
+        "xtree": "cpp",
+        "set": "cpp",
+        "map": "cpp"
     }
 }

@@ -29,10 +29,14 @@ void BlockTextureCreator::CreateTexture(std::string name, std::vector<SDL_Surfac
 
     mCubeTexture[name] = glGetTextureHandleARB(texture);
     glMakeTextureHandleResidentARB(mCubeTexture[name]);
+    std::cout << name << ": " << mCubeTexture[name] << std::endl;
 }
 
 GLuint64& BlockTextureCreator::GetTexture(std::string name) {
     return mCubeTexture[name];
+}
+std::unordered_map<std::string, GLuint64>& BlockTextureCreator::GetTextures() {
+    return mCubeTexture;
 }
 
 BlockTextureCreator& BlockTextureCreator::GetInstance() {
