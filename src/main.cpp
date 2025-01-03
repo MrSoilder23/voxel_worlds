@@ -84,6 +84,8 @@ void MainLoop(float deltaTime) {
     // gRendererSystem.DrawChunk();
     auto chunk = gChunkManager.GetChunk(0,0,0);
     gChunkRendererSystem.DrawChunk(chunk);
+    auto chunk1 = gChunkManager.GetChunk(0,0,-1);
+    gChunkRendererSystem.DrawChunk(chunk1);
 }
 
 int main(int argc, char* argv[]) {
@@ -99,6 +101,7 @@ int main(int argc, char* argv[]) {
     InitializeBlocks();
 
     auto chunk = gChunkManager.CreateChunk(0,0,0);
+    auto chunk1 = gChunkManager.CreateChunk(0,0,-1);
     auto grass_block = gEntityManager.GetEntity("grass_block");
     auto dirt_block = gEntityManager.GetEntity("dirt_block");
     for(float i = 0; i < 32; i++) {
@@ -106,8 +109,10 @@ int main(int argc, char* argv[]) {
             for(float k = 0; k < 32; k++) {
                 if(k == 31) {
                     gChunkManager.InsertToChunk(chunk, grass_block, i, k, j);
+                    gChunkManager.InsertToChunk(chunk1, grass_block, i, k, j);
                 } else {
                     gChunkManager.InsertToChunk(chunk, dirt_block, i, k, j);
+                    gChunkManager.InsertToChunk(chunk1, dirt_block, i, k, j);
                     
                 }
             
@@ -115,8 +120,9 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    // utility::MeshTranslate(gChunkManager.GetChunk(0,0,0)->GetTransform(), glm::vec3(0.0f,0.0f,-32.0f));
+    utility::MeshTranslate(gChunkManager.GetChunk(0,0,-1)->GetTransform(), glm::vec3(0.0f,0.0f,-32.0f));
     gChunkManager.InitializeChunk(0,0,0);
+    gChunkManager.InitializeChunk(0,0,-1);
     // gRendererSystem.AddGraphicsApp(gGraphicsApp);
     gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);
 
