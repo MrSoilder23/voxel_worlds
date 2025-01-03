@@ -23,7 +23,7 @@ struct Settings {
     int mScreenWidth = 640;
     int mScreenHeight = 480;
 
-    float mSpeed = 10.0f;
+    float mSpeed = 20.0f;
     float mSensitivity = 10.0f;
 };
 Settings gSettings;
