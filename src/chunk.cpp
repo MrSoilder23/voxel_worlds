@@ -34,6 +34,10 @@ void Chunk::CreateVao() {
                 std::vector<glm::vec3>& vertexPositions = modelComponent->GetModel().vertexPositions;
                 std::vector<GLuint>& indexBufferData = modelComponent->GetModel().indexBufferData;
 
+                if(indexBufferData.size() == 0) {
+                    continue;
+                }
+
                 size_t modelSize = mModel->vertexPositions.size();
 
                 for (size_t i = 0; i < vertexPositions.size(); i++) {

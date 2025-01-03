@@ -74,22 +74,22 @@ void ChunkManager::InitializeChunk(int x, int y, int z) {
 
                 std::vector<GLuint> indexes;
 
-                if(GetBlock(chunk ,blockX+1, blockY, blockZ).empty()) {
+                if(GetBlock(x,y,z ,blockX+1, blockY, blockZ).empty()) {
                     indexes.insert(indexes.end(), {3,1,7, 5,7,1}); // RightFace
                 }
-                if(GetBlock(chunk ,blockX-1, blockY, blockZ).empty()) {
+                if(GetBlock(x,y,z ,blockX-1, blockY, blockZ).empty()) {
                     indexes.insert(indexes.end(), {6,4,2, 0,2,4}); // LeftFace
                 }
-                if(GetBlock(chunk ,blockX, blockY+1, blockZ).empty()) {
+                if(GetBlock(x,y,z ,blockX, blockY+1, blockZ).empty()) {
                     indexes.insert(indexes.end(), {6,2,7, 3,7,2}); // TopFace
                 }
-                if(GetBlock(chunk ,blockX, blockY-1, blockZ).empty()) {
+                if(GetBlock(x,y,z ,blockX, blockY-1, blockZ).empty()) {
                     indexes.insert(indexes.end(), {0,4,5, 1,0,5}); // BotFace
                 }
-                if(GetBlock(chunk ,blockX, blockY, blockZ+1).empty()) {
+                if(GetBlock(x,y,z ,blockX, blockY, blockZ+1).empty()) {
                     indexes.insert(indexes.end(), {0,1,2, 3,2,1}); // FrontFace
                 }
-                if(GetBlock(chunk ,blockX, blockY, blockZ-1).empty()) {
+                if(GetBlock(x,y,z ,blockX, blockY, blockZ-1).empty()) {
                     indexes.insert(indexes.end(), {6,7,4, 7,5,4}); // BackFace
                 }
 
@@ -102,11 +102,33 @@ void ChunkManager::InitializeChunk(int x, int y, int z) {
     chunk->CreateVao();
 }
 
-BlockData ChunkManager::GetBlock(std::shared_ptr<Chunk>& chunk, int x, int y, int z) {
-    if(x < 0 || y < 0 || z < 0 || x > 31 || y > 31 || z > 31) {
-        return {};
+BlockData ChunkManager::GetBlock(int chunkX, int chunkY, int chunkZ, int x, int y, int z) {
+    if(x < 0) {
+        x = 31;
+        chunkX = chunkX-1;
+    } else if(x > 31) {
+        x = 0;
+        chunkX = chunkX+1;
+    } else if(y < 0) {
+        y = 31;
+        chunkY = chunkY-1;
+    } else if(y > 31) {
+        y = 0;
+        chunkY = chunkY+1;
+    } else if(z < 0) {
+        z = 31;
+        chunkZ = chunkZ-1;
+    } else if(z > 31) {
+        z = 0;
+        chunkZ = chunkZ+1;
     }
-    return chunk->blocks[x][y][z];
+    ChunkKey key = std::make_tuple(chunkX,chunkY,chunkZ);
+
+    if(chunks.find(key) == chunks.end()) {
+        return {}; 
+    }
+
+    return chunks[key]->blocks[x][y][z];
 }
 
 ChunkManager& ChunkManager::GetInstance() {
