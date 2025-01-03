@@ -22,6 +22,8 @@ class Game {
         void SetEventCallback(const std::function<void(float)>& func);
         void SetUpdateCallback(const std::function<void(float)>& func);
 
+        SDL_Window* GetWindow();
+
         void TurnDebug();
 
         void RunLoop();

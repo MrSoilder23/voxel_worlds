@@ -79,7 +79,8 @@ void Input(float deltaTime) {
 
 void MainLoop(float deltaTime) {
     float fps = 1.0f/deltaTime;
-    std::cout << "FPS: " << fps << std::endl;
+    std::string newTitle = "Giera, FPS: " + std::to_string(fps);
+    SDL_SetWindowTitle(gGame.GetWindow(), newTitle.data());
 
     // gRendererSystem.DrawChunk();
     auto chunk = gChunkManager.GetChunk(0,0,0);

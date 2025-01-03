@@ -71,6 +71,10 @@ void Game::SetUpdateCallback(const std::function<void(float)>& func) {
     mUpdateCallback = func;
 }
 
+SDL_Window* Game::GetWindow() {
+    return mWindow;
+}
+
 void Game::TurnDebug() {
     mDebug = true;
 }
