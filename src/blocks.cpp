@@ -102,10 +102,6 @@ void InitializeBlocks() {
     std::shared_ptr<Texture> dirtBlockTexture = std::make_shared<Texture>();
     dirtBlockTexture->textureHandle = blockTextureCreator.GetTexture("dirt_block");
     dirtModel.AddTextures(dirtBlockTexture);
-
-
-    grassModel.GetMeshData().Initialize(grassModel.GetModel());
-    dirtModel.GetMeshData().Initialize(dirtModel.GetModel());
     
     entityManager.InitializeAllComponents();
 }
