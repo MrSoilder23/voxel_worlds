@@ -29,10 +29,10 @@ void Chunk::CreateVao() {
 
                 auto modelComponent = std::dynamic_pointer_cast<ModelComponent>(modelComponentLocation->second);
 
-                glm::mat4& transform = modelComponent->GetTransform().mModelMatrix;
-
                 std::vector<glm::vec3>& vertexPositions = modelComponent->GetModel().vertexPositions;
                 std::vector<GLuint>& indexBufferData = modelComponent->GetModel().indexBufferData;
+
+                glm::mat4& transform = modelComponent->GetTransform().mModelMatrix;
 
                 if(indexBufferData.size() == 0) {
                     continue;
@@ -51,11 +51,7 @@ void Chunk::CreateVao() {
                 }
 
                 mTexturePositions.insert(mTexturePositions.end(), vertexPositions.begin(), vertexPositions.end());
-
-                for(size_t i = 0; i < vertexPositions.size(); i++) {
-                    mTextureID.push_back(mTextures[modelComponent->GetTexture()->textureHandle]);
-                }
-                
+                mTextureID.insert(mTextureID.end(), vertexPositions.size(), mTextures[modelComponent->GetTexture()->textureHandle]);
             }
         }
     }
