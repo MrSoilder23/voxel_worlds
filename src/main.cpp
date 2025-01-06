@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <random>
 
 // Third_party libraries
 #include <SDL2/SDL.h>
@@ -88,6 +89,31 @@ void MainLoop(float deltaTime) {
     gChunkRendererSystem.DrawChunk(chunk1);
 }
 
+glm::vec2 Gradient(unsigned int seed) {
+    std::mt19937 mersenneEngine{seed};
+    std::uniform_real_distribution<> dist{0, 2*M_PI};
+    
+    float a = dist(mersenneEngine);
+    return glm::vec2(std::cos(a), std::sin(a));
+}
+
+float PerlinNoise(float x, float y, unsigned int seed) {
+    float dot1 = glm::dot(Gradient(seed), glm::vec2(x,y));
+    float dot2 = glm::dot(Gradient(seed), glm::vec2(1.0-x,y));
+    float dot3 = glm::dot(Gradient(seed), glm::vec2(x,1.0-y));
+    float dot4 = glm::dot(Gradient(seed), glm::vec2(1.0-x,1.0-y));
+
+    x = 6*std::pow(x,5) - 15*std::pow(x,4) + 10 * std::pow(x,3);
+    y = 6*std::pow(y,5) - 15*std::pow(y,4) + 10 * std::pow(y,3);
+
+    float AB = dot1 + x * (dot2-dot1);
+    float CD = dot3 + x * (dot4-dot3);
+
+    float result = AB + y * (CD-AB);
+
+    return (result + 1.0f) / 2.0f;
+}
+
 int main(int argc, char* argv[]) {
 
     gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gSettings.mScreenWidth, gSettings.mScreenHeight);
@@ -100,14 +126,18 @@ int main(int argc, char* argv[]) {
     InitializeTextures();
     InitializeBlocks();
 
+    static std::random_device rndDevice;
+    unsigned int seed = rndDevice();
+
     auto chunk = gChunkManager.CreateChunk(0,0,0);
     auto chunk1 = gChunkManager.CreateChunk(0,0,-1);
     auto grass_block = gEntityManager.GetEntity("grass_block");
     auto dirt_block = gEntityManager.GetEntity("dirt_block");
     for(float i = 0; i < 32; i++) {
         for(float j = 0; j < 32; j++) {
-            for(float k = 0; k < 32; k++) {
-                if(k == 31) {
+            float height = std::round(PerlinNoise(i/32.0, j/32.0, seed) * 32.0);
+            for(float k = 0; k < height; k++) {
+                if(k == height-1) {
                     gChunkManager.InsertToChunk(chunk, grass_block, i, k, j);
                     gChunkManager.InsertToChunk(chunk1, grass_block, i, k, j);
                 } else {
@@ -119,6 +149,9 @@ int main(int argc, char* argv[]) {
             }
         }
     }
+
+    std::cout << "PerlinNoise: " << std::round(PerlinNoise(16.0/32.0, 32.0/32.0, seed) * 32.0) << std::endl;
+    std::cout << "PerlinNoise: " << std::round(PerlinNoise(16.0/32.0, 32.0/32.0, seed) * 32.0) << std::endl;
 
     utility::MeshTranslate(gChunkManager.GetChunk(0,0,-1)->GetTransform(), glm::vec3(0.0f,0.0f,-32.0f));
     gChunkManager.InitializeChunk(0,0,0);
