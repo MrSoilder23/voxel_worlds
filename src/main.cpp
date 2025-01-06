@@ -97,11 +97,11 @@ glm::vec2 Gradient(int x, int y, unsigned int seed) {
     return glm::vec2(std::cos(a), std::sin(a));
 }
 
-float PerlinNoise(float x, float y, unsigned int seed) {
-    float dot1 = glm::dot(Gradient(0,0, seed), glm::vec2(x,y));
-    float dot2 = glm::dot(Gradient(1,0, seed), glm::vec2(1.0-x,y));
-    float dot3 = glm::dot(Gradient(0,1, seed), glm::vec2(x,1.0-y));
-    float dot4 = glm::dot(Gradient(1,1, seed), glm::vec2(1.0-x,1.0-y));
+float PerlinNoise(int chunkX, int chunkY,float x, float y, unsigned int seed) {
+    float dot1 = glm::dot(Gradient(chunkX,chunkY, seed), glm::vec2(x,y));
+    float dot2 = glm::dot(Gradient(chunkX+1,chunkY, seed), glm::vec2(1.0-x,y));
+    float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x,1.0-y));
+    float dot4 = glm::dot(Gradient(chunkX+1,chunkY+1, seed), glm::vec2(1.0-x,1.0-y));
 
     x = 6*std::pow(x,5) - 15*std::pow(x,4) + 10 * std::pow(x,3);
     y = 6*std::pow(y,5) - 15*std::pow(y,4) + 10 * std::pow(y,3);
@@ -135,13 +135,25 @@ int main(int argc, char* argv[]) {
     auto dirt_block = gEntityManager.GetEntity("dirt_block");
     for(float i = 0; i < 32; i++) {
         for(float j = 0; j < 32; j++) {
-            float height = std::round(PerlinNoise(i/32.0, j/32.0, seed) * 32.0);
+            float height = std::round(PerlinNoise(0,0 ,i/32.0, j/32.0, seed) * 32.0);
             for(float k = 0; k < height; k++) {
                 if(k == height-1) {
                     gChunkManager.InsertToChunk(chunk, grass_block, i, k, j);
-                    gChunkManager.InsertToChunk(chunk1, grass_block, i, k, j);
                 } else {
                     gChunkManager.InsertToChunk(chunk, dirt_block, i, k, j);
+                    
+                }
+            
+            }
+        }
+    }
+    for(float i = 0; i < 32; i++) {
+        for(float j = 0; j < 32; j++) {
+            float height = std::round(PerlinNoise(0,-1 ,i/32.0, j/32.0, seed) * 32.0);
+            for(float k = 0; k < height; k++) {
+                if(k == height-1) {
+                    gChunkManager.InsertToChunk(chunk1, grass_block, i, k, j);
+                } else {
                     gChunkManager.InsertToChunk(chunk1, dirt_block, i, k, j);
                     
                 }
@@ -150,8 +162,8 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    std::cout << "PerlinNoise: " << std::round(PerlinNoise(16.0/32.0, 32.0/32.0, seed) * 32.0) << std::endl;
-    std::cout << "PerlinNoise: " << std::round(PerlinNoise(16.0/32.0, 32.0/32.0, seed) * 32.0) << std::endl;
+    std::cout << "PerlinNoise: " << std::round(PerlinNoise(0,0, 16.0/32.0, 32.0/32.0, seed) * 32.0) << std::endl;
+    std::cout << "PerlinNoise: " << std::round(PerlinNoise(0,0, 16.0/32.0, 32.0/32.0, seed) * 32.0) << std::endl;
 
     utility::MeshTranslate(gChunkManager.GetChunk(0,0,-1)->GetTransform(), glm::vec3(0.0f,0.0f,-32.0f));
     gChunkManager.InitializeChunk(0,0,0);
