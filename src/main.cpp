@@ -89,8 +89,8 @@ void MainLoop(float deltaTime) {
     gChunkRendererSystem.DrawChunk(chunk1);
 }
 
-glm::vec2 Gradient(unsigned int seed) {
-    std::mt19937 mersenneEngine{seed};
+glm::vec2 Gradient(int x, int y, unsigned int seed) {
+    std::mt19937 mersenneEngine{seed + x * 985712 ^ y * 5019858};
     std::uniform_real_distribution<> dist{0, 2*M_PI};
     
     float a = dist(mersenneEngine);
@@ -98,10 +98,10 @@ glm::vec2 Gradient(unsigned int seed) {
 }
 
 float PerlinNoise(float x, float y, unsigned int seed) {
-    float dot1 = glm::dot(Gradient(seed), glm::vec2(x,y));
-    float dot2 = glm::dot(Gradient(seed), glm::vec2(1.0-x,y));
-    float dot3 = glm::dot(Gradient(seed), glm::vec2(x,1.0-y));
-    float dot4 = glm::dot(Gradient(seed), glm::vec2(1.0-x,1.0-y));
+    float dot1 = glm::dot(Gradient(0,0, seed), glm::vec2(x,y));
+    float dot2 = glm::dot(Gradient(1,0, seed), glm::vec2(1.0-x,y));
+    float dot3 = glm::dot(Gradient(0,1, seed), glm::vec2(x,1.0-y));
+    float dot4 = glm::dot(Gradient(1,1, seed), glm::vec2(1.0-x,1.0-y));
 
     x = 6*std::pow(x,5) - 15*std::pow(x,4) + 10 * std::pow(x,3);
     y = 6*std::pow(y,5) - 15*std::pow(y,4) + 10 * std::pow(y,3);
