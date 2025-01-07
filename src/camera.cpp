@@ -18,6 +18,10 @@ glm::mat4 Camera::GetViewMatrix() const{
     return glm::lookAt(mEye, mEye + mViewDirection, mUpVector);
 }
 
+glm::vec3 Camera::GetEye() const{
+    return mEye;
+}
+
 void Camera::MouseLook(float mouseDeltaX, float mouseDeltaY, float sensitivity, float deltaTime) {
     float yaw = -glm::radians(mouseDeltaX * sensitivity * deltaTime);
     float pitch = -glm::radians(mouseDeltaY * sensitivity * deltaTime);

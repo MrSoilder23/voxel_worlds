@@ -13,6 +13,7 @@ class Camera {
         glm::mat4 GetProjectionMatrix() const;
         
         glm::mat4 GetViewMatrix() const;
+        glm::vec3 GetEye() const;
 
         void MouseLook(float mouseDeltaX, float mouseDeltaY,float sensitivity, float deltaTime);
 

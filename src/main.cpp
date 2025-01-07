@@ -17,6 +17,7 @@
 #include "blocks.hpp"
 #include "chunk_manager.hpp"
 #include "chunk_renderer_system.hpp"
+#include "chunk_system.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
@@ -36,6 +37,8 @@ EntityManager& gEntityManager = EntityManager::GetInstance();
 RendererSystem& gRendererSystem = RendererSystem::GetInstance();
 ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
 ChunkManager& gChunkManager = ChunkManager::GetInstance();
+
+ChunkSystem chunkSystem;
 
 void Input(float deltaTime) {
     SDL_Event e;
@@ -83,35 +86,11 @@ void MainLoop(float deltaTime) {
     std::string newTitle = "Giera, FPS: " + std::to_string(fps);
     SDL_SetWindowTitle(gGame.GetWindow(), newTitle.data());
 
-    auto chunk = gChunkManager.GetChunk(0,0,0);
-    gChunkRendererSystem.DrawChunk(chunk);
-    auto chunk1 = gChunkManager.GetChunk(0,0,-1);
-    gChunkRendererSystem.DrawChunk(chunk1);
-}
-
-glm::vec2 Gradient(int x, int y, unsigned int seed) {
-    std::mt19937 mersenneEngine{seed + x * 985712 ^ y * 5019858};
-    std::uniform_real_distribution<> dist{0, 2*M_PI};
-    
-    float a = dist(mersenneEngine);
-    return glm::vec2(std::cos(a), std::sin(a));
-}
-
-float PerlinNoise(int chunkX, int chunkY,float x, float y, unsigned int seed) {
-    float dot1 = glm::dot(Gradient(chunkX,chunkY, seed), glm::vec2(x,y));
-    float dot2 = glm::dot(Gradient(chunkX+1,chunkY, seed), glm::vec2(1.0-x,y));
-    float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x,1.0-y));
-    float dot4 = glm::dot(Gradient(chunkX+1,chunkY+1, seed), glm::vec2(1.0-x,1.0-y));
-
-    x = 6*std::pow(x,5) - 15*std::pow(x,4) + 10 * std::pow(x,3);
-    y = 6*std::pow(y,5) - 15*std::pow(y,4) + 10 * std::pow(y,3);
-
-    float AB = dot1 + x * (dot2-dot1);
-    float CD = dot3 + x * (dot4-dot3);
-
-    float result = AB + y * (CD-AB);
-
-    return (result + 1.0f) / 2.0f;
+    // auto chunk = gChunkManager.GetChunk(0,0,0);
+    // gChunkRendererSystem.DrawChunk(chunk);
+    chunkSystem.SetCameraPosition(gGraphicsApp->mCamera.GetEye());
+    chunkSystem.GenerateWorld();
+    chunkSystem.DrawChunks();
 }
 
 int main(int argc, char* argv[]) {
@@ -129,45 +108,30 @@ int main(int argc, char* argv[]) {
     static std::random_device rndDevice;
     unsigned int seed = rndDevice();
 
-    auto chunk = gChunkManager.CreateChunk(0,0,0);
-    auto chunk1 = gChunkManager.CreateChunk(0,0,-1);
-    auto grass_block = gEntityManager.GetEntity("grass_block");
-    auto dirt_block = gEntityManager.GetEntity("dirt_block");
-    for(float i = 0; i < 32; i++) {
-        for(float j = 0; j < 32; j++) {
-            float height = std::round(PerlinNoise(0,0 ,i/32.0, j/32.0, seed) * 32.0);
-            for(float k = 0; k < height; k++) {
-                if(k == height-1) {
-                    gChunkManager.InsertToChunk(chunk, grass_block, i, k, j);
-                } else {
-                    gChunkManager.InsertToChunk(chunk, dirt_block, i, k, j);
-                    
-                }
-            
-            }
-        }
-    }
-    for(float i = 0; i < 32; i++) {
-        for(float j = 0; j < 32; j++) {
-            float height = std::round(PerlinNoise(0,-1 ,i/32.0, j/32.0, seed) * 32.0);
-            for(float k = 0; k < height; k++) {
-                if(k == height-1) {
-                    gChunkManager.InsertToChunk(chunk1, grass_block, i, k, j);
-                } else {
-                    gChunkManager.InsertToChunk(chunk1, dirt_block, i, k, j);
-                    
-                }
-            
-            }
-        }
-    }
+    chunkSystem.SetWorldSeed(seed);
+    chunkSystem.SetRenderDistance(6.0);
 
-    std::cout << "PerlinNoise: " << std::round(PerlinNoise(0,0, 16.0/32.0, 32.0/32.0, seed) * 32.0) << std::endl;
-    std::cout << "PerlinNoise: " << std::round(PerlinNoise(0,0, 16.0/32.0, 32.0/32.0, seed) * 32.0) << std::endl;
+    // auto chunk = gChunkManager.CreateChunk(0,0,0);
+    // auto grass_block = gEntityManager.GetEntity("grass_block");
+    // auto dirt_block = gEntityManager.GetEntity("dirt_block");
+    // for(float i = 0; i < 32; i++) {
+    //     for(float j = 0; j < 32; j++) {
+    //         float height = std::round(PerlinNoise(0,0 ,i/32.0, j/32.0, seed) * 32.0);
+    //         for(float k = 0; k < height; k++) {
+    //             if(k == height-1) {
+    //                 gChunkManager.InsertToChunk(chunk, grass_block, i, k, j);
+    //             } else {
+    //                 gChunkManager.InsertToChunk(chunk, dirt_block, i, k, j);
+                    
+    //             }
+            
+    //         }
+    //     }
+    // }
 
-    utility::MeshTranslate(gChunkManager.GetChunk(0,0,-1)->GetTransform(), glm::vec3(0.0f,0.0f,-32.0f));
+
     gChunkManager.InitializeChunk(0,0,0);
-    gChunkManager.InitializeChunk(0,0,-1);
+
     // gRendererSystem.AddGraphicsApp(gGraphicsApp);
     gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);
 
