@@ -7,8 +7,8 @@ void ChunkSystem::GenerateWorld() {
     float cameraX = std::floor(mCameraPosition.x/32.0);
     float cameraZ = std::floor(mCameraPosition.z/32.0);
 
-    auto grass_block = gEntityManager.GetEntity("grass_block");
-    auto dirt_block = gEntityManager.GetEntity("dirt_block");
+    static auto& grass_block = gEntityManager.GetEntity("grass_block");
+    static auto& dirt_block = gEntityManager.GetEntity("dirt_block");
 
     for (int xChunkPos = cameraX - mRenderDistance; xChunkPos < cameraX + mRenderDistance; xChunkPos++) {
         for (int zChunkPos = cameraZ - mRenderDistance; zChunkPos < cameraZ + mRenderDistance; zChunkPos++) {
@@ -17,8 +17,8 @@ void ChunkSystem::GenerateWorld() {
             }
 
             auto chunk = gChunkManager.CreateChunk(xChunkPos,0,zChunkPos);
-            utility::MeshTranslate(chunk->GetTransform(), glm::vec3((float)xChunkPos*32.0, 0,(float)zChunkPos*32.0));
-
+            utility::MeshTranslate(chunk->GetTransform(), glm::vec3(static_cast<float>(xChunkPos)*32.0, 0,static_cast<float>(zChunkPos)*32.0));
+            
             for(float x = 0; x < 32; x++) {
                 for(float z = 0; z < 32; z++) {
                     float height = std::round(utility::PerlinNoise(xChunkPos,zChunkPos , x/32.0, z/32.0, mSeed) * 32.0);
@@ -28,18 +28,19 @@ void ChunkSystem::GenerateWorld() {
                             gChunkManager.InsertToChunk(chunk, grass_block, x, y, z);
                         } else {
                             gChunkManager.InsertToChunk(chunk, dirt_block, x, y, z);
-                            
                         }
-                    
                     }
                 }
             }
+            // To-Do pre generate chunks and then initialize chunk in the middle
             gChunkManager.InitializeChunk(xChunkPos,0,zChunkPos);
         }
     }
-    
-
 }
+void ChunkSystem::GenerateChunk() {
+    
+}
+
 void ChunkSystem::DrawChunks() {
     ChunkManager& gChunkManager = ChunkManager::GetInstance();
     ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
@@ -49,7 +50,7 @@ void ChunkSystem::DrawChunks() {
 
     for (int xChunkPos = cameraX - mRenderDistance; xChunkPos < cameraX + mRenderDistance; xChunkPos++) {
         for (int zChunkPos = cameraZ - mRenderDistance; zChunkPos < cameraZ + mRenderDistance; zChunkPos++) {
-            auto chunk = gChunkManager.GetChunk((int)xChunkPos, 0, (int)zChunkPos);
+            auto chunk = gChunkManager.GetChunk(static_cast<int>(xChunkPos), 0, static_cast<int>(zChunkPos));
             gChunkRendererSystem.DrawChunk(chunk);
         }
     }

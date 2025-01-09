@@ -35,8 +35,10 @@ class Chunk {
     private:
         std::shared_ptr<Model> mModel;
         std::map<GLuint64, GLuint> mTextures;
-        std::vector<GLuint> mTextureID;
+        
         std::vector<glm::vec3> mTexturePositions;
+        std::vector<GLuint> mTextureID;
+
         MeshData mMeshData;
         Transform mTransform;
 };

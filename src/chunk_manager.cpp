@@ -1,5 +1,4 @@
 #include "chunk_manager.hpp"
-#include <iostream>
 
 ChunkManager::~ChunkManager() {
     std::cout << "Chunk manager bye bye" << std::endl;
@@ -24,33 +23,43 @@ std::shared_ptr<Chunk> ChunkManager::GetChunk(int x, int y, int z) {
 void ChunkManager::InsertToChunk(std::shared_ptr<Chunk>& chunk, BlockData& block, int x, int y, int z) {
     BlockData blockComponents;
 
+    static const std::type_index positionType = std::type_index(typeid(PositionComponent));
+    static const std::type_index modelType = std::type_index(typeid(ModelComponent));
+
     for(const auto& [type, component] : block) {
-        
-        if(type == std::type_index(typeid(PositionComponent))) {
-            auto positionComponent = std::dynamic_pointer_cast<PositionComponent>(component);
-            blockComponents[type] = std::make_shared<PositionComponent>(*positionComponent);
-            
-        } else if(type == std::type_index(typeid(ModelComponent))) {
-            auto modelComponent = std::dynamic_pointer_cast<ModelComponent>(component);
-            blockComponents[type] = std::make_shared<ModelComponent>(*modelComponent);
-
+        if(type == positionType) {
+            blockComponents.emplace(type, std::make_shared<PositionComponent>(
+                                    *std::static_pointer_cast<PositionComponent>(component)));
+        } else if(type == modelType) {
+            blockComponents.emplace(type, std::make_shared<ModelComponent>(
+                                    *std::static_pointer_cast<ModelComponent>(component)));
         } else {
-            blockComponents[type] = component;
+            blockComponents.emplace(type, component);
         }
-
     }
 
-    auto positionComponentLocation = blockComponents.find(std::type_index(typeid(PositionComponent)));
-    auto modelComponentLocation = blockComponents.find(std::type_index(typeid(ModelComponent)));
+    auto positionComponentLocation = blockComponents.find(positionType);
+    auto modelComponentLocation = blockComponents.find(modelType);
 
-    auto positionComponent = std::dynamic_pointer_cast<PositionComponent>(positionComponentLocation->second);
-    auto modelComponent = std::dynamic_pointer_cast<ModelComponent>(modelComponentLocation->second);
+    auto positionComponent = std::static_pointer_cast<PositionComponent>(positionComponentLocation->second);
+    auto modelComponent = std::static_pointer_cast<ModelComponent>(modelComponentLocation->second);
 
-    positionComponent->SetPosition((float)x,(float)y,(float)z);
+    positionComponent->SetPosition(static_cast<float>(x),
+                                   static_cast<float>(y),
+                                   static_cast<float>(z));
+    
+    Transform& transform = modelComponent->GetTransform();
+    Model& model = modelComponent->GetModel();
 
-    utility::MeshTranslate(modelComponent->GetTransform(), positionComponent->GetPosition());
+    utility::MeshTranslate(transform, static_cast<float>(x),
+                                      static_cast<float>(y),
+                                      static_cast<float>(z));
 
-    chunk->blocks[x][y][z] = blockComponents;
+    for (size_t i = 0; i < model.vertexPositions.size(); i++) {
+        model.vertexPositions[i] = glm::vec3(transform.mModelMatrix * glm::vec4(model.vertexPositions[i], 1.0f));
+    }
+    
+    chunk->blocks[x][y][z] = std::move(blockComponents);
 }
 
 void ChunkManager::InitializeChunk(int x, int y, int z) {
@@ -70,7 +79,7 @@ void ChunkManager::InitializeChunk(int x, int y, int z) {
                 if(modelComponentLocation == chunk->blocks[blockX][blockY][blockZ].end()) {
                     continue;
                 }
-                auto modelComponent = std::dynamic_pointer_cast<ModelComponent>(modelComponentLocation->second);
+                auto modelComponent = std::static_pointer_cast<ModelComponent>(modelComponentLocation->second);
 
                 std::vector<GLuint> indexes;
 
@@ -93,8 +102,7 @@ void ChunkManager::InitializeChunk(int x, int y, int z) {
                     indexes.insert(indexes.end(), {6,7,4, 7,5,4}); // BackFace
                 }
 
-                modelComponent->GetModel().indexBufferData.insert(modelComponent->GetModel().indexBufferData.end(), indexes.begin(), indexes.end());
-                indexes.clear();
+                modelComponent->GetModel().indexBufferData = std::move(indexes);
             }
         }
     }
@@ -105,22 +113,22 @@ void ChunkManager::InitializeChunk(int x, int y, int z) {
 BlockData ChunkManager::GetBlock(int chunkX, int chunkY, int chunkZ, int x, int y, int z) {
     if(x < 0) {
         x = 31;
-        chunkX = chunkX-1;
+        chunkX--;
     } else if(x > 31) {
         x = 0;
-        chunkX = chunkX+1;
+        chunkX++;
     } else if(y < 0) {
         y = 31;
-        chunkY = chunkY-1;
+        chunkY--;
     } else if(y > 31) {
         y = 0;
-        chunkY = chunkY+1;
+        chunkY++;
     } else if(z < 0) {
         z = 31;
-        chunkZ = chunkZ-1;
+        chunkZ--;
     } else if(z > 31) {
         z = 0;
-        chunkZ = chunkZ+1;
+        chunkZ++;
     }
     ChunkKey key = std::make_tuple(chunkX,chunkY,chunkZ);
 

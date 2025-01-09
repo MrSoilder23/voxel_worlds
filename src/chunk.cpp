@@ -1,10 +1,16 @@
 #include "chunk.hpp"
+#include <chrono>
 
 Chunk::Chunk() {
     mModel = std::make_shared<Model>();
 }
 
 void Chunk::CreateVao() {
+    mModel->vertexPositions.clear();
+    mModel->indexBufferData.clear();
+    mTexturePositions.clear();
+    mTextureID.clear();
+
     BlockTextureCreator& blockTexture = BlockTextureCreator::GetInstance();
     auto& textureList = blockTexture.GetTextures();
 
@@ -19,6 +25,20 @@ void Chunk::CreateVao() {
         mTextures[handle] = index++;
     }
 
+    std::vector<glm::vec3> textureBox = {
+        // FrontFace
+        glm::vec3(-0.5f, -0.5f,  0.5f), // BotLeftVertex
+        glm::vec3( 0.5f, -0.5f,  0.5f), // BotRightVertex
+        glm::vec3(-0.5f,  0.5f,  0.5f), // TopLeftVertex
+        glm::vec3( 0.5f,  0.5f,  0.5f), // TopRightVertex
+
+        // BackFace
+        glm::vec3(-0.5f, -0.5f, -0.5f), // BackBotLeft
+        glm::vec3( 0.5f, -0.5f, -0.5f), // BackBotRight
+        glm::vec3(-0.5f,  0.5f, -0.5f), // BackTopLeft
+        glm::vec3( 0.5f,  0.5f, -0.5f), // BackTopRight
+    };
+
     for (int x = 0; x < 32; x++) {
         for (int y = 0; y < 32; y++) {
             for (int z = 0; z < 32; z++) {
@@ -27,31 +47,26 @@ void Chunk::CreateVao() {
                     continue;
                 }
 
-                auto modelComponent = std::dynamic_pointer_cast<ModelComponent>(modelComponentLocation->second);
-
-                std::vector<glm::vec3>& vertexPositions = modelComponent->GetModel().vertexPositions;
-                std::vector<GLuint>& indexBufferData = modelComponent->GetModel().indexBufferData;
-
-                glm::mat4& transform = modelComponent->GetTransform().mModelMatrix;
+                auto modelComponent = std::static_pointer_cast<ModelComponent>(modelComponentLocation->second);
+                const std::vector<GLuint>& indexBufferData = modelComponent->GetModel().indexBufferData;
 
                 if(indexBufferData.size() == 0) {
                     continue;
                 }
 
-                size_t modelSize = mModel->vertexPositions.size();
-
-                for (size_t i = 0; i < vertexPositions.size(); i++) {
-                    glm::vec3 vertex = glm::vec3(transform * glm::vec4(vertexPositions[i], 1.0f));
-                    
-                    mModel->vertexPositions.push_back(vertex);
-                }
+                const std::vector<glm::vec3>& vertexPositions = modelComponent->GetModel().vertexPositions;
+                
+                const size_t modelSize = mModel->vertexPositions.size();
+                
+                mModel->vertexPositions.insert(mModel->vertexPositions.end(), vertexPositions.begin(), vertexPositions.end());
 
                 for (size_t i = 0; i < indexBufferData.size(); i++) {
-                    mModel->indexBufferData.push_back(indexBufferData[i] + (modelSize));
+                    mModel->indexBufferData.emplace_back(indexBufferData[i] + (modelSize));
                 }
 
-                mTexturePositions.insert(mTexturePositions.end(), vertexPositions.begin(), vertexPositions.end());
-                mTextureID.insert(mTextureID.end(), vertexPositions.size(), mTextures[modelComponent->GetTexture()->textureHandle]);
+                auto textureIDs = modelComponent->GetTexture()->textureHandle;
+                mTexturePositions.insert(mTexturePositions.end(), textureBox.begin(), textureBox.end());
+                mTextureID.insert(mTextureID.end(), textureBox.size(), mTextures[textureIDs]);
             }
         }
     }
@@ -99,6 +114,7 @@ void Chunk::CreateVao() {
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
+
 }
 std::shared_ptr<Model>& Chunk::GetModel() {
     return mModel;

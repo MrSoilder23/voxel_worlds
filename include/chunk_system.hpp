@@ -1,4 +1,7 @@
 #pragma once
+// C++ standard libraries
+#include <thread>
+
 // Third_party libraries
 #include <glm/glm.hpp>
 
@@ -11,6 +14,7 @@
 class ChunkSystem {
     public:
         void GenerateWorld();
+        void GenerateChunk();
         void DrawChunks();
 
         void SetRenderDistance(int renderDistance);
