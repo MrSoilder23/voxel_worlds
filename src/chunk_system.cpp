@@ -15,10 +15,8 @@ void ChunkSystem::GenerateWorld() {
     static int max = 1;
     static bool side = true;
 
-
     int coordinatesX = cameraX + loopX;
     int coordinatesZ = cameraZ + loopZ;
-    std::cout << "LoopX: " << coordinatesX << " " << "LoopZ: " << coordinatesZ << std::endl;
 
     if(gChunkManager.GetChunk(coordinatesX,0,coordinatesZ) == nullptr) {
         auto chunk = gChunkManager.CreateChunk(coordinatesX,0,coordinatesZ);
