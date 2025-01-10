@@ -10,33 +10,70 @@ void ChunkSystem::GenerateWorld() {
     static auto& grass_block = gEntityManager.GetEntity("grass_block");
     static auto& dirt_block = gEntityManager.GetEntity("dirt_block");
 
-    for (int xChunkPos = cameraX - mRenderDistance; xChunkPos < cameraX + mRenderDistance; xChunkPos++) {
-        for (int zChunkPos = cameraZ - mRenderDistance; zChunkPos < cameraZ + mRenderDistance; zChunkPos++) {
-            if(gChunkManager.GetChunk(xChunkPos,0,zChunkPos) != nullptr) {
-                continue;
-            }
+    static int loopX = 0;
+    static int loopZ = 0;
+    static int max = 1;
+    static bool side = true;
 
-            auto chunk = gChunkManager.CreateChunk(xChunkPos,0,zChunkPos);
-            utility::MeshTranslate(chunk->GetTransform(), glm::vec3(static_cast<float>(xChunkPos)*32.0, 0,static_cast<float>(zChunkPos)*32.0));
-            
-            for(float x = 0; x < 32; x++) {
-                for(float z = 0; z < 32; z++) {
-                    float height = std::round(utility::PerlinNoise(xChunkPos,zChunkPos , x/32.0, z/32.0, mSeed) * 32.0);
 
-                    for(float y = 0; y < height; y++) {
-                        if(y == height-1) {
-                            gChunkManager.InsertToChunk(chunk, grass_block, x, y, z);
-                        } else {
-                            gChunkManager.InsertToChunk(chunk, dirt_block, x, y, z);
-                        }
+    int coordinatesX = cameraX + loopX;
+    int coordinatesZ = cameraZ + loopZ;
+    std::cout << "LoopX: " << coordinatesX << " " << "LoopZ: " << coordinatesZ << std::endl;
+
+    if(gChunkManager.GetChunk(coordinatesX,0,coordinatesZ) == nullptr) {
+        auto chunk = gChunkManager.CreateChunk(coordinatesX,0,coordinatesZ);
+        utility::MeshTranslate(chunk->GetTransform(), glm::vec3(static_cast<float>(coordinatesX)*32.0, 0,static_cast<float>(coordinatesZ)*32.0));
+        
+        for(float x = 0; x < 32; x++) {
+            for(float z = 0; z < 32; z++) {
+                float height = std::round(utility::PerlinNoise(coordinatesX,coordinatesZ , x/32.0, z/32.0, mSeed) * 32.0);
+
+                for(float y = 0; y < height; y++) {
+                    if(y == height-1) {
+                        gChunkManager.InsertToChunk(chunk, grass_block, x, y, z);
+                    } else {
+                        gChunkManager.InsertToChunk(chunk, dirt_block, x, y, z);
                     }
                 }
             }
-            // To-Do pre generate chunks and then initialize chunk in the middle
-            gChunkManager.InitializeChunk(xChunkPos,0,zChunkPos);
+        }
+        // To-Do pre generate chunks and then initialize chunk in the middle
+        gChunkManager.InitializeChunk(coordinatesX,0,coordinatesZ);
+    }
+
+    // Spiral loop
+    if(side) {
+        if(loopX < max) {
+            loopX++;
+        } else if(loopZ < max){
+            loopZ++;
+        }
+        if(loopZ == max) {
+            side = false;
+        }
+    } else {
+        if(loopX > -max) {
+            loopX--;
+        } else if(loopZ > -max){
+            loopZ--;
+        } 
+        if(loopZ == -max) {
+            side = true;
         }
     }
+
+    if(max <= mRenderDistance+1) {
+        if(loopZ == -max) {
+            max++;
+        } 
+    } else if(loopX >= max){
+        loopX = 0;
+        loopZ = 0;
+        max = 1;
+        side = true;
+    }
 }
+
 void ChunkSystem::GenerateChunk() {
     
 }
@@ -50,11 +87,10 @@ void ChunkSystem::DrawChunks() {
 
     for (int xChunkPos = cameraX - mRenderDistance; xChunkPos < cameraX + mRenderDistance; xChunkPos++) {
         for (int zChunkPos = cameraZ - mRenderDistance; zChunkPos < cameraZ + mRenderDistance; zChunkPos++) {
-            auto chunk = gChunkManager.GetChunk(static_cast<int>(xChunkPos), 0, static_cast<int>(zChunkPos));
+            auto chunk = gChunkManager.GetChunk(xChunkPos, 0, zChunkPos);
             gChunkRendererSystem.DrawChunk(chunk);
         }
     }
-
 }
 
 void ChunkSystem::SetRenderDistance(int renderDistance) {

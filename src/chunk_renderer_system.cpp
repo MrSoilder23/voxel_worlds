@@ -19,6 +19,10 @@ static bool GLCheckErrorStatus(const char* function, int line) {
 
 
 void ChunkRendererSystem::DrawChunk(std::shared_ptr<Chunk>& chunk) {
+
+    if(!chunk) {
+        return;
+    }
     
     glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
