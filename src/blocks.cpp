@@ -83,11 +83,11 @@ void InitializeBlocks() {
     entityManager.AddComponent<PositionComponent>(grassBlock);
 
     ModelComponent& grassModel = *entityManager.GetComponent<ModelComponent>(grassBlock);
-    grassModel.AddModel(modelManager.GetModel("cube"));
+    grassModel.mModel = modelManager.GetModel("cube");
 
     std::shared_ptr<Texture> grassBlockTexture = std::make_shared<Texture>();
     grassBlockTexture->textureHandle = blockTextureCreator.GetTexture("grass_block");
-    grassModel.AddTextures(grassBlockTexture);
+    grassModel.mTextures = grassBlockTexture;
 
 
     // Dirt Block
@@ -97,11 +97,11 @@ void InitializeBlocks() {
     entityManager.AddComponent<PositionComponent>(dirtBlock);
 
     ModelComponent& dirtModel = *entityManager.GetComponent<ModelComponent>(dirtBlock);
-    dirtModel.AddModel(modelManager.GetModel("cube"));
+    dirtModel.mModel = modelManager.GetModel("cube");
 
     std::shared_ptr<Texture> dirtBlockTexture = std::make_shared<Texture>();
     dirtBlockTexture->textureHandle = blockTextureCreator.GetTexture("dirt_block");
-    dirtModel.AddTextures(dirtBlockTexture);
+    dirtModel.mTextures = dirtBlockTexture;
     
     entityManager.InitializeAllComponents();
 }

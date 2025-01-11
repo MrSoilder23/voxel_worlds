@@ -2,5 +2,5 @@
 
 class IComponent {
     public:
-        virtual void Initialize() = 0;
+        virtual ~IComponent() = default;
 };

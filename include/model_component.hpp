@@ -12,19 +12,6 @@
 
 class ModelComponent : public IComponent {
     public: 
-        ModelComponent();
-
-        void Initialize() override;
-        
-        void AddModel(const Model& model);
-        void AddTextures(const std::shared_ptr<Texture>& textures);
-
-        Model& GetModel();
-        std::shared_ptr<Texture>& GetTexture();
-        MeshData& GetMeshData();
-        Transform& GetTransform();
-
-    private:
         Model mModel;
         std::shared_ptr<Texture> mTextures;
         MeshData mMeshData;

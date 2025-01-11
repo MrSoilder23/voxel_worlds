@@ -7,18 +7,5 @@
 
 class PositionComponent : public IComponent {
     public:
-        PositionComponent();
-        PositionComponent(float _x, float _y, float _z);
-
-        void Initialize() override;
-
-        void SetPosition(float _x, float _y, float _z);
-
-        glm::vec3 GetPosition();
-        float& GetPositionX();
-        float& GetPositionY();
-        float& GetPositionZ();
-
-    private:
         float x,y,z;
 };

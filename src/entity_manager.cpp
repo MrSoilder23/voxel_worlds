@@ -20,13 +20,7 @@ EntityManager::~EntityManager() {
 }
 
 void EntityManager::InitializeAllComponents() {
-    for(auto it = mEntityComponents.begin(); it != mEntityComponents.end(); ++it) {
-        for(auto jt = it->second.begin(); jt != it->second.end(); ++jt) {
-            if(jt->second) {
-                jt->second->Initialize();
-            }
-        }
-    }
+
 }
 
 EntityManager& EntityManager::GetInstance() {

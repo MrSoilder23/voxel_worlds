@@ -44,12 +44,12 @@ void ChunkManager::InsertToChunk(std::shared_ptr<Chunk>& chunk, BlockData& block
     auto positionComponent = std::static_pointer_cast<PositionComponent>(positionComponentLocation->second);
     auto modelComponent = std::static_pointer_cast<ModelComponent>(modelComponentLocation->second);
 
-    positionComponent->SetPosition(static_cast<float>(x),
-                                   static_cast<float>(y),
-                                   static_cast<float>(z));
+    positionComponent->x = static_cast<float>(x);
+    positionComponent->y = static_cast<float>(y);
+    positionComponent->z = static_cast<float>(z);
     
-    Transform& transform = modelComponent->GetTransform();
-    Model& model = modelComponent->GetModel();
+    Transform& transform = modelComponent->mTransform;
+    Model& model = modelComponent->mModel;
 
     utility::MeshTranslate(transform, static_cast<float>(x),
                                       static_cast<float>(y),
@@ -102,7 +102,7 @@ void ChunkManager::InitializeChunk(int x, int y, int z) {
                     indexes.insert(indexes.end(), {6,7,4, 7,5,4}); // BackFace
                 }
 
-                modelComponent->GetModel().indexBufferData = std::move(indexes);
+                modelComponent->mModel.indexBufferData = std::move(indexes);
             }
         }
     }

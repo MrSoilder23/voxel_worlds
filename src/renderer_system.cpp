@@ -15,7 +15,7 @@ void RendererSystem::DrawAll() {
             glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
             GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-            glUniformMatrix4fv(uModelMatrixLocation, 1, false, &componentPointer->GetTransform().mModelMatrix[0][0]);
+            glUniformMatrix4fv(uModelMatrixLocation, 1, false, &componentPointer->mTransform.mModelMatrix[0][0]);
 
             glm::mat4 view = mGraphicsApp->mCamera.GetViewMatrix();
             GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
@@ -25,9 +25,9 @@ void RendererSystem::DrawAll() {
             GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
             glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
 
-            componentPointer->GetMeshData().Bind();
+            // componentPointer->GetMeshData().Bind();
 
-            glDrawElements(GL_TRIANGLES, componentPointer->GetModel().indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);
+            glDrawElements(GL_TRIANGLES, componentPointer->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);
         } else {
             std::cerr << "No ModelComponent" << std::endl;
         }
