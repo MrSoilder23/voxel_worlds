@@ -41,7 +41,7 @@ void InitializeTextures() {
 
     SDL_Surface* grassTop = IMG_Load("./assets/grass_top.png");
     SDL_Surface* grassSide = IMG_Load("./assets/grass_side.png");
-    SDL_Surface* grassBottom = IMG_Load("./assets/grass_bottom.png");
+    SDL_Surface* grassBottom = IMG_Load("./assets/dirt.png");
 
     textureManager.CreateNewTexture("grassTop", grassTop);
     textureManager.CreateNewTexture("grassSide", grassSide);
