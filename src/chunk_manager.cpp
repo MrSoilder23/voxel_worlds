@@ -1,145 +1,81 @@
 #include "chunk_manager.hpp"
 
-ChunkManager::~ChunkManager() {
-    std::cout << "Chunk manager bye bye" << std::endl;
+void ChunkManager::InsertToChunk(Chunk& chunk, BlockTypes block, uint blockX, uint blockY, uint blockZ) {
+    chunk.blocks[blockX][blockY][blockZ] = block;
 }
-
-std::shared_ptr<Chunk>& ChunkManager::CreateChunk(int x, int y, int z) {
-    ChunkKey key = std::make_tuple(x,y,z);
-    if (!chunks.contains(key)) {
-        chunks[key] = std::make_shared<Chunk>();
+BlockTypes ChunkManager::GetBlock(Chunk& chunk, uint blockX, uint blockY, uint blockZ) const{
+    if(blockX < 0 || blockX > chunk.chunkSize) {
+        return BlockTypes::air;
+    } else if(blockY < 0 || blockY > chunk.chunkSize) {
+        return BlockTypes::air;
+    } else if(blockZ < 0 || blockZ > chunk.chunkSize) {
+        return BlockTypes::air;
     }
-    return chunks[key];
-}
-        
-std::shared_ptr<Chunk> ChunkManager::GetChunk(int x, int y, int z) {
-    ChunkKey key = std::make_tuple(x,y,z);
-    if(chunks.contains(key)) {
-        return chunks[key];
-    }
-    return nullptr;
+
+    return chunk.blocks[blockX][blockY][blockZ];
 }
 
-void ChunkManager::InsertToChunk(std::shared_ptr<Chunk>& chunk, BlockData& block, int x, int y, int z) {
-    BlockData blockComponents;
+void ChunkManager::AddModel(Chunk& chunk, Model model) {
+    chunk.mModel = std::move(model);
+}
 
-    static const std::type_index positionType = std::type_index(typeid(PositionComponent));
-    static const std::type_index modelType = std::type_index(typeid(ModelComponent));
-
-    for(const auto& [type, component] : block) {
-        if(type == positionType) {
-            blockComponents.emplace(type, std::make_shared<PositionComponent>(
-                                    *std::static_pointer_cast<PositionComponent>(component)));
-        } else if(type == modelType) {
-            blockComponents.emplace(type, std::make_shared<ModelComponent>(
-                                    *std::static_pointer_cast<ModelComponent>(component)));
-        } else {
-            blockComponents.emplace(type, component);
+void ChunkManager::CreateVAO(Chunk& chunk) {
+    std::map<GLuint64, GLuint> mTextures;
+    BlockTextureCreator& blockTexture = BlockTextureCreator::GetInstance();
+    auto& textureList = blockTexture.GetTextures();
+    
+    for (const auto& [key, textureHandle] : textureList) { 
+        if (mTextures.count(textureHandle) == 0) {
+            mTextures[textureHandle];
         }
     }
 
-    auto positionComponentLocation = blockComponents.find(positionType);
-    auto modelComponentLocation = blockComponents.find(modelType);
-
-    auto positionComponent = std::static_pointer_cast<PositionComponent>(positionComponentLocation->second);
-    auto modelComponent = std::static_pointer_cast<ModelComponent>(modelComponentLocation->second);
-
-    positionComponent->x = static_cast<float>(x);
-    positionComponent->y = static_cast<float>(y);
-    positionComponent->z = static_cast<float>(z);
-    
-    Transform& transform = modelComponent->mTransform;
-    Model& model = modelComponent->mModel;
-
-    utility::MeshTranslate(transform, static_cast<float>(x),
-                                      static_cast<float>(y),
-                                      static_cast<float>(z));
-
-    for (size_t i = 0; i < model.vertexPositions.size(); i++) {
-        model.vertexPositions[i] = glm::vec3(transform.mModelMatrix * glm::vec4(model.vertexPositions[i], 1.0f));
-    }
-    
-    chunk->blocks[x][y][z] = std::move(blockComponents);
-}
-
-void ChunkManager::InitializeChunk(int x, int y, int z) {
-    ChunkKey key = std::make_tuple(x,y,z);
-
-    if (chunks.find(key) == chunks.end()) {
-        return;
+    GLuint index = 0;
+    for(auto& [handle, _] : mTextures) {
+        mTextures[handle] = index++;
     }
 
-    auto chunk = chunks[key];
-
-    for(int blockX = 0; blockX < 32; blockX++) {
-        for (int blockY = 0; blockY < 32; blockY++) {
-            for (int blockZ = 0; blockZ < 32; blockZ++) {
-                
-                auto modelComponentLocation = chunk->blocks[blockX][blockY][blockZ].find(std::type_index(typeid(ModelComponent)));
-                if(modelComponentLocation == chunk->blocks[blockX][blockY][blockZ].end()) {
-                    continue;
-                }
-                auto modelComponent = std::static_pointer_cast<ModelComponent>(modelComponentLocation->second);
-
-                std::vector<GLuint> indexes;
-
-                if(GetBlock(x,y,z ,blockX+1, blockY, blockZ).empty()) {
-                    indexes.insert(indexes.end(), {3,1,7, 5,7,1}); // RightFace
-                }
-                if(GetBlock(x,y,z ,blockX-1, blockY, blockZ).empty()) {
-                    indexes.insert(indexes.end(), {6,4,2, 0,2,4}); // LeftFace
-                }
-                if(GetBlock(x,y,z ,blockX, blockY+1, blockZ).empty()) {
-                    indexes.insert(indexes.end(), {6,2,7, 3,7,2}); // TopFace
-                }
-                if(GetBlock(x,y,z ,blockX, blockY-1, blockZ).empty()) {
-                    indexes.insert(indexes.end(), {0,4,5, 1,0,5}); // BotFace
-                }
-                if(GetBlock(x,y,z ,blockX, blockY, blockZ+1).empty()) {
-                    indexes.insert(indexes.end(), {0,1,2, 3,2,1}); // FrontFace
-                }
-                if(GetBlock(x,y,z ,blockX, blockY, blockZ-1).empty()) {
-                    indexes.insert(indexes.end(), {6,7,4, 7,5,4}); // BackFace
-                }
-
-                modelComponent->mModel.indexBufferData = std::move(indexes);
-            }
-        }
+    std::vector<GLuint64> handlers;
+    for(auto& [textureId, _] : mTextures) {
+        handlers.push_back(textureId);
     }
+    GLuint vao, vbo, ebo, texId, textures, textureCoords;
+    glGenVertexArrays(1, &chunk.mVertexArrayObject);
+    glBindVertexArray(chunk.mVertexArrayObject);
 
-    chunk->CreateVao();
-}
+    // Start generating VBO
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, chunk.mModel.vertexPositions.size()*sizeof(glm::vec3), chunk.mModel.vertexPositions.data(), GL_STATIC_DRAW);
 
-BlockData ChunkManager::GetBlock(int chunkX, int chunkY, int chunkZ, int x, int y, int z) {
-    if(x < 0) {
-        x = 31;
-        chunkX--;
-    } else if(x > 31) {
-        x = 0;
-        chunkX++;
-    } else if(y < 0) {
-        y = 31;
-        chunkY--;
-    } else if(y > 31) {
-        y = 0;
-        chunkY++;
-    } else if(z < 0) {
-        z = 31;
-        chunkZ--;
-    } else if(z > 31) {
-        z = 0;
-        chunkZ++;
-    }
-    ChunkKey key = std::make_tuple(chunkX,chunkY,chunkZ);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, (void*)0);
 
-    if(chunks.find(key) == chunks.end()) {
-        return {}; 
-    }
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, chunk.mModel.indexBufferData.size()*sizeof(GLuint), chunk.mModel.indexBufferData.data(), GL_STATIC_DRAW);
 
-    return chunks[key]->blocks[x][y][z];
-}
+    glGenBuffers(1, &textures);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, textures);
+    glBufferData(GL_SHADER_STORAGE_BUFFER, handlers.size() * sizeof(GLuint64), handlers.data(), GL_STATIC_DRAW);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, textures);
 
-ChunkManager& ChunkManager::GetInstance() {
-    static ChunkManager sInstance;
-    return sInstance;
+    glGenBuffers(1, &textureCoords);
+    glBindBuffer(GL_ARRAY_BUFFER, textureCoords);
+    glBufferData(GL_ARRAY_BUFFER, chunk.mTexturePositions.size() * sizeof(glm::vec3), chunk.mTexturePositions.data(), GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, (void*)0);
+
+    glGenBuffers(1, &texId);
+    glBindBuffer(GL_ARRAY_BUFFER, texId);
+    glBufferData(GL_ARRAY_BUFFER, chunk.mTextureID.size() * sizeof(GLuint), chunk.mTextureID.data(), GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(2);
+    glVertexAttribIPointer(2, 1, GL_UNSIGNED_INT, 0, (void*)0);
+
+    glBindVertexArray(0);
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
 }

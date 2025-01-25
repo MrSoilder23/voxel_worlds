@@ -15,9 +15,10 @@
 #include "graphics.hpp"
 #include "renderer_system.hpp"
 #include "blocks.hpp"
-#include "chunk_manager.hpp"
+
 #include "chunk_renderer_system.hpp"
-#include "chunk_system.hpp"
+#include "chunk_manager.hpp"
+#include "world.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
@@ -36,9 +37,10 @@ EntityManager& gEntityManager = EntityManager::GetInstance();
 
 RendererSystem& gRendererSystem = RendererSystem::GetInstance();
 ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
-ChunkManager& gChunkManager = ChunkManager::GetInstance();
+// ChunkManager& gChunkManager = ChunkManager::GetInstance();
 
-ChunkSystem chunkSystem;
+// ChunkSystem chunkSystem;
+World world;
 
 void Input(float deltaTime) {
     SDL_Event e;
@@ -88,9 +90,10 @@ void MainLoop(float deltaTime) {
 
     // auto chunk = gChunkManager.GetChunk(0,0,0);
     // gChunkRendererSystem.DrawChunk(chunk);
-    chunkSystem.SetCameraPosition(gGraphicsApp->mCamera.GetEye());
-    chunkSystem.GenerateWorld();
-    chunkSystem.DrawChunks();
+
+    world.SetCameraPosition(gGraphicsApp->mCamera.GetEye());
+    world.GenerateWorld();
+    world.DrawChunks();
 }
 
 int main(int argc, char* argv[]) {
@@ -108,8 +111,8 @@ int main(int argc, char* argv[]) {
     static std::random_device rndDevice;
     unsigned int seed = rndDevice();
 
-    chunkSystem.SetWorldSeed(seed);
-    chunkSystem.SetRenderDistance(6.0);
+    world.SetSeed(seed);
+    world.SetRenderDistance(6.0f);
 
     // gRendererSystem.AddGraphicsApp(gGraphicsApp);
     gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);

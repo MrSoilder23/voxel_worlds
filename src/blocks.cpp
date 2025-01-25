@@ -77,12 +77,11 @@ void InitializeBlocks() {
     GLfloat defaultPos[] = {0.0f,0.0f,0.0f};
 
     // Grass block
-    std::string grassBlock = "grass_block";
-    entityManager.CreateEntity(grassBlock);
-    entityManager.AddComponent<ModelComponent>(grassBlock);
-    entityManager.AddComponent<PositionComponent>(grassBlock);
+    entityManager.CreateEntity(BlockTypes::grass_block);
+    entityManager.AddComponent<ModelComponent>(BlockTypes::grass_block);
+    entityManager.AddComponent<PositionComponent>(BlockTypes::grass_block);
 
-    ModelComponent& grassModel = *entityManager.GetComponent<ModelComponent>(grassBlock);
+    ModelComponent& grassModel = *entityManager.GetComponent<ModelComponent>(BlockTypes::grass_block);
     grassModel.mModel = modelManager.GetModel("cube");
 
     std::shared_ptr<Texture> grassBlockTexture = std::make_shared<Texture>();
@@ -91,12 +90,11 @@ void InitializeBlocks() {
 
 
     // Dirt Block
-    std::string dirtBlock = "dirt_block";
-    entityManager.CreateEntity(dirtBlock);
-    entityManager.AddComponent<ModelComponent>(dirtBlock);
-    entityManager.AddComponent<PositionComponent>(dirtBlock);
+    entityManager.CreateEntity(BlockTypes::dirt_block);
+    entityManager.AddComponent<ModelComponent>(BlockTypes::dirt_block);
+    entityManager.AddComponent<PositionComponent>(BlockTypes::dirt_block);
 
-    ModelComponent& dirtModel = *entityManager.GetComponent<ModelComponent>(dirtBlock);
+    ModelComponent& dirtModel = *entityManager.GetComponent<ModelComponent>(BlockTypes::dirt_block);
     dirtModel.mModel = modelManager.GetModel("cube");
 
     std::shared_ptr<Texture> dirtBlockTexture = std::make_shared<Texture>();

@@ -24,10 +24,10 @@ void ChunkRendererSystem::DrawChunk(std::shared_ptr<Chunk>& chunk) {
         return;
     }
     
-    glUseProgram(mGraphicsApp->mGraphicsPipeline);
+    GLCheck(glUseProgram(mGraphicsApp->mGraphicsPipeline);)
 
     GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-    glUniformMatrix4fv(uModelMatrixLocation, 1, false, &chunk->GetTransform().mModelMatrix[0][0]);
+    glUniformMatrix4fv(uModelMatrixLocation, 1, false, &chunk->mTransform.mModelMatrix[0][0]);
 
     glm::mat4 view = mGraphicsApp->mCamera.GetViewMatrix();
     GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
@@ -36,9 +36,9 @@ void ChunkRendererSystem::DrawChunk(std::shared_ptr<Chunk>& chunk) {
     glm::mat4 perspective = mGraphicsApp->mCamera.GetProjectionMatrix();
     GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
     glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
-
-    chunk->GetMeshData().Bind();
-    glDrawElements(GL_TRIANGLES, chunk->GetModel()->indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);
+    
+    glBindVertexArray(chunk->mVertexArrayObject);
+    glDrawElements(GL_TRIANGLES, chunk->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);
     glBindVertexArray(0);
 }
 

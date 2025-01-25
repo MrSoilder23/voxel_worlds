@@ -10,6 +10,7 @@
 #include "model_manager.hpp"
 #include "texture_manager.hpp"
 #include "block_texture_creator.hpp"
+#include "block_types.hpp"
 // Components
 #include "model_component.hpp"
 #include "position_component.hpp"
