@@ -77,19 +77,6 @@ void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
                 std::vector<GLuint> tempIndexes;
                 
                 auto modelComponent = entityManager.GetComponent<ModelComponent>(block);
-                glm::vec3 chunkOffset = glm::vec3(x,y,z);
-                for (auto chunkVertex : modelComponent->mModel.vertexPositions) {
-                    chunkModel.vertexPositions.push_back(chunkVertex + chunkOffset);
-                }
-                
-                chunk->mTexturePositions.insert(chunk->mTexturePositions.end(), 
-                                                modelComponent->mModel.vertexPositions.begin(),
-                                                modelComponent->mModel.vertexPositions.end());
-
-                auto textureIDs = modelComponent->mTextures->textureHandle;
-                chunk->mTextureID.insert(chunk->mTextureID.end(), 
-                                                modelComponent->mModel.vertexPositions.size(),
-                                                chunk->mTextures[textureIDs]);
 
                 if(GetBlock(chunkX,chunkY,chunkZ ,x+1, y, z) == BlockTypes::air) {
                     tempIndexes.insert(tempIndexes.end(), {3,1,7, 5,7,1}); // RightFace
@@ -111,8 +98,27 @@ void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
                 }
 
                 for(int i = 0; i < tempIndexes.size(); i++) {
-                    tempIndexes[i] = tempIndexes[i] + chunkModel.vertexPositions.size()-8;
+                    tempIndexes[i] = tempIndexes[i] + chunkModel.vertexPositions.size();
                 }
+                
+                if(tempIndexes.size() == 0) {
+                    continue;
+                }
+
+                glm::vec3 chunkOffset = glm::vec3(x,y,z);
+                for (auto chunkVertex : modelComponent->mModel.vertexPositions) {
+                    chunkModel.vertexPositions.push_back(chunkVertex + chunkOffset);
+                }
+                
+                chunk->mTexturePositions.insert(chunk->mTexturePositions.end(), 
+                                                modelComponent->mModel.vertexPositions.begin(),
+                                                modelComponent->mModel.vertexPositions.end());
+
+                auto textureIDs = modelComponent->mTextures->textureHandle;
+                chunk->mTextureID.insert(chunk->mTextureID.end(), 
+                                                modelComponent->mModel.vertexPositions.size(),
+                                                chunk->mTextures[textureIDs]);
+
                 indexes.insert(indexes.end(), 
                             std::make_move_iterator(tempIndexes.begin()),
                             std::make_move_iterator(tempIndexes.end()));
@@ -165,9 +171,6 @@ void World::GenerateWorld() {
                 }
             }
         }
-        // To-Do pre generate chunks and then initialize chunk in the middle
-        CreateChunkModel(coordinatesX,0,coordinatesZ);
-        chunkManger.CreateVAO(*chunk);
     }
 
     // Spiral loop
@@ -192,6 +195,69 @@ void World::GenerateWorld() {
     }
 
     if(max <= mRenderDistance+VoxelWorlds::CHUNK_OFFSET) {
+        if(loopZ == -max) {
+            max++;
+        } 
+    } else if(loopX >= max){
+        loopX = 0;
+        loopZ = 0;
+        max = 1;
+        side = true;
+    }
+}
+// TO-DO make this better
+void World::GenerateMesh() {
+    ChunkManager chunkManger;
+    static uint8_t wait = 50;
+
+    if(wait > 0) {
+        wait--;
+        return;
+    }
+
+    float cameraX = std::floor(mCameraPosition.x/VoxelWorlds::CHUNK_SIZE);
+    float cameraZ = std::floor(mCameraPosition.z/VoxelWorlds::CHUNK_SIZE);
+
+    static int loopX = 0;
+    static int loopZ = 0;
+    static int max = 1;
+    static bool side = true;
+
+    int coordinatesX = cameraX + loopX;
+    int coordinatesZ = cameraZ + loopZ;
+    
+    auto chunk = GetChunk(coordinatesX,0,coordinatesZ);
+
+    if(chunk != nullptr) {
+        if(chunk->mVertexArrayObject == 0) {
+            CreateChunkModel(coordinatesX,0,coordinatesZ);
+            chunkManger.CreateVAO(*chunk);
+        }        
+    }
+
+
+    // Spiral loop
+    if(side) {
+        if(loopX < max) {
+            loopX++;
+        } else if(loopZ < max){
+            loopZ++;
+        }
+        if(loopZ == max) {
+            side = false;
+        }
+    } else {
+        if(loopX > -max) {
+            loopX--;
+        } else if(loopZ > -max){
+            loopZ--;
+        } 
+        if(loopZ == -max) {
+            side = true;
+        }
+    }
+
+    if(max <= mRenderDistance) {
         if(loopZ == -max) {
             max++;
         } 

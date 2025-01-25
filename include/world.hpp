@@ -25,6 +25,7 @@ class World {
         BlockTypes GetBlock(int chunkX, int chunkY, int chunkZ, int x, int y, int z);
 
         void CreateChunkModel(int chunkX, int chunkY, int chunkZ);
+        void GenerateMesh();
         
         void SetCameraPosition(glm::vec3 cameraPosition);
         void SetRenderDistance(float renderDistance);

@@ -93,6 +93,7 @@ void MainLoop(float deltaTime) {
 
     world.SetCameraPosition(gGraphicsApp->mCamera.GetEye());
     world.GenerateWorld();
+    world.GenerateMesh();
     world.DrawChunks();
 }
 
