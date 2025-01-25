@@ -208,10 +208,10 @@ void World::GenerateWorld() {
 // TO-DO make this better
 void World::GenerateMesh() {
     ChunkManager chunkManger;
-    static uint8_t wait = 50;
+    static uint8_t delay = 50; // In frames
 
-    if(wait > 0) {
-        wait--;
+    if(delay > 0) {
+        delay--;
         return;
     }
 
