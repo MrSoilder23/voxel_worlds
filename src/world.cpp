@@ -161,8 +161,8 @@ void World::GenerateWorld() {
         
         for(float x = 0; x < VoxelWorlds::CHUNK_SIZE; x++) {
             for(float z = 0; z < VoxelWorlds::CHUNK_SIZE; z++) {
-                int chunkCoordinateX = static_cast<int>(std::floor((float)coordinatesX/VoxelWorlds::PERLIN_SCALE));
-                int chunkCoordinateY = static_cast<int>(std::floor((float)coordinatesZ/VoxelWorlds::PERLIN_SCALE));
+                int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(coordinatesX)/VoxelWorlds::PERLIN_SCALE));
+                int chunkCoordinateY = static_cast<int>(std::floor(static_cast<float>(coordinatesZ)/VoxelWorlds::PERLIN_SCALE));
 
                 int xOffset = (coordinatesX % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
                 int zOffset = (coordinatesZ % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
