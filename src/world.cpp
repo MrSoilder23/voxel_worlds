@@ -156,11 +156,20 @@ void World::GenerateWorld() {
     if(GetChunk(coordinatesX,0,coordinatesZ) == nullptr) {
         CreateChunk(coordinatesX,0,coordinatesZ);
         auto chunk = GetChunk(coordinatesX,0,coordinatesZ);
-        utility::MeshTranslate(chunk->mTransform, glm::vec3(static_cast<float>(coordinatesX)*VoxelWorlds::CHUNK_SIZE, 0,static_cast<float>(coordinatesZ)*VoxelWorlds::CHUNK_SIZE));
+        utility::MeshTranslate(chunk->mTransform, glm::vec3(static_cast<float>(coordinatesX)*VoxelWorlds::CHUNK_SIZE, 0,
+                                                            static_cast<float>(coordinatesZ)*VoxelWorlds::CHUNK_SIZE));
         
         for(float x = 0; x < VoxelWorlds::CHUNK_SIZE; x++) {
             for(float z = 0; z < VoxelWorlds::CHUNK_SIZE; z++) {
-                float height = std::round(utility::PerlinNoise(coordinatesX,coordinatesZ , x/VoxelWorlds::CHUNK_SIZE, z/VoxelWorlds::CHUNK_SIZE, mSeed) * VoxelWorlds::CHUNK_SIZE);
+                int chunkCoordinateX = static_cast<int>(std::floor((float)coordinatesX/VoxelWorlds::PERLIN_SCALE));
+                int chunkCoordinateY = static_cast<int>(std::floor((float)coordinatesZ/VoxelWorlds::PERLIN_SCALE));
+
+                int xOffset = (coordinatesX % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+                int zOffset = (coordinatesZ % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+
+                float height = std::round(utility::PerlinNoise(chunkCoordinateX,chunkCoordinateY,
+                                        (x+(xOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE),
+                                        (z+(zOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE), mSeed) * VoxelWorlds::CHUNK_SIZE);
 
                 for(float y = 0; y < height; y++) {
                     if(y == height-1) {
