@@ -53,14 +53,18 @@ namespace utility {
         return glm::vec2(std::cos(a), std::sin(a));
     }
 
+    inline float Smooth(float t) {
+        return t * t * t * (t * (t * 6 - 15) + 10);
+    }
+
     inline float PerlinNoise(int chunkX, int chunkY,float x, float y, unsigned int seed) {
         float dot1 = glm::dot(Gradient(chunkX,chunkY, seed), glm::vec2(x,y));
         float dot2 = glm::dot(Gradient(chunkX+1,chunkY, seed), glm::vec2(1.0-x,y));
         float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x,1.0-y));
         float dot4 = glm::dot(Gradient(chunkX+1,chunkY+1, seed), glm::vec2(1.0-x,1.0-y));
 
-        x = 6*std::pow(x,5) - 15*std::pow(x,4) + 10 * std::pow(x,3);
-        y = 6*std::pow(y,5) - 15*std::pow(y,4) + 10 * std::pow(y,3);
+        x = Smooth(x);
+        y = Smooth(y);
 
         float AB = dot1 + x * (dot2-dot1);
         float CD = dot3 + x * (dot4-dot3);

@@ -15,6 +15,7 @@
 struct Chunk {
     BlockTypes blocks[32][32][32];
     int chunkSize;
+    bool wasGenerated = false;
 
     Model mModel;
     std::map<GLuint64, GLuint> mTextures;

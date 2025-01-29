@@ -1,8 +1,10 @@
 #include "world.hpp"
+#include <chrono>
+#include <iostream>
 
 void World::CreateChunk(int chunkX, int chunkY, int chunkZ) {
     auto chunkCoords = std::make_tuple(chunkX,chunkY,chunkZ);
-    chunks[chunkCoords] = std::make_shared<Chunk>();
+    chunks.emplace(chunkCoords, std::make_shared<Chunk>());
 }
 std::shared_ptr<Chunk> World::GetChunk(int chunkX, int chunkY, int chunkZ) const {
     auto chunkCoords = std::make_tuple(chunkX,chunkY,chunkZ);
@@ -140,141 +142,226 @@ void World::SetSeed(unsigned int seed) {
 }
 
 void World::GenerateWorld() {
+
     ChunkManager chunkManger;
 
-    float cameraX = std::floor(mCameraPosition.x/VoxelWorlds::CHUNK_SIZE);
-    float cameraZ = std::floor(mCameraPosition.z/VoxelWorlds::CHUNK_SIZE);
+    static float cameraOldX = 0;
+    static float cameraOldY = 0;
+    static float cameraOldZ = 0;
 
     static int loopX = 0;
     static int loopZ = 0;
     static int max = 1;
     static bool side = true;
+    static int chunkY = -mRenderDistance;
 
-    int coordinatesX = cameraX + loopX;
-    int coordinatesZ = cameraZ + loopZ;
+    float cameraX = std::floor(mCameraPosition.x/VoxelWorlds::CHUNK_SIZE);
+    float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
+    float cameraZ = std::floor(mCameraPosition.z/VoxelWorlds::CHUNK_SIZE);
 
-    if(GetChunk(coordinatesX,0,coordinatesZ) == nullptr) {
-        CreateChunk(coordinatesX,0,coordinatesZ);
-        auto chunk = GetChunk(coordinatesX,0,coordinatesZ);
-        utility::MeshTranslate(chunk->mTransform, glm::vec3(static_cast<float>(coordinatesX)*VoxelWorlds::CHUNK_SIZE, 0,
-                                                            static_cast<float>(coordinatesZ)*VoxelWorlds::CHUNK_SIZE));
-        
-        for(float x = 0; x < VoxelWorlds::CHUNK_SIZE; x++) {
-            for(float z = 0; z < VoxelWorlds::CHUNK_SIZE; z++) {
-                int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(coordinatesX)/VoxelWorlds::PERLIN_SCALE));
-                int chunkCoordinateY = static_cast<int>(std::floor(static_cast<float>(coordinatesZ)/VoxelWorlds::PERLIN_SCALE));
-
-                int xOffset = (coordinatesX % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
-                int zOffset = (coordinatesZ % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
-
-                float height = std::round(utility::PerlinNoise(chunkCoordinateX,chunkCoordinateY,
-                                        (x+(xOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE),
-                                        (z+(zOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE), mSeed) * VoxelWorlds::CHUNK_SIZE);
-
-                for(float y = 0; y < height; y++) {
-                    if(y == height-1) {
-                        chunkManger.InsertToChunk(*chunk, BlockTypes::grass_block, x, y, z);
-                    } else {
-                        chunkManger.InsertToChunk(*chunk, BlockTypes::dirt_block, x, y, z);
-                    }
-                }
-            }
-        }
-    }
-
-    // Spiral loop
-    if(side) {
-        if(loopX < max) {
-            loopX++;
-        } else if(loopZ < max){
-            loopZ++;
-        }
-        if(loopZ == max) {
-            side = false;
-        }
-    } else {
-        if(loopX > -max) {
-            loopX--;
-        } else if(loopZ > -max){
-            loopZ--;
-        } 
-        if(loopZ == -max) {
-            side = true;
-        }
-    }
-
-    if(max <= mRenderDistance+VoxelWorlds::CHUNK_OFFSET) {
-        if(loopZ == -max) {
-            max++;
-        } 
-    } else if(loopX >= max){
+    if(cameraX != cameraOldX || cameraY != cameraOldY || cameraZ != cameraOldZ) {
         loopX = 0;
         loopZ = 0;
         max = 1;
         side = true;
+        chunkY = -mRenderDistance;
+    }
+
+    cameraOldX = cameraX;
+    cameraOldY = cameraY;
+    cameraOldZ = cameraZ;
+
+    int coordinatesX = cameraX + loopX;
+    int coordinatesY = cameraY + chunkY;
+    int coordinatesZ = cameraZ + loopZ;
+
+    if(!GetChunk(coordinatesX,coordinatesY,coordinatesZ)) {
+                // auto start = std::chrono::high_resolution_clock::now();
+        CreateChunk(coordinatesX,coordinatesY,coordinatesZ);
+        auto chunk = GetChunk(coordinatesX,coordinatesY,coordinatesZ);
+        utility::MeshTranslate(chunk->mTransform, glm::vec3(static_cast<float>(coordinatesX)*VoxelWorlds::CHUNK_SIZE, 
+                                                            static_cast<float>(coordinatesY)*VoxelWorlds::CHUNK_SIZE,
+                                                            static_cast<float>(coordinatesZ)*VoxelWorlds::CHUNK_SIZE));
+    // auto end = std::chrono::high_resolution_clock::now();
+    // std::chrono::duration<double, std::milli> duration = end - start;
+    // std::cout << "Time taken: " << duration.count() << " ms\n";
+                    
+    }
+
+    if(chunkY <= mRenderDistance) {
+        chunkY++;
+    } else {
+        // std::cout << chunkY << std::endl;
+        chunkY = -mRenderDistance;
+        // auto start = std::chrono::high_resolution_clock::now();
+        auto chunk = GetChunk(coordinatesX,0,coordinatesZ);
+        if(!chunk->wasGenerated) {
+            int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(coordinatesX)/VoxelWorlds::PERLIN_SCALE));
+            int chunkCoordinateZ = static_cast<int>(std::floor(static_cast<float>(coordinatesZ)/VoxelWorlds::PERLIN_SCALE));
+
+            int xOffset = (coordinatesX % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+            int zOffset = (coordinatesZ % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+            
+            for(float x = 0; x < VoxelWorlds::CHUNK_SIZE; x++) {
+                for(float z = 0; z < VoxelWorlds::CHUNK_SIZE; z++) {
+
+                    float height = utility::PerlinNoise(chunkCoordinateX,chunkCoordinateZ,
+                    (x+(xOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE),
+                    (z+(zOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE), mSeed);
+
+                    height = std::round(height * VoxelWorlds::CHUNK_SIZE);
+
+                    int numChunks = static_cast<int>(height / VoxelWorlds::CHUNK_SIZE);
+                    int remainder = static_cast<int>(height) % static_cast<int>(VoxelWorlds::CHUNK_SIZE); // Extra blocks for the top chunk
+
+                    for (int i = 0; i <= numChunks; i++) {
+                        coordinatesY = i;
+                        chunk = GetChunk(coordinatesX,coordinatesY,coordinatesZ);
+
+                        int blocksToPlace = (i == numChunks) ? remainder : VoxelWorlds::CHUNK_SIZE;
+
+                        for(float y = 0; y < blocksToPlace; y++) {
+                            int globalY = (i * VoxelWorlds::CHUNK_SIZE) + y;
+                            if(globalY == height-1) {
+                                chunkManger.InsertToChunk(*chunk, BlockTypes::grass_block, x, y, z);
+                            } else {
+                                chunkManger.InsertToChunk(*chunk, BlockTypes::dirt_block, x, y, z);
+                            }
+                        }
+                        chunk->wasGenerated = true;
+                    
+                    
+                    }
+                }
+            }
+            // auto end = std::chrono::high_resolution_clock::now();
+            // std::chrono::duration<double, std::milli> duration = end - start;
+            // std::cout << "Time taken: " << duration.count() << " ms\n";
+
+        }
+
+
+        // Spiral loop
+        if(side) {
+            if(loopX < max) {
+                loopX++;
+            } else if(loopZ < max){
+                loopZ++;
+            }
+            if(loopZ == max) {
+                side = false;
+            }
+        } else {
+            if(loopX > -max) {
+                loopX--;
+            } else if(loopZ > -max){
+                loopZ--;
+            } 
+            if(loopZ == -max) {
+                side = true;
+            }
+        }
+
+        if(max <= mRenderDistance+VoxelWorlds::CHUNK_OFFSET) {
+            if(loopZ == -max) {
+                max++;
+            } 
+        } else if(loopX >= max){
+            loopX = 0;
+            loopZ = 0;
+            max = 1;
+            side = true;
+            chunkY = -mRenderDistance;
+        }
+
     }
 }
 // TO-DO make this better
 void World::GenerateMesh() {
     ChunkManager chunkManger;
-    static uint8_t delay = 50; // In frames
+    static uint8_t delay = 122; // In frames
 
     if(delay > 0) {
         delay--;
         return;
     }
-
-    float cameraX = std::floor(mCameraPosition.x/VoxelWorlds::CHUNK_SIZE);
-    float cameraZ = std::floor(mCameraPosition.z/VoxelWorlds::CHUNK_SIZE);
+    
+    static float cameraOldX = 0;
+    static float cameraOldY = 0;
+    static float cameraOldZ = 0;
 
     static int loopX = 0;
     static int loopZ = 0;
     static int max = 1;
     static bool side = true;
+    static int chunkY = -mRenderDistance;
 
-    int coordinatesX = cameraX + loopX;
-    int coordinatesZ = cameraZ + loopZ;
-    
-    auto chunk = GetChunk(coordinatesX,0,coordinatesZ);
+    float cameraX = std::floor(mCameraPosition.x/VoxelWorlds::CHUNK_SIZE);
+    float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
+    float cameraZ = std::floor(mCameraPosition.z/VoxelWorlds::CHUNK_SIZE);
 
-    if(chunk != nullptr) {
-        if(chunk->mVertexArrayObject == 0) {
-            CreateChunkModel(coordinatesX,0,coordinatesZ);
-            chunkManger.CreateVAO(*chunk);
-        }        
-    }
-
-
-    // Spiral loop
-    if(side) {
-        if(loopX < max) {
-            loopX++;
-        } else if(loopZ < max){
-            loopZ++;
-        }
-        if(loopZ == max) {
-            side = false;
-        }
-    } else {
-        if(loopX > -max) {
-            loopX--;
-        } else if(loopZ > -max){
-            loopZ--;
-        } 
-        if(loopZ == -max) {
-            side = true;
-        }
-    }
-
-    if(max <= mRenderDistance) {
-        if(loopZ == -max) {
-            max++;
-        } 
-    } else if(loopX >= max){
+    if(cameraX != cameraOldX || cameraY != cameraOldY || cameraZ != cameraOldZ) {
         loopX = 0;
         loopZ = 0;
         max = 1;
         side = true;
+        chunkY = -mRenderDistance;
+    }
+
+    cameraOldX = cameraX;
+    cameraOldY = cameraY;
+    cameraOldZ = cameraZ;
+
+    int coordinatesX = cameraX + loopX;
+    int coordinatesY = cameraY + chunkY;
+    int coordinatesZ = cameraZ + loopZ;
+    
+    auto chunk = GetChunk(coordinatesX,coordinatesY,coordinatesZ);
+
+    if(chunk) {
+        if(chunk->mVertexArrayObject == 0) {
+            CreateChunkModel(coordinatesX,coordinatesY,coordinatesZ);
+            chunkManger.CreateVAO(*chunk);
+        }        
+    }
+
+    if(chunkY < mRenderDistance) {
+        chunkY++;
+    } else {
+        chunkY = -mRenderDistance;
+        
+        // Spiral loop
+        if(side) {
+            if(loopX < max) {
+                loopX++;
+            } else if(loopZ < max){
+                loopZ++;
+            }
+            if(loopZ == max) {
+                side = false;
+            }
+        } else {
+            if(loopX > -max) {
+                loopX--;
+            } else if(loopZ > -max){
+                loopZ--;
+            } 
+            if(loopZ == -max) {
+                side = true;
+            }
+        }
+
+        if(max <= mRenderDistance) {
+            if(loopZ == -max) {
+                max++;
+            } 
+        } else if(loopX >= max){
+            loopX = 0;
+            loopZ = 0;
+            max = 1;
+            side = true;
+            chunkY = -mRenderDistance;
+        }
     }
 }
 
@@ -282,12 +369,17 @@ void World::DrawChunks() {
     ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
 
     float cameraX = std::floor(mCameraPosition.x/VoxelWorlds::CHUNK_SIZE);
+    float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
     float cameraZ = std::floor(mCameraPosition.z/VoxelWorlds::CHUNK_SIZE);
 
     for (int xChunkPos = cameraX - mRenderDistance; xChunkPos < cameraX + mRenderDistance; xChunkPos++) {
         for (int zChunkPos = cameraZ - mRenderDistance; zChunkPos < cameraZ + mRenderDistance; zChunkPos++) {
-            auto chunk = GetChunk(xChunkPos, 0, zChunkPos);
-            gChunkRendererSystem.DrawChunk(chunk);
+            for (int yChunkPos = cameraY - mRenderDistance; yChunkPos < cameraY + mRenderDistance; yChunkPos++) {
+                auto chunk = GetChunk(xChunkPos, yChunkPos, zChunkPos);
+                if(chunk) {
+                    gChunkRendererSystem.DrawChunk(chunk);
+                }
+            }
         }
     }
 }
