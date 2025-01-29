@@ -1,6 +1,4 @@
 #include "world.hpp"
-#include <chrono>
-#include <iostream>
 
 void World::CreateChunk(int chunkX, int chunkY, int chunkZ) {
     auto chunkCoords = std::make_tuple(chunkX,chunkY,chunkZ);
@@ -176,24 +174,19 @@ void World::GenerateWorld() {
     int coordinatesZ = cameraZ + loopZ;
 
     if(!GetChunk(coordinatesX,coordinatesY,coordinatesZ)) {
-                // auto start = std::chrono::high_resolution_clock::now();
         CreateChunk(coordinatesX,coordinatesY,coordinatesZ);
         auto chunk = GetChunk(coordinatesX,coordinatesY,coordinatesZ);
         utility::MeshTranslate(chunk->mTransform, glm::vec3(static_cast<float>(coordinatesX)*VoxelWorlds::CHUNK_SIZE, 
                                                             static_cast<float>(coordinatesY)*VoxelWorlds::CHUNK_SIZE,
                                                             static_cast<float>(coordinatesZ)*VoxelWorlds::CHUNK_SIZE));
-    // auto end = std::chrono::high_resolution_clock::now();
-    // std::chrono::duration<double, std::milli> duration = end - start;
-    // std::cout << "Time taken: " << duration.count() << " ms\n";
                     
     }
 
     if(chunkY <= mRenderDistance) {
         chunkY++;
     } else {
-        // std::cout << chunkY << std::endl;
         chunkY = -mRenderDistance;
-        // auto start = std::chrono::high_resolution_clock::now();
+
         auto chunk = GetChunk(coordinatesX,0,coordinatesZ);
         if(!chunk->wasGenerated) {
             int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(coordinatesX)/VoxelWorlds::PERLIN_SCALE));
@@ -234,10 +227,6 @@ void World::GenerateWorld() {
                     }
                 }
             }
-            // auto end = std::chrono::high_resolution_clock::now();
-            // std::chrono::duration<double, std::milli> duration = end - start;
-            // std::cout << "Time taken: " << duration.count() << " ms\n";
-
         }
 
 
