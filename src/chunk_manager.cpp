@@ -1,6 +1,12 @@
 #include "chunk_manager.hpp"
 
 void ChunkManager::InsertToChunk(Chunk& chunk, BlockTypes block, uint blockX, uint blockY, uint blockZ) {
+    if(blockX > VoxelWorlds::CHUNK_SIZE || blockY > VoxelWorlds::CHUNK_SIZE|| blockZ > VoxelWorlds::CHUNK_SIZE) {
+        return;
+    }
+    if(blockX < 0 || blockY < 0 || blockZ < 0) {
+        return;
+    }
     chunk.blocks[blockX][blockY][blockZ] = block;
 }
 BlockTypes ChunkManager::GetBlock(Chunk& chunk, uint blockX, uint blockY, uint blockZ) const{

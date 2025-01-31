@@ -58,18 +58,18 @@ namespace utility {
     }
 
     inline float PerlinNoise(int chunkX, int chunkY,float x, float y, unsigned int seed) {
-        float dot1 = glm::dot(Gradient(chunkX,chunkY, seed), glm::vec2(x,y));
-        float dot2 = glm::dot(Gradient(chunkX+1,chunkY, seed), glm::vec2(1.0-x,y));
-        float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x,1.0-y));
-        float dot4 = glm::dot(Gradient(chunkX+1,chunkY+1, seed), glm::vec2(1.0-x,1.0-y));
+        float dot1 = glm::dot(Gradient(chunkX,chunkY , seed), glm::vec2(x,-y));
+        float dot2 = glm::dot(Gradient(chunkX+1,chunkY, seed), glm::vec2(x-1.0f,-y));
+        float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x,1.0f-y));
+        float dot4 = glm::dot(Gradient(chunkX+1,chunkY+1, seed), glm::vec2(x-1.0f,1.0f-y));
 
         x = Smooth(x);
         y = Smooth(y);
 
-        float AB = dot1 + x * (dot2-dot1);
-        float CD = dot3 + x * (dot4-dot3);
+        float AB = dot1 + (x * (dot2-dot1));
+        float CD = dot3 + (x * (dot4-dot3));
 
-        float result = AB + y * (CD-AB);
+        float result = AB + (y * (CD-AB));
 
         return (result + 1.0f) / 2.0f;
     }

@@ -197,7 +197,6 @@ void World::GenerateWorld() {
             
             for(float x = 0; x < VoxelWorlds::CHUNK_SIZE; x++) {
                 for(float z = 0; z < VoxelWorlds::CHUNK_SIZE; z++) {
-
                     float height = utility::PerlinNoise(chunkCoordinateX,chunkCoordinateZ,
                     (x+(xOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE),
                     (z+(zOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE), mSeed);
@@ -207,11 +206,19 @@ void World::GenerateWorld() {
                     int numChunks = static_cast<int>(height / VoxelWorlds::CHUNK_SIZE);
                     int remainder = static_cast<int>(height) % static_cast<int>(VoxelWorlds::CHUNK_SIZE); // Extra blocks for the top chunk
 
+                    if(numChunks > mRenderDistance) {
+                        numChunks = mRenderDistance-1;
+                    }
+
                     for (int i = 0; i <= numChunks; i++) {
                         coordinatesY = i;
                         chunk = GetChunk(coordinatesX,coordinatesY,coordinatesZ);
 
                         int blocksToPlace = (i == numChunks) ? remainder : VoxelWorlds::CHUNK_SIZE;
+
+                        if(!chunk) {
+                            continue;
+                        }
 
                         for(float y = 0; y < blocksToPlace; y++) {
                             int globalY = (i * VoxelWorlds::CHUNK_SIZE) + y;

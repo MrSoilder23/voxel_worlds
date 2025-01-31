@@ -8,6 +8,7 @@
 #include "chunk.hpp"
 #include "model.hpp"
 #include "block_texture_creator.hpp"
+#include "constant.hpp" 
 
 using uint = unsigned int;
 
