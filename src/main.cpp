@@ -23,8 +23,8 @@
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
 
-    int mScreenWidth = 640;
-    int mScreenHeight = 480;
+    int mScreenWidth = 1366;
+    int mScreenHeight = 768;
 
     float mSpeed = 20.0f;
     float mSensitivity = 10.0f;
