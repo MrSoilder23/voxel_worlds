@@ -187,54 +187,63 @@ void World::GenerateWorld() {
     } else {
         chunkY = -mRenderDistance;
 
-        auto chunk = GetChunk(coordinatesX,0,coordinatesZ);
-        if(!chunk->wasGenerated) {
-            int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(coordinatesX)/VoxelWorlds::PERLIN_SCALE));
-            int chunkCoordinateZ = static_cast<int>(std::floor(static_cast<float>(coordinatesZ)/VoxelWorlds::PERLIN_SCALE));
+        int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(coordinatesX)/VoxelWorlds::PERLIN_SCALE));
+        int chunkCoordinateZ = static_cast<int>(std::floor(static_cast<float>(coordinatesZ)/VoxelWorlds::PERLIN_SCALE));
 
-            int xOffset = (coordinatesX % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
-            int zOffset = (coordinatesZ % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
-            
-            for(float x = 0; x < VoxelWorlds::CHUNK_SIZE; x++) {
-                for(float z = 0; z < VoxelWorlds::CHUNK_SIZE; z++) {
-                    float height = utility::PerlinNoise(chunkCoordinateX,chunkCoordinateZ,
+        int xOffset = (coordinatesX % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+        int zOffset = (coordinatesZ % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+
+        int xOffset1 = (coordinatesX % (VoxelWorlds::PERLIN_SCALE+3) + VoxelWorlds::PERLIN_SCALE+3) % (VoxelWorlds::PERLIN_SCALE+3);
+        int zOffset1 = (coordinatesZ % (VoxelWorlds::PERLIN_SCALE+3) + VoxelWorlds::PERLIN_SCALE+3) % (VoxelWorlds::PERLIN_SCALE+3);
+        
+        std::shared_ptr<Chunk> chunk;
+        for(float x = 0; x < VoxelWorlds::CHUNK_SIZE; x++) {
+            for(float z = 0; z < VoxelWorlds::CHUNK_SIZE; z++) {
+                if(chunk && chunk->wasGenerated) {
+                    continue;
+                }
+
+                float height = utility::LayeredPerlinNoise(
+                    chunkCoordinateX,
+                    chunkCoordinateZ,
                     (x+(xOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE),
-                    (z+(zOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE), mSeed);
+                    (z+(zOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE),
+                    mSeed,
+                    VoxelWorlds::OCTAVES,
+                    VoxelWorlds::PERSISTANCE,
+                    VoxelWorlds::LACUNARITY
+                );
+                height = 1 - height;
+                height = std::round(std::pow(height,4) * 1000);
 
-                    height = std::round(height * VoxelWorlds::CHUNK_SIZE);
+                int numChunks = static_cast<int>(height / VoxelWorlds::CHUNK_SIZE);
+                int remainder = static_cast<int>(height) % static_cast<int>(VoxelWorlds::CHUNK_SIZE); // Extra blocks for the top chunk
 
-                    int numChunks = static_cast<int>(height / VoxelWorlds::CHUNK_SIZE);
-                    int remainder = static_cast<int>(height) % static_cast<int>(VoxelWorlds::CHUNK_SIZE); // Extra blocks for the top chunk
+                for (int i = 0; i <= numChunks; i++) {
+                    coordinatesY = i;
+                    chunk = GetChunk(coordinatesX,coordinatesY,coordinatesZ);
 
-                    if(numChunks > mRenderDistance) {
-                        numChunks = mRenderDistance-1;
+                    int blocksToPlace = (i == numChunks) ? remainder : VoxelWorlds::CHUNK_SIZE;
+
+                    if(!chunk || chunk->wasGenerated) {
+                        continue;
+                    }
+                    if(x == VoxelWorlds::CHUNK_SIZE-1 && z == VoxelWorlds::CHUNK_SIZE-1) {
+                        chunk->wasGenerated = true;
                     }
 
-                    for (int i = 0; i <= numChunks; i++) {
-                        coordinatesY = i;
-                        chunk = GetChunk(coordinatesX,coordinatesY,coordinatesZ);
-
-                        int blocksToPlace = (i == numChunks) ? remainder : VoxelWorlds::CHUNK_SIZE;
-
-                        if(!chunk) {
-                            continue;
+                    for(float y = 0; y < blocksToPlace; y++) {
+                        int globalY = (i * VoxelWorlds::CHUNK_SIZE) + y;
+                        if(globalY == height-1) {
+                            chunkManger.InsertToChunk(*chunk, BlockTypes::grass_block, x, y, z);
+                        } else {
+                            chunkManger.InsertToChunk(*chunk, BlockTypes::dirt_block, x, y, z);
                         }
-
-                        for(float y = 0; y < blocksToPlace; y++) {
-                            int globalY = (i * VoxelWorlds::CHUNK_SIZE) + y;
-                            if(globalY == height-1) {
-                                chunkManger.InsertToChunk(*chunk, BlockTypes::grass_block, x, y, z);
-                            } else {
-                                chunkManger.InsertToChunk(*chunk, BlockTypes::dirt_block, x, y, z);
-                            }
-                        }
-                        chunk->wasGenerated = true;
-                    
-                    
                     }
                 }
             }
         }
+    
 
 
         // Spiral loop
@@ -372,9 +381,7 @@ void World::DrawChunks() {
         for (int zChunkPos = cameraZ - mRenderDistance; zChunkPos < cameraZ + mRenderDistance; zChunkPos++) {
             for (int yChunkPos = cameraY - mRenderDistance; yChunkPos < cameraY + mRenderDistance; yChunkPos++) {
                 auto chunk = GetChunk(xChunkPos, yChunkPos, zChunkPos);
-                if(chunk) {
-                    gChunkRendererSystem.DrawChunk(chunk);
-                }
+                gChunkRendererSystem.DrawChunk(chunk);
             }
         }
     }

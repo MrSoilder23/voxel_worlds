@@ -13,6 +13,7 @@
 
 // Own Libraries
 #include "transform.hpp"
+#include "constant.hpp"
 
 #ifndef M_PI
 #define M_PI (3.14159265358979323846)
@@ -73,5 +74,34 @@ namespace utility {
 
         return (result + 1.0f) / 2.0f;
     }
+
+    // Persistance - More Pronouced peaks and valleys
+    // Lacunarity -  More detailed terrain
+    inline float LayeredPerlinNoise(int chunkX, int chunkY, float x, float y, unsigned int seed, int octaves = 4, float persistence = 0.5f, float lacunarity = 2.0f) {
+        float total = 0.0f;
+        float frequency = 1.0f;
+        float amplitude = 1.0f; 
+        float maxAmplitude = 0.0f;
+
+        for (int i = 0; i < octaves; ++i) {
+            float scaledX = (chunkX * VoxelWorlds::CHUNK_SIZE + x * VoxelWorlds::CHUNK_SIZE) * frequency;
+            float scaledY = (chunkY * VoxelWorlds::CHUNK_SIZE + y * VoxelWorlds::CHUNK_SIZE) * frequency;
+
+            int newChunkX = static_cast<int>(floor(scaledX / VoxelWorlds::CHUNK_SIZE));
+            int newChunkY = static_cast<int>(floor(scaledY / VoxelWorlds::CHUNK_SIZE));
+            float localX = (scaledX - newChunkX * VoxelWorlds::CHUNK_SIZE) / VoxelWorlds::CHUNK_SIZE;
+            float localY = (scaledY - newChunkY * VoxelWorlds::CHUNK_SIZE) / VoxelWorlds::CHUNK_SIZE;
+
+            float noise = PerlinNoise(newChunkX, newChunkY, localX, localY, seed);
+            total += noise * amplitude;
+
+            maxAmplitude += amplitude;
+            amplitude *= persistence; 
+            frequency *= lacunarity; 
+        }
+
+        return total / maxAmplitude;
+    }
+
 
 }
