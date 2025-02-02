@@ -267,7 +267,7 @@ void World::GenerateWorld() {
             }
         }
 
-        if(max <= mRenderDistance+VoxelWorlds::CHUNK_OFFSET) {
+        if(max <= mRenderDistance+VoxelWorlds::CHUNK_GENERATION_OFFSET) {
             if(loopZ == -max) {
                 max++;
             } 
