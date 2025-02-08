@@ -5,6 +5,7 @@ namespace VoxelWorlds {
     const int CHUNK_GENERATION_OFFSET = 5;
     const int PERLIN_SCALE = 4;
 
+    // Perlin noise settings
     const int   OCTAVES =     6;
     const float PERSISTANCE = 0.3f;
     const float LACUNARITY =  2.7f;
