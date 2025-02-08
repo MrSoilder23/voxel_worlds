@@ -105,10 +105,8 @@ void MainLoop(float deltaTime) {
         threadPool.enqueue([ptr = &world, loopX, loopZ]() {
             ptr->GenerateMesh(loopX, loopZ);
         });
+        
         world.WorldVao(loopX, loopZ);
-        // threadPool.enqueue(&world, &World::GenerateWorld);
-        // world.GenerateWorld();
-        // world.GenerateMesh(loopX, loopZ);
         world.DrawChunks();
         world.WorldSpiral();
     }

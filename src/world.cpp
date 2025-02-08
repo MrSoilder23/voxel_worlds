@@ -1,6 +1,4 @@
-#include "world.hpp"
-#include <iostream>    
-#include <chrono>     
+#include "world.hpp"   
 
 void World::CreateChunk(int chunkX, int chunkY, int chunkZ) {
     auto chunkCoords = std::make_tuple(chunkX,chunkY,chunkZ);
@@ -184,8 +182,6 @@ void World::GenerateMesh(int loopX, int loopZ) {
     int coordinatesX = cameraX + loopX;
     int coordinatesZ = cameraZ + loopZ;
 
-    // std::chrono::time_point<std::chrono::system_clock> start, end;
-    // start = std::chrono::system_clock::now();
     ChunkManager chunkManger;
 
     for(int chunkY = -mRenderDistance; chunkY <= mRenderDistance; chunkY++) {
@@ -196,10 +192,6 @@ void World::GenerateMesh(int loopX, int loopZ) {
             CreateChunkModel(coordinatesX,coordinatesY,coordinatesZ);
         }        
     }
-    // end = std::chrono::system_clock::now();
-    // std::chrono::duration<double> elapsed_seconds = end - start;
-    // std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
-
 }
 
 void World::GenerateWorldChunk(int coordinatesX,int coordinatesY,int coordinatesZ) {
@@ -288,11 +280,6 @@ void World::DrawChunks() {
             }
         }
     }
-        // std::chrono::time_point<std::chrono::system_clock> start, end;
-        // start = std::chrono::system_clock::now();
-        // end = std::chrono::system_clock::now();
-        // std::chrono::duration<double> elapsed_seconds = end - start;
-        // std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 }
 
 void World::WorldVao(int loopX, int loopZ) {
@@ -303,8 +290,6 @@ void World::WorldVao(int loopX, int loopZ) {
     int coordinatesX = cameraX + loopX;
     int coordinatesZ = cameraZ + loopZ;
 
-    // std::chrono::time_point<std::chrono::system_clock> start, end;
-    // start = std::chrono::system_clock::now();
     ChunkManager chunkManger;
 
     for(int chunkY = -mRenderDistance; chunkY <= mRenderDistance; chunkY++) {
