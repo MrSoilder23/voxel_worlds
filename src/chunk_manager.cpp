@@ -29,7 +29,7 @@ void ChunkManager::CreateVAO(Chunk& chunk) {
     std::map<GLuint64, GLuint> mTextures;
     BlockTextureCreator& blockTexture = BlockTextureCreator::GetInstance();
     auto& textureList = blockTexture.GetTextures();
-    
+
     for (const auto& [key, textureHandle] : textureList) { 
         if (mTextures.count(textureHandle) == 0) {
             mTextures[textureHandle];
@@ -45,36 +45,44 @@ void ChunkManager::CreateVAO(Chunk& chunk) {
     for(auto& [textureId, _] : mTextures) {
         handlers.push_back(textureId);
     }
-    GLuint vao, vbo, ebo, texId, textures, textureCoords;
+    if(chunk.mVertexArrayObject != 0) {
+        glDeleteVertexArrays(1, &chunk.mVertexArrayObject);
+        glDeleteBuffers(1, &chunk.mVbo);
+        glDeleteBuffers(1, &chunk.mEbo);
+        glDeleteBuffers(1, &chunk.mTexturesBuffer);
+        glDeleteBuffers(1, &chunk.mTextureCoords);
+        glDeleteBuffers(1, &chunk.mTexId);
+    }
+
     glGenVertexArrays(1, &chunk.mVertexArrayObject);
     glBindVertexArray(chunk.mVertexArrayObject);
 
     // Start generating VBO
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glGenBuffers(1, &chunk.mVbo);
+    glBindBuffer(GL_ARRAY_BUFFER, chunk.mVbo);
     glBufferData(GL_ARRAY_BUFFER, chunk.mModel.vertexPositions.size()*sizeof(glm::vec3), chunk.mModel.vertexPositions.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, (void*)0);
 
-    glGenBuffers(1, &ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glGenBuffers(1, &chunk.mEbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chunk.mEbo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, chunk.mModel.indexBufferData.size()*sizeof(GLuint), chunk.mModel.indexBufferData.data(), GL_STATIC_DRAW);
 
-    glGenBuffers(1, &textures);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, textures);
+    glGenBuffers(1, &chunk.mTexturesBuffer);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, chunk.mTexturesBuffer);
     glBufferData(GL_SHADER_STORAGE_BUFFER, handlers.size() * sizeof(GLuint64), handlers.data(), GL_STATIC_DRAW);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, textures);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, chunk.mTexturesBuffer);
 
-    glGenBuffers(1, &textureCoords);
-    glBindBuffer(GL_ARRAY_BUFFER, textureCoords);
+    glGenBuffers(1, &chunk.mTextureCoords);
+    glBindBuffer(GL_ARRAY_BUFFER, chunk.mTextureCoords);
     glBufferData(GL_ARRAY_BUFFER, chunk.mTexturePositions.size() * sizeof(glm::vec3), chunk.mTexturePositions.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, (void*)0);
 
-    glGenBuffers(1, &texId);
-    glBindBuffer(GL_ARRAY_BUFFER, texId);
+    glGenBuffers(1, &chunk.mTexId);
+    glBindBuffer(GL_ARRAY_BUFFER, chunk.mTexId);
     glBufferData(GL_ARRAY_BUFFER, chunk.mTextureID.size() * sizeof(GLuint), chunk.mTextureID.data(), GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(2);

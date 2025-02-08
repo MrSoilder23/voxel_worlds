@@ -24,5 +24,6 @@ struct Chunk {
     std::vector<GLuint> mTextureID;
 
     GLuint mVertexArrayObject;
+    GLuint mVbo, mEbo, mTexId, mTexturesBuffer, mTextureCoords;
     Transform mTransform;
 };

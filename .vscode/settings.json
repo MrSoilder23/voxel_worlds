@@ -85,6 +85,9 @@
         "set": "cpp",
         "map": "cpp",
         "chrono": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "mutex": "cpp",
+        "queue": "cpp",
+        "future": "cpp"
     }
 }

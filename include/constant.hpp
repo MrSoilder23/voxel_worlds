@@ -8,4 +8,6 @@ namespace VoxelWorlds {
     const int   OCTAVES =     6;
     const float PERSISTANCE = 0.3f;
     const float LACUNARITY =  2.7f;
+    
+    const size_t THREAD_AMOUNT = 4;
 }
