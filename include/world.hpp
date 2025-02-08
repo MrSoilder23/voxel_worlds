@@ -35,10 +35,8 @@ class World {
         void GenerateWorld(int loopX, int loopZ);
         void DrawChunks();
         
-        void WorldSpiral();
         void WorldVao(int loopX, int loopZ);
-        int GetloopX() const;
-        int GetloopZ() const;
+        
     private: 
         void GenerateWorldChunk(int coordinatesX,int coordinatesY,int coordinatesZ);
     private:
@@ -48,13 +46,4 @@ class World {
 
         unsigned int mSeed;
         float mRenderDistance;
-
-        float cameraOldX = 0;
-        float cameraOldY = 0;
-        float cameraOldZ = 0;
-        
-        int mLoopX = 0;
-        int mLoopZ = 0;
-        int max = 1;
-        bool side = true;
 };

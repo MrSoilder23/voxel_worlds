@@ -20,6 +20,7 @@
 #include "chunk_manager.hpp"
 #include "world.hpp"
 #include "thread_pool.hpp"
+#include "spiral_loop.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
@@ -43,6 +44,11 @@ ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
 // ChunkSystem chunkSystem;
 ThreadPool& threadPool = ThreadPool::GetInstance();
 World world;
+
+float gCameraOldX = 0;
+float gCameraOldY = 0;
+float gCameraOldZ = 0;
+SpiralLoop loop;
 
 void Input(float deltaTime) {
     SDL_Event e;
@@ -92,11 +98,27 @@ void MainLoop(float deltaTime) {
 
     // auto chunk = gChunkManager.GetChunk(0,0,0);
     // gChunkRendererSystem.DrawChunk(chunk);
+    glm::vec3 camera = gGraphicsApp->mCamera.GetEye();
+
+    float cameraX = std::floor(camera.x/VoxelWorlds::CHUNK_SIZE);
+    float cameraY = std::floor(camera.y/VoxelWorlds::CHUNK_SIZE);
+    float cameraZ = std::floor(camera.z/VoxelWorlds::CHUNK_SIZE);
+    
+    if(cameraX != gCameraOldX || cameraY != gCameraOldY || cameraZ != gCameraOldZ) {
+        loop.Reset();
+    }
+
+    gCameraOldX = cameraX;
+    gCameraOldY = cameraY;
+    gCameraOldZ = cameraZ;
+
+    std::cout << "CameraX: " << camera.x << ", " << cameraX << "CameraZ: " << camera.z << ", " << cameraZ << std::endl;
+    
     {   
-        world.SetCameraPosition(gGraphicsApp->mCamera.GetEye());
+        world.SetCameraPosition(camera);
         
-        int loopX = world.GetloopX();
-        int loopZ = world.GetloopZ();
+        int loopX = loop.GetLoopX() + cameraX;
+        int loopZ = loop.GetLoopZ() + cameraZ;
 
         world.GenerateChunks(loopX, loopZ);
 
@@ -109,7 +131,8 @@ void MainLoop(float deltaTime) {
 
         world.WorldVao(loopX, loopZ);
         world.DrawChunks();
-        world.WorldSpiral();
+
+        loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
     }
 }
 
@@ -129,7 +152,7 @@ int main(int argc, char* argv[]) {
     unsigned int seed = rndDevice();
 
     world.SetSeed(seed);
-    world.SetRenderDistance(6.0f);
+    world.SetRenderDistance(VoxelWorlds::RENDER_DISTANCE);
 
     // gRendererSystem.AddGraphicsApp(gGraphicsApp);
     gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);
