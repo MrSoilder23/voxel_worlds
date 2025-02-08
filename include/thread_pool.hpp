@@ -23,17 +23,6 @@ class ThreadPool {
             condition.notify_one();
         }
 
-        template<class C, class F, class... Args>
-        void enqueue(C* obj, F&& f, Args&&... args) {
-            auto task = std::bind(std::forward<F>(f), obj, std::forward<Args>(args)...);
-            
-            std::unique_lock<std::mutex> lock(queueMutex);
-            tasks.emplace([task = std::move(task)]() { task(); });
-        
-            lock.unlock();
-            condition.notify_one();
-        }
-
         static ThreadPool& GetInstance();
 
     private:
