@@ -14,7 +14,6 @@
 #include "entity_manager.hpp"
 #include "model_component.hpp"
 #include "chunk_renderer_system.hpp"
-#include "thread_pool.hpp"
 
 using ChunkKey = std::tuple<int, int, int>;
 
@@ -49,7 +48,6 @@ class World {
 
         unsigned int mSeed;
         float mRenderDistance;
-        std::mutex mMutex;
 
         float cameraOldX = 0;
         float cameraOldY = 0;

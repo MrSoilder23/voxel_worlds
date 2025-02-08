@@ -19,6 +19,7 @@
 #include "chunk_renderer_system.hpp"
 #include "chunk_manager.hpp"
 #include "world.hpp"
+#include "thread_pool.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
