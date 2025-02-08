@@ -40,6 +40,7 @@ ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
 // ChunkManager& gChunkManager = ChunkManager::GetInstance();
 
 // ChunkSystem chunkSystem;
+ThreadPool& threadPool = ThreadPool::GetInstance();
 World world;
 
 void Input(float deltaTime) {
@@ -82,7 +83,6 @@ void Input(float deltaTime) {
 
 
 }
-ThreadPool& threadPool = ThreadPool::GetInstance();
 
 void MainLoop(float deltaTime) {
     float fps = 1.0f/deltaTime;
@@ -105,7 +105,7 @@ void MainLoop(float deltaTime) {
         threadPool.enqueue([ptr = &world, loopX, loopZ]() {
             ptr->GenerateMesh(loopX, loopZ);
         });
-        
+
         world.WorldVao(loopX, loopZ);
         world.DrawChunks();
         world.WorldSpiral();
