@@ -1,18 +1,18 @@
 #include "entity_manager.hpp"
 #include <iostream>
 
-void EntityManager::CreateEntity(BlockTypes entityName) {
+void EntityManager::CreateEntity(int entityName) {
     mEntityComponents[entityName] = {};
 }
-void EntityManager::DeleteEntity(BlockTypes entityName) {
+void EntityManager::DeleteEntity(int entityName) {
     mEntityComponents.erase(entityName);
 }
 
-std::unordered_map<std::type_index, std::shared_ptr<IComponent>>& EntityManager::GetEntity(BlockTypes entityName) {
+std::unordered_map<std::type_index, std::shared_ptr<IComponent>>& EntityManager::GetEntity(int entityName) {
     return mEntityComponents[entityName];
 }
 
-std::unordered_map<BlockTypes, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& EntityManager::GetEntities() {
+std::unordered_map<int, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& EntityManager::GetEntities() {
     return mEntityComponents;
 }
 EntityManager::~EntityManager() {

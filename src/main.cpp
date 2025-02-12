@@ -111,8 +111,6 @@ void MainLoop(float deltaTime) {
     gCameraOldX = cameraX;
     gCameraOldY = cameraY;
     gCameraOldZ = cameraZ;
-
-    std::cout << "CameraX: " << camera.x << ", " << cameraX << "CameraZ: " << camera.z << ", " << cameraZ << std::endl;
     
     {   
         world.SetCameraPosition(camera);

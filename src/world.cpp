@@ -44,7 +44,7 @@ BlockTypes World::GetBlock(int chunkX, int chunkY, int chunkZ, int x, int y, int
 }
 
 void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
-    EntityManager& entityManager = EntityManager::GetInstance();
+    BlockRegistry& blockRegistry = BlockRegistry::GetInstance();
     BlockTextureCreator& blockTexture = BlockTextureCreator::GetInstance();
 
     Model chunkModel;
@@ -78,7 +78,7 @@ void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
                 
                 std::vector<GLuint> tempIndexes;
                 
-                auto modelComponent = entityManager.GetComponent<ModelComponent>(block);
+                auto blockObject = blockRegistry.GetBlock(block);
 
                 if(GetBlock(chunkX,chunkY,chunkZ ,x+1, y, z) == BlockTypes::air) {
                     tempIndexes.insert(tempIndexes.end(), {3,1,7, 5,7,1}); // RightFace
@@ -108,17 +108,17 @@ void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
                 }
 
                 glm::vec3 chunkOffset = glm::vec3(x,y,z);
-                for (auto chunkVertex : modelComponent->mModel.vertexPositions) {
+                for (auto chunkVertex : blockObject.model.vertexPositions) {
                     chunkModel.vertexPositions.push_back(chunkVertex + chunkOffset);
                 }
                 
                 chunk->mTexturePositions.insert(chunk->mTexturePositions.end(), 
-                                                modelComponent->mModel.vertexPositions.begin(),
-                                                modelComponent->mModel.vertexPositions.end());
+                                                blockObject.model.vertexPositions.begin(),
+                                                blockObject.model.vertexPositions.end());
 
-                auto textureIDs = modelComponent->mTextures->textureHandle;
+                auto textureIDs = blockObject.textures->textureHandle;
                 chunk->mTextureID.insert(chunk->mTextureID.end(), 
-                                                modelComponent->mModel.vertexPositions.size(),
+                                                blockObject.model.vertexPositions.size(),
                                                 chunk->mTextures[textureIDs]);
 
                 indexes.insert(indexes.end(), 

@@ -11,6 +11,7 @@
 #include "texture_manager.hpp"
 #include "block_texture_creator.hpp"
 #include "block_types.hpp"
+#include "block_registry.hpp"
 // Components
 #include "model_component.hpp"
 #include "position_component.hpp"

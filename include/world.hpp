@@ -14,6 +14,7 @@
 #include "entity_manager.hpp"
 #include "model_component.hpp"
 #include "chunk_renderer_system.hpp"
+#include "block_registry.hpp"
 
 using ChunkKey = std::tuple<int, int, int>;
 

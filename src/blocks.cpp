@@ -70,36 +70,32 @@ void InitializeTextures() {
 }
 
 void InitializeBlocks() {
-    EntityManager& entityManager = EntityManager::GetInstance();
+    BlockRegistry& blockRegistry = BlockRegistry::GetInstance();
     ModelManager& modelManager = ModelManager::GetInstance();
     BlockTextureCreator& blockTextureCreator = BlockTextureCreator::GetInstance();
-
-    GLfloat defaultPos[] = {0.0f,0.0f,0.0f};
+    
 
     // Grass block
-    entityManager.CreateEntity(BlockTypes::grass_block);
-    entityManager.AddComponent<ModelComponent>(BlockTypes::grass_block);
-    entityManager.AddComponent<PositionComponent>(BlockTypes::grass_block);
+    BlockTemplate grassBlock;
 
-    ModelComponent& grassModel = *entityManager.GetComponent<ModelComponent>(BlockTypes::grass_block);
-    grassModel.mModel = modelManager.GetModel("cube");
+    grassBlock.model = modelManager.GetModel("cube");
 
     std::shared_ptr<Texture> grassBlockTexture = std::make_shared<Texture>();
     grassBlockTexture->textureHandle = blockTextureCreator.GetTexture("grass_block");
-    grassModel.mTextures = grassBlockTexture;
+    grassBlock.textures = grassBlockTexture;
+    
+    blockRegistry.RegisterBlock(BlockTypes::grass_block, grassBlock);
 
+    
+    // Dirt Block    
+    BlockTemplate dirtBlock;
 
-    // Dirt Block
-    entityManager.CreateEntity(BlockTypes::dirt_block);
-    entityManager.AddComponent<ModelComponent>(BlockTypes::dirt_block);
-    entityManager.AddComponent<PositionComponent>(BlockTypes::dirt_block);
-
-    ModelComponent& dirtModel = *entityManager.GetComponent<ModelComponent>(BlockTypes::dirt_block);
-    dirtModel.mModel = modelManager.GetModel("cube");
+    dirtBlock.model = modelManager.GetModel("cube");
 
     std::shared_ptr<Texture> dirtBlockTexture = std::make_shared<Texture>();
     dirtBlockTexture->textureHandle = blockTextureCreator.GetTexture("dirt_block");
-    dirtModel.mTextures = dirtBlockTexture;
+    dirtBlock.textures = dirtBlockTexture;
+
+    blockRegistry.RegisterBlock(BlockTypes::dirt_block, dirtBlock);
     
-    entityManager.InitializeAllComponents();
 }
