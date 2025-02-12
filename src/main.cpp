@@ -10,17 +10,17 @@
 #include <glm/glm.hpp>
 
 // Own libraries
-#include "shader.hpp"
-#include "game.hpp"
-#include "graphics.hpp"
-#include "renderer_system.hpp"
-#include "blocks.hpp"
+#include "./graphics/shader.hpp"
+#include "./core/game.hpp"
+#include "./graphics/graphics.hpp"
+#include "./systems/renderer_system.hpp"
+#include "./blocks/blocks.hpp"
 
-#include "chunk_renderer_system.hpp"
-#include "chunk_manager.hpp"
-#include "world.hpp"
-#include "thread_pool.hpp"
-#include "spiral_loop.hpp"
+#include "./systems/chunk_renderer_system.hpp"
+#include "./world/chunk_manager.hpp"
+#include "./core/world.hpp"
+#include "./utility/thread_pool.hpp"
+#include "./utility/spiral_loop.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;

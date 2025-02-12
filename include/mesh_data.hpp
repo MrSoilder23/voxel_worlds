@@ -9,9 +9,9 @@
 
 // Own libraries
 #include "model.hpp"
-#include "texture.hpp"
-#include "graphics.hpp"
-#include "shader.hpp"
+#include "./graphics/texture.hpp"
+#include "./graphics/graphics.hpp"
+#include "./graphics/shader.hpp"
 
 class MeshData {
     public:
