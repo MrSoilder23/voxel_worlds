@@ -1,5 +1,4 @@
 #include "./core/world.hpp"
-#include <chrono>
 
 void World::CreateChunk(int chunkX, int chunkY, int chunkZ) {
     auto chunkCoords = std::make_tuple(chunkX,chunkY,chunkZ);
@@ -142,56 +141,41 @@ void World::SetRenderDistance(float renderDistance) {
 void World::SetSeed(unsigned int seed) {
     mSeed = seed;
 }
-void World::GenerateChunks(int loopX, int loopZ) {
-    float cameraX = std::floor(mCameraPosition.x/VoxelWorlds::CHUNK_SIZE);
+void World::GenerateChunks(int chunkX, int chunkZ) {
     float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
-    float cameraZ = std::floor(mCameraPosition.z/VoxelWorlds::CHUNK_SIZE);
 
-    int coordinatesX = cameraX + loopX;
     int coordinatesY = cameraY;
-    int coordinatesZ = cameraZ + loopZ;
 
     for(int chunkY = -mRenderDistance; chunkY <= mRenderDistance; chunkY++) {
         coordinatesY = cameraY + chunkY;
-        if(!GetChunk(coordinatesX,coordinatesY,coordinatesZ)) {
-            CreateChunk(coordinatesX,coordinatesY,coordinatesZ);    
-            auto chunk = GetChunk(coordinatesX,coordinatesY,coordinatesZ);
-            utility::MeshTranslate(chunk->mTransform, glm::vec3(static_cast<float>(coordinatesX)*VoxelWorlds::CHUNK_SIZE, 
+        if(!GetChunk(chunkX,coordinatesY,chunkZ)) {
+            CreateChunk(chunkX,coordinatesY,chunkZ);    
+            auto chunk = GetChunk(chunkX,coordinatesY,chunkZ);
+            utility::MeshTranslate(chunk->mTransform, glm::vec3(static_cast<float>(chunkX)*VoxelWorlds::CHUNK_SIZE, 
                                                                 static_cast<float>(coordinatesY)*VoxelWorlds::CHUNK_SIZE,
-                                                                static_cast<float>(coordinatesZ)*VoxelWorlds::CHUNK_SIZE));
+                                                                static_cast<float>(chunkZ)*VoxelWorlds::CHUNK_SIZE));
                         
         }
     }
 }
 
-void World::GenerateWorld(int loopX, int loopZ) {
-    float cameraX = std::floor(mCameraPosition.x/VoxelWorlds::CHUNK_SIZE);
+void World::GenerateWorld(int chunkX, int chunkZ) {
     float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
-    float cameraZ = std::floor(mCameraPosition.z/VoxelWorlds::CHUNK_SIZE);
 
-    int coordinatesX = cameraX + loopX;
-    int coordinatesY = cameraY;
-    int coordinatesZ = cameraZ + loopZ;
-
-    GenerateWorldChunk(coordinatesX, coordinatesY, coordinatesZ);
+    GenerateWorldChunk(chunkX, cameraY, chunkZ);
 }
 // TO-DO make this better
-void World::GenerateMesh(int loopX, int loopZ) {
-    float cameraX = std::floor(mCameraPosition.x/VoxelWorlds::CHUNK_SIZE);
+void World::GenerateMesh(int chunkX, int chunkZ) {
     float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
-    float cameraZ = std::floor(mCameraPosition.z/VoxelWorlds::CHUNK_SIZE);
-
-    int coordinatesX = cameraX + loopX;
-    int coordinatesZ = cameraZ + loopZ;
 
     ChunkManager chunkManger;
 
     for(int chunkY = -mRenderDistance; chunkY <= mRenderDistance; chunkY++) {
         int coordinatesY = cameraY + chunkY;
-        auto chunk = GetChunk(coordinatesX,coordinatesY,coordinatesZ);
+        auto chunk = GetChunk(chunkX,coordinatesY,chunkZ);
 
         if(chunk && chunk->wasGenerated && chunk->mVertexArrayObject == 0) {
-            CreateChunkModel(coordinatesX,coordinatesY,coordinatesZ);
+            CreateChunkModel(chunkX,coordinatesY,chunkZ);
         }        
     }
 }
@@ -282,19 +266,14 @@ void World::DrawChunks() {
     }
 }
 
-void World::WorldVao(int loopX, int loopZ) {
-    float cameraX = std::floor(mCameraPosition.x/VoxelWorlds::CHUNK_SIZE);
+void World::WorldVao(int chunkX, int chunkZ) {
     float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
-    float cameraZ = std::floor(mCameraPosition.z/VoxelWorlds::CHUNK_SIZE);
-
-    int coordinatesX = cameraX + loopX;
-    int coordinatesZ = cameraZ + loopZ;
 
     ChunkManager chunkManger;
 
     for(int chunkY = -mRenderDistance; chunkY <= mRenderDistance; chunkY++) {
         int coordinatesY = cameraY + chunkY;
-        auto chunk = GetChunk(coordinatesX,coordinatesY,coordinatesZ);
+        auto chunk = GetChunk(chunkX,coordinatesY,chunkZ);
         
         if(chunk && chunk->wasGenerated && chunk->mVertexArrayObject == 0 && chunk->mModel.vertexPositions.size() != 0) {
             chunkManger.CreateVAO(*chunk);

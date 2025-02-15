@@ -25,17 +25,17 @@ class World {
         BlockTypes GetBlock(int chunkX, int chunkY, int chunkZ, int x, int y, int z);
         
         void CreateChunkModel(int chunkX, int chunkY, int chunkZ);
-        void GenerateMesh(int loopX, int loopZ);
+        void GenerateMesh(int chunkX, int chunkZ);
         
         void SetCameraPosition(glm::vec3 cameraPosition);
         void SetRenderDistance(float renderDistance);
         void SetSeed(unsigned int seed);
         
-        void GenerateChunks(int loopX, int loopZ);
-        void GenerateWorld(int loopX, int loopZ);
+        void GenerateChunks(int chunkX, int chunkZ);
+        void GenerateWorld(int chunkX, int chunkZ);
         void DrawChunks();
         
-        void WorldVao(int loopX, int loopZ);
+        void WorldVao(int chunkX, int loochunkZpZ);
         
     private: 
         void GenerateWorldChunk(int coordinatesX,int coordinatesY,int coordinatesZ);

@@ -103,13 +103,14 @@ void MainLoop(float deltaTime) {
     // gChunkRendererSystem.DrawChunk(chunk);
     glm::vec3 camera = gGraphicsApp->mCamera.GetEye();
 
-    float cameraX = std::floor(camera.x/VoxelWorlds::CHUNK_SIZE);
-    float cameraY = std::floor(camera.y/VoxelWorlds::CHUNK_SIZE);
-    float cameraZ = std::floor(camera.z/VoxelWorlds::CHUNK_SIZE);
+    int cameraX = static_cast<int>(std::floor(camera.x/VoxelWorlds::CHUNK_SIZE));
+    int cameraY = static_cast<int>(std::floor(camera.y/VoxelWorlds::CHUNK_SIZE));
+    int cameraZ = static_cast<int>(std::floor(camera.z/VoxelWorlds::CHUNK_SIZE));
     
     if(cameraX != gCameraOldX || cameraY != gCameraOldY || cameraZ != gCameraOldZ) {
         loop.Reset();
         loop2.Reset();
+        delay = 10;
     }
 
     gCameraOldX = cameraX;
@@ -119,21 +120,19 @@ void MainLoop(float deltaTime) {
     {   
         world.SetCameraPosition(camera);
         
-        int loopX = loop.GetLoopX() + cameraX;
+        int loopX  = loop.GetLoopX()  + cameraX;
         int loopX1 = loop2.GetLoopX() + cameraX;
-        int loopZ = loop.GetLoopZ() + cameraZ;
+        int loopZ  = loop.GetLoopZ()  + cameraZ;
         int loopZ1 = loop2.GetLoopZ() + cameraZ;
 
         world.GenerateChunks(loopX, loopZ);
 
         threadPool.enqueue([ptr = &world, loopX, loopZ]() {
             ptr->GenerateWorld(loopX, loopZ);
-        });
-        threadPool.enqueue([ptr = &world, loopX, loopZ]() {
             ptr->GenerateMesh(loopX, loopZ);
         });
-
         world.WorldVao(loopX1, loopZ1);
+
         world.DrawChunks();
 
         loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
