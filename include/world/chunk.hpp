@@ -2,6 +2,7 @@
 // C++ standard libraries
 #include <map>
 #include <iostream>
+#include <mutex>
 
 // Third_party libraries
 #include <glm/glm.hpp>
@@ -11,12 +12,12 @@
 #include "./blocks/block_types.hpp"
 #include "model.hpp"
 #include "transform.hpp"
+#include "./utility/constant.hpp"
 
 struct Chunk {
-    BlockTypes blocks[32][32][32];
-    int chunkSize;
+    BlockTypes blocks[static_cast<size_t>(VoxelWorlds::CHUNK_SIZE)][static_cast<size_t>(VoxelWorlds::CHUNK_SIZE)][static_cast<size_t>(VoxelWorlds::CHUNK_SIZE)];
     bool wasGenerated = false;
-
+    
     Model mModel;
     std::map<GLuint64, GLuint> mTextures;
     

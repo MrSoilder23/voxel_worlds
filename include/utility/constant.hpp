@@ -1,15 +1,15 @@
 #pragma once
 
 namespace VoxelWorlds {
-    const int RENDER_DISTANCE = 6;
-    const float CHUNK_SIZE = 32;
-    const int CHUNK_GENERATION_OFFSET = 5;
-    const int PERLIN_SCALE = 4;
+    constexpr int RENDER_DISTANCE = 6;
+    constexpr float CHUNK_SIZE = 32;
+    constexpr int CHUNK_GENERATION_OFFSET = 5;
+    constexpr int PERLIN_SCALE = 4;
 
     // Perlin noise settings
-    const int   OCTAVES =     6;
-    const float PERSISTANCE = 0.3f;
-    const float LACUNARITY =  2.7f;
+    constexpr int   OCTAVES =     6;
+    constexpr float PERSISTANCE = 0.3f;
+    constexpr float LACUNARITY =  2.7f;
     
-    const size_t THREAD_AMOUNT = 4;
+    constexpr size_t THREAD_AMOUNT = 4;
 }

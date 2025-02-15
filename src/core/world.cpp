@@ -273,9 +273,7 @@ void World::DrawChunks() {
                 int coordinatesZ = cameraZ + zChunkPos;
 
                 auto chunk = GetChunk(coordinatesX, coordinatesY, coordinatesZ);
-                if (!chunk) {
-                    continue;
-                }
+
                 gChunkRendererSystem.DrawChunk(chunk);
             }
         }

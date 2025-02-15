@@ -5,6 +5,7 @@
 #include <random>
 
 // Third_party libraries
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -134,7 +135,7 @@ void MainLoop(float deltaTime) {
     }
 }
 
-int main(int argc, char* argv[]) {
+int main() {
 
     gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gSettings.mScreenWidth, gSettings.mScreenHeight);
     gGraphicsApp->mCamera.SetProjectionMatrix(glm::radians(45.0f), (float)gSettings.mScreenWidth/(float)gSettings.mScreenHeight, 0.1f);

@@ -1,0 +1,11 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.o",
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}

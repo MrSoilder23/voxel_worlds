@@ -41,6 +41,11 @@ void InitializeTextures() {
     SDL_Surface* grassSide = IMG_Load("./assets/grass_side.png");
     SDL_Surface* grassBottom = IMG_Load("./assets/dirt.png");
 
+    if (!grassTop || !grassSide || !grassBottom) {
+        std::cerr << "Failed to load textures!" << std::endl;
+        return;
+    }
+
     textureManager.CreateNewTexture("grassTop", grassTop);
     textureManager.CreateNewTexture("grassSide", grassSide);
     textureManager.CreateNewTexture("grassBottom", grassBottom);

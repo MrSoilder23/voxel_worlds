@@ -10,11 +10,11 @@ void ChunkManager::InsertToChunk(Chunk& chunk, BlockTypes block, uint blockX, ui
     chunk.blocks[blockX][blockY][blockZ] = block;
 }
 BlockTypes ChunkManager::GetBlock(Chunk& chunk, uint blockX, uint blockY, uint blockZ) const{
-    if(blockX < 0 || blockX > chunk.chunkSize) {
+    if(blockX < 0 || blockX > VoxelWorlds::CHUNK_SIZE) {
         return BlockTypes::air;
-    } else if(blockY < 0 || blockY > chunk.chunkSize) {
+    } else if(blockY < 0 || blockY > VoxelWorlds::CHUNK_SIZE) {
         return BlockTypes::air;
-    } else if(blockZ < 0 || blockZ > chunk.chunkSize) {
+    } else if(blockZ < 0 || blockZ > VoxelWorlds::CHUNK_SIZE) {
         return BlockTypes::air;
     }
 

@@ -1,0 +1,111 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "GNU",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "C:/Projects/voxel_worlds/build",
+	"dir-cur-src" : "C:/Projects/voxel_worlds",
+	"dir-top-bld" : "C:/Projects/voxel_worlds/build",
+	"dir-top-src" : "C:/Projects/voxel_worlds",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"C:\\Projects\\voxel_worlds\\third_party\\include",
+		"C:\\Projects\\voxel_worlds\\include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "C:/Projects/voxel_worlds/build/CMakeFiles/prog.dir",
+	"sources" : 
+	{
+		"CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/blocks/block_registry.cpp"
+		},
+		"CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/blocks/block_texture_creator.cpp"
+		},
+		"CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/blocks/blocks.cpp"
+		},
+		"CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/core/entity_manager.cpp"
+		},
+		"CMakeFiles/prog.dir/src/core/game.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/core/game.cpp"
+		},
+		"CMakeFiles/prog.dir/src/core/world.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/core/world.cpp"
+		},
+		"CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/graphics/model_manager.cpp"
+		},
+		"CMakeFiles/prog.dir/src/graphics/shader.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/graphics/shader.cpp"
+		},
+		"CMakeFiles/prog.dir/src/main.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/main.cpp"
+		},
+		"CMakeFiles/prog.dir/src/mesh_data.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/mesh_data.cpp"
+		},
+		"CMakeFiles/prog.dir/src/systems/camera.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/camera.cpp"
+		},
+		"CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_renderer_system.cpp"
+		},
+		"CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/renderer_system.cpp"
+		},
+		"CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/texture_manager.cpp"
+		},
+		"CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/utility/spiral_loop.cpp"
+		},
+		"CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/utility/thread_pool.cpp"
+		},
+		"CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/world/chunk_manager.cpp"
+		}
+	}
+}
