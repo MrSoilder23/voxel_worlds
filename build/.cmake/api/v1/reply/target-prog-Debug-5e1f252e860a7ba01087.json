@@ -31,7 +31,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 35,
+				"line" : 51,
 				"parent" : 0
 			},
 			{
@@ -43,13 +43,13 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 41,
+				"line" : 60,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 37,
+				"line" : 53,
 				"parent" : 0
 			},
 			{
@@ -149,16 +149,6 @@
 				"backtrace" : 2,
 				"fragment" : "-LC:\\Projects\\voxel_worlds\\lib",
 				"role" : "libraryPath"
-			},
-			{
-				"backtrace" : 3,
-				"fragment" : "-lmingw32",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 3,
-				"fragment" : "C:\\Projects\\voxel_worlds\\lib\\libSDL2main.a",
-				"role" : "libraries"
 			},
 			{
 				"backtrace" : 3,

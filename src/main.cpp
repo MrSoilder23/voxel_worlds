@@ -97,6 +97,8 @@ void MainLoop(float deltaTime) {
     std::string newTitle = "Giera, FPS: " + std::to_string(fps);
     SDL_SetWindowTitle(gGame.GetWindow(), newTitle.data());
 
+    static int delay = 50; // delay in frames
+    static SpiralLoop loop2;
     // auto chunk = gChunkManager.GetChunk(0,0,0);
     // gChunkRendererSystem.DrawChunk(chunk);
     glm::vec3 camera = gGraphicsApp->mCamera.GetEye();
@@ -107,6 +109,7 @@ void MainLoop(float deltaTime) {
     
     if(cameraX != gCameraOldX || cameraY != gCameraOldY || cameraZ != gCameraOldZ) {
         loop.Reset();
+        loop2.Reset();
     }
 
     gCameraOldX = cameraX;
@@ -117,7 +120,9 @@ void MainLoop(float deltaTime) {
         world.SetCameraPosition(camera);
         
         int loopX = loop.GetLoopX() + cameraX;
+        int loopX1 = loop2.GetLoopX() + cameraX;
         int loopZ = loop.GetLoopZ() + cameraZ;
+        int loopZ1 = loop2.GetLoopZ() + cameraZ;
 
         world.GenerateChunks(loopX, loopZ);
 
@@ -128,10 +133,15 @@ void MainLoop(float deltaTime) {
             ptr->GenerateMesh(loopX, loopZ);
         });
 
-        world.WorldVao(loopX, loopZ);
+        world.WorldVao(loopX1, loopZ1);
         world.DrawChunks();
 
         loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
+        if(delay <= 0) {
+            loop2.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
+        } else {
+            delay--;
+        }
     }
 }
 

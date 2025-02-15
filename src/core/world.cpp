@@ -1,4 +1,5 @@
-#include "./core/world.hpp"   
+#include "./core/world.hpp"
+#include <chrono>
 
 void World::CreateChunk(int chunkX, int chunkY, int chunkZ) {
     auto chunkCoords = std::make_tuple(chunkX,chunkY,chunkZ);
@@ -14,7 +15,7 @@ std::shared_ptr<Chunk> World::GetChunk(int chunkX, int chunkY, int chunkZ) const
     return findChunk->second;
 }
 
-BlockTypes World::GetBlock(int chunkX, int chunkY, int chunkZ, int x, int y, int z) {
+BlockTypes World::GetBlock(int chunkX, int chunkY, int chunkZ, int x, int y, int z) {    
     if(x < 0) {
         x = 31;
         chunkX--;
@@ -35,12 +36,13 @@ BlockTypes World::GetBlock(int chunkX, int chunkY, int chunkZ, int x, int y, int
         chunkZ++;
     }
     ChunkKey key = std::make_tuple(chunkX,chunkY,chunkZ);
+    auto it = chunks.find(key); 
 
-    if(chunks.find(key) == chunks.end()) {
+    if(it == chunks.end()) {
         return BlockTypes::air; 
     }
 
-    return chunks[key]->blocks[x][y][z];
+    return it->second->blocks[x][y][z];
 }
 
 void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
@@ -98,7 +100,7 @@ void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
                 if(GetBlock(chunkX,chunkY,chunkZ ,x, y, z-1) == BlockTypes::air) {
                     tempIndexes.insert(tempIndexes.end(), {6,7,4, 7,5,4}); // BackFace
                 }
-
+                
                 for(int i = 0; i < tempIndexes.size(); i++) {
                     tempIndexes[i] = tempIndexes[i] + chunkModel.vertexPositions.size();
                 }
@@ -106,7 +108,6 @@ void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
                 if(tempIndexes.size() == 0) {
                     continue;
                 }
-
                 glm::vec3 chunkOffset = glm::vec3(x,y,z);
                 for (auto chunkVertex : blockObject.model.vertexPositions) {
                     chunkModel.vertexPositions.push_back(chunkVertex + chunkOffset);
@@ -127,6 +128,7 @@ void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
             }
         }
     }
+
     chunkModel.indexBufferData = std::move(indexes);
     chunk->mModel = std::move(chunkModel);
 }

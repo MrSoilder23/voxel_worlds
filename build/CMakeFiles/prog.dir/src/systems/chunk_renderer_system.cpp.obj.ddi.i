@@ -118310,15 +118310,25 @@ namespace utility {
 
 
     inline glm::vec2 Gradient(int x, int y, unsigned int seed) {
-        std::mt19937 mersenneEngine{seed + x * 985712 ^ y * 5019858};
-        std::uniform_real_distribution<> dist{0, 2*
-# 51 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 3
-                                                  3.14159265358979323846
-# 51 "C:/Projects/voxel_worlds/include/utility/utility.hpp"
-                                                      };
+        uint32_t h = seed;
+        h ^= static_cast<uint32_t>(x) * 374761393u;
+        h ^= static_cast<uint32_t>(y) * 668265263u;
+        h = (h ^ (h >> 13)) * 1274126177u;
+        h ^= (h >> 16);
 
-        float a = dist(mersenneEngine);
-        return glm::vec2(std::cos(a), std::sin(a));
+
+        const float invMax = 1.0f / 4294967296.0f;
+        float normalized = h * invMax;
+
+
+        constexpr float TWO_PI = 2*
+# 61 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 3
+                                  3.14159265358979323846
+# 61 "C:/Projects/voxel_worlds/include/utility/utility.hpp"
+                                      ;
+        float angle = normalized * TWO_PI;
+
+        return glm::vec2(std::cos(angle), std::sin(angle));
     }
 
     inline float Smooth(float t) {

@@ -12,9 +12,25 @@ include_directories(${CMAKE_SOURCE_DIR}/third_party/include)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
+if(NOT DEFINED PLATFORM)
+    if(WIN32)
+        set(PLATFORM "Windows")
+    elseif(UNIX)
+        set(PLATFORM "Linux")
+    else()
+        message(FATAL_ERROR "Unsupported platform! Please specify PLATFORM=Windows or PLATFORM=Linux manually.")
+    endif()
+endif()
+
 find_library(SDL2_LIBRARY NAMES SDL2 PATHS ${CMAKE_SOURCE_DIR}/lib NO_DEFAULT_PATH)
 find_library(SDL2_IMAGE_LIB NAMES SDL2_image PATHS ${CMAKE_SOURCE_DIR}/lib NO_DEFAULT_PATH)
-find_library(SDL2_MAIN_LIB NAMES SDL2main PATHS ${CMAKE_SOURCE_DIR}/lib NO_DEFAULT_PATH)
+
+if(PLATFORM STREQUAL "Windows")
+    message(STATUS "Configuring for windows")
+    find_library(SDL2_MAIN_LIB NAMES SDL2main PATHS ${CMAKE_SOURCE_DIR}/lib NO_DEFAULT_PATH)
+elseif(PLATFORM STREQUAL "Linux")
+    message(STATUS "Configuring for linux")
+endif()
 
 add_custom_target(copy_assets ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -38,4 +54,8 @@ add_dependencies(${PROG_NAME} copy_assets copy_shaders)
 
 set_target_properties(${PROG_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
-target_link_libraries(${PROG_NAME} mingw32 ${SDL2_MAIN_LIB} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIB} glad)
+if(PLATFORM STREQUAL "Windows")
+    target_link_libraries(${PROG_NAME} mingw32 ${SDL2_MAIN_LIB} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIB} glad)
+elseif(PLATFORM STREQUAL "Linux")
+    target_link_libraries(${PROG_NAME} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIB} glad)
+endif()

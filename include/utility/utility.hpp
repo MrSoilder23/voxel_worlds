@@ -47,11 +47,21 @@ namespace utility {
 
     // World Generation
     inline glm::vec2 Gradient(int x, int y, unsigned int seed) {
-        std::mt19937 mersenneEngine{seed + x * 985712 ^ y * 5019858};
-        std::uniform_real_distribution<> dist{0, 2*M_PI};
+        uint32_t h = seed;
+        h ^= static_cast<uint32_t>(x) * 374761393u;
+        h ^= static_cast<uint32_t>(y) * 668265263u;
+        h = (h ^ (h >> 13)) * 1274126177u;
+        h ^= (h >> 16);
         
-        float a = dist(mersenneEngine);
-        return glm::vec2(std::cos(a), std::sin(a));
+        // Map h to a float in [0, 1)
+        const float invMax = 1.0f / 4294967296.0f;  // 1 / 2^32
+        float normalized = h * invMax;
+        
+        // Convert to an angle in [0, 2π)
+        constexpr float TWO_PI = 2*M_PI;
+        float angle = normalized * TWO_PI;
+        
+        return glm::vec2(std::cos(angle), std::sin(angle));
     }
 
     inline float Smooth(float t) {
