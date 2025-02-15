@@ -23,26 +23,35 @@ void ChunkRendererSystem::DrawChunk(std::shared_ptr<Chunk>& chunk) {
     if(!chunk) {
         return;
     }
+
+    if(chunk->mVertexArrayObject == 0 || chunk->mModel.indexBufferData.size() == 0 || !chunk->wasGenerated) {
+        return;
+    }
     
     GLCheck(glUseProgram(mGraphicsApp->mGraphicsPipeline);)
 
     GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-    glUniformMatrix4fv(uModelMatrixLocation, 1, false, &chunk->mTransform.mModelMatrix[0][0]);
+    GLCheck(glUniformMatrix4fv(uModelMatrixLocation, 1, false, &chunk->mTransform.mModelMatrix[0][0]);)
 
     glm::mat4 view = mGraphicsApp->mCamera.GetViewMatrix();
     GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
-    glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
+    GLCheck(glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);)
 
     glm::mat4 perspective = mGraphicsApp->mCamera.GetProjectionMatrix();
     GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
-    glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
+    GLCheck(glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);)
     
-    glBindVertexArray(chunk->mVertexArrayObject);
-    glDrawElements(GL_TRIANGLES, chunk->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);
-    glBindVertexArray(0);
+    GLCheck(glBindVertexArray(chunk->mVertexArrayObject);)
+    GLCheck(glDrawElements(GL_TRIANGLES, chunk->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);)
+    GLCheck(glBindVertexArray(0);)
 }
 
 void ChunkRendererSystem::AddGraphicsApp(std::shared_ptr<GraphicsApp>& graphicsApp) {
+    if (!glIsProgram(graphicsApp->mGraphicsPipeline)) {
+        std::cerr << "The shader program is not a valid OpenGL program!" << std::endl;
+        exit(1);
+    }
+
     mGraphicsApp = graphicsApp;
 }
 

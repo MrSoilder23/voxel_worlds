@@ -120785,12 +120785,7 @@ namespace utility {
         float normalized = h * invMax;
 
 
-        constexpr float TWO_PI = 2*
-# 61 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 3
-                                  3.14159265358979323846
-# 61 "C:/Projects/voxel_worlds/include/utility/utility.hpp"
-                                      ;
-        float angle = normalized * TWO_PI;
+        float angle = normalized * 6.2831853;
 
         return glm::vec2(std::cos(angle), std::sin(angle));
     }

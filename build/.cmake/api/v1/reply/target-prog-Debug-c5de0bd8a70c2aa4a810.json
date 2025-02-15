@@ -121,11 +121,11 @@
 	[
 		{
 			"backtrace" : 4,
-			"id" : "copy_assets::@6890427a1f51a3e7e1df"
+			"id" : "copy_shaders::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 4,
-			"id" : "copy_shaders::@6890427a1f51a3e7e1df"
+			"id" : "copy_assets::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 3,

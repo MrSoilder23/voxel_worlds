@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <random>
+#include <mutex>
 
 // Third_party libraries
 #define SDL_MAIN_HANDLED
@@ -91,7 +92,7 @@ void Input(float deltaTime) {
 
 
 }
-
+std::mutex gMainMutex;
 void MainLoop(float deltaTime) {
     float fps = 1.0f/deltaTime;
     std::string newTitle = "Giera, FPS: " + std::to_string(fps);
@@ -125,16 +126,17 @@ void MainLoop(float deltaTime) {
         int loopZ  = loop.GetLoopZ()  + cameraZ;
         int loopZ1 = loop2.GetLoopZ() + cameraZ;
 
-        world.GenerateChunks(loopX, loopZ);
-
+        // Temporal fix, need to set better locks
         threadPool.enqueue([ptr = &world, loopX, loopZ]() {
+            ptr->GenerateChunks(loopX, loopZ);
             ptr->GenerateWorld(loopX, loopZ);
             ptr->GenerateMesh(loopX, loopZ);
         });
+
         world.WorldVao(loopX1, loopZ1);
-
+        
         world.DrawChunks();
-
+        
         loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
         if(delay <= 0) {
             loop2.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
@@ -169,6 +171,7 @@ int main() {
     gGame.SetUpdateCallback(MainLoop);
     
     gGame.RunLoop();
+    threadPool.Shutdown();
 
     return 0;
 }

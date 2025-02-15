@@ -2,7 +2,6 @@
 // C++ standard libraries
 #include <map>
 #include <iostream>
-#include <mutex>
 
 // Third_party libraries
 #include <glm/glm.hpp>

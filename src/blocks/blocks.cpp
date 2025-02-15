@@ -77,7 +77,6 @@ void InitializeBlocks() {
     ModelManager& modelManager = ModelManager::GetInstance();
     BlockTextureCreator& blockTextureCreator = BlockTextureCreator::GetInstance();
 
-
     // Grass block
     BlockTemplate grassBlock;
 

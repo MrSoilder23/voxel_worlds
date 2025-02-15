@@ -3,6 +3,7 @@
 #include <tuple>
 #include <unordered_map>
 #include <memory>
+#include <mutex>
 
 // Own libraries
 #include "./world/chunk.hpp"
@@ -24,7 +25,7 @@ class World {
 
         BlockTypes GetBlock(int chunkX, int chunkY, int chunkZ, int x, int y, int z);
         
-        void CreateChunkModel(int chunkX, int chunkY, int chunkZ);
+        void CreateChunkModel(std::shared_ptr<Chunk> chunk, int chunkX, int chunkY, int chunkZ);
         void GenerateMesh(int chunkX, int chunkZ);
         
         void SetCameraPosition(glm::vec3 cameraPosition);
@@ -41,6 +42,7 @@ class World {
         void GenerateWorldChunk(int coordinatesX,int coordinatesY,int coordinatesZ);
     private:
         std::unordered_map<ChunkKey, std::shared_ptr<Chunk>, Tuple3DHash> chunks;
+        std::mutex mWorldMutex;
         
         glm::vec3 mCameraPosition;
 

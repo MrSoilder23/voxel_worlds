@@ -58,8 +58,7 @@ namespace utility {
         float normalized = h * invMax;
         
         // Convert to an angle in [0, 2π)
-        constexpr float TWO_PI = 2*M_PI;
-        float angle = normalized * TWO_PI;
+        float angle = normalized * 6.2831853;
         
         return glm::vec2(std::cos(angle), std::sin(angle));
     }

@@ -44,26 +44,24 @@ BlockTypes World::GetBlock(int chunkX, int chunkY, int chunkZ, int x, int y, int
     return it->second->blocks[x][y][z];
 }
 
-void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
+void World::CreateChunkModel(std::shared_ptr<Chunk> chunk, int chunkX, int chunkY, int chunkZ) {
     BlockRegistry& blockRegistry = BlockRegistry::GetInstance();
     BlockTextureCreator& blockTexture = BlockTextureCreator::GetInstance();
 
     Model chunkModel;
     std::vector<GLuint> indexes;
-    ChunkKey key = std::make_tuple(chunkX,chunkY,chunkZ);
 
     auto& textureList = blockTexture.GetTextures();
     
     for (const auto& [_, textureHandle] : textureList) { 
-        if (chunks[key]->mTextures.count(textureHandle) == 0) {
-            chunks[key]->mTextures[textureHandle];
+        if (chunk->mTextures.count(textureHandle) == 0) {
+            chunk->mTextures[textureHandle];
         }
     }
     GLuint index = 0;
-    for(auto& [handle, _] : chunks[key]->mTextures) {
-        chunks[key]->mTextures[handle] = index++;
+    for(auto& [handle, _] : chunk->mTextures) {
+        chunk->mTextures[handle] = index++;
     }
-    auto chunk = chunks[key];
     chunk->mTexturePositions.clear();
     chunk->mTextureID.clear();
     chunk->mModel = Model();
@@ -111,7 +109,6 @@ void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
                 for (auto chunkVertex : blockObject.model.vertexPositions) {
                     chunkModel.vertexPositions.push_back(chunkVertex + chunkOffset);
                 }
-                
                 chunk->mTexturePositions.insert(chunk->mTexturePositions.end(), 
                                                 blockObject.model.vertexPositions.begin(),
                                                 blockObject.model.vertexPositions.end());
@@ -127,8 +124,8 @@ void World::CreateChunkModel(int chunkX, int chunkY, int chunkZ) {
             }
         }
     }
-
     chunkModel.indexBufferData = std::move(indexes);
+
     chunk->mModel = std::move(chunkModel);
 }
 
@@ -149,34 +146,39 @@ void World::GenerateChunks(int chunkX, int chunkZ) {
     for(int chunkY = -mRenderDistance; chunkY <= mRenderDistance; chunkY++) {
         coordinatesY = cameraY + chunkY;
         if(!GetChunk(chunkX,coordinatesY,chunkZ)) {
+            std::unique_lock<std::mutex> lock(mWorldMutex);
             CreateChunk(chunkX,coordinatesY,chunkZ);    
+            lock.unlock();
             auto chunk = GetChunk(chunkX,coordinatesY,chunkZ);
             utility::MeshTranslate(chunk->mTransform, glm::vec3(static_cast<float>(chunkX)*VoxelWorlds::CHUNK_SIZE, 
                                                                 static_cast<float>(coordinatesY)*VoxelWorlds::CHUNK_SIZE,
                                                                 static_cast<float>(chunkZ)*VoxelWorlds::CHUNK_SIZE));
-                        
+
         }
     }
 }
 
 void World::GenerateWorld(int chunkX, int chunkZ) {
+    std::lock_guard<std::mutex> lock(mWorldMutex);
     float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
 
     GenerateWorldChunk(chunkX, cameraY, chunkZ);
 }
 // TO-DO make this better
 void World::GenerateMesh(int chunkX, int chunkZ) {
-    float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
-
     ChunkManager chunkManger;
+
+    float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
 
     for(int chunkY = -mRenderDistance; chunkY <= mRenderDistance; chunkY++) {
         int coordinatesY = cameraY + chunkY;
+        std::unique_lock<std::mutex> lock(mWorldMutex);
         auto chunk = GetChunk(chunkX,coordinatesY,chunkZ);
-
+        
         if(chunk && chunk->wasGenerated && chunk->mVertexArrayObject == 0) {
-            CreateChunkModel(chunkX,coordinatesY,chunkZ);
+            CreateChunkModel(chunk, chunkX,coordinatesY,chunkZ);
         }        
+        lock.unlock();
     }
 }
 
@@ -188,9 +190,6 @@ void World::GenerateWorldChunk(int coordinatesX,int coordinatesY,int coordinates
 
     int xOffset = (coordinatesX % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
     int zOffset = (coordinatesZ % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
-
-    int xOffset1 = (coordinatesX % (VoxelWorlds::PERLIN_SCALE+3) + VoxelWorlds::PERLIN_SCALE+3) % (VoxelWorlds::PERLIN_SCALE+3);
-    int zOffset1 = (coordinatesZ % (VoxelWorlds::PERLIN_SCALE+3) + VoxelWorlds::PERLIN_SCALE+3) % (VoxelWorlds::PERLIN_SCALE+3);
 
     std::shared_ptr<Chunk> chunk;
     for(float x = 0; x < VoxelWorlds::CHUNK_SIZE; x++) {
@@ -218,7 +217,7 @@ void World::GenerateWorldChunk(int coordinatesX,int coordinatesY,int coordinates
             for (int i = 0; i <= mRenderDistance; i++) {
                 coordinatesY = i;
                 chunk = GetChunk(coordinatesX,coordinatesY,coordinatesZ);
-                
+
                 int blocksToPlace = (i < numChunks) ? VoxelWorlds::CHUNK_SIZE : 0;
                 if(i == numChunks) {
                     blocksToPlace = remainder;
