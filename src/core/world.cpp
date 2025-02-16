@@ -77,8 +77,6 @@ void World::CreateChunkModel(std::shared_ptr<Chunk> chunk, int chunkX, int chunk
                 
                 std::vector<GLuint> tempIndexes;
                 
-                auto blockObject = blockRegistry.GetBlock(block);
-
                 if(GetBlock(chunkX,chunkY,chunkZ ,x+1, y, z) == BlockTypes::air) {
                     tempIndexes.insert(tempIndexes.end(), {3,1,7, 5,7,1}); // RightFace
                 }
@@ -105,10 +103,13 @@ void World::CreateChunkModel(std::shared_ptr<Chunk> chunk, int chunkX, int chunk
                 if(tempIndexes.size() == 0) {
                     continue;
                 }
+
+                auto blockObject = blockRegistry.GetBlock(block);
                 glm::vec3 chunkOffset = glm::vec3(x,y,z);
                 for (auto chunkVertex : blockObject.model.vertexPositions) {
                     chunkModel.vertexPositions.push_back(chunkVertex + chunkOffset);
                 }
+
                 chunk->mTexturePositions.insert(chunk->mTexturePositions.end(), 
                                                 blockObject.model.vertexPositions.begin(),
                                                 blockObject.model.vertexPositions.end());
@@ -146,9 +147,7 @@ void World::GenerateChunks(int chunkX, int chunkZ) {
     for(int chunkY = -mRenderDistance; chunkY <= mRenderDistance; chunkY++) {
         coordinatesY = cameraY + chunkY;
         if(!GetChunk(chunkX,coordinatesY,chunkZ)) {
-            std::unique_lock<std::mutex> lock(mWorldMutex);
             CreateChunk(chunkX,coordinatesY,chunkZ);    
-            lock.unlock();
             auto chunk = GetChunk(chunkX,coordinatesY,chunkZ);
             utility::MeshTranslate(chunk->mTransform, glm::vec3(static_cast<float>(chunkX)*VoxelWorlds::CHUNK_SIZE, 
                                                                 static_cast<float>(coordinatesY)*VoxelWorlds::CHUNK_SIZE,
@@ -159,7 +158,6 @@ void World::GenerateChunks(int chunkX, int chunkZ) {
 }
 
 void World::GenerateWorld(int chunkX, int chunkZ) {
-    std::lock_guard<std::mutex> lock(mWorldMutex);
     float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
 
     GenerateWorldChunk(chunkX, cameraY, chunkZ);
@@ -172,13 +170,11 @@ void World::GenerateMesh(int chunkX, int chunkZ) {
 
     for(int chunkY = -mRenderDistance; chunkY <= mRenderDistance; chunkY++) {
         int coordinatesY = cameraY + chunkY;
-        std::unique_lock<std::mutex> lock(mWorldMutex);
         auto chunk = GetChunk(chunkX,coordinatesY,chunkZ);
         
         if(chunk && chunk->wasGenerated && chunk->mVertexArrayObject == 0) {
             CreateChunkModel(chunk, chunkX,coordinatesY,chunkZ);
         }        
-        lock.unlock();
     }
 }
 

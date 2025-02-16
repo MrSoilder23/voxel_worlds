@@ -93,6 +93,7 @@ void Input(float deltaTime) {
 
 }
 
+std::mutex gWorldMutex;
 
 void MainLoop(float deltaTime) {
     static float smoothedFPS = 0.0f;
@@ -104,7 +105,7 @@ void MainLoop(float deltaTime) {
     std::string newTitle = "Giera, FPS: " + std::to_string(static_cast<int>(smoothedFPS));
     SDL_SetWindowTitle(gGame.GetWindow(), newTitle.data());
 
-    static int delay = 50; // delay in frames
+    static int delay = 90; // delay in frames
     static SpiralLoop loop2;
     // auto chunk = gChunkManager.GetChunk(0,0,0);
     // gChunkRendererSystem.DrawChunk(chunk);
@@ -134,6 +135,7 @@ void MainLoop(float deltaTime) {
 
         // Temporal fix, need to set better locks
         threadPool.enqueue([ptr = &world, loopX, loopZ]() {
+            std::lock_guard<std::mutex> lock(gWorldMutex);
             ptr->GenerateChunks(loopX, loopZ);
             ptr->GenerateWorld(loopX, loopZ);
             ptr->GenerateMesh(loopX, loopZ);

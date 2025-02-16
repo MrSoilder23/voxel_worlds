@@ -3,7 +3,7 @@
 void BlockRegistry::RegisterBlock(BlockTypes type, BlockTemplate block) {
     blocks[type] = std::move(block);
 }
-BlockTemplate BlockRegistry::GetBlock(BlockTypes type) const {
+const BlockTemplate& BlockRegistry::GetBlock(BlockTypes type) const {
     return blocks.at(type);
 }
 

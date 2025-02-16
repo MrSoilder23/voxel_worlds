@@ -16,7 +16,7 @@ struct BlockTemplate {
 class BlockRegistry {
     public:
         void RegisterBlock(BlockTypes type, BlockTemplate block);
-        BlockTemplate GetBlock(BlockTypes type) const;
+        const BlockTemplate& GetBlock(BlockTypes type) const;
 
         static BlockRegistry& GetInstance();
     private:

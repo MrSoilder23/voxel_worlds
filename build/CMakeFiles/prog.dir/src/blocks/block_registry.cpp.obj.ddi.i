@@ -98361,7 +98361,7 @@ struct BlockTemplate {
 class BlockRegistry {
     public:
         void RegisterBlock(BlockTypes type, BlockTemplate block);
-        BlockTemplate GetBlock(BlockTypes type) const;
+        const BlockTemplate& GetBlock(BlockTypes type) const;
 
         static BlockRegistry& GetInstance();
     private:
@@ -98372,7 +98372,7 @@ class BlockRegistry {
 void BlockRegistry::RegisterBlock(BlockTypes type, BlockTemplate block) {
     blocks[type] = std::move(block);
 }
-BlockTemplate BlockRegistry::GetBlock(BlockTypes type) const {
+const BlockTemplate& BlockRegistry::GetBlock(BlockTypes type) const {
     return blocks.at(type);
 }
 
