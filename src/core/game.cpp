@@ -3,7 +3,7 @@
 Game::Game() :  mOpenGLContext(nullptr), mWindow(nullptr), mScreenWidth(640), mScreenHeight(480), 
                 r(0.0510f),g(0.1255f),b(0.1490f), 
                 mEventCallback([](float deltaTime){}), mUpdateCallback([](float deltaTime){}),
-                lastTime(0) {
+                lastTime(std::chrono::steady_clock::now()) {
 
 }
 Game::~Game() {
@@ -56,6 +56,18 @@ void Game::InitializeProgram(std::string name, int x, int y, int w, int h) {
         exit(1);
     }
 
+    SDL_GL_SetSwapInterval(0);
+
+    int vsync_status = SDL_GL_GetSwapInterval();
+    if (vsync_status == 1) {
+        std::cout << "VSYNC is enabled." << std::endl;
+    } else if (vsync_status == 0) {
+        std::cout << "VSYNC is disabled." << std::endl;
+    } else {
+        std::cout << "Unable to determine VSYNC status." << std::endl;
+    }
+
+
     utility::GetOpenGlVersionInfo();
 }
 
@@ -88,9 +100,10 @@ void Game::RunLoop() {
     SDL_SetRelativeMouseMode(SDL_TRUE);
 
     while (!mQuit) {
-        Uint32 currentTime = SDL_GetTicks();
-        float deltaTime = (currentTime - lastTime) / 1000.0f;
+        auto currentTime = std::chrono::steady_clock::now();
+        std::chrono::duration<float> deltaTimeChrono = currentTime - lastTime;
         lastTime = currentTime;
+        float deltaTime = deltaTimeChrono.count();
 
         mEventCallback(deltaTime);
 
@@ -111,8 +124,20 @@ void Game::RunLoop() {
         mUpdateCallback(deltaTime);
 
         SDL_GL_SwapWindow(mWindow);
+
+        constexpr float TARGET_FRAME_TIME = 1.0f/VoxelWorlds::FRAME_RATE;
+
+        auto frameEnd = std::chrono::steady_clock::now();
+        std::chrono::duration<float> frameDuration = frameEnd - currentTime;
+        float remainingTime = TARGET_FRAME_TIME - frameDuration.count();
+
+        if (remainingTime > 0) {
+            auto start = std::chrono::steady_clock::now();
+            while (std::chrono::duration<float>(std::chrono::steady_clock::now() - start).count() < remainingTime) {
+                // Busy-wait for the remaining time
+            }
+        }
     }
-    
 }
 
 void Game::StopLoop() {

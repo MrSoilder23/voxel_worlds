@@ -2,6 +2,8 @@
 // C++ standard libraries
 #include <functional>
 #include <string>
+#include <chrono>
+#include <thread>
 
 // Third_party libraries
 #include <SDL2/SDL.h>
@@ -37,7 +39,7 @@ class Game {
         SDL_GLContext mOpenGLContext;
         SDL_Window* mWindow;
 
-        Uint32 lastTime;
+        std::chrono::steady_clock::time_point lastTime;
 
         int mScreenWidth;
         int mScreenHeight;

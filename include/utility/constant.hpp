@@ -12,4 +12,5 @@ namespace VoxelWorlds {
     constexpr float LACUNARITY =  2.7f;
     
     constexpr size_t THREAD_AMOUNT = 4;
+    constexpr float FRAME_RATE = 240;
 }

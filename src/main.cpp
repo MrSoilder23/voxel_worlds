@@ -92,10 +92,16 @@ void Input(float deltaTime) {
 
 
 }
-std::mutex gMainMutex;
+
+
 void MainLoop(float deltaTime) {
+    static float smoothedFPS = 0.0f;
+    static float alpha = 0.1f;  
+
     float fps = 1.0f/deltaTime;
-    std::string newTitle = "Giera, FPS: " + std::to_string(fps);
+    smoothedFPS = alpha * fps + (1.0f - alpha) * smoothedFPS;
+
+    std::string newTitle = "Giera, FPS: " + std::to_string(static_cast<int>(smoothedFPS));
     SDL_SetWindowTitle(gGame.GetWindow(), newTitle.data());
 
     static int delay = 50; // delay in frames
