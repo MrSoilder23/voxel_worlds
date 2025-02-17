@@ -5,7 +5,7 @@
 
 // Own libraries
 #include "./graphics/graphics.hpp"
-#include "./graphics/model_component.hpp"
+#include "./components/model_component.hpp"
 #include "./core/entity_manager.hpp"
 
 class RendererSystem {

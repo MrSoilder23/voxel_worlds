@@ -115620,7 +115620,7 @@ namespace utility {
 }
 # 13 "C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp" 2
 
-# 1 "C:/Projects/voxel_worlds/include/graphics/model_component.hpp" 1
+# 1 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 1
        
 
 
@@ -115634,7 +115634,7 @@ class IComponent {
     public:
         virtual ~IComponent() = default;
 };
-# 8 "C:/Projects/voxel_worlds/include/graphics/model_component.hpp" 2
+# 8 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
 
 # 1 "C:/Projects/voxel_worlds/include/graphics/texture.hpp" 1
        
@@ -115648,7 +115648,7 @@ class IComponent {
 struct Texture {
     GLuint64 textureHandle;
 };
-# 10 "C:/Projects/voxel_worlds/include/graphics/model_component.hpp" 2
+# 10 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/graphics/shader.hpp" 1
        
 
@@ -118381,7 +118381,7 @@ namespace shader {
     int FindUniformLocation(GLuint pipeline, const GLchar* name);
 
 }
-# 11 "C:/Projects/voxel_worlds/include/graphics/model_component.hpp" 2
+# 11 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
 
 class ModelComponent : public IComponent {
     public:
@@ -118391,7 +118391,7 @@ class ModelComponent : public IComponent {
 
 };
 # 15 "C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp" 2
-# 1 "C:/Projects/voxel_worlds/include/world/position_component.hpp" 1
+# 1 "C:/Projects/voxel_worlds/include/components/position_component.hpp" 1
        
 
 

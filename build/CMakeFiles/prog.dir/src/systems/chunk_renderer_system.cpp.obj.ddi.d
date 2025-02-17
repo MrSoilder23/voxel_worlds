@@ -407,7 +407,7 @@ CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/numeric \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_numeric.h \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_numeric_defs.h \
- C:/Projects/voxel_worlds/include/graphics/model_component.hpp \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
  C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/Projects/voxel_worlds/include/graphics/shader.hpp \
@@ -416,4 +416,4 @@ CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/fstream.tcc \
- C:/Projects/voxel_worlds/include/world/position_component.hpp
+ C:/Projects/voxel_worlds/include/components/position_component.hpp

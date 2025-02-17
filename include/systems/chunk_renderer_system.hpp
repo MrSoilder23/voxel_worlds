@@ -11,8 +11,8 @@
 #include "./world/chunk.hpp"
 #include "./utility/utility.hpp"
 
-#include "./graphics/model_component.hpp"
-#include "./world/position_component.hpp"
+#include "./components/model_component.hpp"
+#include "./components/position_component.hpp"
 
 class ChunkRendererSystem {
     public:

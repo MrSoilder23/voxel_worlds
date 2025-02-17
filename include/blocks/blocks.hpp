@@ -13,8 +13,8 @@
 #include "block_types.hpp"
 #include "block_registry.hpp"
 // Components
-#include "./graphics/model_component.hpp"
-#include "./world/position_component.hpp"
+#include "./components/model_component.hpp"
+#include "./components/position_component.hpp"
 
 void InitializeBlocks();
 void InitializeTextures();

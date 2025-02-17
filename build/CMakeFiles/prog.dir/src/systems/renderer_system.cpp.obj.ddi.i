@@ -92498,7 +92498,7 @@ struct GraphicsApp {
     Camera mCamera;
 };
 # 8 "C:/Projects/voxel_worlds/include/systems/renderer_system.hpp" 2
-# 1 "C:/Projects/voxel_worlds/include/graphics/model_component.hpp" 1
+# 1 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 1
        
 
 
@@ -92512,7 +92512,7 @@ struct GraphicsApp {
 struct Transform {
     glm::mat4 mModelMatrix{glm::mat4(1.0f)};
 };
-# 7 "C:/Projects/voxel_worlds/include/graphics/model_component.hpp" 2
+# 7 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/core/component.hpp" 1
        
 
@@ -92520,7 +92520,7 @@ class IComponent {
     public:
         virtual ~IComponent() = default;
 };
-# 8 "C:/Projects/voxel_worlds/include/graphics/model_component.hpp" 2
+# 8 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/model.hpp" 1
        
 
@@ -96492,7 +96492,7 @@ struct Model {
     std::vector<glm::vec3> vertexPositions;
     std::vector<GLuint> indexBufferData;
 };
-# 9 "C:/Projects/voxel_worlds/include/graphics/model_component.hpp" 2
+# 9 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/graphics/texture.hpp" 1
        
 
@@ -96505,7 +96505,7 @@ struct Model {
 struct Texture {
     GLuint64 textureHandle;
 };
-# 10 "C:/Projects/voxel_worlds/include/graphics/model_component.hpp" 2
+# 10 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/graphics/shader.hpp" 1
        
 
@@ -100820,7 +100820,7 @@ namespace shader {
     int FindUniformLocation(GLuint pipeline, const GLchar* name);
 
 }
-# 11 "C:/Projects/voxel_worlds/include/graphics/model_component.hpp" 2
+# 11 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
 
 class ModelComponent : public IComponent {
     public:

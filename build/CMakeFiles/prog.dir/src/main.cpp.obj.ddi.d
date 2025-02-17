@@ -613,7 +613,7 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
  C:/Projects/voxel_worlds/include/systems/renderer_system.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/typeindex \
- C:/Projects/voxel_worlds/include/graphics/model_component.hpp \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
  C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/model.hpp \
  C:/Projects/voxel_worlds/include/graphics/texture.hpp \
@@ -624,7 +624,7 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/systems/texture_manager.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
- C:/Projects/voxel_worlds/include/world/position_component.hpp \
+ C:/Projects/voxel_worlds/include/components/position_component.hpp \
  C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp \
  C:/Projects/voxel_worlds/include/world/chunk.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/map \

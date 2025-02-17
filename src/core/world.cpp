@@ -272,6 +272,6 @@ void World::WorldVao(int chunkX, int chunkZ) {
         
         if(chunk && chunk->wasGenerated && chunk->mVertexArrayObject == 0 && chunk->mModel.vertexPositions.size() != 0) {
             chunkManger.CreateVAO(*chunk);
-        }        
+        }
     }
 }

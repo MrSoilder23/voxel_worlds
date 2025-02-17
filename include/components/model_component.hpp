@@ -6,8 +6,8 @@
 #include "./world/transform.hpp"
 #include "./core/component.hpp"
 #include "model.hpp"
-#include "texture.hpp"
-#include "shader.hpp"
+#include "./graphics/texture.hpp"
+#include "./graphics/shader.hpp"
 
 class ModelComponent : public IComponent {
     public: 
