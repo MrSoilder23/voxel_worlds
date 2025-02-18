@@ -40,8 +40,9 @@ void InitializeTextures() {
     SDL_Surface* grassTop = IMG_Load("./assets/grass_top.png");
     SDL_Surface* grassSide = IMG_Load("./assets/grass_side.png");
     SDL_Surface* grassBottom = IMG_Load("./assets/dirt.png");
+    SDL_Surface* stone = IMG_Load("./assets/stone.png");
 
-    if (!grassTop || !grassSide || !grassBottom) {
+    if (!grassTop || !grassSide || !grassBottom || !stone) {
         std::cerr << "Failed to load textures!" << std::endl;
         return;
     }
@@ -49,6 +50,7 @@ void InitializeTextures() {
     textureManager.CreateNewTexture("grassTop", grassTop);
     textureManager.CreateNewTexture("grassSide", grassSide);
     textureManager.CreateNewTexture("grassBottom", grassBottom);
+    textureManager.CreateNewTexture("stone", stone);
 
     std::vector<SDL_Surface*> grassBlockFaces;
     grassBlockFaces.reserve(6); // Right Left Top Bottom Back Front
@@ -68,8 +70,18 @@ void InitializeTextures() {
     dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
     dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
 
+    std::vector<SDL_Surface*> stoneBlockFaces;
+    stoneBlockFaces.reserve(6); // Right Left Top Bottom Back Front
+    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
+    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
+    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
+    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
+    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
+    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
+
     blockTextureCreator.CreateTexture("grass_block", grassBlockFaces);
     blockTextureCreator.CreateTexture("dirt_block", dirtBlockFaces);
+    blockTextureCreator.CreateTexture("stone_block", stoneBlockFaces);
 }
 
 void InitializeBlocks() {
@@ -99,5 +111,17 @@ void InitializeBlocks() {
     dirtBlock.textures = dirtBlockTexture;
 
     blockRegistry.RegisterBlock(BlockTypes::dirt_block, dirtBlock);
+
+    
+    // Stone Block    
+    BlockTemplate stoneBlock;
+
+    stoneBlock.model = modelManager.GetModel("cube");
+
+    std::shared_ptr<Texture> stoneBlockTexture = std::make_shared<Texture>();
+    stoneBlockTexture->textureHandle = blockTextureCreator.GetTexture("stone_block");
+    stoneBlock.textures = stoneBlockTexture;
+
+    blockRegistry.RegisterBlock(BlockTypes::stone_block, stoneBlock);
     
 }

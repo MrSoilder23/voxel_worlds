@@ -230,8 +230,10 @@ void World::GenerateWorldChunk(int coordinatesX,int coordinatesY,int coordinates
                     int globalY = (i * VoxelWorlds::CHUNK_SIZE) + y;
                     if(globalY == height-1) {
                         chunkManger.InsertToChunk(*chunk, BlockTypes::grass_block, x, y, z);
-                    } else {
+                    } else if(globalY <= height-2 && globalY >= height-5){
                         chunkManger.InsertToChunk(*chunk, BlockTypes::dirt_block, x, y, z);
+                    } else {
+                        chunkManger.InsertToChunk(*chunk, BlockTypes::stone_block, x, y, z);
                     }
                 }
             }
