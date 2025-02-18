@@ -13,16 +13,20 @@
 
 // Own libraries
 #include "./graphics/shader.hpp"
-#include "./core/game.hpp"
 #include "./graphics/graphics.hpp"
-#include "./systems/renderer_system.hpp"
-#include "./blocks/blocks.hpp"
-
-#include "./systems/chunk_renderer_system.hpp"
-#include "./world/chunk_manager.hpp"
+#include "./core/entity_manager.hpp"
 #include "./core/world.hpp"
+#include "./core/game.hpp"
+#include "./systems/renderer_system.hpp"
+#include "./systems/chunk_renderer_system.hpp"
+#include "./systems/player_controller_system.hpp"
+#include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
 #include "./utility/spiral_loop.hpp"
+
+#include "./components/player_controller_component.hpp"
+#include "./components/position_component.hpp"
+#include "./components/camera_component.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
@@ -31,13 +35,14 @@ struct Settings {
     int mScreenHeight = 768;
 
     float mSpeed = 20.0f;
-    float mSensitivity = 10.0f;
+    float mSensitivity = 18.0f;
 };
 Settings gSettings;
 Game gGame;
 
 std::shared_ptr<GraphicsApp> gGraphicsApp = std::make_shared<GraphicsApp>();
 EntityManager& gEntityManager = EntityManager::GetInstance();
+PlayerControllerSystem gPlayerControllerSys;
 
 RendererSystem& gRendererSystem = RendererSystem::GetInstance();
 ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
@@ -59,39 +64,14 @@ void Input(float deltaTime) {
         if(e.type == SDL_QUIT) {
             gGame.StopLoop();
         }
-        if(e.type == SDL_MOUSEMOTION) {
-            int mouseX = e.motion.xrel;
-            int mouseY = e.motion.yrel;
-
-            gGraphicsApp->mCamera.MouseLook(mouseX, mouseY, gSettings.mSensitivity, deltaTime);
-        }
     }
 
     const Uint8* state = SDL_GetKeyboardState(NULL);
     if(state[SDL_SCANCODE_ESCAPE]) {
         gGame.StopLoop();
     }
-    if(state[SDL_SCANCODE_W]) {
-        gGraphicsApp->mCamera.MoveForward(gSettings.mSpeed, deltaTime);
-    }
-    if(state[SDL_SCANCODE_S]) {
-        gGraphicsApp->mCamera.MoveBackward(gSettings.mSpeed, deltaTime);
-    }
-    if(state[SDL_SCANCODE_A]) {
-        gGraphicsApp->mCamera.MoveLeft(gSettings.mSpeed, deltaTime);
-    }
-    if(state[SDL_SCANCODE_D]) {
-        gGraphicsApp->mCamera.MoveRight(gSettings.mSpeed, deltaTime);
-    }
-    if(state[SDL_SCANCODE_SPACE]) {
-        gGraphicsApp->mCamera.MoveUp(gSettings.mSpeed, deltaTime);
-    }
-    if(state[SDL_SCANCODE_LSHIFT]) {
-        gGraphicsApp->mCamera.MoveDown(gSettings.mSpeed, deltaTime);
-    }
-
-
 }
+
 
 std::mutex gWorldMutex;
 
@@ -109,7 +89,7 @@ void MainLoop(float deltaTime) {
     static SpiralLoop loop2;
     // auto chunk = gChunkManager.GetChunk(0,0,0);
     // gChunkRendererSystem.DrawChunk(chunk);
-    glm::vec3 camera = gGraphicsApp->mCamera.GetEye();
+    glm::vec3 camera = gEntityManager.GetComponent<CameraComponent>("Player")->mEye;
 
     int cameraX = static_cast<int>(std::floor(camera.x/VoxelWorlds::CHUNK_SIZE));
     int cameraY = static_cast<int>(std::floor(camera.y/VoxelWorlds::CHUNK_SIZE));
@@ -143,7 +123,7 @@ void MainLoop(float deltaTime) {
 
         world.WorldVao(loopX1, loopZ1);
         
-        world.DrawChunks();
+        world.DrawChunks(gEntityManager);
         
         loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
         if(delay <= 0) {
@@ -152,6 +132,8 @@ void MainLoop(float deltaTime) {
             delay--;
         }
     }
+
+    gPlayerControllerSys.Update(gEntityManager, deltaTime);
 }
 
 int main() {
@@ -171,6 +153,17 @@ int main() {
 
     world.SetSeed(seed);
     world.SetRenderDistance(VoxelWorlds::RENDER_DISTANCE);
+
+    gEntityManager.CreateEntity("Player");
+    gEntityManager.AddComponent<PlayerControllerComponent>("Player");
+    gEntityManager.AddComponent<PositionComponent>("Player");
+    gEntityManager.AddComponent<CameraComponent>("Player");
+
+    gEntityManager.GetComponent<PlayerControllerComponent>("Player")->mSensitivity = gSettings.mSensitivity;
+
+    gPlayerControllerSys.SetFov(45.0f);
+    gPlayerControllerSys.SetScreenSize(gSettings.mScreenWidth,gSettings.mScreenHeight);
+    gPlayerControllerSys.SetCamera(gEntityManager, 0.1f);
 
     // gRendererSystem.AddGraphicsApp(gGraphicsApp);
     gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);

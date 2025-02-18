@@ -515,69 +515,22 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/fstream.tcc \
- C:/Projects/voxel_worlds/include/core/game.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/functional \
- C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
- C:/msys64/mingw64/include/c++/14.2.0/unordered_map \
- C:/msys64/mingw64/include/c++/14.2.0/bits/unordered_map.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable_policy.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/enable_special_members.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
- C:/msys64/mingw64/include/c++/14.2.0/array \
- C:/msys64/mingw64/include/c++/14.2.0/chrono \
- C:/msys64/mingw64/include/c++/14.2.0/sstream \
- C:/msys64/mingw64/include/c++/14.2.0/bits/sstream.tcc \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/chrono_io.h \
- C:/msys64/mingw64/include/c++/14.2.0/iomanip \
- C:/msys64/mingw64/include/c++/14.2.0/locale \
- C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets_nonio.h \
- C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/time_members.h \
- C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/messages_members.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets_nonio.tcc \
- C:/msys64/mingw64/include/c++/14.2.0/bits/locale_conv.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/quoted_string.h \
- C:/msys64/mingw64/include/c++/14.2.0/format \
- C:/msys64/mingw64/include/c++/14.2.0/charconv \
- C:/msys64/mingw64/include/c++/14.2.0/optional \
- C:/msys64/mingw64/include/c++/14.2.0/span \
- C:/msys64/mingw64/include/c++/14.2.0/variant \
- C:/msys64/mingw64/include/c++/14.2.0/bits/unicode.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/unicode-data.h \
- C:/msys64/mingw64/include/c++/14.2.0/thread \
- C:/msys64/mingw64/include/c++/14.2.0/stop_token \
- C:/msys64/mingw64/include/c++/14.2.0/atomic \
- C:/msys64/mingw64/include/c++/14.2.0/bits/std_thread.h \
- C:/msys64/mingw64/include/c++/14.2.0/semaphore \
- C:/msys64/mingw64/include/c++/14.2.0/bits/semaphore_base.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_timed_wait.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/this_thread_sleep.h \
- C:/msys64/mingw64/include/semaphore.h \
- C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
- C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h \
- C:/Projects/voxel_worlds/include/utility/utility.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.hpp \
+ C:/Projects/voxel_worlds/include/graphics/graphics.hpp \
+ C:/Projects/voxel_worlds/include/systems/camera.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/gtc/constants.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_constants.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_constants.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtc/constants.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/quaternion.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_clip_space.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_clip_space.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.inl \
- C:/Projects/voxel_worlds/include/world/transform.hpp \
- C:/Projects/voxel_worlds/include/utility/constant.hpp \
- C:/Projects/voxel_worlds/include/graphics/graphics.hpp \
- C:/Projects/voxel_worlds/include/systems/camera.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/quaternion.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/vector_relational.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/vector_relational.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/detail/type_float.hpp \
@@ -611,29 +564,79 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
- C:/Projects/voxel_worlds/include/systems/renderer_system.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/typeindex \
- C:/Projects/voxel_worlds/include/components/model_component.hpp \
- C:/Projects/voxel_worlds/include/core/component.hpp \
- C:/Projects/voxel_worlds/include/model.hpp \
- C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/unordered_map \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unordered_map.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable_policy.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/enable_special_members.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
+ C:/msys64/mingw64/include/c++/14.2.0/typeindex \
+ C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
- C:/Projects/voxel_worlds/include/blocks/blocks.hpp \
- C:/Projects/voxel_worlds/include/graphics/model_manager.hpp \
- C:/Projects/voxel_worlds/include/systems/texture_manager.hpp \
- C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
- C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
- C:/Projects/voxel_worlds/include/components/position_component.hpp \
- C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp \
+ C:/Projects/voxel_worlds/include/core/world.hpp \
  C:/Projects/voxel_worlds/include/world/chunk.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/map \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_map.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multimap.h \
- C:/Projects/voxel_worlds/include/world/chunk_manager.hpp \
- C:/Projects/voxel_worlds/include/core/world.hpp \
+ C:/Projects/voxel_worlds/include/model.hpp \
+ C:/Projects/voxel_worlds/include/world/transform.hpp \
+ C:/Projects/voxel_worlds/include/utility/constant.hpp \
  C:/Projects/voxel_worlds/include/utility/tuple_hash.hpp \
+ C:/Projects/voxel_worlds/include/utility/utility.hpp \
+ C:/Projects/voxel_worlds/include/world/chunk_manager.hpp \
+ C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
+ C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
+ C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h \
+ C:/Projects/voxel_worlds/include/graphics/texture.hpp \
+ C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
+ C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
+ C:/Projects/voxel_worlds/include/components/position_component.hpp \
+ C:/Projects/voxel_worlds/include/components/camera_component.hpp \
+ C:/Projects/voxel_worlds/include/core/game.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/functional \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
+ C:/msys64/mingw64/include/c++/14.2.0/array \
+ C:/msys64/mingw64/include/c++/14.2.0/chrono \
+ C:/msys64/mingw64/include/c++/14.2.0/sstream \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/sstream.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/chrono_io.h \
+ C:/msys64/mingw64/include/c++/14.2.0/iomanip \
+ C:/msys64/mingw64/include/c++/14.2.0/locale \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets_nonio.h \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/time_members.h \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/messages_members.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets_nonio.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/locale_conv.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/quoted_string.h \
+ C:/msys64/mingw64/include/c++/14.2.0/format \
+ C:/msys64/mingw64/include/c++/14.2.0/charconv \
+ C:/msys64/mingw64/include/c++/14.2.0/optional \
+ C:/msys64/mingw64/include/c++/14.2.0/span \
+ C:/msys64/mingw64/include/c++/14.2.0/variant \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unicode.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unicode-data.h \
+ C:/msys64/mingw64/include/c++/14.2.0/thread \
+ C:/msys64/mingw64/include/c++/14.2.0/stop_token \
+ C:/msys64/mingw64/include/c++/14.2.0/atomic \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_thread.h \
+ C:/msys64/mingw64/include/c++/14.2.0/semaphore \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/semaphore_base.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_timed_wait.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/this_thread_sleep.h \
+ C:/msys64/mingw64/include/semaphore.h \
+ C:/Projects/voxel_worlds/include/systems/renderer_system.hpp \
+ C:/Projects/voxel_worlds/include/systems/player_controller_system.hpp \
+ C:/Projects/voxel_worlds/include/components/player_controller_component.hpp \
+ C:/Projects/voxel_worlds/include/blocks/blocks.hpp \
+ C:/Projects/voxel_worlds/include/graphics/model_manager.hpp \
+ C:/Projects/voxel_worlds/include/systems/texture_manager.hpp \
  C:/Projects/voxel_worlds/include/utility/thread_pool.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/queue \
  C:/msys64/mingw64/include/c++/14.2.0/deque \

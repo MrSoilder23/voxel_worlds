@@ -57281,35 +57281,35 @@ enum class BlockTypes {
 
 class EntityManager {
     public:
-        void CreateEntity(int entityName);
-        void DeleteEntity(int entityName);
+        void CreateEntity(std::string entityName);
+        void DeleteEntity(std::string entityName);
         ~EntityManager();
 
         template <typename ComponentType>
-        void AddComponent(int entityName) {
+        void AddComponent(std::string entityName) {
             mEntityComponents[entityName][std::type_index(typeid(ComponentType))] = std::make_shared<ComponentType>();
         }
 
         template <typename ComponentType>
-        void DeleteComponent(int entityName) {
+        void DeleteComponent(std::string entityName) {
             mEntityComponents[entityName].erase(std::type_index(typeid(ComponentType)));
         }
 
         template <typename ComponentType>
-        std::shared_ptr<ComponentType> GetComponent(int entityName) {
+        std::shared_ptr<ComponentType> GetComponent(std::string entityName) {
             return std::dynamic_pointer_cast<ComponentType>(mEntityComponents[entityName][std::type_index(typeid(ComponentType))]);
         }
 
-        std::unordered_map<std::type_index, std::shared_ptr<IComponent>>& GetEntity(int entityName);
+        std::unordered_map<std::type_index, std::shared_ptr<IComponent>>& GetEntity(std::string entityName);
 
-        std::unordered_map<int, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& GetEntities();
+        std::unordered_map<std::string, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& GetEntities();
 
         void InitializeAllComponents();
 
         static EntityManager& GetInstance();
 
     private:
-        std::unordered_map<int, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>> mEntityComponents;
+        std::unordered_map<std::string, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>> mEntityComponents;
 };
 # 2 "C:/Projects/voxel_worlds/src/core/entity_manager.cpp" 2
 # 1 "C:/msys64/mingw64/include/c++/14.2.0/iostream" 1 3
@@ -58900,18 +58900,18 @@ namespace std
 
 
 # 4 "C:/Projects/voxel_worlds/src/core/entity_manager.cpp"
-void EntityManager::CreateEntity(int entityName) {
+void EntityManager::CreateEntity(std::string entityName) {
     mEntityComponents[entityName] = {};
 }
-void EntityManager::DeleteEntity(int entityName) {
+void EntityManager::DeleteEntity(std::string entityName) {
     mEntityComponents.erase(entityName);
 }
 
-std::unordered_map<std::type_index, std::shared_ptr<IComponent>>& EntityManager::GetEntity(int entityName) {
+std::unordered_map<std::type_index, std::shared_ptr<IComponent>>& EntityManager::GetEntity(std::string entityName) {
     return mEntityComponents[entityName];
 }
 
-std::unordered_map<int, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& EntityManager::GetEntities() {
+std::unordered_map<std::string, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& EntityManager::GetEntities() {
     return mEntityComponents;
 }
 EntityManager::~EntityManager() {

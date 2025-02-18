@@ -239,7 +239,7 @@ void World::GenerateWorldChunk(int coordinatesX,int coordinatesY,int coordinates
     }
 }
 
-void World::DrawChunks() {
+void World::DrawChunks(EntityManager& entityManager) {
     ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
 
     float cameraX = std::floor(mCameraPosition.x/VoxelWorlds::CHUNK_SIZE);
@@ -255,7 +255,7 @@ void World::DrawChunks() {
 
                 auto chunk = GetChunk(coordinatesX, coordinatesY, coordinatesZ);
 
-                gChunkRendererSystem.DrawChunk(chunk);
+                gChunkRendererSystem.DrawChunk(chunk, entityManager);
             }
         }
     }

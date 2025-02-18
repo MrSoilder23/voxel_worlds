@@ -12,7 +12,7 @@
 #include "./utility/constant.hpp" 
 #include "./utility/utility.hpp"
 #include "./world/chunk_manager.hpp"
-#include "entity_manager.hpp"
+#include "./core/entity_manager.hpp"
 #include "./blocks/block_registry.hpp"
 #include "./systems/chunk_renderer_system.hpp"
 
@@ -34,7 +34,7 @@ class World {
         
         void GenerateChunks(int chunkX, int chunkZ);
         void GenerateWorld(int chunkX, int chunkZ);
-        void DrawChunks();
+        void DrawChunks(EntityManager& entityManager);
         
         void WorldVao(int chunkX, int loochunkZpZ);
         

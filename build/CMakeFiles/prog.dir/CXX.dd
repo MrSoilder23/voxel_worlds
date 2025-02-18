@@ -23,6 +23,8 @@ build CMakeFiles/prog.dir/src/systems/camera.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj: dyndep
 
+build CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj: dyndep
+
 build CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj: dyndep

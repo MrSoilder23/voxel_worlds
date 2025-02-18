@@ -82,6 +82,11 @@
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_renderer_system.cpp"
 		},
+		"CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/player_controller_system.cpp"
+		},
 		"CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj" : 
 		{
 			"language" : "CXX",

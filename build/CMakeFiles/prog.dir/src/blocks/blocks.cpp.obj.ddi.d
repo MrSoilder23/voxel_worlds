@@ -524,4 +524,51 @@ CMakeFiles\prog.dir\src\blocks\blocks.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/fstream.tcc \
- C:/Projects/voxel_worlds/include/components/position_component.hpp
+ C:/Projects/voxel_worlds/include/components/position_component.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/constants.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_constants.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_constants.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/constants.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/quaternion.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_clip_space.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_clip_space.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/vector_relational.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/vector_relational.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/detail/type_float.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_common.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_geometric.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_geometric.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_common.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_float.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/detail/type_quat.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_relational.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_relational.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/detail/type_quat.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_float_precision.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_double.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_double_precision.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_trigonometric.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_trigonometric.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_transform.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_transform.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/quaternion.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/epsilon.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/detail/setup.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/epsilon.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_exponential.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_exponential.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/component_wise.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/detail/setup.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/component_wise.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl

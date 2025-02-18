@@ -18,7 +18,7 @@ static bool GLCheckErrorStatus(const char* function, int line) {
 #define GLCheck(x) GLClearAllErrors(); x; GLCheckErrorStatus(#x, __LINE__);
 
 
-void ChunkRendererSystem::DrawChunk(std::shared_ptr<Chunk>& chunk) {
+void ChunkRendererSystem::DrawChunk(std::shared_ptr<Chunk>& chunk, EntityManager& entityManager) {
 
     if(!chunk) {
         return;
@@ -27,17 +27,20 @@ void ChunkRendererSystem::DrawChunk(std::shared_ptr<Chunk>& chunk) {
     if(chunk->mVertexArrayObject == 0 || chunk->mModel.indexBufferData.size() == 0 || !chunk->wasGenerated) {
         return;
     }
+
+    auto cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
+    auto positionComponent = entityManager.GetComponent<PositionComponent>("Player");
     
     GLCheck(glUseProgram(mGraphicsApp->mGraphicsPipeline);)
 
     GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
     GLCheck(glUniformMatrix4fv(uModelMatrixLocation, 1, false, &chunk->mTransform.mModelMatrix[0][0]);)
 
-    glm::mat4 view = mGraphicsApp->mCamera.GetViewMatrix();
+    glm::mat4 view = glm::lookAt(cameraComponent->mEye, cameraComponent->mEye + positionComponent->mViewDirection, cameraComponent->mUpVector);
     GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
     GLCheck(glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);)
 
-    glm::mat4 perspective = mGraphicsApp->mCamera.GetProjectionMatrix();
+    glm::mat4 perspective = cameraComponent->mProjectionMatrix;
     GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
     GLCheck(glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);)
     
