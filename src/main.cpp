@@ -35,7 +35,7 @@ struct Settings {
     int mScreenHeight = 768;
 
     float mSpeed = 20.0f;
-    float mSensitivity = 18.0f;
+    float mSensitivity = 24.0f;
 };
 Settings gSettings;
 Game gGame;
@@ -49,13 +49,8 @@ ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
 // ChunkManager& gChunkManager = ChunkManager::GetInstance();
 
 // ChunkSystem chunkSystem;
-ThreadPool& threadPool = ThreadPool::GetInstance();
-World world;
-
-float gCameraOldX = 0;
-float gCameraOldY = 0;
-float gCameraOldZ = 0;
-SpiralLoop loop;
+ThreadPool& gThreadPool = ThreadPool::GetInstance();
+World gWorld;
 
 void Input(float deltaTime) {
     SDL_Event e;
@@ -86,7 +81,13 @@ void MainLoop(float deltaTime) {
     SDL_SetWindowTitle(gGame.GetWindow(), newTitle.data());
 
     static int delay = 90; // delay in frames
+    static SpiralLoop loop;
     static SpiralLoop loop2;
+
+    static float gCameraOldX = 0;
+    static float gCameraOldY = 0;
+    static float gCameraOldZ = 0;
+
     // auto chunk = gChunkManager.GetChunk(0,0,0);
     // gChunkRendererSystem.DrawChunk(chunk);
     glm::vec3 camera = gEntityManager.GetComponent<CameraComponent>("Player")->mEye;
@@ -106,7 +107,7 @@ void MainLoop(float deltaTime) {
     gCameraOldZ = cameraZ;
     
     {   
-        world.SetCameraPosition(camera);
+        gWorld.SetCameraPosition(camera);
         
         int loopX  = loop.GetLoopX()  + cameraX;
         int loopX1 = loop2.GetLoopX() + cameraX;
@@ -114,16 +115,16 @@ void MainLoop(float deltaTime) {
         int loopZ1 = loop2.GetLoopZ() + cameraZ;
 
         // Temporal fix, need to set better locks
-        threadPool.enqueue([ptr = &world, loopX, loopZ]() {
+        gThreadPool.enqueue([ptr = &gWorld, loopX, loopZ]() {
             std::lock_guard<std::mutex> lock(gWorldMutex);
             ptr->GenerateChunks(loopX, loopZ);
             ptr->GenerateWorld(loopX, loopZ);
             ptr->GenerateMesh(loopX, loopZ);
         });
 
-        world.WorldVao(loopX1, loopZ1);
+        gWorld.WorldVao(loopX1, loopZ1);
         
-        world.DrawChunks(gEntityManager);
+        gWorld.DrawChunks(gEntityManager);
         
         loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
         if(delay <= 0) {
@@ -151,19 +152,21 @@ int main() {
     static std::random_device rndDevice;
     unsigned int seed = rndDevice();
 
-    world.SetSeed(seed);
-    world.SetRenderDistance(VoxelWorlds::RENDER_DISTANCE);
+    gWorld.SetSeed(seed);
+    gWorld.SetRenderDistance(VoxelWorlds::RENDER_DISTANCE);
 
-    gEntityManager.CreateEntity("Player");
-    gEntityManager.AddComponent<PlayerControllerComponent>("Player");
-    gEntityManager.AddComponent<PositionComponent>("Player");
-    gEntityManager.AddComponent<CameraComponent>("Player");
+    {
+        gEntityManager.CreateEntity("Player");
+        gEntityManager.AddComponent<PlayerControllerComponent>("Player");
+        gEntityManager.AddComponent<PositionComponent>("Player");
+        gEntityManager.AddComponent<CameraComponent>("Player");
 
-    gEntityManager.GetComponent<PlayerControllerComponent>("Player")->mSensitivity = gSettings.mSensitivity;
+        gEntityManager.GetComponent<PlayerControllerComponent>("Player")->mSensitivity = gSettings.mSensitivity;
 
-    gPlayerControllerSys.SetFov(45.0f);
-    gPlayerControllerSys.SetScreenSize(gSettings.mScreenWidth,gSettings.mScreenHeight);
-    gPlayerControllerSys.SetCamera(gEntityManager, 0.1f);
+        gPlayerControllerSys.SetFov(45.0f);
+        gPlayerControllerSys.SetScreenSize(gSettings.mScreenWidth,gSettings.mScreenHeight);
+        gPlayerControllerSys.SetCamera(gEntityManager, 0.1f);
+    }
 
     // gRendererSystem.AddGraphicsApp(gGraphicsApp);
     gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);
@@ -172,7 +175,7 @@ int main() {
     gGame.SetUpdateCallback(MainLoop);
     
     gGame.RunLoop();
-    threadPool.Shutdown();
+    gThreadPool.Shutdown();
 
     return 0;
 }
