@@ -136,7 +136,7 @@ void MainLoop(float deltaTime) {
         }
     }
 
-    gRendererSystem.DrawAll();
+    gRendererSystem.DrawAllDebug();
     gPlayerControllerSys.Update(gEntityManager, deltaTime);
 }
 GLuint VAO, VBO, EBO;
@@ -174,10 +174,45 @@ int main() {
     {
         gEntityManager.CreateEntity("Test");
         gEntityManager.AddComponent<BoundingBoxComponent>("Test");
+        gEntityManager.AddComponent<ModelComponent>("Test");
 
         auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test");
         boundingBox->mMin = glm::vec3(0.0f,0.0f,0.0f);
         boundingBox->mMax = glm::vec3(1.0f,1.0f,1.0f);
+
+        Model model;
+        model.vertexPositions = {
+            glm::vec3(boundingBox->mMin.x, boundingBox->mMin.y, boundingBox->mMin.z),  // Bottom-left-back
+            glm::vec3(boundingBox->mMax.x, boundingBox->mMin.y, boundingBox->mMin.z),  // Bottom-right-back
+            glm::vec3(boundingBox->mMax.x, boundingBox->mMax.y, boundingBox->mMin.z),  // Top-right-back
+            glm::vec3(boundingBox->mMin.x, boundingBox->mMax.y, boundingBox->mMin.z),  // Top-left-back
+            glm::vec3(boundingBox->mMin.x, boundingBox->mMin.y, boundingBox->mMax.z),  // Bottom-left-front
+            glm::vec3(boundingBox->mMax.x, boundingBox->mMin.y, boundingBox->mMax.z),  // Bottom-right-front
+            glm::vec3(boundingBox->mMax.x, boundingBox->mMax.y, boundingBox->mMax.z),  // Top-right-front
+            glm::vec3(boundingBox->mMin.x, boundingBox->mMax.y, boundingBox->mMax.z)   // Top-left-front
+        };
+
+        model.indexBufferData = {
+            0, 1,  // Bottom edge
+            1, 2,  // Right edge
+            2, 3,  // Top edge
+            3, 0,  // Left edge
+        
+            // Front face edges
+            4, 5,  // Bottom edge
+            5, 6,  // Right edge
+            6, 7,  // Top edge
+            7, 4,  // Left edge
+        
+            // Connecting edges between back and front faces
+            0, 4,  // Bottom-left edge
+            1, 5,  // Bottom-right edge
+            2, 6,  // Top-right edge
+            3, 7   // Top-left edge
+        };
+        auto a = gEntityManager.GetComponent<ModelComponent>("Test");
+
+        a->mModel = std::move(model);
     }
     {
         gEntityManager.CreateEntity("Test1");
@@ -222,7 +257,6 @@ int main() {
 
         
         a->mModel = std::move(model);
-        utility::MeshTranslate(gEntityManager.GetComponent<ModelComponent>("Test1")->mTransform, glm::vec3(0.0f,0.0f,0.0f));
     }
 
     VertexSetupSystem vSetupSystem;
