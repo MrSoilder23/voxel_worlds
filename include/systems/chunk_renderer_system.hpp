@@ -11,6 +11,7 @@
 #include "./world/chunk.hpp"
 #include "./utility/utility.hpp"
 #include "./core/entity_manager.hpp"
+#include "./graphics/shader.hpp"
 
 #include "./components/model_component.hpp"
 #include "./components/position_component.hpp"

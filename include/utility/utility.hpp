@@ -13,6 +13,7 @@
 
 // Own Libraries
 #include "./world/transform.hpp"
+#include "./components/bounding_box_component.hpp"
 #include "constant.hpp"
 
 #ifndef M_PI
@@ -43,6 +44,13 @@ namespace utility {
 
     inline void MeshScale(Transform& transform, float x, float y, float z) {
         transform.mModelMatrix = glm::scale(transform.mModelMatrix, glm::vec3(x,y,z));
+    }
+
+    // Collision detection
+    inline bool Instersects(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
+        return (box1.mMin.x <= box2.mMax.x && box1.mMax.x >= box2.mMin.x) &&
+               (box1.mMin.y <= box2.mMax.y && box1.mMax.y >= box2.mMin.y) &&
+               (box1.mMin.z <= box2.mMax.z && box1.mMax.z >= box2.mMin.z);
     }
 
     // World Generation

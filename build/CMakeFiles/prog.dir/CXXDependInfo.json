@@ -97,6 +97,11 @@
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/texture_manager.cpp"
 		},
+		"CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/vertex_setup_system.cpp"
+		},
 		"CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj" : 
 		{
 			"language" : "CXX",

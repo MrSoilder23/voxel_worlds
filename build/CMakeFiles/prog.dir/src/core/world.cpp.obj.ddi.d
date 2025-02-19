@@ -382,6 +382,8 @@ CMakeFiles\prog.dir\src\core\world.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.inl \
+ C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
+ C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/world/chunk_manager.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
@@ -546,7 +548,6 @@ CMakeFiles\prog.dir\src\core\world.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/typeindex \
- C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
  C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp \
  C:/Projects/voxel_worlds/include/graphics/graphics.hpp \
@@ -586,12 +587,12 @@ CMakeFiles\prog.dir\src\core\world.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
- C:/Projects/voxel_worlds/include/components/model_component.hpp \
  C:/Projects/voxel_worlds/include/graphics/shader.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/fstream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/codecvt.h \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/fstream.tcc \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
  C:/Projects/voxel_worlds/include/components/camera_component.hpp

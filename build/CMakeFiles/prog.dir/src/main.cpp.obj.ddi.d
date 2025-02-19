@@ -586,6 +586,7 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
  C:/Projects/voxel_worlds/include/utility/tuple_hash.hpp \
  C:/Projects/voxel_worlds/include/utility/utility.hpp \
+ C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
  C:/Projects/voxel_worlds/include/world/chunk_manager.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
@@ -634,6 +635,7 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/systems/renderer_system.hpp \
  C:/Projects/voxel_worlds/include/systems/player_controller_system.hpp \
  C:/Projects/voxel_worlds/include/components/player_controller_component.hpp \
+ C:/Projects/voxel_worlds/include/systems/vertex_setup_system.hpp \
  C:/Projects/voxel_worlds/include/blocks/blocks.hpp \
  C:/Projects/voxel_worlds/include/graphics/model_manager.hpp \
  C:/Projects/voxel_worlds/include/systems/texture_manager.hpp \

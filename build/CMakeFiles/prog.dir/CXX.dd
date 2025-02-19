@@ -29,6 +29,8 @@ build CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj: dyndep
 
+build CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj: dyndep
+
 build CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj: dyndep

@@ -20,6 +20,7 @@
 #include "./systems/renderer_system.hpp"
 #include "./systems/chunk_renderer_system.hpp"
 #include "./systems/player_controller_system.hpp"
+#include "./systems/vertex_setup_system.hpp"
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
 #include "./utility/spiral_loop.hpp"
@@ -27,6 +28,7 @@
 #include "./components/player_controller_component.hpp"
 #include "./components/position_component.hpp"
 #include "./components/camera_component.hpp"
+#include "./components/bounding_box_component.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
@@ -134,13 +136,14 @@ void MainLoop(float deltaTime) {
         }
     }
 
+    gRendererSystem.DrawAll();
     gPlayerControllerSys.Update(gEntityManager, deltaTime);
 }
+GLuint VAO, VBO, EBO;
 
 int main() {
 
     gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gSettings.mScreenWidth, gSettings.mScreenHeight);
-    gGraphicsApp->mCamera.SetProjectionMatrix(glm::radians(45.0f), (float)gSettings.mScreenWidth/(float)gSettings.mScreenHeight, 0.1f);
 
     shader::CreateGraphicsPipeline(gSettings.mGraphicsShaderProgram, "./shaders/vert.glsl", "./shaders/frag.glsl");
     gGraphicsApp->mGraphicsPipeline = gSettings.mGraphicsShaderProgram;
@@ -168,7 +171,64 @@ int main() {
         gPlayerControllerSys.SetCamera(gEntityManager, 0.1f);
     }
 
-    // gRendererSystem.AddGraphicsApp(gGraphicsApp);
+    {
+        gEntityManager.CreateEntity("Test");
+        gEntityManager.AddComponent<BoundingBoxComponent>("Test");
+
+        auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test");
+        boundingBox->mMin = glm::vec3(0.0f,0.0f,0.0f);
+        boundingBox->mMax = glm::vec3(1.0f,1.0f,1.0f);
+    }
+    {
+        gEntityManager.CreateEntity("Test1");
+        gEntityManager.AddComponent<BoundingBoxComponent>("Test1");
+        gEntityManager.AddComponent<ModelComponent>("Test1");
+
+        auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test1");
+        boundingBox->mMin = glm::vec3(-0.5f,-0.5f,-0.5f);
+        boundingBox->mMax = glm::vec3(0.5f,0.5f,0.5f);
+
+        Model model;
+        model.vertexPositions = {
+            glm::vec3(boundingBox->mMin.x, boundingBox->mMin.y, boundingBox->mMin.z),  // Bottom-left-back
+            glm::vec3(boundingBox->mMax.x, boundingBox->mMin.y, boundingBox->mMin.z),  // Bottom-right-back
+            glm::vec3(boundingBox->mMax.x, boundingBox->mMax.y, boundingBox->mMin.z),  // Top-right-back
+            glm::vec3(boundingBox->mMin.x, boundingBox->mMax.y, boundingBox->mMin.z),  // Top-left-back
+            glm::vec3(boundingBox->mMin.x, boundingBox->mMin.y, boundingBox->mMax.z),  // Bottom-left-front
+            glm::vec3(boundingBox->mMax.x, boundingBox->mMin.y, boundingBox->mMax.z),  // Bottom-right-front
+            glm::vec3(boundingBox->mMax.x, boundingBox->mMax.y, boundingBox->mMax.z),  // Top-right-front
+            glm::vec3(boundingBox->mMin.x, boundingBox->mMax.y, boundingBox->mMax.z)   // Top-left-front
+        };
+
+        model.indexBufferData = {
+            0, 1,  // Bottom edge
+            1, 2,  // Right edge
+            2, 3,  // Top edge
+            3, 0,  // Left edge
+        
+            // Front face edges
+            4, 5,  // Bottom edge
+            5, 6,  // Right edge
+            6, 7,  // Top edge
+            7, 4,  // Left edge
+        
+            // Connecting edges between back and front faces
+            0, 4,  // Bottom-left edge
+            1, 5,  // Bottom-right edge
+            2, 6,  // Top-right edge
+            3, 7   // Top-left edge
+        };
+        auto a = gEntityManager.GetComponent<ModelComponent>("Test1");
+
+        
+        a->mModel = std::move(model);
+        utility::MeshTranslate(gEntityManager.GetComponent<ModelComponent>("Test1")->mTransform, glm::vec3(0.0f,0.0f,0.0f));
+    }
+
+    VertexSetupSystem vSetupSystem;
+
+    vSetupSystem.CreateVertexSpecification(gEntityManager);
+    gRendererSystem.AddGraphicsApp(gGraphicsApp);
     gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);
 
     gGame.SetEventCallback(Input);

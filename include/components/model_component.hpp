@@ -3,16 +3,17 @@
 #include <memory>
 
 // Own libraries
+#include "./graphics/texture.hpp"
 #include "./world/transform.hpp"
 #include "./core/component.hpp"
-#include "model.hpp"
-#include "./graphics/texture.hpp"
-#include "./graphics/shader.hpp"
+#include "./model.hpp"
 
-class ModelComponent : public IComponent {
-    public: 
-        std::shared_ptr<Texture> mTextures;
-        Transform mTransform;
-        Model mModel;
-
+struct ModelComponent : public IComponent {
+    std::shared_ptr<Texture> mTextures;
+    Transform mTransform;
+    Model mModel;
+    
+    GLuint VAO;
+    GLuint VBO;
+    GLuint EBO;
 };

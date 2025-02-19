@@ -115520,9 +115520,35 @@ namespace __detail
        
 # 40 "C:/msys64/mingw64/include/c++/14.2.0/cmath" 3
 # 8 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 2
-# 22 "C:/Projects/voxel_worlds/include/utility/utility.hpp"
+# 16 "C:/Projects/voxel_worlds/include/utility/utility.hpp"
+# 1 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 1
+       
 
-# 22 "C:/Projects/voxel_worlds/include/utility/utility.hpp"
+
+
+# 1 "C:/Projects/voxel_worlds/include/core/component.hpp" 1
+       
+
+
+# 3 "C:/Projects/voxel_worlds/include/core/component.hpp"
+class IComponent {
+    public:
+        virtual ~IComponent() = default;
+};
+# 6 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 2
+
+struct BoundingBoxComponent : public IComponent{
+
+    glm::vec3 mMin;
+    glm::vec3 mMax;
+};
+# 17 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 2
+
+
+
+
+
+
 namespace utility {
 
 
@@ -115547,6 +115573,13 @@ namespace utility {
 
     inline void MeshScale(Transform& transform, float x, float y, float z) {
         transform.mModelMatrix = glm::scale(transform.mModelMatrix, glm::vec3(x,y,z));
+    }
+
+
+    inline bool Instersects(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
+        return (box1.mMin.x <= box2.mMax.x && box1.mMax.x >= box2.mMin.x) &&
+               (box1.mMin.y <= box2.mMax.y && box1.mMax.y >= box2.mMin.y) &&
+               (box1.mMin.z <= box2.mMax.z && box1.mMax.z >= box2.mMin.z);
     }
 
 
@@ -122093,18 +122126,11 @@ namespace std
 
 
 
-# 1 "C:/Projects/voxel_worlds/include/core/component.hpp" 1
-       
 
 
-# 3 "C:/Projects/voxel_worlds/include/core/component.hpp"
-class IComponent {
-    public:
-        virtual ~IComponent() = default;
-};
-# 10 "C:/Projects/voxel_worlds/include/core/entity_manager.hpp" 2
 
 
+# 12 "C:/Projects/voxel_worlds/include/core/entity_manager.hpp"
 class EntityManager {
     public:
         void CreateEntity(std::string entityName);
@@ -122138,29 +122164,6 @@ class EntityManager {
         std::unordered_map<std::string, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>> mEntityComponents;
 };
 # 14 "C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp" 2
-
-# 1 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 1
-       
-
-
-
-
-
-
-
-# 1 "C:/Projects/voxel_worlds/include/graphics/texture.hpp" 1
-       
-
-
-
-
-
-
-
-struct Texture {
-    GLuint64 textureHandle;
-};
-# 10 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/graphics/shader.hpp" 1
        
 
@@ -124893,16 +124896,41 @@ namespace shader {
     int FindUniformLocation(GLuint pipeline, const GLchar* name);
 
 }
-# 11 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
+# 15 "C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp" 2
 
-class ModelComponent : public IComponent {
-    public:
-        std::shared_ptr<Texture> mTextures;
-        Transform mTransform;
-        Model mModel;
+# 1 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 1
+       
 
+
+
+
+# 1 "C:/Projects/voxel_worlds/include/graphics/texture.hpp" 1
+       
+
+
+
+
+
+
+
+struct Texture {
+    GLuint64 textureHandle;
 };
-# 16 "C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp" 2
+# 7 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
+
+
+
+
+struct ModelComponent : public IComponent {
+    std::shared_ptr<Texture> mTextures;
+    Transform mTransform;
+    Model mModel;
+
+    GLuint VAO;
+    GLuint VBO;
+    GLuint EBO;
+};
+# 17 "C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/components/position_component.hpp" 1
        
 # 10 "C:/Projects/voxel_worlds/include/components/position_component.hpp"
@@ -124912,7 +124940,7 @@ struct PositionComponent : public IComponent {
     glm::vec3 mViewDirection;
     glm::quat mOrientation;
 };
-# 17 "C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp" 2
+# 18 "C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/components/camera_component.hpp" 1
        
 
@@ -124931,7 +124959,7 @@ struct CameraComponent : public IComponent {
     glm::vec3 mEye;
     glm::vec3 mUpVector;
 };
-# 18 "C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp" 2
+# 19 "C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp" 2
 
 class ChunkRendererSystem {
     public:

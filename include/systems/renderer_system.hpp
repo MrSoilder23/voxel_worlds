@@ -5,6 +5,7 @@
 
 // Own libraries
 #include "./graphics/graphics.hpp"
+#include "./graphics/shader.hpp"
 #include "./components/model_component.hpp"
 #include "./core/entity_manager.hpp"
 
