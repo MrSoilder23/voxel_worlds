@@ -98373,7 +98373,14 @@ void BlockRegistry::RegisterBlock(BlockTypes type, BlockTemplate block) {
     blocks[type] = std::move(block);
 }
 const BlockTemplate& BlockRegistry::GetBlock(BlockTypes type) const {
-    return blocks.at(type);
+    static BlockTemplate defaultBlock = BlockTemplate();
+
+    auto it = blocks.find(type);
+    if(it != blocks.end()) {
+        return it->second;
+    }
+
+    return defaultBlock;
 }
 
 BlockRegistry& BlockRegistry::GetInstance() {

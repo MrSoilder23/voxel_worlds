@@ -208,7 +208,6 @@ int main() {
     gGame.SetUpdateCallback(MainLoop);
     
     gGame.RunLoop();
-    gThreadPool.Shutdown();
 
     return 0;
 }

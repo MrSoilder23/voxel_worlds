@@ -28,17 +28,6 @@ ThreadPool::~ThreadPool() {
     }
 }
 
-void ThreadPool::Shutdown() {
-    {
-        std::unique_lock<std::mutex> lock(queueMutex);
-        stop = true;
-    }
-    condition.notify_all();
-    for (std::thread& worker : workers) {
-        worker.join();
-    }
-}
-
 ThreadPool& ThreadPool::GetInstance() {
     static ThreadPool sInstance(VoxelWorlds::THREAD_AMOUNT);
     return sInstance;

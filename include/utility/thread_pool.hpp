@@ -15,8 +15,6 @@ class ThreadPool {
         ThreadPool(size_t numThreads);
         ~ThreadPool();
 
-        void Shutdown();
-
         template<class F>
         void enqueue(F&& task) {
             std::unique_lock<std::mutex> lock(queueMutex);
