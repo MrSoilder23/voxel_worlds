@@ -15,6 +15,7 @@
 #include "./world/transform.hpp"
 #include "./components/bounding_box_component.hpp"
 #include "constant.hpp"
+#include "./model.hpp"
 
 #ifndef M_PI
 #define M_PI (3.14159265358979323846)
@@ -51,6 +52,42 @@ namespace utility {
         return (box1.mMin.x <= box2.mMax.x && box1.mMax.x >= box2.mMin.x) &&
                (box1.mMin.y <= box2.mMax.y && box1.mMax.y >= box2.mMin.y) &&
                (box1.mMin.z <= box2.mMax.z && box1.mMax.z >= box2.mMin.z);
+    }
+
+    // Bounding box model creation
+    inline Model CreateBoundingModel(BoundingBoxComponent& boundingBox) {
+        Model model;
+        model.vertexPositions = {
+            glm::vec3(boundingBox.mMin.x, boundingBox.mMin.y, boundingBox.mMin.z),  // Bottom-left-back
+            glm::vec3(boundingBox.mMax.x, boundingBox.mMin.y, boundingBox.mMin.z),  // Bottom-right-back
+            glm::vec3(boundingBox.mMax.x, boundingBox.mMax.y, boundingBox.mMin.z),  // Top-right-back
+            glm::vec3(boundingBox.mMin.x, boundingBox.mMax.y, boundingBox.mMin.z),  // Top-left-back
+            glm::vec3(boundingBox.mMin.x, boundingBox.mMin.y, boundingBox.mMax.z),  // Bottom-left-front
+            glm::vec3(boundingBox.mMax.x, boundingBox.mMin.y, boundingBox.mMax.z),  // Bottom-right-front
+            glm::vec3(boundingBox.mMax.x, boundingBox.mMax.y, boundingBox.mMax.z),  // Top-right-front
+            glm::vec3(boundingBox.mMin.x, boundingBox.mMax.y, boundingBox.mMax.z)   // Top-left-front
+        };
+
+        model.indexBufferData = {
+            0, 1,  // Bottom edge
+            1, 2,  // Right edge
+            2, 3,  // Top edge
+            3, 0,  // Left edge
+        
+            // Front face edges
+            4, 5,  // Bottom edge
+            5, 6,  // Right edge
+            6, 7,  // Top edge
+            7, 4,  // Left edge
+        
+            // Connecting edges between back and front faces
+            0, 4,  // Bottom-left edge
+            1, 5,  // Bottom-right edge
+            2, 6,  // Top-right edge
+            3, 7   // Top-left edge
+        };
+
+        return model;
     }
 
     // World Generation

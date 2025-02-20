@@ -570,4 +570,5 @@ CMakeFiles\prog.dir\src\core\game.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/world/transform.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
  C:/Projects/voxel_worlds/include/core/component.hpp \
- C:/Projects/voxel_worlds/include/utility/constant.hpp
+ C:/Projects/voxel_worlds/include/utility/constant.hpp \
+ C:/Projects/voxel_worlds/include/model.hpp

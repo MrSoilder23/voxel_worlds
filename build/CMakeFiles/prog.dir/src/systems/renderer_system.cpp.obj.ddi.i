@@ -120794,6 +120794,7 @@ namespace VoxelWorlds {
 
 
 
+
 namespace utility {
 
 
@@ -120825,6 +120826,42 @@ namespace utility {
         return (box1.mMin.x <= box2.mMax.x && box1.mMax.x >= box2.mMin.x) &&
                (box1.mMin.y <= box2.mMax.y && box1.mMax.y >= box2.mMin.y) &&
                (box1.mMin.z <= box2.mMax.z && box1.mMax.z >= box2.mMin.z);
+    }
+
+
+    inline Model CreateBoundingModel(BoundingBoxComponent& boundingBox) {
+        Model model;
+        model.vertexPositions = {
+            glm::vec3(boundingBox.mMin.x, boundingBox.mMin.y, boundingBox.mMin.z),
+            glm::vec3(boundingBox.mMax.x, boundingBox.mMin.y, boundingBox.mMin.z),
+            glm::vec3(boundingBox.mMax.x, boundingBox.mMax.y, boundingBox.mMin.z),
+            glm::vec3(boundingBox.mMin.x, boundingBox.mMax.y, boundingBox.mMin.z),
+            glm::vec3(boundingBox.mMin.x, boundingBox.mMin.y, boundingBox.mMax.z),
+            glm::vec3(boundingBox.mMax.x, boundingBox.mMin.y, boundingBox.mMax.z),
+            glm::vec3(boundingBox.mMax.x, boundingBox.mMax.y, boundingBox.mMax.z),
+            glm::vec3(boundingBox.mMin.x, boundingBox.mMax.y, boundingBox.mMax.z)
+        };
+
+        model.indexBufferData = {
+            0, 1,
+            1, 2,
+            2, 3,
+            3, 0,
+
+
+            4, 5,
+            5, 6,
+            6, 7,
+            7, 4,
+
+
+            0, 4,
+            1, 5,
+            2, 6,
+            3, 7
+        };
+
+        return model;
     }
 
 
