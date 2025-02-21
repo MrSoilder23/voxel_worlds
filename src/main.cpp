@@ -21,6 +21,7 @@
 #include "./systems/chunk_renderer_system.hpp"
 #include "./systems/player_controller_system.hpp"
 #include "./systems/vertex_setup_system.hpp"
+#include "./systems/bounding_box_system.hpp"
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
 #include "./utility/spiral_loop.hpp"
@@ -139,7 +140,6 @@ void MainLoop(float deltaTime) {
     gRendererSystem.DrawAllDebug();
     gPlayerControllerSys.Update(gEntityManager, deltaTime);
 }
-GLuint VAO, VBO, EBO;
 
 int main() {
 
@@ -174,33 +174,30 @@ int main() {
     {
         gEntityManager.CreateEntity("Test");
         gEntityManager.AddComponent<BoundingBoxComponent>("Test");
+        gEntityManager.AddComponent<PositionComponent>("Test");
         gEntityManager.AddComponent<ModelComponent>("Test");
 
         auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test");
         boundingBox->mMin = glm::vec3(0.0f,0.0f,0.0f);
         boundingBox->mMax = glm::vec3(1.0f,1.0f,1.0f);
-
-        auto a = gEntityManager.GetComponent<ModelComponent>("Test");
-
-        a->mModel = utility::CreateBoundingModel(*boundingBox);
     }
     {
         gEntityManager.CreateEntity("Test1");
         gEntityManager.AddComponent<BoundingBoxComponent>("Test1");
+        gEntityManager.AddComponent<PositionComponent>("Test1");
         gEntityManager.AddComponent<ModelComponent>("Test1");
 
         auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test1");
         boundingBox->mMin = glm::vec3(-0.5f,-0.5f,-0.5f);
         boundingBox->mMax = glm::vec3(0.5f,0.5f,0.5f);
-
-        auto a = gEntityManager.GetComponent<ModelComponent>("Test1");
-        
-        a->mModel = utility::CreateBoundingModel(*boundingBox);
     }
 
     VertexSetupSystem vSetupSystem;
+    BoundingBoxSystem boundingBoxSystem;
 
+    boundingBoxSystem.GenerateBoundingBox(gEntityManager);
     vSetupSystem.CreateVertexSpecification(gEntityManager);
+
     gRendererSystem.AddGraphicsApp(gGraphicsApp);
     gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);
 

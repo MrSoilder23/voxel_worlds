@@ -72,6 +72,11 @@
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/mesh_data.cpp"
 		},
+		"CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/bounding_box_system.cpp"
+		},
 		"CMakeFiles/prog.dir/src/systems/camera.cpp.obj" : 
 		{
 			"language" : "CXX",

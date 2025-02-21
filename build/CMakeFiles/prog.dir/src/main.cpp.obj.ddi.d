@@ -636,6 +636,7 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/systems/player_controller_system.hpp \
  C:/Projects/voxel_worlds/include/components/player_controller_component.hpp \
  C:/Projects/voxel_worlds/include/systems/vertex_setup_system.hpp \
+ C:/Projects/voxel_worlds/include/systems/bounding_box_system.hpp \
  C:/Projects/voxel_worlds/include/blocks/blocks.hpp \
  C:/Projects/voxel_worlds/include/graphics/model_manager.hpp \
  C:/Projects/voxel_worlds/include/systems/texture_manager.hpp \
