@@ -1,7 +1,7 @@
 [
 {
   "directory": "C:/Projects/voxel_worlds/build",
-  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include -g -o CMakeFiles\\glad.dir\\third_party\\glad.c.obj -c C:\\Projects\\voxel_worlds\\third_party\\glad.c",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -O3 -g -o CMakeFiles\\glad.dir\\third_party\\glad.c.obj -c C:\\Projects\\voxel_worlds\\third_party\\glad.c",
   "file": "C:\\Projects\\voxel_worlds\\third_party\\glad.c",
   "output": "CMakeFiles\\glad.dir\\third_party\\glad.c.obj"
 },
