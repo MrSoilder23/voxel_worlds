@@ -22,6 +22,9 @@
 #include "./systems/player_controller_system.hpp"
 #include "./systems/vertex_setup_system.hpp"
 #include "./systems/bounding_box_system.hpp"
+#include "./systems/position_update_system.hpp"
+#include "./systems/chunk_vertex_setup_system.hpp"
+#include "./systems/world_generation_system.hpp"
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
 #include "./utility/spiral_loop.hpp"
@@ -39,6 +42,8 @@ struct Settings {
 
     float mSpeed = 20.0f;
     float mSensitivity = 24.0f;
+
+    bool mBoundingDebug = false;
 };
 Settings gSettings;
 Game gGame;
@@ -53,6 +58,7 @@ ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
 
 // ChunkSystem chunkSystem;
 ThreadPool& gThreadPool = ThreadPool::GetInstance();
+WorldGenerationSystem gWorldGen;
 World gWorld;
 
 void Input(float deltaTime) {
@@ -68,12 +74,13 @@ void Input(float deltaTime) {
     if(state[SDL_SCANCODE_ESCAPE]) {
         gGame.StopLoop();
     }
+    if(state[SDL_SCANCODE_F12]) {
+        gSettings.mBoundingDebug = !gSettings.mBoundingDebug;
+    }
 }
 
-
-std::mutex gWorldMutex;
-
 void MainLoop(float deltaTime) {
+    static uint8_t delay = 90;
     static float smoothedFPS = 0.0f;
     static float alpha = 0.1f;  
 
@@ -83,17 +90,16 @@ void MainLoop(float deltaTime) {
     std::string newTitle = "Giera, FPS: " + std::to_string(static_cast<int>(smoothedFPS));
     SDL_SetWindowTitle(gGame.GetWindow(), newTitle.data());
 
-    static int delay = 90; // delay in frames
     static SpiralLoop loop;
-    static SpiralLoop loop2;
+    static SpiralLoop loop1;
 
     static float gCameraOldX = 0;
     static float gCameraOldY = 0;
     static float gCameraOldZ = 0;
 
-    // auto chunk = gChunkManager.GetChunk(0,0,0);
-    // gChunkRendererSystem.DrawChunk(chunk);
-    glm::vec3 camera = gEntityManager.GetComponent<CameraComponent>("Player")->mEye;
+    static int yLoop = -VoxelWorlds::RENDER_DISTANCE;
+
+    glm::vec3 camera = gEntityManager.GetComponent<PositionComponent>("Player")->mPosition;
 
     int cameraX = static_cast<int>(std::floor(camera.x/VoxelWorlds::CHUNK_SIZE));
     int cameraY = static_cast<int>(std::floor(camera.y/VoxelWorlds::CHUNK_SIZE));
@@ -101,8 +107,8 @@ void MainLoop(float deltaTime) {
     
     if(cameraX != gCameraOldX || cameraY != gCameraOldY || cameraZ != gCameraOldZ) {
         loop.Reset();
-        loop2.Reset();
-        delay = 10;
+        loop1.Reset();
+        delay = 30;
     }
 
     gCameraOldX = cameraX;
@@ -112,32 +118,60 @@ void MainLoop(float deltaTime) {
     {   
         gWorld.SetCameraPosition(camera);
         
-        int loopX  = loop.GetLoopX()  + cameraX;
-        int loopX1 = loop2.GetLoopX() + cameraX;
-        int loopZ  = loop.GetLoopZ()  + cameraZ;
-        int loopZ1 = loop2.GetLoopZ() + cameraZ;
+        int loopX = loop.GetLoopX() + cameraX;
+        int loopY = yLoop + cameraY;
+        int loopZ = loop.GetLoopZ() + cameraZ;
 
-        // Temporal fix, need to set better locks
-        gThreadPool.enqueue([ptr = &gWorld, loopX, loopZ]() {
-            std::lock_guard<std::mutex> lock(gWorldMutex);
-            ptr->GenerateChunks(loopX, loopZ);
-            ptr->GenerateWorld(loopX, loopZ);
-            ptr->GenerateMesh(loopX, loopZ);
-        });
+        int loopX1 = loop1.GetLoopX() + cameraX;
+        int loopZ1 = loop1.GetLoopZ() + cameraZ;
+        
+        // gThreadPool.enqueue([ptr = &wGen, loopX, loopY, loopZ]() {
+            // std::lock_guard<std::mutex> lock(gWorldMutex);
+            // ptr->GenerateChunk(loopX, loopY, loopZ);
+            // ptr->GenerateModel(loopX, loopY, loopZ);
+            // });
+            
+            gWorldGen.GenerateChunk(loopX, loopY, loopZ);
+            gWorldGen.GenerateModel(loopX, loopY, loopZ);
 
-        gWorld.WorldVao(loopX1, loopZ1);
-        
-        gWorld.DrawChunks(gEntityManager);
-        
-        loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
-        if(delay <= 0) {
-            loop2.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
+            if(delay <= 1) {
+                gWorldGen.GenerateModel(loopX1, loopY, loopZ1);
+            }
+            
+            if(yLoop >= VoxelWorlds::RENDER_DISTANCE) {
+            loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
+            yLoop = -VoxelWorlds::RENDER_DISTANCE;
+            if(delay <= 1) {
+                loop1.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
+            } else {
+                delay--;
+            }
         } else {
-            delay--;
+            yLoop++;
         }
+
     }
 
-    gRendererSystem.DrawAllDebug();
+    static PositionUpdateSystem posUpdateSystem;
+    static VertexSetupSystem vSetupSystem;
+    static BoundingBoxSystem boundingBoxSystem;
+    static ChunkVertexSetupSystem chunkVSS;
+
+    for(const auto& componentPointer : gEntityManager.GetEntities()) {
+        
+        boundingBoxSystem.GenerateBoundingBoxSingle(gEntityManager, componentPointer.first);
+        vSetupSystem.CreateVertexSpecificationSingle(gEntityManager, componentPointer.first);
+        chunkVSS.CreateVertexSpecificationSingle(gEntityManager, componentPointer.first);
+        
+        posUpdateSystem.UpdatePositionTransformSingle(gEntityManager, componentPointer.first);
+        
+        gRendererSystem.DrawAllSingle(gEntityManager, componentPointer.first);
+        if(gSettings.mBoundingDebug) {
+            gRendererSystem.DrawAllDebugSingle(gEntityManager, componentPointer.first);
+        }
+    
+    }
+    
     gPlayerControllerSys.Update(gEntityManager, deltaTime);
 }
 
@@ -175,7 +209,6 @@ int main() {
         gEntityManager.CreateEntity("Test");
         gEntityManager.AddComponent<BoundingBoxComponent>("Test");
         gEntityManager.AddComponent<PositionComponent>("Test");
-        gEntityManager.AddComponent<ModelComponent>("Test");
 
         auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test");
         boundingBox->mMin = glm::vec3(0.0f,0.0f,0.0f);
@@ -185,18 +218,14 @@ int main() {
         gEntityManager.CreateEntity("Test1");
         gEntityManager.AddComponent<BoundingBoxComponent>("Test1");
         gEntityManager.AddComponent<PositionComponent>("Test1");
-        gEntityManager.AddComponent<ModelComponent>("Test1");
 
         auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test1");
         boundingBox->mMin = glm::vec3(-0.5f,-0.5f,-0.5f);
         boundingBox->mMax = glm::vec3(0.5f,0.5f,0.5f);
     }
 
-    VertexSetupSystem vSetupSystem;
-    BoundingBoxSystem boundingBoxSystem;
-
-    boundingBoxSystem.GenerateBoundingBox(gEntityManager);
-    vSetupSystem.CreateVertexSpecification(gEntityManager);
+    gWorldGen.SetEntityManager(gEntityManager);
+    gWorldGen.SetSeed(seed);
 
     gRendererSystem.AddGraphicsApp(gGraphicsApp);
     gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);

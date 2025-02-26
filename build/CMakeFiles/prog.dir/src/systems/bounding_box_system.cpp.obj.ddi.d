@@ -215,6 +215,36 @@ CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/integer.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/detail/func_integer.inl \
  C:/Projects/voxel_worlds/include/core/component.hpp \
+ C:/Projects/voxel_worlds/include/model.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/vector \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/allocator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++allocator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/new_allocator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/memoryfwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_uninitialized.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ext/alloc_traits.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/alloc_traits.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h \
+ C:/msys64/mingw64/include/c++/14.2.0/initializer_list \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/functional_hash.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/hash_bytes.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/refwrap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/invoke.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_function.h \
+ C:/msys64/mingw64/include/c++/14.2.0/backward/binders.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/range_access.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/vector.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/memory_resource.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/uses_allocator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/uses_allocator_args.h \
+ C:/msys64/mingw64/include/c++/14.2.0/tuple \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_util.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_base.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/max_size_type.h \
+ C:/msys64/mingw64/include/c++/14.2.0/numbers \
+ C:/Projects/voxel_worlds/third_party/include/glad/glad.h \
+ C:/Projects/voxel_worlds/third_party/include/KHR/khrplatform.h \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/gtc/constants.hpp \
@@ -265,29 +295,10 @@ CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
  C:/Projects/voxel_worlds/include/components/model_component.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/memory \
- C:/msys64/mingw64/include/c++/14.2.0/bits/memoryfwd.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/allocator.h \
- C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++allocator.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/new_allocator.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tempbuf.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_uninitialized.h \
- C:/msys64/mingw64/include/c++/14.2.0/ext/alloc_traits.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/alloc_traits.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_raw_storage_iter.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/align.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/uses_allocator.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/unique_ptr.h \
- C:/msys64/mingw64/include/c++/14.2.0/tuple \
- C:/msys64/mingw64/include/c++/14.2.0/bits/invoke.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_util.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_base.h \
- C:/msys64/mingw64/include/c++/14.2.0/initializer_list \
- C:/msys64/mingw64/include/c++/14.2.0/bits/max_size_type.h \
- C:/msys64/mingw64/include/c++/14.2.0/numbers \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_function.h \
- C:/msys64/mingw64/include/c++/14.2.0/backward/binders.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/functional_hash.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/hash_bytes.h \
  C:/msys64/mingw64/include/c++/14.2.0/ostream \
  C:/msys64/mingw64/include/c++/14.2.0/ios \
  C:/msys64/mingw64/include/c++/14.2.0/iosfwd \
@@ -334,8 +345,6 @@ CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/string \
  C:/msys64/mingw64/include/c++/14.2.0/bits/ostream_insert.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/cxxabi_forced.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/refwrap.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/range_access.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/basic_string.h \
  C:/msys64/mingw64/include/c++/14.2.0/string_view \
  C:/msys64/mingw64/include/c++/14.2.0/bits/string_view.tcc \
@@ -344,8 +353,6 @@ CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/cerrno \
  C:/msys64/mingw64/include/c++/14.2.0/bits/charconv.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/basic_string.tcc \
- C:/msys64/mingw64/include/c++/14.2.0/bits/memory_resource.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/uses_allocator_args.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/locale_classes.tcc \
  C:/msys64/mingw64/include/c++/14.2.0/system_error \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/error_constants.h \
@@ -378,14 +385,7 @@ CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_memory_defs.h \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/execution_defs.h \
  C:/Projects/voxel_worlds/include/graphics/texture.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/vector \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/vector.tcc \
- C:/Projects/voxel_worlds/third_party/include/glad/glad.h \
- C:/Projects/voxel_worlds/third_party/include/KHR/khrplatform.h \
  C:/Projects/voxel_worlds/include/world/transform.hpp \
- C:/Projects/voxel_worlds/include/model.hpp \
  C:/Projects/voxel_worlds/include/utility/utility.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/iostream \
  C:/msys64/mingw64/include/c++/14.2.0/istream \
@@ -413,4 +413,11 @@ CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
  C:/msys64/mingw64/include/c++/14.2.0/typeindex \
+ C:/msys64/mingw64/include/c++/14.2.0/shared_mutex \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/chrono.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ratio \
+ C:/msys64/mingw64/include/c++/14.2.0/ctime \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/parse_numbers.h \
+ C:/msys64/mingw64/include/c++/14.2.0/mutex \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unique_lock.h \
  C:/Projects/voxel_worlds/include/blocks/block_types.hpp

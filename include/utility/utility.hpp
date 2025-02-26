@@ -8,12 +8,15 @@
 
 // Third_Party libraries
 #include <glad/glad.h>
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 // Own Libraries
 #include "./world/transform.hpp"
 #include "./components/bounding_box_component.hpp"
+#include "./components/position_component.hpp"
 #include "constant.hpp"
 #include "./model.hpp"
 
@@ -45,6 +48,22 @@ namespace utility {
 
     inline void MeshScale(Transform& transform, float x, float y, float z) {
         transform.mModelMatrix = glm::scale(transform.mModelMatrix, glm::vec3(x,y,z));
+    }
+
+    // Position Component tools
+    inline void MovePosition(PositionComponent& positionComponent, const glm::vec3& newPosition) {
+        positionComponent.mPosition = newPosition;
+        positionComponent.mDirty = true;
+    }
+
+    inline void RotatePosition(PositionComponent& positionComponent, const glm::quat& newRotation) {
+        positionComponent.mRotation = newRotation;
+        positionComponent.mDirty = true;
+    }
+
+    inline void ScalePosition(PositionComponent& positionComponent, const glm::vec3& newScale) {
+        positionComponent.mScale = newScale;
+        positionComponent.mDirty = true;
     }
 
     // Collision detection
@@ -99,8 +118,8 @@ namespace utility {
         h ^= (h >> 16);
         
         // Map h to a float in [0, 1)
-        const float invMax = 1.0f / 4294967296.0f;  // 1 / 2^32
-        float normalized = h * invMax;
+        constexpr float inverseMax = 1.0f / 4294967296.0f;  // 1 / 2^32
+        float normalized = h * inverseMax;
         
         // Convert to an angle in [0, 2π)
         float angle = normalized * 6.2831853;

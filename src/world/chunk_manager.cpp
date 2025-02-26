@@ -9,7 +9,7 @@ void ChunkManager::InsertToChunk(Chunk& chunk, BlockTypes block, uint blockX, ui
     }
     chunk.blocks[blockX][blockY][blockZ] = block;
 }
-BlockTypes ChunkManager::GetBlock(Chunk& chunk, uint blockX, uint blockY, uint blockZ) const{
+BlockTypes ChunkManager::GetBlock(Chunk& chunk, uint blockX, uint blockY, uint blockZ) {
     if(blockX < 0 || blockX > VoxelWorlds::CHUNK_SIZE) {
         return BlockTypes::air;
     } else if(blockY < 0 || blockY > VoxelWorlds::CHUNK_SIZE) {
@@ -24,27 +24,17 @@ BlockTypes ChunkManager::GetBlock(Chunk& chunk, uint blockX, uint blockY, uint b
 void ChunkManager::AddModel(Chunk& chunk, Model model) {
     chunk.mModel = std::move(model);
 }
-
+#include <algorithm>
 void ChunkManager::CreateVAO(Chunk& chunk) {
     std::map<GLuint64, GLuint> mTextures;
     BlockTextureCreator& blockTexture = BlockTextureCreator::GetInstance();
-    auto& textureList = blockTexture.GetTextures();
+    std::vector<GLuint64> textures;
 
-    for (const auto& [key, textureHandle] : textureList) { 
-        if (mTextures.count(textureHandle) == 0) {
-            mTextures[textureHandle];
-        }
+    for (const auto& pair : blockTexture.GetTextures()) {
+        textures.push_back(pair.second);
     }
+    std::sort(textures.begin(), textures.end());
 
-    GLuint index = 0;
-    for(auto& [handle, _] : mTextures) {
-        mTextures[handle] = index++;
-    }
-
-    std::vector<GLuint64> handlers;
-    for(auto& [textureId, _] : mTextures) {
-        handlers.push_back(textureId);
-    }
     if(chunk.mVertexArrayObject != 0) {
         glDeleteVertexArrays(1, &chunk.mVertexArrayObject);
         glDeleteBuffers(1, &chunk.mVbo);
@@ -71,7 +61,7 @@ void ChunkManager::CreateVAO(Chunk& chunk) {
 
     glGenBuffers(1, &chunk.mTexturesBuffer);
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, chunk.mTexturesBuffer);
-    glBufferData(GL_SHADER_STORAGE_BUFFER, handlers.size() * sizeof(GLuint64), handlers.data(), GL_STATIC_DRAW);
+    glBufferData(GL_SHADER_STORAGE_BUFFER, textures.size() * sizeof(GLuint64), textures.data(), GL_STATIC_DRAW);
     glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, chunk.mTexturesBuffer);
 
     glGenBuffers(1, &chunk.mTextureCoords);

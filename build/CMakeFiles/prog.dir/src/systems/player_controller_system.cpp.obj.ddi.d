@@ -457,14 +457,7 @@ CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/memory_resource.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/uses_allocator_args.h \
- C:/msys64/mingw64/include/c++/14.2.0/typeindex \
- C:/msys64/mingw64/include/c++/14.2.0/typeinfo \
- C:/msys64/mingw64/include/c++/14.2.0/memory \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tempbuf.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_uninitialized.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_raw_storage_iter.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/align.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/unique_ptr.h \
+ C:/msys64/mingw64/include/c++/14.2.0/iostream \
  C:/msys64/mingw64/include/c++/14.2.0/ostream \
  C:/msys64/mingw64/include/c++/14.2.0/ios \
  C:/msys64/mingw64/include/c++/14.2.0/iosfwd \
@@ -479,6 +472,7 @@ CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/exception \
  C:/msys64/mingw64/include/c++/14.2.0/bits/exception_ptr.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/cxxabi_init_exception.h \
+ C:/msys64/mingw64/include/c++/14.2.0/typeinfo \
  C:/msys64/mingw64/include/c++/14.2.0/bits/nested_exception.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/char_traits.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/localefwd.h \
@@ -530,6 +524,15 @@ CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/locale_facets.tcc \
  C:/msys64/mingw64/include/c++/14.2.0/bits/basic_ios.tcc \
  C:/msys64/mingw64/include/c++/14.2.0/bits/ostream.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/istream \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/istream.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/typeindex \
+ C:/msys64/mingw64/include/c++/14.2.0/memory \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tempbuf.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_uninitialized.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_raw_storage_iter.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/align.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unique_ptr.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/shared_ptr.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/shared_ptr_base.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/allocated_ptr.h \
@@ -544,8 +547,34 @@ CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algobase.h \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_memory_defs.h \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/execution_defs.h \
+ C:/msys64/mingw64/include/c++/14.2.0/shared_mutex \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/chrono.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ratio \
+ C:/msys64/mingw64/include/c++/14.2.0/ctime \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/parse_numbers.h \
+ C:/msys64/mingw64/include/c++/14.2.0/mutex \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unique_lock.h \
  C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
  C:/Projects/voxel_worlds/include/components/player_controller_component.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
- C:/Projects/voxel_worlds/include/components/camera_component.hpp
+ C:/Projects/voxel_worlds/include/components/camera_component.hpp \
+ C:/Projects/voxel_worlds/include/utility/utility.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/random \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/random.h \
+ C:/msys64/mingw64/include/c++/14.2.0/vector \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/vector.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/opt_random.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/random.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/numeric \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_numeric.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_numeric_defs.h \
+ C:/Projects/voxel_worlds/third_party/include/glad/glad.h \
+ C:/Projects/voxel_worlds/third_party/include/KHR/khrplatform.h \
+ C:/Projects/voxel_worlds/include/world/transform.hpp \
+ C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
+ C:/Projects/voxel_worlds/include/model.hpp \
+ C:/Projects/voxel_worlds/include/utility/constant.hpp

@@ -57161,8 +57161,10 @@ namespace std
        
 
 
-# 3 "C:/Projects/voxel_worlds/include/blocks/block_types.hpp"
-enum class BlockTypes {
+
+
+# 5 "C:/Projects/voxel_worlds/include/blocks/block_types.hpp"
+enum class BlockTypes : uint8_t {
     air,
     grass_block,
     dirt_block,

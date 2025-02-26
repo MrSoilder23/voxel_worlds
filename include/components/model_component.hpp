@@ -10,7 +10,6 @@
 
 struct ModelComponent : public IComponent {
     std::shared_ptr<Texture> mTextures;
-    Transform mTransform;
     Model mModel;
     
     GLuint VAO;

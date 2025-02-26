@@ -36,7 +36,7 @@ void ChunkRendererSystem::DrawChunk(std::shared_ptr<Chunk>& chunk, EntityManager
     GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
     GLCheck(glUniformMatrix4fv(uModelMatrixLocation, 1, false, &chunk->mTransform.mModelMatrix[0][0]);)
 
-    glm::mat4 view = glm::lookAt(cameraComponent->mEye, cameraComponent->mEye + positionComponent->mViewDirection, cameraComponent->mUpVector);
+    glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
     GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
     GLCheck(glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);)
 

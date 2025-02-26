@@ -87,10 +87,20 @@
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_renderer_system.cpp"
 		},
+		"CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_vertex_setup_system.cpp"
+		},
 		"CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj" : 
 		{
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/player_controller_system.cpp"
+		},
+		"CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/position_update_system.cpp"
 		},
 		"CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj" : 
 		{
@@ -106,6 +116,11 @@
 		{
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/vertex_setup_system.cpp"
+		},
+		"CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/world_generation_system.cpp"
 		},
 		"CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj" : 
 		{

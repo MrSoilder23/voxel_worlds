@@ -1,8 +1,11 @@
 #include "./core/entity_manager.hpp"
-#include <iostream>
 
-void EntityManager::CreateEntity(std::string entityName) {
-    mEntityComponents[entityName] = {};
+bool EntityManager::CreateEntity(std::string entityName) {
+    if(mEntityComponents.find(entityName) == mEntityComponents.end()) {
+        mEntityComponents[entityName] = {};
+        return true;
+    }
+    return false;
 }
 void EntityManager::DeleteEntity(std::string entityName) {
     mEntityComponents.erase(entityName);

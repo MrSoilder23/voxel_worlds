@@ -28,22 +28,23 @@ RendererSystem::~RendererSystem() {
 void RendererSystem::AddGraphicsApp(std::shared_ptr<GraphicsApp> graphicsApp) {
     mGraphicsApp = graphicsApp;
 }
-void RendererSystem::DrawAll() {
-    EntityManager& entityManager = EntityManager::GetInstance();
+void RendererSystem::DrawAll(EntityManager& entityManager) {
     auto cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
     auto positionComponent = entityManager.GetComponent<PositionComponent>("Player");
     
     for(const auto& entityPointer : entityManager.GetEntities()) {
         auto modelComponent = entityManager.GetComponent<ModelComponent>(entityPointer.first);
-        auto boundingBoxComp = entityManager.GetComponent<ModelComponent>(entityPointer.first);
+        auto modelPositionComponent = entityManager.GetComponent<PositionComponent>(entityPointer.first);
+        auto chunkModelComponent = entityManager.GetComponent<ChunkModelComponent>(entityPointer.first);
+        auto boundingBoxComp = entityManager.GetComponent<BoundingBoxComponent>(entityPointer.first);
 
-        if(modelComponent && !boundingBoxComp) { 
+        if(chunkModelComponent && chunkModelComponent->mVAO != 0) {
             glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
             GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-            glUniformMatrix4fv(uModelMatrixLocation, 1, false, &modelComponent->mTransform.mModelMatrix[0][0]);
+            glUniformMatrix4fv(uModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
 
-            glm::mat4 view = glm::lookAt(cameraComponent->mEye, cameraComponent->mEye + positionComponent->mViewDirection, cameraComponent->mUpVector);
+            glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
             GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
             glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
 
@@ -51,7 +52,23 @@ void RendererSystem::DrawAll() {
             GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
             glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
 
-            // componentPointer->GetMeshData().Bind();
+            glBindVertexArray(chunkModelComponent->mVAO);
+            GLCheck(glDrawElements(GL_TRIANGLES, chunkModelComponent->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);)
+
+        } else if(modelComponent && !boundingBoxComp) { 
+            glUseProgram(mGraphicsApp->mGraphicsPipeline);
+
+            GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
+            glUniformMatrix4fv(uModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
+
+            glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
+            GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
+            glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
+
+            glm::mat4 perspective = cameraComponent->mProjectionMatrix;
+            GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
+            glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
+
             glBindVertexArray(modelComponent->VAO);
             GLCheck(glDrawElements(GL_TRIANGLES, modelComponent->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);)
         } else {
@@ -59,22 +76,65 @@ void RendererSystem::DrawAll() {
         }
     }
 }
-void RendererSystem::DrawAllDebug() {
-    EntityManager& entityManager = EntityManager::GetInstance();
+void RendererSystem::DrawAllSingle(EntityManager& entityManager, std::string entityName) {
+    static auto cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
+    static auto positionComponent = entityManager.GetComponent<PositionComponent>("Player");
+    
+    auto modelComponent = entityManager.GetComponent<ModelComponent>(entityName);
+    auto modelPositionComponent = entityManager.GetComponent<PositionComponent>(entityName);
+    auto chunkModelComponent = entityManager.GetComponent<ChunkModelComponent>(entityName);
+
+    if(chunkModelComponent && chunkModelComponent->mVAO != 0) {
+        glUseProgram(mGraphicsApp->mGraphicsPipeline);
+
+        GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
+        glUniformMatrix4fv(uModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
+
+        glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
+        GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
+        glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
+
+        glm::mat4 perspective = cameraComponent->mProjectionMatrix;
+        GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
+        glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
+
+        glBindVertexArray(chunkModelComponent->mVAO);
+        GLCheck(glDrawElements(GL_TRIANGLES, chunkModelComponent->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);)
+
+    } else if(modelComponent && modelComponent->VAO != 0) { 
+        glUseProgram(mGraphicsApp->mGraphicsPipeline);
+
+        GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
+        glUniformMatrix4fv(uModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
+
+        glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
+        GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
+        glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
+
+        glm::mat4 perspective = cameraComponent->mProjectionMatrix;
+        GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
+        glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
+
+        glBindVertexArray(modelComponent->VAO);
+        GLCheck(glDrawElements(GL_TRIANGLES, modelComponent->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);)
+    }
+}
+
+
+void RendererSystem::DrawAllDebug(EntityManager& entityManager) {
     auto cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
     auto positionComponent = entityManager.GetComponent<PositionComponent>("Player");
     
     for(const auto& entityPointer : entityManager.GetEntities()) {
-        auto modelComponent = entityManager.GetComponent<ModelComponent>(entityPointer.first);
-        auto boundingBoxComp = entityManager.GetComponent<ModelComponent>(entityPointer.first);
+        auto boundingBoxComp = entityManager.GetComponent<BoundingBoxComponent>(entityPointer.first);
 
-        if(modelComponent && boundingBoxComp) { 
+        if(boundingBoxComp) { 
             glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
             GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-            glUniformMatrix4fv(uModelMatrixLocation, 1, false, &modelComponent->mTransform.mModelMatrix[0][0]);
+            glUniformMatrix4fv(uModelMatrixLocation, 1, false, &positionComponent->mTransform[0][0]);
 
-            glm::mat4 view = glm::lookAt(cameraComponent->mEye, cameraComponent->mEye + positionComponent->mViewDirection, cameraComponent->mUpVector);
+            glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
             GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
             glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
 
@@ -83,11 +143,37 @@ void RendererSystem::DrawAllDebug() {
             glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
 
             // componentPointer->GetMeshData().Bind();
-            glBindVertexArray(modelComponent->VAO);
-            GLCheck(glDrawElements(GL_LINES, static_cast<GLsizei>(modelComponent->mModel.indexBufferData.size()), GL_UNSIGNED_INT, (void*)0);)
+            glBindVertexArray(boundingBoxComp->VAO);
+            glDrawElements(GL_LINES, static_cast<GLsizei>(boundingBoxComp->mModel.indexBufferData.size()), GL_UNSIGNED_INT, (void*)0);
         } else {
             // std::cerr << "No ModelComponent" << std::endl;
         }
+    }
+}
+
+void RendererSystem::DrawAllDebugSingle(EntityManager& entityManager, std::string entityName) {
+    static auto cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
+    static auto positionComponent = entityManager.GetComponent<PositionComponent>("Player");
+
+    auto boundingBoxComp = entityManager.GetComponent<BoundingBoxComponent>(entityName);
+
+    if(boundingBoxComp && boundingBoxComp->VAO != 0) { 
+        glUseProgram(mGraphicsApp->mGraphicsPipeline);
+
+        GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
+        glUniformMatrix4fv(uModelMatrixLocation, 1, false, &positionComponent->mTransform[0][0]);
+
+        glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
+        GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
+        glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
+
+        glm::mat4 perspective = cameraComponent->mProjectionMatrix;
+        GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
+        glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
+
+        // componentPointer->GetMeshData().Bind();
+        glBindVertexArray(boundingBoxComp->VAO);
+        glDrawElements(GL_LINES, static_cast<GLsizei>(boundingBoxComp->mModel.indexBufferData.size()), GL_UNSIGNED_INT, (void*)0);
     }
 }
 

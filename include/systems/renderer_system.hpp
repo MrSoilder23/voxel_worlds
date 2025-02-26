@@ -12,6 +12,7 @@
 #include "./components/position_component.hpp"
 #include "./components/camera_component.hpp"
 #include "./components/model_component.hpp"
+#include "./components/chunk_model_component.hpp"
 
 class RendererSystem {
     public:
@@ -19,8 +20,11 @@ class RendererSystem {
         
         void AddGraphicsApp(std::shared_ptr<GraphicsApp> graphicsApp);
     
-        void DrawAll();
-        void DrawAllDebug();
+        void DrawAll(EntityManager& entityManager);
+        void DrawAllSingle(EntityManager& entityManager, std::string entityName);
+
+        void DrawAllDebug(EntityManager& entityManager);
+        void DrawAllDebugSingle(EntityManager& entityManager, std::string entityName);
         
         static RendererSystem& GetInstance();
 

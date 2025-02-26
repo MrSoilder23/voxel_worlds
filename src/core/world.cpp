@@ -49,19 +49,18 @@ void World::CreateChunkModel(std::shared_ptr<Chunk> chunk, int chunkX, int chunk
     BlockTextureCreator& blockTexture = BlockTextureCreator::GetInstance();
 
     Model chunkModel;
-    std::vector<GLuint> indexes;
 
-    auto& textureList = blockTexture.GetTextures();
-    
-    for (const auto& [_, textureHandle] : textureList) { 
-        if (chunk->mTextures.count(textureHandle) == 0) {
-            chunk->mTextures[textureHandle];
+    std::unordered_map<GLuint64, GLuint> mTextures;
+    for (const auto& [_, textureHandle] : blockTexture.GetTextures()) { 
+        if (mTextures.count(textureHandle) == 0) {
+            mTextures[textureHandle];
         }
     }
     GLuint index = 0;
-    for(auto& [handle, _] : chunk->mTextures) {
-        chunk->mTextures[handle] = index++;
+    for(auto& [handle, _] : mTextures) {
+        mTextures[handle] = index++;
     }
+
     chunk->mTexturePositions.clear();
     chunk->mTextureID.clear();
     chunk->mModel = Model();
@@ -117,15 +116,14 @@ void World::CreateChunkModel(std::shared_ptr<Chunk> chunk, int chunkX, int chunk
                 auto textureIDs = blockObject.textures->textureHandle;
                 chunk->mTextureID.insert(chunk->mTextureID.end(), 
                                                 blockObject.model.vertexPositions.size(),
-                                                chunk->mTextures[textureIDs]);
+                                                mTextures[textureIDs]);
 
-                indexes.insert(indexes.end(), 
+                chunkModel.indexBufferData.insert(chunkModel.indexBufferData.end(), 
                             std::make_move_iterator(tempIndexes.begin()),
                             std::make_move_iterator(tempIndexes.end()));
             }
         }
     }
-    chunkModel.indexBufferData = std::move(indexes);
 
     chunk->mModel = std::move(chunkModel);
 }
@@ -164,8 +162,6 @@ void World::GenerateWorld(int chunkX, int chunkZ) {
 }
 // TO-DO make this better
 void World::GenerateMesh(int chunkX, int chunkZ) {
-    ChunkManager chunkManger;
-
     float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
 
     for(int chunkY = -mRenderDistance; chunkY <= mRenderDistance; chunkY++) {
@@ -179,8 +175,6 @@ void World::GenerateMesh(int chunkX, int chunkZ) {
 }
 
 void World::GenerateWorldChunk(int coordinatesX,int coordinatesY,int coordinatesZ) {
-    ChunkManager chunkManger;
-
     int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(coordinatesX)/VoxelWorlds::PERLIN_SCALE));
     int chunkCoordinateZ = static_cast<int>(std::floor(static_cast<float>(coordinatesZ)/VoxelWorlds::PERLIN_SCALE));
 
@@ -229,11 +223,11 @@ void World::GenerateWorldChunk(int coordinatesX,int coordinatesY,int coordinates
                 for(float y = 0; y < blocksToPlace; y++) {
                     int globalY = (i * VoxelWorlds::CHUNK_SIZE) + y;
                     if(globalY == height-1) {
-                        chunkManger.InsertToChunk(*chunk, BlockTypes::grass_block, x, y, z);
+                        ChunkManager::InsertToChunk(*chunk, BlockTypes::grass_block, x, y, z);
                     } else if(globalY <= height-2 && globalY >= height-5){
-                        chunkManger.InsertToChunk(*chunk, BlockTypes::dirt_block, x, y, z);
+                        ChunkManager::InsertToChunk(*chunk, BlockTypes::dirt_block, x, y, z);
                     } else {
-                        chunkManger.InsertToChunk(*chunk, BlockTypes::stone_block, x, y, z);
+                        ChunkManager::InsertToChunk(*chunk, BlockTypes::stone_block, x, y, z);
                     }
                 }
             }
@@ -266,14 +260,12 @@ void World::DrawChunks(EntityManager& entityManager) {
 void World::WorldVao(int chunkX, int chunkZ) {
     float cameraY = std::floor(mCameraPosition.y/VoxelWorlds::CHUNK_SIZE);
 
-    ChunkManager chunkManger;
-
     for(int chunkY = -mRenderDistance; chunkY <= mRenderDistance; chunkY++) {
         int coordinatesY = cameraY + chunkY;
         auto chunk = GetChunk(chunkX,coordinatesY,chunkZ);
         
         if(chunk && chunk->wasGenerated && chunk->mVertexArrayObject == 0 && chunk->mModel.vertexPositions.size() != 0) {
-            chunkManger.CreateVAO(*chunk);
+            ChunkManager::CreateVAO(*chunk);
         }
     }
 }

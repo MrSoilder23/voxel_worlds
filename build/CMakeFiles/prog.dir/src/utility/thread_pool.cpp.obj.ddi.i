@@ -74602,18 +74602,18 @@ namespace std
 
 # 3 "C:/Projects/voxel_worlds/include/utility/constant.hpp"
 namespace VoxelWorlds {
-    constexpr int RENDER_DISTANCE = 6;
-    constexpr float CHUNK_SIZE = 32;
-    constexpr int CHUNK_GENERATION_OFFSET = 5;
-    constexpr int PERLIN_SCALE = 4;
+    static constexpr int RENDER_DISTANCE = 6;
+    static constexpr float CHUNK_SIZE = 32;
+    static constexpr int CHUNK_GENERATION_OFFSET = 5;
+    static constexpr int PERLIN_SCALE = 4;
 
 
-    constexpr int OCTAVES = 6;
-    constexpr float PERSISTANCE = 0.3f;
-    constexpr float LACUNARITY = 2.7f;
+    static constexpr int OCTAVES = 6;
+    static constexpr float PERSISTANCE = 0.3f;
+    static constexpr float LACUNARITY = 2.7f;
 
-    constexpr size_t THREAD_AMOUNT = 4;
-    constexpr float FRAME_RATE = 240;
+    static constexpr size_t THREAD_AMOUNT = 1;
+    static constexpr float FRAME_RATE = 240;
 }
 # 12 "C:/Projects/voxel_worlds/include/utility/thread_pool.hpp" 2
 

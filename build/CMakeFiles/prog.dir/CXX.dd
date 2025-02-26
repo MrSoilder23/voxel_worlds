@@ -25,13 +25,19 @@ build CMakeFiles/prog.dir/src/systems/camera.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj: dyndep
 
+build CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj: dyndep
+
 build CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj: dyndep
 

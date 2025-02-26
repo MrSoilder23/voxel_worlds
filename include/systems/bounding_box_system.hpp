@@ -9,4 +9,5 @@
 class BoundingBoxSystem {
     public:
         void GenerateBoundingBox(EntityManager& entityManager);
+        void GenerateBoundingBoxSingle(EntityManager& entityManager, std::string entityName);
 };

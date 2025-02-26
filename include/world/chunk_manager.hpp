@@ -12,13 +12,12 @@
 
 using uint = unsigned int;
 
-class ChunkManager {
-    public:
-        void InsertToChunk(Chunk& chunk, BlockTypes block, uint blockX, uint blockY, uint blockZ);
+namespace ChunkManager {
+    void InsertToChunk(Chunk& chunk, BlockTypes block, uint blockX, uint blockY, uint blockZ);
 
-        BlockTypes GetBlock(Chunk& chunk, uint blockX, uint blockY, uint blockZ) const;
+    BlockTypes GetBlock(Chunk& chunk, uint blockX, uint blockY, uint blockZ);
 
-        void AddModel(Chunk& chunk, Model model);
+    void AddModel(Chunk& chunk, Model model);
 
-        void CreateVAO(Chunk& chunk);
+    void CreateVAO(Chunk& chunk);
 };

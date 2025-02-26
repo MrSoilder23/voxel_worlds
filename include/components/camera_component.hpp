@@ -7,11 +7,8 @@
 #include <glm/gtx/quaternion.hpp>
 
 struct CameraComponent : public IComponent {
-    CameraComponent() : mEye(glm::vec3(0.0f)),
-    mUpVector(glm::vec3(0.0f, 1.0f, 0.0f)) {}
-    
     glm::mat4 mProjectionMatrix;
     
-    glm::vec3 mEye;
-    glm::vec3 mUpVector;
+    glm::vec3 mUpVector = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 mViewDirection = glm::vec3(0.0f, 0.0f, -1.0f);
 };
