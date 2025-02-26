@@ -126,7 +126,7 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
         }
     }
     
-    if(chunkModel->mChangeSize != model.vertexPositions.size()) {
+    if(chunkModel->mChangeSize != model.indexBufferData.size()) {
         chunkModel->mTexturePositions.clear();
         chunkModel->mTextures.clear();
         chunkModel->mModel = Model();
@@ -135,7 +135,7 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
         chunkModel->mTextures = std::move(textureIdVector);
         chunkModel->mModel = std::move(model);
 
-        chunkModel->mChangeSize = chunkModel->mModel.vertexPositions.size();
+        chunkModel->mChangeSize = chunkModel->mModel.indexBufferData.size();
         chunkModel->mGenerated = false;
     }
 }
