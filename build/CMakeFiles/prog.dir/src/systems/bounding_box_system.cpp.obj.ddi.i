@@ -111073,7 +111073,7 @@ namespace VoxelWorlds {
     static constexpr float PERSISTANCE = 0.3f;
     static constexpr float LACUNARITY = 2.7f;
 
-    static constexpr size_t THREAD_AMOUNT = 1;
+    static constexpr size_t THREAD_AMOUNT = 2;
     static constexpr float FRAME_RATE = 240;
 }
 # 21 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 2
@@ -121390,12 +121390,13 @@ using Entity = std::unordered_map<std::type_index, std::shared_ptr<IComponent>>;
 class EntityManager {
     public:
 
-        bool CreateEntity(std::string entityName);
-        void DeleteEntity(std::string entityName);
+        bool CreateEntity(const std::string& entityName);
+        void DeleteEntity(const std::string& entityName);
         ~EntityManager();
 
         template <typename ComponentType>
-        void AddComponent(std::string entityName) {
+        void AddComponent(const std::string& entityName) {
+            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -121414,12 +121415,23 @@ class EntityManager {
         }
 
         template <typename ComponentType>
-        void DeleteComponent(std::string entityName) {
-            mEntityComponents[entityName].erase(std::type_index(typeid(ComponentType)));
+        void DeleteComponent(const std::string& entityName) {
+            std::unique_lock lock(mMutex);
+            static const std::type_index componentTypeIndex = typeid(ComponentType);
+            auto entityIt = mEntityComponents.find(entityName);
+
+            if(entityIt == mEntityComponents.end()) {
+                std::cerr << "Entity with the name: " << entityName << " do not exist. Could not delete the component: " << componentTypeIndex.name() << std::endl;
+                return;
+            }
+
+            auto& componentMap = entityIt->second;
+            componentMap.erase(componentTypeIndex);
         }
 
         template <typename ComponentType>
-        std::shared_ptr<ComponentType> GetComponent(std::string entityName) {
+        std::shared_ptr<ComponentType> GetComponent(const std::string& entityName) {
+            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -121437,16 +121449,17 @@ class EntityManager {
             return std::static_pointer_cast<ComponentType>(componentIt->second);
         }
 
-        Entity& GetEntity(std::string entityName);
+        Entity& GetEntity(const std::string& entityName);
 
         std::unordered_map<std::string, Entity>& GetEntities();
 
-        void InitializeAllComponents();
+
 
         static EntityManager& GetInstance();
 
     private:
         std::unordered_map<std::string, Entity> mEntityComponents;
+        std::shared_mutex mMutex;
 };
 # 8 "C:/Projects/voxel_worlds/include/systems/bounding_box_system.hpp" 2
 

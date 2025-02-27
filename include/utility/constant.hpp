@@ -11,6 +11,6 @@ namespace VoxelWorlds {
     static constexpr float PERSISTANCE = 0.3f;
     static constexpr float LACUNARITY =  2.7f;
     
-    static constexpr size_t THREAD_AMOUNT = 1;
+    static constexpr size_t THREAD_AMOUNT = 2;
     static constexpr float FRAME_RATE = 240;
 }

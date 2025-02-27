@@ -125,18 +125,18 @@ void MainLoop(float deltaTime) {
         int loopX1 = loop1.GetLoopX() + cameraX;
         int loopZ1 = loop1.GetLoopZ() + cameraZ;
         
-        // gThreadPool.enqueue([ptr = &wGen, loopX, loopY, loopZ]() {
+        gThreadPool.enqueue([ptr = &gWorldGen, loopX, loopY, loopZ]() {
             // std::lock_guard<std::mutex> lock(gWorldMutex);
-            // ptr->GenerateChunk(loopX, loopY, loopZ);
-            // ptr->GenerateModel(loopX, loopY, loopZ);
-            // });
+            ptr->GenerateChunk(loopX, loopY, loopZ);
+            ptr->GenerateModel(loopX, loopY, loopZ);
+        });
             
-            gWorldGen.GenerateChunk(loopX, loopY, loopZ);
-            gWorldGen.GenerateModel(loopX, loopY, loopZ);
+            // gWorldGen.GenerateChunk(loopX, loopY, loopZ);
+            // gWorldGen.GenerateModel(loopX, loopY, loopZ);
 
-            if(delay <= 1) {
-                gWorldGen.GenerateModel(loopX1, loopY, loopZ1);
-            }
+            // if(delay <= 1) {
+            //     gWorldGen.GenerateModel(loopX1, loopY, loopZ1);
+            // }
             
             if(yLoop >= VoxelWorlds::RENDER_DISTANCE) {
             loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);

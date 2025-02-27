@@ -26,8 +26,7 @@ void WorldGenerationSystem::GenerateChunk(int x, int y, int z) {
     PositionComponent posComponent;
     utility::MovePosition(posComponent, glm::vec3(x*VoxelWorlds::CHUNK_SIZE,
         y*VoxelWorlds::CHUNK_SIZE, z*VoxelWorlds::CHUNK_SIZE));
-        
-        
+
     auto boundingBox = mEntityManager->GetComponent<BoundingBoxComponent>(chunkName);
     auto position = mEntityManager->GetComponent<PositionComponent>(chunkName);
 
