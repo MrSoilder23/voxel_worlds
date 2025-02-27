@@ -93592,8 +93592,8 @@ class EntityManager {
         }
 
         template <typename ComponentType>
-        std::shared_ptr<ComponentType> GetComponent(const std::string& entityName) {
-            std::unique_lock lock(mMutex);
+        std::shared_ptr<ComponentType> GetComponent(const std::string& entityName){
+            std::shared_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -93608,6 +93608,7 @@ class EntityManager {
                 return nullptr;
             }
 
+            lock.unlock();
             return std::static_pointer_cast<ComponentType>(componentIt->second);
         }
 

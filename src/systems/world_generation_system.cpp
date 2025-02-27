@@ -43,8 +43,6 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
     if(!chunkData->mWasGenerated) {
         return;
     }
-    
-    auto chunkModel = mEntityManager->GetComponent<ChunkModelComponent>(chunkName);
 
     // Texture mapping
     BlockRegistry& blockRegistry = BlockRegistry::GetInstance();
@@ -125,6 +123,7 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
         }
     }
     
+    auto chunkModel = mEntityManager->GetComponent<ChunkModelComponent>(chunkName);
     if(chunkModel->mChangeSize != model.indexBufferData.size()) {
         chunkModel->mTexturePositions.clear();
         chunkModel->mTextures.clear();

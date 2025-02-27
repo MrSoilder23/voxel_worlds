@@ -111073,7 +111073,7 @@ namespace VoxelWorlds {
     static constexpr float PERSISTANCE = 0.3f;
     static constexpr float LACUNARITY = 2.7f;
 
-    static constexpr size_t THREAD_AMOUNT = 2;
+    static constexpr size_t THREAD_AMOUNT = 5;
     static constexpr float FRAME_RATE = 240;
 }
 # 21 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 2
@@ -121430,8 +121430,8 @@ class EntityManager {
         }
 
         template <typename ComponentType>
-        std::shared_ptr<ComponentType> GetComponent(const std::string& entityName) {
-            std::unique_lock lock(mMutex);
+        std::shared_ptr<ComponentType> GetComponent(const std::string& entityName){
+            std::shared_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -121446,6 +121446,7 @@ class EntityManager {
                 return nullptr;
             }
 
+            lock.unlock();
             return std::static_pointer_cast<ComponentType>(componentIt->second);
         }
 
@@ -121473,9 +121474,13 @@ class BoundingBoxSystem {
 void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
     for(const auto& componentPointer : entityManager.GetEntities()) {
         auto boundingBox = entityManager.GetComponent<BoundingBoxComponent>(componentPointer.first);
+        if(!boundingBox || boundingBox->VAO != 0) {
+            return;
+        }
+
         auto position = entityManager.GetComponent<PositionComponent>(componentPointer.first);
 
-        if(boundingBox && position && boundingBox->VAO == 0) {
+        if(position && boundingBox->VAO == 0) {
             boundingBox->mMax = boundingBox->mMax + position->mPosition;
             boundingBox->mMin = boundingBox->mMin + position->mPosition;
 
@@ -121487,9 +121492,13 @@ void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
 
 void BoundingBoxSystem::GenerateBoundingBoxSingle(EntityManager& entityManager, std::string entityName) {
     auto boundingBox = entityManager.GetComponent<BoundingBoxComponent>(entityName);
+    if(!boundingBox || boundingBox->VAO != 0) {
+        return;
+    }
+
     auto position = entityManager.GetComponent<PositionComponent>(entityName);
 
-    if(boundingBox && position && boundingBox->VAO == 0) {
+    if(position) {
         boundingBox->mMax = boundingBox->mMax + position->mPosition;
         boundingBox->mMin = boundingBox->mMin + position->mPosition;
 

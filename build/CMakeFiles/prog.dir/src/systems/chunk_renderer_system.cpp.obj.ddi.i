@@ -102476,7 +102476,7 @@ namespace VoxelWorlds {
     static constexpr float PERSISTANCE = 0.3f;
     static constexpr float LACUNARITY = 2.7f;
 
-    static constexpr size_t THREAD_AMOUNT = 2;
+    static constexpr size_t THREAD_AMOUNT = 5;
     static constexpr float FRAME_RATE = 240;
 }
 # 15 "C:/Projects/voxel_worlds/include/world/chunk.hpp" 2
@@ -125503,8 +125503,8 @@ class EntityManager {
         }
 
         template <typename ComponentType>
-        std::shared_ptr<ComponentType> GetComponent(const std::string& entityName) {
-            std::unique_lock lock(mMutex);
+        std::shared_ptr<ComponentType> GetComponent(const std::string& entityName){
+            std::shared_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -125519,6 +125519,7 @@ class EntityManager {
                 return nullptr;
             }
 
+            lock.unlock();
             return std::static_pointer_cast<ComponentType>(componentIt->second);
         }
 
