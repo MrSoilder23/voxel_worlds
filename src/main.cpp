@@ -97,7 +97,7 @@ void MainLoop(float deltaTime) {
     static float gCameraOldY = 0;
     static float gCameraOldZ = 0;
 
-    static int yLoop = -VoxelWorlds::RENDER_DISTANCE;
+    static int yLoop = VoxelWorlds::RENDER_DISTANCE;
 
     glm::vec3 camera = gEntityManager.GetComponent<PositionComponent>("Player")->mPosition;
 
@@ -138,16 +138,16 @@ void MainLoop(float deltaTime) {
             //     gWorldGen.GenerateModel(loopX1, loopY, loopZ1);
             // }
             
-            if(yLoop >= VoxelWorlds::RENDER_DISTANCE) {
+        if(yLoop <= -VoxelWorlds::RENDER_DISTANCE) {
             loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
-            yLoop = -VoxelWorlds::RENDER_DISTANCE;
+            yLoop = VoxelWorlds::RENDER_DISTANCE;
             if(delay <= 1) {
                 loop1.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
             } else {
                 delay--;
             }
         } else {
-            yLoop++;
+            yLoop--;
         }
 
     }
