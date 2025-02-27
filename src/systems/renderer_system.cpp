@@ -54,7 +54,7 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
             GLCheck(glDrawElements(GL_TRIANGLES, chunkModelComponent->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);)
 
         } else {
-            auto modelComponent = entityManager.GetComponent<ModelComponent>(entityName);
+            auto modelComponent = entityManager.GetComponent<ModelComponent>(entityPointer.first);
             
             if(modelComponent && modelComponent->VAO != 0) { 
                 glUseProgram(mGraphicsApp->mGraphicsPipeline);

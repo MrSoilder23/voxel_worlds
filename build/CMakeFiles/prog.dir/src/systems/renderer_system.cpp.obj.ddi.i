@@ -124340,7 +124340,7 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
             GLClearAllErrors(); glad_glDrawElements(0x0004, chunkModelComponent->mModel.indexBufferData.size(), 0x1405, (void*)0);; GLCheckErrorStatus("glDrawElements(GL_TRIANGLES, chunkModelComponent->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);", 54);
 
         } else {
-            auto modelComponent = entityManager.GetComponent<ModelComponent>(entityName);
+            auto modelComponent = entityManager.GetComponent<ModelComponent>(entityPointer.first);
 
             if(modelComponent && modelComponent->VAO != 0) {
                 glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
