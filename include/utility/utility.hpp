@@ -131,7 +131,7 @@ namespace utility {
         return t * t * t * (t * (t * 6 - 15) + 10);
     }
 
-    inline float PerlinNoise(int chunkX, int chunkY,float x, float y, unsigned int seed) {
+    inline float PerlinNoiseNormalized(int chunkX, int chunkY,float x, float y, unsigned int seed) {
         float dot1 = glm::dot(Gradient(chunkX,chunkY , seed), glm::vec2(x,-y));
         float dot2 = glm::dot(Gradient(chunkX+1,chunkY, seed), glm::vec2(x-1.0f,-y));
         float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x,1.0f-y));
@@ -146,6 +146,23 @@ namespace utility {
         float result = AB + (y * (CD-AB));
 
         return (result + 1.0f) / 2.0f;
+    }
+
+    inline float PerlinNoise(int chunkX, int chunkY,float x, float y, unsigned int seed) {
+        float dot1 = glm::dot(Gradient(chunkX,chunkY , seed), glm::vec2(x,-y));
+        float dot2 = glm::dot(Gradient(chunkX+1,chunkY, seed), glm::vec2(x-1.0f,-y));
+        float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x,1.0f-y));
+        float dot4 = glm::dot(Gradient(chunkX+1,chunkY+1, seed), glm::vec2(x-1.0f,1.0f-y));
+
+        x = Smooth(x);
+        y = Smooth(y);
+
+        float AB = dot1 + (x * (dot2-dot1));
+        float CD = dot3 + (x * (dot4-dot3));
+
+        float result = AB + (y * (CD-AB));
+
+        return result;
     }
 
     // Persistance - More Pronouced peaks and valleys
@@ -165,7 +182,7 @@ namespace utility {
             float localX = (scaledX - newChunkX * VoxelWorlds::CHUNK_SIZE) / VoxelWorlds::CHUNK_SIZE;
             float localY = (scaledY - newChunkY * VoxelWorlds::CHUNK_SIZE) / VoxelWorlds::CHUNK_SIZE;
 
-            float noise = PerlinNoise(newChunkX, newChunkY, localX, localY, seed);
+            float noise = PerlinNoiseNormalized(newChunkX, newChunkY, localX, localY, seed);
             total += noise * amplitude;
 
             maxAmplitude += amplitude;

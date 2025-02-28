@@ -8,6 +8,7 @@
 // Third_party libraries
 #include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/constants.hpp>
 
 // Own libraries
 #include "./core/entity_manager.hpp"
@@ -29,6 +30,7 @@ class WorldGenerationSystem {
 
     private:
         void GeneratePerlin(int x, int y, int z, std::string chunkName);
+        float GetHeightMultiplier(float continentalness);
         bool CheckBlock(ChunkStorageComponent& currentChunkData, int chunkX, int chunkY, int chunkZ, int x, int y, int z);
     
     private:

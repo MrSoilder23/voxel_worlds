@@ -145,11 +145,19 @@ void WorldGenerationSystem::GeneratePerlin(int x, int y, int z, std::string chun
         return;
     }
 
-    int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(x)/VoxelWorlds::PERLIN_SCALE));
-    int chunkCoordinateZ = static_cast<int>(std::floor(static_cast<float>(z)/VoxelWorlds::PERLIN_SCALE));
+    // Perlin chunk size
+    const int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(x)/VoxelWorlds::PERLIN_SCALE));
+    const int chunkCoordinateZ = static_cast<int>(std::floor(static_cast<float>(z)/VoxelWorlds::PERLIN_SCALE));
 
-    int xOffset = (x % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
-    int zOffset = (z % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+    const int xOffset = (x % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+    const int zOffset = (z % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+    
+    // Continent chunk size
+    const int continentCoordinateX = static_cast<int>(std::floor(static_cast<float>(x)/VoxelWorlds::CONTINENTALNESS));
+    const int continentCoordinateZ = static_cast<int>(std::floor(static_cast<float>(z)/VoxelWorlds::CONTINENTALNESS));
+
+    const int xContinentalOffset = (x % VoxelWorlds::CONTINENTALNESS + VoxelWorlds::CONTINENTALNESS) % VoxelWorlds::CONTINENTALNESS;
+    const int zContinentalOffset = (z % VoxelWorlds::CONTINENTALNESS + VoxelWorlds::CONTINENTALNESS) % VoxelWorlds::CONTINENTALNESS;
     
     ChunkStorageComponent chunkStorage;
     chunkStorage = *chunkData;
@@ -167,8 +175,18 @@ void WorldGenerationSystem::GeneratePerlin(int x, int y, int z, std::string chun
                 VoxelWorlds::PERSISTANCE,
                 VoxelWorlds::LACUNARITY
             );
-            height = 1 - height;
-            height = std::round(std::pow(height,4) * 600);
+
+            float continentalness = utility::PerlinNoise(
+                continentCoordinateX,
+                continentCoordinateZ,
+                (blockX+(xContinentalOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CONTINENTALNESS),
+                (blockZ+(zContinentalOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CONTINENTALNESS),
+                mSeed
+            );
+
+            height = height * GetHeightMultiplier(continentalness);
+
+            height = std::round(height);
 
             int numChunks = static_cast<int>(height / VoxelWorlds::CHUNK_SIZE);
             int remainder = static_cast<int>(height) % static_cast<int>(VoxelWorlds::CHUNK_SIZE); // Extra blocks for the top chunk
@@ -192,6 +210,24 @@ void WorldGenerationSystem::GeneratePerlin(int x, int y, int z, std::string chun
     }
     chunkStorage.mWasGenerated = true;
     *chunkData = std::move(chunkStorage);
+}
+
+float WorldGenerationSystem::GetHeightMultiplier(float continentalness) {
+    using namespace VoxelWorlds;
+    
+    for (size_t i = 0; i < CONTINENTAL_KEY_POINTS.size() - 1; ++i) {
+        if (continentalness >= CONTINENTAL_KEY_POINTS[i].first && continentalness <= CONTINENTAL_KEY_POINTS[i + 1].first) {
+            float interpolation = (continentalness - CONTINENTAL_KEY_POINTS[i].first) / (CONTINENTAL_KEY_POINTS[i + 1].first - CONTINENTAL_KEY_POINTS[i].first);
+
+            float smoothedInterpolation = utility::Smooth(interpolation);
+
+            // lerp
+            return glm::mix(CONTINENTAL_KEY_POINTS[i].second, CONTINENTAL_KEY_POINTS[i + 1].second, smoothedInterpolation);
+        }
+    }
+
+    // If continentalness is outside the defined range, return the closest multiplier
+    return continentalness < CONTINENTAL_KEY_POINTS.front().first ? CONTINENTAL_KEY_POINTS.front().second : CONTINENTAL_KEY_POINTS.back().second;
 }
 
 bool WorldGenerationSystem::CheckBlock(ChunkStorageComponent& currentChunkData, int chunkX, int chunkY, int chunkZ, int x, int y, int z) {

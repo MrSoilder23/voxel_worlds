@@ -334,6 +334,10 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/detail/type_half.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/integer.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/detail/func_integer.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/constants.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_constants.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_constants.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/constants.inl \
  C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/iostream \
  C:/msys64/mingw64/include/c++/14.2.0/typeindex \
@@ -366,10 +370,6 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/model.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/constants.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_constants.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_constants.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/constants.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtc/quaternion.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.hpp \
