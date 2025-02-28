@@ -1,4 +1,6 @@
 #pragma once
+// C++ standard libraries
+#include <array>
 
 namespace VoxelWorlds {
     static constexpr int RENDER_DISTANCE = 6;

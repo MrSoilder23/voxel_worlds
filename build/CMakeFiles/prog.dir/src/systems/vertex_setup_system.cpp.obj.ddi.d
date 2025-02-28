@@ -358,4 +358,5 @@ CMakeFiles\prog.dir\src\systems\vertex_setup_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/integer.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/detail/func_integer.inl \
  C:/Projects/voxel_worlds/include/model.hpp \
- C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp
+ C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
+ C:/Projects/voxel_worlds/include/group.hpp

@@ -74600,7 +74600,9 @@ namespace std
        
 
 
-# 3 "C:/Projects/voxel_worlds/include/utility/constant.hpp"
+
+
+# 5 "C:/Projects/voxel_worlds/include/utility/constant.hpp"
 namespace VoxelWorlds {
     static constexpr int RENDER_DISTANCE = 6;
     static constexpr float CHUNK_SIZE = 32;
@@ -74609,6 +74611,19 @@ namespace VoxelWorlds {
 
     static constexpr int PERLIN_SCALE = 4;
     static constexpr int CONTINENTALNESS = 20;
+
+
+    static constexpr std::array<std::pair<float, float>, 9> CONTINENTAL_KEY_POINTS = {{
+        {-1.0f, 600.0f},
+        {-0.8f, 100.0f},
+        {-0.4f, 150.0f},
+        {-0.1f, 150.0f},
+        { 0.0f, 400.0f},
+        { 0.6f, 400.0f},
+        { 0.8f, 500.0f},
+        { 0.9f, 900.0f},
+        { 1.0f, 1000.0f}
+    }};
 
     static constexpr int OCTAVES = 6;
     static constexpr float PERSISTANCE = 0.3f;
