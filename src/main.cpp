@@ -178,19 +178,18 @@ void MainLoop(float deltaTime) {
     }
 
     for(const auto& componentPointer : gEntityManager.GetEntities()) {
+        physSystem.UpdatePosition(gEntityManager, componentPointer.first, deltaTime);
+        posUpdateSystem.UpdatePositionTransformSingle(gEntityManager, componentPointer.first);
+
+        gRendererSystem.DrawAllSingle(gEntityManager, componentPointer.first);
+        
+        if(gSettings.mBoundingDebug) {
+            gRendererSystem.DrawAllDebugSingle(gEntityManager, componentPointer.first);
+        }
         
         boundingBoxSystem.GenerateBoundingBoxSingle(gEntityManager, componentPointer.first);
         vSetupSystem.CreateVertexSpecificationSingle(gEntityManager, componentPointer.first);
         chunkVSS.CreateVertexSpecificationSingle(gEntityManager, componentPointer.first);
-        physSystem.UpdatePosition(gEntityManager, componentPointer.first, deltaTime);
-        
-        posUpdateSystem.UpdatePositionTransformSingle(gEntityManager, componentPointer.first);
-        
-        gRendererSystem.DrawAllSingle(gEntityManager, componentPointer.first);
-        if(gSettings.mBoundingDebug) {
-            gRendererSystem.DrawAllDebugSingle(gEntityManager, componentPointer.first);
-        }
-    
     }
 
     gPlayerControllerSys.Update(gEntityManager, deltaTime);

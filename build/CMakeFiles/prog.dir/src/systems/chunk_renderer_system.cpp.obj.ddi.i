@@ -22494,9 +22494,6 @@ int swprintf (wchar_t *__stream, const wchar_t *__format, ...)
 
   __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _wremove(const wchar_t *_Filename);
   __attribute__ ((__dllimport__)) wchar_t *__attribute__((__cdecl__)) _wtmpnam(wchar_t *_Buffer);
-# 1178 "C:/msys64/mingw64/include/wchar.h" 3
-  inline wint_t __attribute__((__cdecl__)) getwchar() {return (fgetwc((__acrt_iob_func(0)))); }
-  inline wint_t __attribute__((__cdecl__)) putwchar(wchar_t _C) {return (fputwc(_C,(__acrt_iob_func(1)))); }
 # 1193 "C:/msys64/mingw64/include/wchar.h" 3
   __attribute__ ((__dllimport__)) wchar_t *__attribute__((__cdecl__)) _itow(int _Value,wchar_t *_Dest,int _Radix) ;
   __attribute__ ((__dllimport__)) wchar_t *__attribute__((__cdecl__)) _ltow(long _Value,wchar_t *_Dest,int _Radix) ;
@@ -22668,14 +22665,8 @@ int swprintf (wchar_t *__stream, const wchar_t *__format, ...)
 
 
   wchar_t *__attribute__((__cdecl__)) _wctime(const time_t *_Time) ;
-
-
-  inline wchar_t *__attribute__((__cdecl__)) _wctime(const time_t *_Time) { return _wctime64(_Time); }
 # 1390 "C:/msys64/mingw64/include/wchar.h" 3
   errno_t __attribute__((__cdecl__)) _wctime_s(wchar_t *, size_t, const time_t *);
-
-
-  inline errno_t __attribute__((__cdecl__)) _wctime_s (wchar_t *_Buffer,size_t _SizeInWords,const time_t *_Time) { return _wctime64_s (_Buffer,_SizeInWords,_Time); }
 # 1409 "C:/msys64/mingw64/include/wchar.h" 3
   typedef int mbstate_t;
 
@@ -22709,41 +22700,6 @@ int swprintf (wchar_t *__stream, const wchar_t *__format, ...)
 
   void *__attribute__((__cdecl__)) memmove(void *_Dst,const void *_Src,size_t _MaxCount);
   void *__attribute__((__cdecl__)) memcpy(void * __restrict__ _Dst,const void * __restrict__ _Src,size_t _MaxCount) ;
-
-  inline int __attribute__((__cdecl__)) fwide(FILE *_F,int _M) { (void)_F; return (_M); }
-
-  inline int __attribute__((__cdecl__)) mbsinit(const mbstate_t *_P) { return (!_P || *_P==0); }
-
-  inline wchar_t *__attribute__((__cdecl__)) wmemchr(const wchar_t *_S,wchar_t _C,size_t _N) {
-    if (_S) {
-      for ( ; 0 < _N; ++_S, --_N)
- if (*_S == _C)
-   return ( wchar_t *)(_S);
-    }
-    return ( wchar_t *) __null;
-  }
-  inline int __attribute__((__cdecl__)) wmemcmp(const wchar_t *_S1,const wchar_t *_S2,size_t _N) {
-    if (_N == 0 || _S1 == _S2)
-      return 0;
-    if ((_S1 && !(_S2)) || (_S2 && !(_S1)))
-      return !(_S2) ? 1 : -1;
-    for ( ; 0 < _N; ++_S1, ++_S2, --_N)
-      if (*_S1 != *_S2)
- return (*_S1 < *_S2 ? -1 : +1);
-    return 0;
-  }
-  inline wchar_t *__attribute__((__cdecl__)) wmemcpy(wchar_t * __restrict__ _S1,const wchar_t * __restrict__ _S2,size_t _N)
-  {
-    return (wchar_t *) memcpy (_S1,_S2,_N*sizeof(wchar_t));
-  }
-  inline wchar_t *__attribute__((__cdecl__)) wmemmove(wchar_t *_S1,const wchar_t *_S2,size_t _N) { return (wchar_t *)memmove(_S1,_S2,_N*sizeof(wchar_t)); }
-  inline wchar_t *__attribute__((__cdecl__)) wmemset(wchar_t *_S,wchar_t _C,size_t _N) {
-    wchar_t *_Su = _S;
-    for (;0<_N;++_Su,--_N) {
-      *_Su = _C;
-    }
-    return (_S);
-  }
 # 1492 "C:/msys64/mingw64/include/wchar.h" 3
 int __attribute__((__cdecl__)) __mingw_str_wide_utf8 (const wchar_t * const wptr, char **mbptr, size_t * buflen);
 # 1506 "C:/msys64/mingw64/include/wchar.h" 3
@@ -25887,8 +25843,8 @@ extern "C" {
 
   void __attribute__((__cdecl__)) _Exit(int) __attribute__ ((__noreturn__));
 
-  inline __attribute__ ((__noreturn__)) void __attribute__((__cdecl__)) _Exit(int status)
-  { _exit(status); }
+
+
 
 
 
@@ -31118,7 +31074,7 @@ unsigned long __attribute__((__cdecl__)) _lrotr(unsigned long,int);
 
   __extension__ long long __attribute__((__cdecl__)) llabs(long long);
 
-  __extension__ inline long long __attribute__((__cdecl__)) llabs(long long _j) { return (_j >= 0 ? _j : -_j); }
+
 
 
   __extension__ long long __attribute__((__cdecl__)) strtoll(const char * __restrict__, char ** __restrict, int);
@@ -31133,20 +31089,7 @@ unsigned long __attribute__((__cdecl__)) _lrotr(unsigned long,int);
   __extension__ char *__attribute__((__cdecl__)) ulltoa (unsigned long long , char *, int);
   __extension__ wchar_t *__attribute__((__cdecl__)) lltow (long long, wchar_t *, int);
   __extension__ wchar_t *__attribute__((__cdecl__)) ulltow (unsigned long long, wchar_t *, int);
-
-
-
-  __extension__ inline char *__attribute__((__cdecl__)) lltoa (long long _n, char * _c, int _i) { return _i64toa (_n, _c, _i); }
-  __extension__ inline char *__attribute__((__cdecl__)) ulltoa (unsigned long long _n, char * _c, int _i) { return _ui64toa (_n, _c, _i); }
-  __extension__ inline long long __attribute__((__cdecl__)) wtoll (const wchar_t * _w) { return _wtoi64 (_w); }
-  __extension__ inline wchar_t *__attribute__((__cdecl__)) lltow (long long _n, wchar_t * _w, int _i) { return _i64tow (_n, _w, _i); }
-  __extension__ inline wchar_t *__attribute__((__cdecl__)) ulltow (unsigned long long _n, wchar_t * _w, int _i) { return _ui64tow (_n, _w, _i); }
-
-
-
-
-
-
+# 713 "C:/msys64/mingw64/include/stdlib.h" 3
 }
 
 
@@ -54442,44 +54385,7 @@ extern "C" {
   extern float __attribute__((__cdecl__)) fabsf (float x);
   extern long double __attribute__((__cdecl__)) fabsl (long double);
   extern double __attribute__((__cdecl__)) fabs (double _X);
-
-
-
-  inline float __attribute__((__cdecl__)) fabsf (float x)
-  {
-
-    return __builtin_fabsf (x);
-
-
-
-
-
-  }
-
-  inline long double __attribute__((__cdecl__)) fabsl (long double x)
-  {
-
-
-
-    long double res = 0.0l;
-    __asm__ __volatile__ ("fabs;" : "=t" (res) : "0" (x));
-    return res;
-
-  }
-
-  inline double __attribute__((__cdecl__)) fabs (double x)
-  {
-
-    return __builtin_fabs (x);
-
-
-
-
-
-  }
-
-
-
+# 231 "C:/msys64/mingw64/include/math.h" 3
   double __attribute__((__cdecl__)) ldexp(double _X,int _Y);
   double __attribute__((__cdecl__)) frexp(double _X,int *_Y);
   double __attribute__((__cdecl__)) modf(double _X,double *_Y);
@@ -54541,178 +54447,14 @@ typedef double double_t;
   extern int __attribute__((__cdecl__)) __fpclassifyl (long double);
   extern int __attribute__((__cdecl__)) __fpclassifyf (float);
   extern int __attribute__((__cdecl__)) __fpclassify (double);
-
-
-  inline int __attribute__((__cdecl__)) __fpclassifyl (long double x) {
-
-    __mingw_ldbl_type_t hlp;
-    unsigned int e;
-    hlp.x = x;
-    e = hlp.lh.sign_exponent & 0x7fff;
-    if (!e)
-      {
-        unsigned int h = hlp.lh.high;
-        if (!(hlp.lh.low | h))
-          return 0x4000;
-        else if (!(h & 0x80000000))
-          return (0x0400 | 0x4000);
-      }
-    else if (e == 0x7fff)
-      return (((hlp.lh.high & 0x7fffffff) | hlp.lh.low) == 0 ?
-              (0x0100 | 0x0400) : 0x0100);
-    return 0x0400;
-
-
-
-
-
-
-
-  }
-  inline int __attribute__((__cdecl__)) __fpclassify (double x) {
-
-    __mingw_dbl_type_t hlp;
-    unsigned int l, h;
-
-    hlp.x = x;
-    h = hlp.lh.high;
-    l = hlp.lh.low | (h & 0xfffff);
-    h &= 0x7ff00000;
-    if ((h | l) == 0)
-      return 0x4000;
-    if (!h)
-      return (0x0400 | 0x4000);
-    if (h == 0x7ff00000)
-      return (l ? 0x0100 : (0x0100 | 0x0400));
-    return 0x0400;
-
-
-
-
-
-  }
-  inline int __attribute__((__cdecl__)) __fpclassifyf (float x) {
-
-    __mingw_flt_type_t hlp;
-
-    hlp.x = x;
-    hlp.val &= 0x7fffffff;
-    if (hlp.val == 0)
-      return 0x4000;
-    if (hlp.val < 0x800000)
-      return (0x0400 | 0x4000);
-    if (hlp.val >= 0x7f800000)
-      return (hlp.val > 0x7f800000 ? 0x0100 : (0x0100 | 0x0400));
-    return 0x0400;
-
-
-
-
-
-  }
 # 507 "C:/msys64/mingw64/include/math.h" 3
   extern int __attribute__((__cdecl__)) __isnan (double);
   extern int __attribute__((__cdecl__)) __isnanf (float);
   extern int __attribute__((__cdecl__)) __isnanl (long double);
-
-
-  inline int __attribute__((__cdecl__)) __isnan (double _x)
-  {
-
-    __mingw_dbl_type_t hlp;
-    unsigned int l, h;
-
-    hlp.x = _x;
-    l = hlp.lh.low;
-    h = hlp.lh.high & 0x7fffffff;
-    h |= (l | -l) >> 31;
-    h = 0x7ff00000 - h;
-    return (int) h >> 31;
-
-
-
-
-
-
-
-  }
-
-  inline int __attribute__((__cdecl__)) __isnanf (float _x)
-  {
-
-    __mingw_flt_type_t hlp;
-    unsigned int i;
-
-    hlp.x = _x;
-    i = hlp.val & 0x7fffffff;
-    i = 0x7f800000 - i;
-    return (int) (i >> 31);
-
-
-
-
-
-
-
-  }
-
-  inline int __attribute__((__cdecl__)) __isnanl (long double _x)
-  {
-
-    __mingw_ldbl_type_t ld;
-    unsigned int xx, signexp;
-
-    ld.x = _x;
-    signexp = (ld.lh.sign_exponent & 0x7fff) << 1;
-    xx = ld.lh.low | (ld.lh.high & 0x7fffffffu);
-    signexp |= (xx | (-xx)) >> 31;
-    signexp = 0xfffe - signexp;
-    return (int) signexp >> 16;
-# 573 "C:/msys64/mingw64/include/math.h" 3
-  }
 # 594 "C:/msys64/mingw64/include/math.h" 3
   extern int __attribute__((__cdecl__)) __signbit (double);
   extern int __attribute__((__cdecl__)) __signbitf (float);
   extern int __attribute__((__cdecl__)) __signbitl (long double);
-
-  inline int __attribute__((__cdecl__)) __signbit (double x) {
-
-    __mingw_dbl_type_t hlp;
-
-    hlp.x = x;
-    return ((hlp.lh.high & 0x80000000) != 0);
-
-
-
-
-
-  }
-
-  inline int __attribute__((__cdecl__)) __signbitf (float x) {
-
-    __mingw_flt_type_t hlp;
-    hlp.x = x;
-    return ((hlp.val & 0x80000000) != 0);
-
-
-
-
-
-  }
-
-  inline int __attribute__((__cdecl__)) __signbitl (long double x) {
-
-    __mingw_ldbl_type_t ld;
-    ld.x = x;
-    return ((ld.lh.sign_exponent & 0x8000) != 0);
-
-
-
-
-
-
-
-  }
 # 651 "C:/msys64/mingw64/include/math.h" 3
   extern float __attribute__((__cdecl__)) sinf(float _X);
   extern long double __attribute__((__cdecl__)) sinl(long double);
@@ -54737,19 +54479,19 @@ typedef double double_t;
 
   extern float __attribute__((__cdecl__)) sinhf(float _X);
 
-  inline float sinhf(float _X) { return ((float)sinh((double)_X)); }
+
 
   extern long double __attribute__((__cdecl__)) sinhl(long double);
 
   extern float __attribute__((__cdecl__)) coshf(float _X);
 
-  inline float coshf(float _X) { return ((float)cosh((double)_X)); }
+
 
   extern long double __attribute__((__cdecl__)) coshl(long double);
 
   extern float __attribute__((__cdecl__)) tanhf(float _X);
 
-  inline float tanhf(float _X) { return ((float)tanh((double)_X)); }
+
 
   extern long double __attribute__((__cdecl__)) tanhl(long double);
 
@@ -54773,7 +54515,7 @@ typedef double double_t;
 
   extern float __attribute__((__cdecl__)) expf(float _X);
 
-  inline float expf(float _X) { return ((float)exp((double)_X)); }
+
 
   extern long double __attribute__((__cdecl__)) expl(long double);
 
@@ -54791,7 +54533,7 @@ typedef double double_t;
 
   extern float frexpf(float _X,int *_Y);
 
-  inline float frexpf(float _X,int *_Y) { return ((float)frexp((double)_X,_Y)); }
+
 
   extern long double __attribute__((__cdecl__)) frexpl(long double,int *);
 
@@ -54805,7 +54547,7 @@ typedef double double_t;
 
   extern float __attribute__((__cdecl__)) ldexpf(float _X,int _Y);
 
-  inline float __attribute__((__cdecl__)) ldexpf (float x, int expn) { return (float) ldexp ((double)x, expn); }
+
 
   extern long double __attribute__((__cdecl__)) ldexpl (long double, int);
 
@@ -54854,14 +54596,14 @@ typedef double double_t;
   extern double __attribute__((__cdecl__)) hypot (double, double) ;
   extern float __attribute__((__cdecl__)) hypotf (float x, float y);
 
-  inline float __attribute__((__cdecl__)) hypotf (float x, float y) { return (float) hypot ((double)x, (double)y);}
+
 
   extern long double __attribute__((__cdecl__)) hypotl (long double, long double);
 
 
   extern float __attribute__((__cdecl__)) powf(float _X,float _Y);
 
-  inline float powf(float _X,float _Y) { return ((float)pow((double)_X,(double)_Y)); }
+
 
   extern long double __attribute__((__cdecl__)) powl (long double, long double);
 
@@ -54955,27 +54697,7 @@ __extension__ long long __attribute__((__cdecl__)) llrintl (long double);
   extern double __attribute__((__cdecl__)) copysign (double, double);
   extern float __attribute__((__cdecl__)) copysignf (float, float);
   extern long double __attribute__((__cdecl__)) copysignl (long double, long double);
-
-
-
-  inline double __attribute__((__cdecl__)) copysign (double x, double y)
-  {
-    __mingw_dbl_type_t hx, hy;
-    hx.x = x; hy.x = y;
-    hx.lh.high = (hx.lh.high & 0x7fffffff) | (hy.lh.high & 0x80000000);
-    return hx.x;
-  }
-  inline float __attribute__((__cdecl__)) copysignf (float x, float y)
-  {
-    __mingw_flt_type_t hx, hy;
-    hx.x = x; hy.x = y;
-    hx.val = (hx.val & 0x7fffffff) | (hy.val & 0x80000000);
-    return hx.x;
-  }
-
-
-
-
+# 1078 "C:/msys64/mingw64/include/math.h" 3
   extern double __attribute__((__cdecl__)) nan(const char *tagp);
   extern float __attribute__((__cdecl__)) nanf(const char *tagp);
   extern long double __attribute__((__cdecl__)) nanl(const char *tagp);
@@ -109087,16 +108809,6 @@ enum _mm_hint
   _MM_HINT_T2 = 1,
   _MM_HINT_NTA = 0
 };
-
-
-
-
-extern __inline void __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_prefetch (const void *__P, enum _mm_hint __I)
-{
-  __builtin_ia32_prefetch (__P, (__I & 0x4) >> 2,
-      __I & 0x3, (__I & 0x10) >> 4);
-}
 # 72 "C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xmmintrin.h" 3 4
 typedef float __m128 __attribute__ ((__vector_size__ (16), __may_alias__));
 
@@ -109740,21 +109452,7 @@ _mm_cvtps_pi8(__m128 __A)
   __v4hi __tmp = (__v4hi) _mm_cvtps_pi16 (__A);
   return (__m64) __builtin_ia32_packsswb (__tmp, (__v4hi)0LL);
 }
-
-
-
-extern __inline __m128 __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_shuffle_ps (__m128 __A, __m128 __B, int const __mask)
-{
-  return (__m128) __builtin_ia32_shufps ((__v4sf)__A, (__v4sf)__B, __mask);
-}
-
-
-
-
-
-
-
+# 761 "C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xmmintrin.h" 3 4
 extern __inline __m128 __attribute__((__gnu_inline__, __always_inline__, __artificial__))
 _mm_unpackhi_ps (__m128 __A, __m128 __B)
 {
@@ -110019,32 +109717,6 @@ _mm_move_ss (__m128 __A, __m128 __B)
                                      (__attribute__((__vector_size__ (16))) int)
                                      {4,1,2,3});
 }
-
-
-
-extern __inline int __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_extract_pi16 (__m64 const __A, int const __N)
-{
-  return (unsigned short) __builtin_ia32_vec_ext_v4hi ((__v4hi)__A, __N);
-}
-
-extern __inline int __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_m_pextrw (__m64 const __A, int const __N)
-{
-  return _mm_extract_pi16 (__A, __N);
-}
-# 1049 "C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xmmintrin.h" 3 4
-extern __inline __m64 __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_insert_pi16 (__m64 const __A, int const __D, int const __N)
-{
-  return (__m64) __builtin_ia32_vec_set_v4hi ((__v4hi)__A, __D, __N);
-}
-
-extern __inline __m64 __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_m_pinsrw (__m64 const __A, int const __D, int const __N)
-{
-  return _mm_insert_pi16 (__A, __D, __N);
-}
 # 1069 "C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xmmintrin.h" 3 4
 extern __inline __m64 __attribute__((__gnu_inline__, __always_inline__, __artificial__))
 _mm_max_pi16 (__m64 __A, __m64 __B)
@@ -110122,21 +109794,6 @@ extern __inline __m64 __attribute__((__gnu_inline__, __always_inline__, __artifi
 _m_pmulhuw (__m64 __A, __m64 __B)
 {
   return _mm_mulhi_pu16 (__A, __B);
-}
-
-
-
-
-extern __inline __m64 __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_shuffle_pi16 (__m64 __A, int const __N)
-{
-  return (__m64) __builtin_ia32_pshufw ((__v4hi)__A, __N);
-}
-
-extern __inline __m64 __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_m_pshufw (__m64 __A, int const __N)
-{
-  return _mm_shuffle_pi16 (__A, __N);
 }
 # 1171 "C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xmmintrin.h" 3 4
 extern __inline void __attribute__((__gnu_inline__, __always_inline__, __artificial__))
@@ -111193,19 +110850,7 @@ _mm_cvtss_sd (__m128d __A, __m128 __B)
 {
   return (__m128d)__builtin_ia32_cvtss2sd ((__v2df) __A, (__v4sf)__B);
 }
-
-
-extern __inline __m128d __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_shuffle_pd(__m128d __A, __m128d __B, const int __mask)
-{
-  return (__m128d)__builtin_ia32_shufpd ((__v2df)__A, (__v2df)__B, __mask);
-}
-
-
-
-
-
-
+# 961 "C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h" 3 4
 extern __inline __m128d __attribute__((__gnu_inline__, __always_inline__, __artificial__))
 _mm_unpackhi_pd (__m128d __A, __m128d __B)
 {
@@ -111457,31 +111102,6 @@ _mm_srai_epi32 (__m128i __A, int __B)
 {
   return (__m128i)__builtin_ia32_psradi128 ((__v4si)__A, __B);
 }
-
-
-extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_bsrli_si128 (__m128i __A, const int __N)
-{
-  return (__m128i)__builtin_ia32_psrldqi128 (__A, __N * 8);
-}
-
-extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_bslli_si128 (__m128i __A, const int __N)
-{
-  return (__m128i)__builtin_ia32_pslldqi128 (__A, __N * 8);
-}
-
-extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_srli_si128 (__m128i __A, const int __N)
-{
-  return (__m128i)__builtin_ia32_psrldqi128 (__A, __N * 8);
-}
-
-extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_slli_si128 (__m128i __A, const int __N)
-{
-  return (__m128i)__builtin_ia32_pslldqi128 (__A, __N * 8);
-}
 # 1248 "C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h" 3 4
 extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __artificial__))
 _mm_srli_epi16 (__m128i __A, int __B)
@@ -111626,19 +111246,6 @@ _mm_cmpgt_epi32 (__m128i __A, __m128i __B)
 {
   return (__m128i) ((__v4si)__A > (__v4si)__B);
 }
-
-
-extern __inline int __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_extract_epi16 (__m128i const __A, int const __N)
-{
-  return (unsigned short) __builtin_ia32_vec_ext_v8hi ((__v8hi)__A, __N);
-}
-
-extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_insert_epi16 (__m128i const __A, int const __D, int const __N)
-{
-  return (__m128i) __builtin_ia32_vec_set_v8hi ((__v8hi)__A, __D, __N);
-}
 # 1412 "C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h" 3 4
 extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __artificial__))
 _mm_max_epi16 (__m128i __A, __m128i __B)
@@ -111674,25 +111281,6 @@ extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __arti
 _mm_mulhi_epu16 (__m128i __A, __m128i __B)
 {
   return (__m128i)__builtin_ia32_pmulhuw128 ((__v8hi)__A, (__v8hi)__B);
-}
-
-
-extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_shufflehi_epi16 (__m128i __A, const int __mask)
-{
-  return (__m128i)__builtin_ia32_pshufhw ((__v8hi)__A, __mask);
-}
-
-extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_shufflelo_epi16 (__m128i __A, const int __mask)
-{
-  return (__m128i)__builtin_ia32_pshuflw ((__v8hi)__A, __mask);
-}
-
-extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __artificial__))
-_mm_shuffle_epi32 (__m128i __A, const int __mask)
-{
-  return (__m128i)__builtin_ia32_pshufd ((__v4si)__A, __mask);
 }
 # 1475 "C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h" 3 4
 extern __inline void __attribute__((__gnu_inline__, __always_inline__, __artificial__))
@@ -111906,7 +111494,7 @@ _mm_loaddup_pd (double const *__P)
 extern __inline __m128d __attribute__((__gnu_inline__, __always_inline__, __artificial__))
 _mm_movedup_pd (__m128d __X)
 {
-  return _mm_shuffle_pd (__X, __X, (((0) << 1) | (0)));
+  return ((__m128d)__builtin_ia32_shufpd ((__v2df)(__m128d)(__X), (__v2df)(__m128d)(__X), (int)((((0) << 1) | (0)))));
 }
 
 extern __inline __m128i __attribute__((__gnu_inline__, __always_inline__, __artificial__))

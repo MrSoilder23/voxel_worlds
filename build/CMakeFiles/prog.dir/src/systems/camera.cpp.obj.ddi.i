@@ -1070,44 +1070,7 @@ extern "C" {
   extern float __attribute__((__cdecl__)) fabsf (float x);
   extern long double __attribute__((__cdecl__)) fabsl (long double);
   extern double __attribute__((__cdecl__)) fabs (double _X);
-
-
-
-  inline float __attribute__((__cdecl__)) fabsf (float x)
-  {
-
-    return __builtin_fabsf (x);
-
-
-
-
-
-  }
-
-  inline long double __attribute__((__cdecl__)) fabsl (long double x)
-  {
-
-
-
-    long double res = 0.0l;
-    __asm__ __volatile__ ("fabs;" : "=t" (res) : "0" (x));
-    return res;
-
-  }
-
-  inline double __attribute__((__cdecl__)) fabs (double x)
-  {
-
-    return __builtin_fabs (x);
-
-
-
-
-
-  }
-
-
-
+# 231 "C:/msys64/mingw64/include/math.h" 3
   double __attribute__((__cdecl__)) ldexp(double _X,int _Y);
   double __attribute__((__cdecl__)) frexp(double _X,int *_Y);
   double __attribute__((__cdecl__)) modf(double _X,double *_Y);
@@ -1185,178 +1148,14 @@ typedef double double_t;
   extern int __attribute__((__cdecl__)) __fpclassifyl (long double);
   extern int __attribute__((__cdecl__)) __fpclassifyf (float);
   extern int __attribute__((__cdecl__)) __fpclassify (double);
-
-
-  inline int __attribute__((__cdecl__)) __fpclassifyl (long double x) {
-
-    __mingw_ldbl_type_t hlp;
-    unsigned int e;
-    hlp.x = x;
-    e = hlp.lh.sign_exponent & 0x7fff;
-    if (!e)
-      {
-        unsigned int h = hlp.lh.high;
-        if (!(hlp.lh.low | h))
-          return 0x4000;
-        else if (!(h & 0x80000000))
-          return (0x0400 | 0x4000);
-      }
-    else if (e == 0x7fff)
-      return (((hlp.lh.high & 0x7fffffff) | hlp.lh.low) == 0 ?
-              (0x0100 | 0x0400) : 0x0100);
-    return 0x0400;
-
-
-
-
-
-
-
-  }
-  inline int __attribute__((__cdecl__)) __fpclassify (double x) {
-
-    __mingw_dbl_type_t hlp;
-    unsigned int l, h;
-
-    hlp.x = x;
-    h = hlp.lh.high;
-    l = hlp.lh.low | (h & 0xfffff);
-    h &= 0x7ff00000;
-    if ((h | l) == 0)
-      return 0x4000;
-    if (!h)
-      return (0x0400 | 0x4000);
-    if (h == 0x7ff00000)
-      return (l ? 0x0100 : (0x0100 | 0x0400));
-    return 0x0400;
-
-
-
-
-
-  }
-  inline int __attribute__((__cdecl__)) __fpclassifyf (float x) {
-
-    __mingw_flt_type_t hlp;
-
-    hlp.x = x;
-    hlp.val &= 0x7fffffff;
-    if (hlp.val == 0)
-      return 0x4000;
-    if (hlp.val < 0x800000)
-      return (0x0400 | 0x4000);
-    if (hlp.val >= 0x7f800000)
-      return (hlp.val > 0x7f800000 ? 0x0100 : (0x0100 | 0x0400));
-    return 0x0400;
-
-
-
-
-
-  }
 # 507 "C:/msys64/mingw64/include/math.h" 3
   extern int __attribute__((__cdecl__)) __isnan (double);
   extern int __attribute__((__cdecl__)) __isnanf (float);
   extern int __attribute__((__cdecl__)) __isnanl (long double);
-
-
-  inline int __attribute__((__cdecl__)) __isnan (double _x)
-  {
-
-    __mingw_dbl_type_t hlp;
-    unsigned int l, h;
-
-    hlp.x = _x;
-    l = hlp.lh.low;
-    h = hlp.lh.high & 0x7fffffff;
-    h |= (l | -l) >> 31;
-    h = 0x7ff00000 - h;
-    return (int) h >> 31;
-
-
-
-
-
-
-
-  }
-
-  inline int __attribute__((__cdecl__)) __isnanf (float _x)
-  {
-
-    __mingw_flt_type_t hlp;
-    unsigned int i;
-
-    hlp.x = _x;
-    i = hlp.val & 0x7fffffff;
-    i = 0x7f800000 - i;
-    return (int) (i >> 31);
-
-
-
-
-
-
-
-  }
-
-  inline int __attribute__((__cdecl__)) __isnanl (long double _x)
-  {
-
-    __mingw_ldbl_type_t ld;
-    unsigned int xx, signexp;
-
-    ld.x = _x;
-    signexp = (ld.lh.sign_exponent & 0x7fff) << 1;
-    xx = ld.lh.low | (ld.lh.high & 0x7fffffffu);
-    signexp |= (xx | (-xx)) >> 31;
-    signexp = 0xfffe - signexp;
-    return (int) signexp >> 16;
-# 573 "C:/msys64/mingw64/include/math.h" 3
-  }
 # 594 "C:/msys64/mingw64/include/math.h" 3
   extern int __attribute__((__cdecl__)) __signbit (double);
   extern int __attribute__((__cdecl__)) __signbitf (float);
   extern int __attribute__((__cdecl__)) __signbitl (long double);
-
-  inline int __attribute__((__cdecl__)) __signbit (double x) {
-
-    __mingw_dbl_type_t hlp;
-
-    hlp.x = x;
-    return ((hlp.lh.high & 0x80000000) != 0);
-
-
-
-
-
-  }
-
-  inline int __attribute__((__cdecl__)) __signbitf (float x) {
-
-    __mingw_flt_type_t hlp;
-    hlp.x = x;
-    return ((hlp.val & 0x80000000) != 0);
-
-
-
-
-
-  }
-
-  inline int __attribute__((__cdecl__)) __signbitl (long double x) {
-
-    __mingw_ldbl_type_t ld;
-    ld.x = x;
-    return ((ld.lh.sign_exponent & 0x8000) != 0);
-
-
-
-
-
-
-
-  }
 # 651 "C:/msys64/mingw64/include/math.h" 3
   extern float __attribute__((__cdecl__)) sinf(float _X);
   extern long double __attribute__((__cdecl__)) sinl(long double);
@@ -1381,19 +1180,19 @@ typedef double double_t;
 
   extern float __attribute__((__cdecl__)) sinhf(float _X);
 
-  inline float sinhf(float _X) { return ((float)sinh((double)_X)); }
+
 
   extern long double __attribute__((__cdecl__)) sinhl(long double);
 
   extern float __attribute__((__cdecl__)) coshf(float _X);
 
-  inline float coshf(float _X) { return ((float)cosh((double)_X)); }
+
 
   extern long double __attribute__((__cdecl__)) coshl(long double);
 
   extern float __attribute__((__cdecl__)) tanhf(float _X);
 
-  inline float tanhf(float _X) { return ((float)tanh((double)_X)); }
+
 
   extern long double __attribute__((__cdecl__)) tanhl(long double);
 
@@ -1417,7 +1216,7 @@ typedef double double_t;
 
   extern float __attribute__((__cdecl__)) expf(float _X);
 
-  inline float expf(float _X) { return ((float)exp((double)_X)); }
+
 
   extern long double __attribute__((__cdecl__)) expl(long double);
 
@@ -1435,7 +1234,7 @@ typedef double double_t;
 
   extern float frexpf(float _X,int *_Y);
 
-  inline float frexpf(float _X,int *_Y) { return ((float)frexp((double)_X,_Y)); }
+
 
   extern long double __attribute__((__cdecl__)) frexpl(long double,int *);
 
@@ -1449,7 +1248,7 @@ typedef double double_t;
 
   extern float __attribute__((__cdecl__)) ldexpf(float _X,int _Y);
 
-  inline float __attribute__((__cdecl__)) ldexpf (float x, int expn) { return (float) ldexp ((double)x, expn); }
+
 
   extern long double __attribute__((__cdecl__)) ldexpl (long double, int);
 
@@ -1498,14 +1297,14 @@ typedef double double_t;
   extern double __attribute__((__cdecl__)) hypot (double, double) ;
   extern float __attribute__((__cdecl__)) hypotf (float x, float y);
 
-  inline float __attribute__((__cdecl__)) hypotf (float x, float y) { return (float) hypot ((double)x, (double)y);}
+
 
   extern long double __attribute__((__cdecl__)) hypotl (long double, long double);
 
 
   extern float __attribute__((__cdecl__)) powf(float _X,float _Y);
 
-  inline float powf(float _X,float _Y) { return ((float)pow((double)_X,(double)_Y)); }
+
 
   extern long double __attribute__((__cdecl__)) powl (long double, long double);
 
@@ -1599,27 +1398,7 @@ __extension__ long long __attribute__((__cdecl__)) llrintl (long double);
   extern double __attribute__((__cdecl__)) copysign (double, double);
   extern float __attribute__((__cdecl__)) copysignf (float, float);
   extern long double __attribute__((__cdecl__)) copysignl (long double, long double);
-
-
-
-  inline double __attribute__((__cdecl__)) copysign (double x, double y)
-  {
-    __mingw_dbl_type_t hx, hy;
-    hx.x = x; hy.x = y;
-    hx.lh.high = (hx.lh.high & 0x7fffffff) | (hy.lh.high & 0x80000000);
-    return hx.x;
-  }
-  inline float __attribute__((__cdecl__)) copysignf (float x, float y)
-  {
-    __mingw_flt_type_t hx, hy;
-    hx.x = x; hy.x = y;
-    hx.val = (hx.val & 0x7fffffff) | (hy.val & 0x80000000);
-    return hx.x;
-  }
-
-
-
-
+# 1078 "C:/msys64/mingw64/include/math.h" 3
   extern double __attribute__((__cdecl__)) nan(const char *tagp);
   extern float __attribute__((__cdecl__)) nanf(const char *tagp);
   extern long double __attribute__((__cdecl__)) nanl(const char *tagp);
@@ -1878,8 +1657,8 @@ __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) ___mb_cur_max_fun
 
   void __attribute__((__cdecl__)) _Exit(int) __attribute__ ((__noreturn__));
 
-  inline __attribute__ ((__noreturn__)) void __attribute__((__cdecl__)) _Exit(int status)
-  { _exit(status); }
+
+
 
 
 
@@ -2163,7 +1942,7 @@ unsigned long __attribute__((__cdecl__)) _lrotr(unsigned long,int);
 
   __extension__ long long __attribute__((__cdecl__)) llabs(long long);
 
-  __extension__ inline long long __attribute__((__cdecl__)) llabs(long long _j) { return (_j >= 0 ? _j : -_j); }
+
 
 
   __extension__ long long __attribute__((__cdecl__)) strtoll(const char * __restrict__, char ** __restrict, int);
@@ -2178,20 +1957,7 @@ unsigned long __attribute__((__cdecl__)) _lrotr(unsigned long,int);
   __extension__ char *__attribute__((__cdecl__)) ulltoa (unsigned long long , char *, int);
   __extension__ wchar_t *__attribute__((__cdecl__)) lltow (long long, wchar_t *, int);
   __extension__ wchar_t *__attribute__((__cdecl__)) ulltow (unsigned long long, wchar_t *, int);
-
-
-
-  __extension__ inline char *__attribute__((__cdecl__)) lltoa (long long _n, char * _c, int _i) { return _i64toa (_n, _c, _i); }
-  __extension__ inline char *__attribute__((__cdecl__)) ulltoa (unsigned long long _n, char * _c, int _i) { return _ui64toa (_n, _c, _i); }
-  __extension__ inline long long __attribute__((__cdecl__)) wtoll (const wchar_t * _w) { return _wtoi64 (_w); }
-  __extension__ inline wchar_t *__attribute__((__cdecl__)) lltow (long long _n, wchar_t * _w, int _i) { return _i64tow (_n, _w, _i); }
-  __extension__ inline wchar_t *__attribute__((__cdecl__)) ulltow (unsigned long long _n, wchar_t * _w, int _i) { return _ui64tow (_n, _w, _i); }
-
-
-
-
-
-
+# 713 "C:/msys64/mingw64/include/stdlib.h" 3
 }
 
 
