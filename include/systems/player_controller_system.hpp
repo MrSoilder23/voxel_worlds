@@ -9,6 +9,7 @@
 #include "./components/player_controller_component.hpp"
 #include "./components/position_component.hpp"
 #include "./components/camera_component.hpp"
+#include "./components/physics_component.hpp"
 #include "./utility/utility.hpp"
 
 class PlayerControllerSystem {

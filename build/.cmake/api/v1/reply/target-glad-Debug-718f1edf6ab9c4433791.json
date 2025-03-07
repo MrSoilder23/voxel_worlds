@@ -49,7 +49,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : " -g -Wall -O3 -g"
+					"fragment" : " -g -O3 -g"
 				}
 			],
 			"includes" : 

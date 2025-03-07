@@ -559,6 +559,7 @@ CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/components/player_controller_component.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
  C:/Projects/voxel_worlds/include/components/camera_component.hpp \
+ C:/Projects/voxel_worlds/include/components/physics_component.hpp \
  C:/Projects/voxel_worlds/include/utility/utility.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/random \
  C:/msys64/mingw64/include/c++/14.2.0/bits/random.h \

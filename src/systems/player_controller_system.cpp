@@ -17,34 +17,43 @@ void PlayerControllerSystem::Update(EntityManager& entityManager, float deltaTim
     auto player = entityManager.GetComponent<PlayerControllerComponent>("Player");
     auto playerPosition = entityManager.GetComponent<PositionComponent>("Player");
     auto playerCamera = entityManager.GetComponent<CameraComponent>("Player");
+    auto playerVelocity = entityManager.GetComponent<PhysicsComponent>("Player");
 
+    glm::vec3 forwardVector = glm::normalize(glm::vec3(playerCamera->mViewDirection.x, 0.0f, playerCamera->mViewDirection.z));
     glm::vec3 rightVector = glm::cross(playerCamera->mViewDirection, playerCamera->mUpVector);
     rightVector = glm::normalize(rightVector);
     
-    glm::vec3 forwardMovement = playerCamera->mViewDirection * player->mSpeed * deltaTime;
-    glm::vec3 sidewaysMovement = rightVector * player->mSpeed * deltaTime;
-    glm::vec3 upMovement = playerCamera->mUpVector * player->mSpeed * deltaTime;
+    glm::vec3 forwardMovement = forwardVector * player->mSpeed;
+    glm::vec3 sidewaysMovement = rightVector * player->mSpeed;
+    glm::vec3 upMovement = playerCamera->mUpVector * player->mSpeed;
     
+    glm::vec3 velocity = glm::vec3(0.0f);
+
     const Uint8* state = SDL_GetKeyboardState(NULL);
     if(state[SDL_SCANCODE_W]) {
-        playerPosition->mPosition += forwardMovement;
+        velocity += forwardMovement; 
     }
     if(state[SDL_SCANCODE_S]) {
-        playerPosition->mPosition -= forwardMovement;
+        velocity -= forwardMovement;
     }
     if(state[SDL_SCANCODE_A]) {
-        playerPosition->mPosition -= sidewaysMovement;
+        velocity -= sidewaysMovement;
     }
     if(state[SDL_SCANCODE_D]) {
-        playerPosition->mPosition += sidewaysMovement;
+        velocity += sidewaysMovement;
     }
     if(state[SDL_SCANCODE_SPACE]) {
-        playerPosition->mPosition += upMovement;
+        velocity += upMovement;
     }
     if(state[SDL_SCANCODE_LSHIFT]) {
-        playerPosition->mPosition -= upMovement;
+        velocity -= upMovement;
     }
-
+    
+    playerVelocity->mVelocity += velocity * deltaTime;
+    if(glm::length(playerVelocity->mVelocity) > player->mSpeed) {
+        playerVelocity->mVelocity = glm::normalize(playerVelocity->mVelocity) * player->mSpeed;
+    }
+    
     SDL_Event e;
 
     while(SDL_PollEvent(&e) != 0) {
@@ -65,7 +74,7 @@ void PlayerControllerSystem::Update(EntityManager& entityManager, float deltaTim
         
             rotation = glm::normalize(rotation);
 
-            playerPosition->mRotation = rotation;
+            utility::RotatePosition(*playerPosition, rotation);
         
             playerCamera->mViewDirection = glm::rotate(playerPosition->mRotation, glm::vec3(0.0f, 0.0f, -1.0f));
         }

@@ -130,12 +130,13 @@ void RendererSystem::DrawAllDebug(EntityManager& entityManager) {
     
     for(const auto& entityPointer : entityManager.GetEntities()) {
         auto boundingBoxComp = entityManager.GetComponent<BoundingBoxComponent>(entityPointer.first);
+        auto boundingPos = entityManager.GetComponent<PositionComponent>(entityPointer.first);
 
         if(boundingBoxComp) { 
             glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
             GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-            glUniformMatrix4fv(uModelMatrixLocation, 1, false, &positionComponent->mTransform[0][0]);
+            glUniformMatrix4fv(uModelMatrixLocation, 1, false, &boundingPos->mTransform[0][0]);
 
             glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
             GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
@@ -159,12 +160,13 @@ void RendererSystem::DrawAllDebugSingle(EntityManager& entityManager, std::strin
     static auto positionComponent = entityManager.GetComponent<PositionComponent>("Player");
 
     auto boundingBoxComp = entityManager.GetComponent<BoundingBoxComponent>(entityName);
+    auto boundingPos = entityManager.GetComponent<PositionComponent>(entityName);
 
     if(boundingBoxComp && boundingBoxComp->VAO != 0) { 
         glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
         GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-        glUniformMatrix4fv(uModelMatrixLocation, 1, false, &positionComponent->mTransform[0][0]);
+        glUniformMatrix4fv(uModelMatrixLocation, 1, false, &boundingPos->mTransform[0][0]);
 
         glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
         GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");

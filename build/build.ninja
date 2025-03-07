@@ -63,7 +63,7 @@ build cmake_object_order_depends_target_glad: phony || .
 
 build CMakeFiles/glad.dir/third_party/glad.c.obj: C_COMPILER__glad_unscanned_Debug C$:/Projects/voxel_worlds/third_party/glad.c || cmake_object_order_depends_target_glad
   DEP_FILE = CMakeFiles\glad.dir\third_party\glad.c.obj.d
-  FLAGS = -g -Wall -O3 -g
+  FLAGS = -g -O3 -g
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\glad.dir
   OBJECT_FILE_DIR = CMakeFiles\glad.dir\third_party
@@ -77,7 +77,7 @@ build CMakeFiles/glad.dir/third_party/glad.c.obj: C_COMPILER__glad_unscanned_Deb
 # Link the static library libglad.a
 
 build libglad.a: C_STATIC_LIBRARY_LINKER__glad_Debug CMakeFiles/glad.dir/third_party/glad.c.obj
-  LANGUAGE_COMPILE_FLAGS = -g -Wall -O3 -g
+  LANGUAGE_COMPILE_FLAGS = -g -O3 -g
   OBJECT_DIR = CMakeFiles\glad.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -96,7 +96,7 @@ build cmake_object_order_depends_target_prog: phony || cmake_object_order_depend
 build CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/blocks/block_registry.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\blocks\block_registry.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\blocks\block_registry.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\blocks\block_registry.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\blocks\block_registry.cpp.obj.ddi.i
@@ -104,7 +104,7 @@ build CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj.ddi: CXX_SCAN__prog_
 build CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/blocks/block_registry.cpp | CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\blocks\block_registry.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\blocks\block_registry.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\blocks
@@ -113,7 +113,7 @@ build CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj: CXX_COMPILER__prog_
 build CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/blocks/block_texture_creator.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\blocks\block_texture_creator.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\blocks\block_texture_creator.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\blocks\block_texture_creator.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\blocks\block_texture_creator.cpp.obj.ddi.i
@@ -121,7 +121,7 @@ build CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.ddi: CXX_SCAN
 build CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/blocks/block_texture_creator.cpp | CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\blocks\block_texture_creator.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\blocks\block_texture_creator.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\blocks
@@ -130,7 +130,7 @@ build CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj: CXX_COMPILER
 build CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/blocks/blocks.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\blocks\blocks.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\blocks\blocks.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\blocks\blocks.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\blocks\blocks.cpp.obj.ddi.i
@@ -138,7 +138,7 @@ build CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.ddi: CXX_SCAN__prog_Debug C$
 build CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/blocks/blocks.cpp | CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\blocks\blocks.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\blocks\blocks.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\blocks
@@ -147,7 +147,7 @@ build CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj: CXX_COMPILER__prog_scanned_
 build CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/core/entity_manager.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\core\entity_manager.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\core\entity_manager.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\core\entity_manager.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\core\entity_manager.cpp.obj.ddi.i
@@ -155,7 +155,7 @@ build CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.ddi: CXX_SCAN__prog_De
 build CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/core/entity_manager.cpp | CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\core\entity_manager.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\core\entity_manager.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\core
@@ -164,7 +164,7 @@ build CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj: CXX_COMPILER__prog_sc
 build CMakeFiles/prog.dir/src/core/game.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/core/game.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\core\game.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\core\game.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\core\game.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\core\game.cpp.obj.ddi.i
@@ -172,7 +172,7 @@ build CMakeFiles/prog.dir/src/core/game.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Pr
 build CMakeFiles/prog.dir/src/core/game.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/core/game.cpp | CMakeFiles/prog.dir/src/core/game.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\core\game.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\core\game.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\core
@@ -181,7 +181,7 @@ build CMakeFiles/prog.dir/src/core/game.cpp.obj: CXX_COMPILER__prog_scanned_Debu
 build CMakeFiles/prog.dir/src/core/world.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/core/world.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\core\world.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\core\world.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\core\world.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\core\world.cpp.obj.ddi.i
@@ -189,7 +189,7 @@ build CMakeFiles/prog.dir/src/core/world.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/P
 build CMakeFiles/prog.dir/src/core/world.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/core/world.cpp | CMakeFiles/prog.dir/src/core/world.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\core\world.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\core\world.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\core
@@ -198,7 +198,7 @@ build CMakeFiles/prog.dir/src/core/world.cpp.obj: CXX_COMPILER__prog_scanned_Deb
 build CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/graphics/model_manager.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\graphics\model_manager.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\graphics\model_manager.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\graphics\model_manager.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\graphics\model_manager.cpp.obj.ddi.i
@@ -206,7 +206,7 @@ build CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.ddi: CXX_SCAN__prog
 build CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/graphics/model_manager.cpp | CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\graphics\model_manager.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\graphics\model_manager.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\graphics
@@ -215,7 +215,7 @@ build CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj: CXX_COMPILER__prog
 build CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/graphics/shader.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\graphics\shader.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\graphics\shader.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\graphics\shader.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\graphics\shader.cpp.obj.ddi.i
@@ -223,7 +223,7 @@ build CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.ddi: CXX_SCAN__prog_Debug 
 build CMakeFiles/prog.dir/src/graphics/shader.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/graphics/shader.cpp | CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\graphics\shader.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\graphics\shader.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\graphics
@@ -232,7 +232,7 @@ build CMakeFiles/prog.dir/src/graphics/shader.cpp.obj: CXX_COMPILER__prog_scanne
 build CMakeFiles/prog.dir/src/main.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/main.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\main.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\main.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\main.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\main.cpp.obj.ddi.i
@@ -240,7 +240,7 @@ build CMakeFiles/prog.dir/src/main.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Project
 build CMakeFiles/prog.dir/src/main.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/main.cpp | CMakeFiles/prog.dir/src/main.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\main.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\main.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src
@@ -249,7 +249,7 @@ build CMakeFiles/prog.dir/src/main.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:
 build CMakeFiles/prog.dir/src/mesh_data.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/mesh_data.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\mesh_data.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\mesh_data.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\mesh_data.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\mesh_data.cpp.obj.ddi.i
@@ -257,7 +257,7 @@ build CMakeFiles/prog.dir/src/mesh_data.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Pr
 build CMakeFiles/prog.dir/src/mesh_data.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/mesh_data.cpp | CMakeFiles/prog.dir/src/mesh_data.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\mesh_data.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\mesh_data.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src
@@ -266,7 +266,7 @@ build CMakeFiles/prog.dir/src/mesh_data.cpp.obj: CXX_COMPILER__prog_scanned_Debu
 build CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/bounding_box_system.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi.i
@@ -274,7 +274,7 @@ build CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.ddi: CXX_SCAN_
 build CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/bounding_box_system.cpp | CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
@@ -283,7 +283,7 @@ build CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj: CXX_COMPILER_
 build CMakeFiles/prog.dir/src/systems/camera.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/camera.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\systems\camera.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\camera.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\systems\camera.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\camera.cpp.obj.ddi.i
@@ -291,7 +291,24 @@ build CMakeFiles/prog.dir/src/systems/camera.cpp.obj.ddi: CXX_SCAN__prog_Debug C
 build CMakeFiles/prog.dir/src/systems/camera.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/camera.cpp | CMakeFiles/prog.dir/src/systems/camera.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\systems\camera.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\camera.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
+  INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
+  OBJECT_DIR = CMakeFiles\prog.dir
+  OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  dyndep = CMakeFiles/prog.dir/CXX.dd
+
+build CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/chunk_bounding_creation_system.cpp || cmake_object_order_depends_target_prog
+  DEP_FILE = CMakeFiles\prog.dir\src\systems\chunk_bounding_creation_system.cpp.obj.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\chunk_bounding_creation_system.cpp.obj.ddi
+  FLAGS = -g -O3 -g -std=gnu++20
+  INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
+  OBJ_FILE = CMakeFiles\prog.dir\src\systems\chunk_bounding_creation_system.cpp.obj
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\chunk_bounding_creation_system.cpp.obj.ddi.i
+
+build CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/chunk_bounding_creation_system.cpp | CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
+  DEP_FILE = CMakeFiles\prog.dir\src\systems\chunk_bounding_creation_system.cpp.obj.d
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\chunk_bounding_creation_system.cpp.obj.modmap
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
@@ -300,7 +317,7 @@ build CMakeFiles/prog.dir/src/systems/camera.cpp.obj: CXX_COMPILER__prog_scanned
 build CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/chunk_renderer_system.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj.ddi.i
@@ -308,7 +325,7 @@ build CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.ddi: CXX_SCA
 build CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/chunk_renderer_system.cpp | CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
@@ -317,7 +334,7 @@ build CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj: CXX_COMPILE
 build CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/chunk_vertex_setup_system.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\systems\chunk_vertex_setup_system.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\chunk_vertex_setup_system.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\systems\chunk_vertex_setup_system.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\chunk_vertex_setup_system.cpp.obj.ddi.i
@@ -325,7 +342,41 @@ build CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.ddi: CXX
 build CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/chunk_vertex_setup_system.cpp | CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\systems\chunk_vertex_setup_system.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\chunk_vertex_setup_system.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
+  INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
+  OBJECT_DIR = CMakeFiles\prog.dir
+  OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  dyndep = CMakeFiles/prog.dir/CXX.dd
+
+build CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/collision_system.cpp || cmake_object_order_depends_target_prog
+  DEP_FILE = CMakeFiles\prog.dir\src\systems\collision_system.cpp.obj.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\collision_system.cpp.obj.ddi
+  FLAGS = -g -O3 -g -std=gnu++20
+  INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
+  OBJ_FILE = CMakeFiles\prog.dir\src\systems\collision_system.cpp.obj
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\collision_system.cpp.obj.ddi.i
+
+build CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/collision_system.cpp | CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
+  DEP_FILE = CMakeFiles\prog.dir\src\systems\collision_system.cpp.obj.d
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\collision_system.cpp.obj.modmap
+  FLAGS = -g -O3 -g -std=gnu++20
+  INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
+  OBJECT_DIR = CMakeFiles\prog.dir
+  OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  dyndep = CMakeFiles/prog.dir/CXX.dd
+
+build CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/physics_system.cpp || cmake_object_order_depends_target_prog
+  DEP_FILE = CMakeFiles\prog.dir\src\systems\physics_system.cpp.obj.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\physics_system.cpp.obj.ddi
+  FLAGS = -g -O3 -g -std=gnu++20
+  INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
+  OBJ_FILE = CMakeFiles\prog.dir\src\systems\physics_system.cpp.obj
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\physics_system.cpp.obj.ddi.i
+
+build CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/physics_system.cpp | CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
+  DEP_FILE = CMakeFiles\prog.dir\src\systems\physics_system.cpp.obj.d
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\physics_system.cpp.obj.modmap
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
@@ -334,7 +385,7 @@ build CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj: CXX_COM
 build CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/player_controller_system.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.ddi.i
@@ -342,7 +393,7 @@ build CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.ddi: CXX_
 build CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/player_controller_system.cpp | CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
@@ -351,7 +402,7 @@ build CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj: CXX_COMP
 build CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/position_update_system.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\systems\position_update_system.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\position_update_system.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\systems\position_update_system.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\position_update_system.cpp.obj.ddi.i
@@ -359,7 +410,7 @@ build CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.ddi: CXX_SC
 build CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/position_update_system.cpp | CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\systems\position_update_system.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\position_update_system.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
@@ -368,7 +419,7 @@ build CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj: CXX_COMPIL
 build CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/renderer_system.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\systems\renderer_system.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\renderer_system.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\systems\renderer_system.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\renderer_system.cpp.obj.ddi.i
@@ -376,7 +427,7 @@ build CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.ddi: CXX_SCAN__pro
 build CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/renderer_system.cpp | CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\systems\renderer_system.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\renderer_system.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
@@ -385,7 +436,7 @@ build CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj: CXX_COMPILER__pro
 build CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/texture_manager.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\systems\texture_manager.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\texture_manager.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\systems\texture_manager.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\texture_manager.cpp.obj.ddi.i
@@ -393,7 +444,7 @@ build CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.ddi: CXX_SCAN__pro
 build CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/texture_manager.cpp | CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\systems\texture_manager.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\texture_manager.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
@@ -402,7 +453,7 @@ build CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj: CXX_COMPILER__pro
 build CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/vertex_setup_system.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\systems\vertex_setup_system.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\vertex_setup_system.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\systems\vertex_setup_system.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\vertex_setup_system.cpp.obj.ddi.i
@@ -410,7 +461,7 @@ build CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.ddi: CXX_SCAN_
 build CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/vertex_setup_system.cpp | CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\systems\vertex_setup_system.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\vertex_setup_system.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
@@ -419,7 +470,7 @@ build CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj: CXX_COMPILER_
 build CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/world_generation_system.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi.i
@@ -427,7 +478,7 @@ build CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.ddi: CXX_S
 build CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/systems/world_generation_system.cpp | CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
@@ -436,7 +487,7 @@ build CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj: CXX_COMPI
 build CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/utility/spiral_loop.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\utility\spiral_loop.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\utility\spiral_loop.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\utility\spiral_loop.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\utility\spiral_loop.cpp.obj.ddi.i
@@ -444,7 +495,7 @@ build CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.ddi: CXX_SCAN__prog_De
 build CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/utility/spiral_loop.cpp | CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\utility\spiral_loop.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\utility\spiral_loop.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\utility
@@ -453,7 +504,7 @@ build CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj: CXX_COMPILER__prog_sc
 build CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/utility/thread_pool.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\utility\thread_pool.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\utility\thread_pool.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\utility\thread_pool.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\utility\thread_pool.cpp.obj.ddi.i
@@ -461,7 +512,7 @@ build CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.ddi: CXX_SCAN__prog_De
 build CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/utility/thread_pool.cpp | CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\utility\thread_pool.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\utility\thread_pool.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\utility
@@ -470,7 +521,7 @@ build CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj: CXX_COMPILER__prog_sc
 build CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/world/chunk_manager.cpp || cmake_object_order_depends_target_prog
   DEP_FILE = CMakeFiles\prog.dir\src\world\chunk_manager.cpp.obj.ddi.d
   DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\world\chunk_manager.cpp.obj.ddi
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJ_FILE = CMakeFiles\prog.dir\src\world\chunk_manager.cpp.obj
   PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\world\chunk_manager.cpp.obj.ddi.i
@@ -478,13 +529,13 @@ build CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.ddi: CXX_SCAN__prog_De
 build CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/world/chunk_manager.cpp | CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
   DEP_FILE = CMakeFiles\prog.dir\src\world\chunk_manager.cpp.obj.d
   DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\world\chunk_manager.cpp.obj.modmap
-  FLAGS = -g -Wall -O3 -g -std=gnu++20
+  FLAGS = -g -O3 -g -std=gnu++20
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\world
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
-build CMakeFiles/prog.dir/CXX.dd | C$:/Projects/voxel_worlds/build/CMakeFiles/prog.dir/CXXModules.json CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj.modmap CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.modmap CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.modmap CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/core/game.cpp.obj.modmap CMakeFiles/prog.dir/src/core/world.cpp.obj.modmap CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.modmap CMakeFiles/prog.dir/src/main.cpp.obj.modmap CMakeFiles/prog.dir/src/mesh_data.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/camera.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.modmap CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.modmap: CXX_DYNDEP__prog_Debug CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj.ddi CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.ddi CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.ddi CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/core/game.cpp.obj.ddi CMakeFiles/prog.dir/src/core/world.cpp.obj.ddi CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.ddi CMakeFiles/prog.dir/src/main.cpp.obj.ddi CMakeFiles/prog.dir/src/mesh_data.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/camera.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.ddi CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.ddi | C$:/Projects/voxel_worlds/build/CMakeFiles/prog.dir/CXXDependInfo.json
+build CMakeFiles/prog.dir/CXX.dd | C$:/Projects/voxel_worlds/build/CMakeFiles/prog.dir/CXXModules.json CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj.modmap CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.modmap CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.modmap CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/core/game.cpp.obj.modmap CMakeFiles/prog.dir/src/core/world.cpp.obj.modmap CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.modmap CMakeFiles/prog.dir/src/main.cpp.obj.modmap CMakeFiles/prog.dir/src/mesh_data.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/camera.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.modmap CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.modmap: CXX_DYNDEP__prog_Debug CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj.ddi CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.ddi CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.ddi CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/core/game.cpp.obj.ddi CMakeFiles/prog.dir/src/core/world.cpp.obj.ddi CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.ddi CMakeFiles/prog.dir/src/main.cpp.obj.ddi CMakeFiles/prog.dir/src/mesh_data.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/camera.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.ddi CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.ddi | C$:/Projects/voxel_worlds/build/CMakeFiles/prog.dir/CXXDependInfo.json
 
 
 # =============================================================================
@@ -494,8 +545,8 @@ build CMakeFiles/prog.dir/CXX.dd | C$:/Projects/voxel_worlds/build/CMakeFiles/pr
 #############################################
 # Link the executable C:\Projects\voxel_worlds\bin\prog.exe
 
-build C$:/Projects/voxel_worlds/bin/prog.exe: CXX_EXECUTABLE_LINKER__prog_Debug CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj CMakeFiles/prog.dir/src/core/game.cpp.obj CMakeFiles/prog.dir/src/core/world.cpp.obj CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj CMakeFiles/prog.dir/src/graphics/shader.cpp.obj CMakeFiles/prog.dir/src/main.cpp.obj CMakeFiles/prog.dir/src/mesh_data.cpp.obj CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj CMakeFiles/prog.dir/src/systems/camera.cpp.obj CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj | C$:/Projects/voxel_worlds/lib/libSDL2main.a C$:/Projects/voxel_worlds/lib/libSDL2.dll.a C$:/Projects/voxel_worlds/lib/libSDL2_image.dll.a libglad.a || copy_assets copy_shaders libglad.a
-  FLAGS = -g -Wall -O3 -g
+build C$:/Projects/voxel_worlds/bin/prog.exe: CXX_EXECUTABLE_LINKER__prog_Debug CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj CMakeFiles/prog.dir/src/core/game.cpp.obj CMakeFiles/prog.dir/src/core/world.cpp.obj CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj CMakeFiles/prog.dir/src/graphics/shader.cpp.obj CMakeFiles/prog.dir/src/main.cpp.obj CMakeFiles/prog.dir/src/mesh_data.cpp.obj CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj CMakeFiles/prog.dir/src/systems/camera.cpp.obj CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj | C$:/Projects/voxel_worlds/lib/libSDL2main.a C$:/Projects/voxel_worlds/lib/libSDL2.dll.a C$:/Projects/voxel_worlds/lib/libSDL2_image.dll.a libglad.a || copy_assets copy_shaders libglad.a
+  FLAGS = -g -O3 -g
   LINK_LIBRARIES = -lmingw32  C:/Projects/voxel_worlds/lib/libSDL2main.a  C:/Projects/voxel_worlds/lib/libSDL2.dll.a  C:/Projects/voxel_worlds/lib/libSDL2_image.dll.a  libglad.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LC:/Projects/voxel_worlds/lib
   OBJECT_DIR = CMakeFiles\prog.dir

@@ -18,10 +18,14 @@ void WorldGenerationSystem::GenerateChunk(int x, int y, int z) {
     mEntityManager->AddComponent<ChunkModelComponent>(chunkName);
     mEntityManager->AddComponent<ChunkStorageComponent>(chunkName);
     mEntityManager->AddComponent<BoundingBoxComponent>(chunkName);
+    mEntityManager->AddComponent<BoundingBoxCollectionComponent>(chunkName);
     
     BoundingBoxComponent bBoxComponent;
-    bBoxComponent.mMin = glm::vec3(-0.5f,-0.5f,-0.5);
-    bBoxComponent.mMax = glm::vec3(VoxelWorlds::CHUNK_SIZE-0.5f,VoxelWorlds::CHUNK_SIZE-0.5f,VoxelWorlds::CHUNK_SIZE-0.5f);
+    bBoxComponent.group = Group::render;
+    bBoxComponent.mLocalMin = glm::vec3(-0.5f,-0.5f,-0.5f);
+    bBoxComponent.mLocalMax = glm::vec3(VoxelWorlds::CHUNK_SIZE-0.5f,
+                                   VoxelWorlds::CHUNK_SIZE-0.5f,
+                                   VoxelWorlds::CHUNK_SIZE-0.5f);
     
     PositionComponent posComponent;
     utility::MovePosition(posComponent, glm::vec3(x*VoxelWorlds::CHUNK_SIZE,

@@ -110947,8 +110947,11 @@ struct Model {
 # 1 "C:/Projects/voxel_worlds/include/group.hpp" 1
        
 
-enum class Group {
-    nothing,
+
+
+enum class Group : uint8_t {
+    null,
+    render,
     terrain,
     player,
 };
@@ -110956,11 +110959,15 @@ enum class Group {
 
 struct BoundingBoxComponent : public IComponent{
 
-    glm::vec3 mMin;
-    glm::vec3 mMax;
+    glm::vec3 mLocalMin;
+    glm::vec3 mLocalMax;
+
+    glm::vec3 mWorldMin;
+    glm::vec3 mWorldMax;
 
     Group group;
     Group mask;
+
 
     Model mModel;
 
@@ -124117,7 +124124,7 @@ namespace __detail
        
 # 40 "C:/msys64/mingw64/include/c++/14.2.0/cmath" 3
 # 8 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 2
-# 20 "C:/Projects/voxel_worlds/include/utility/utility.hpp"
+# 22 "C:/Projects/voxel_worlds/include/utility/utility.hpp"
 # 1 "C:/Projects/voxel_worlds/include/utility/constant.hpp" 1
        
 
@@ -124574,7 +124581,7 @@ namespace VoxelWorlds {
     static constexpr size_t THREAD_AMOUNT = 5;
     static constexpr float FRAME_RATE = 240;
 }
-# 21 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 2
+# 23 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 2
 
 
 
@@ -124625,23 +124632,125 @@ namespace utility {
 
 
     inline bool Instersects(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
-        return (box1.mMin.x <= box2.mMax.x && box1.mMax.x >= box2.mMin.x) &&
-               (box1.mMin.y <= box2.mMax.y && box1.mMax.y >= box2.mMin.y) &&
-               (box1.mMin.z <= box2.mMax.z && box1.mMax.z >= box2.mMin.z);
+        return (box1.mWorldMin.x <= box2.mWorldMax.x && box1.mWorldMax.x >= box2.mWorldMin.x) &&
+               (box1.mWorldMin.y <= box2.mWorldMax.y && box1.mWorldMax.y >= box2.mWorldMin.y) &&
+               (box1.mWorldMin.z <= box2.mWorldMax.z && box1.mWorldMax.z >= box2.mWorldMin.z);
+    }
+
+    inline glm::vec3 AxisOfLeastOverlap(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
+        constexpr float epsilon = 0.001f;
+
+        const float overlapX = std::min(box1.mWorldMax.x, box2.mWorldMax.x) - std::max(box1.mWorldMin.x, box2.mWorldMin.x);
+        const float overlapY = std::min(box1.mWorldMax.y, box2.mWorldMax.y) - std::max(box1.mWorldMin.y, box2.mWorldMin.y);
+        const float overlapZ = std::min(box1.mWorldMax.z, box2.mWorldMax.z) - std::max(box1.mWorldMin.z, box2.mWorldMin.z);
+
+        glm::vec3 mtv(0.0f);
+
+        if (overlapX < overlapY && overlapX < overlapZ) {
+            float direction = (box1.mWorldMin.x < box2.mWorldMin.x) ? 1.0f : -1.0f;
+            mtv = glm::vec3(direction * (overlapX+epsilon), 0.0f, 0.0f);
+        } else if (overlapY < overlapZ) {
+            float direction = (box1.mWorldMin.y < box2.mWorldMin.y) ? 1.0f : -1.0f;
+            mtv = glm::vec3(0.0f, direction * (overlapY+epsilon), 0.0f);
+        } else {
+            float direction = (box1.mWorldMin.z < box2.mWorldMin.z) ? 1.0f : -1.0f;
+            mtv = glm::vec3(0.0f, 0.0f, direction * (overlapZ+epsilon));
+        }
+
+        return mtv;
+    }
+
+
+    inline float SweptAABB(const BoundingBoxComponent& box1, const glm::vec3& velocity, const BoundingBoxComponent& box2, glm::vec3& normals) {
+        if ((velocity.x == 0.0f && (box1.mWorldMax.x < box2.mWorldMin.x || box1.mWorldMin.x > box2.mWorldMax.x)) ||
+            (velocity.y == 0.0f && (box1.mWorldMax.y < box2.mWorldMin.y || box1.mWorldMin.y > box2.mWorldMax.y)) ||
+            (velocity.z == 0.0f && (box1.mWorldMax.z < box2.mWorldMin.z || box1.mWorldMin.z > box2.mWorldMax.z))) {
+            normals = glm::vec3(0.0f);
+            return 1.0f;
+        }
+
+        float xBoxEntry, yBoxEntry, zBoxEntry;
+        float xBoxExit, yBoxExit, zBoxExit;
+
+
+        if (velocity.x > 0.0f) {
+            xBoxEntry = box2.mWorldMin.x - box1.mWorldMax.x;
+            xBoxExit = box2.mWorldMax.x - box1.mWorldMin.x;
+        } else {
+            xBoxEntry = box2.mWorldMax.x - box1.mWorldMin.x;
+            xBoxExit = box2.mWorldMin.x - box1.mWorldMax.x;
+        }
+
+        if (velocity.y > 0.0f) {
+            yBoxEntry = box2.mWorldMin.y - box1.mWorldMax.y;
+            yBoxExit = box2.mWorldMax.y - box1.mWorldMin.y;
+        } else {
+            yBoxEntry = box2.mWorldMax.y - box1.mWorldMin.y;
+            yBoxExit = box2.mWorldMin.y - box1.mWorldMax.y;
+        }
+
+        if (velocity.z > 0.0f) {
+            zBoxEntry = box2.mWorldMin.z - box1.mWorldMax.z;
+            zBoxExit = box2.mWorldMax.z - box1.mWorldMin.z;
+        } else {
+            zBoxEntry = box2.mWorldMax.z - box1.mWorldMin.z;
+            zBoxExit = box2.mWorldMin.z - box1.mWorldMax.z;
+        }
+
+
+        float xEntry = (velocity.x != 0.0f) ? xBoxEntry / velocity.x : -std::numeric_limits<float>::infinity();
+        float xExit = (velocity.x != 0.0f) ? xBoxExit / velocity.x : std::numeric_limits<float>::infinity();
+
+        float yEntry = (velocity.y != 0.0f) ? yBoxEntry / velocity.y : -std::numeric_limits<float>::infinity();
+        float yExit = (velocity.y != 0.0f) ? yBoxExit / velocity.y : std::numeric_limits<float>::infinity();
+
+        float zEntry = (velocity.z != 0.0f) ? zBoxEntry / velocity.z : -std::numeric_limits<float>::infinity();
+        float zExit = (velocity.z != 0.0f) ? zBoxExit / velocity.z : std::numeric_limits<float>::infinity();
+
+        float entryTime = std::max(std::max(xEntry, yEntry), zEntry);
+        float exitTime = std::min(std::min(xExit, yExit), zExit);
+
+
+        if (entryTime > exitTime || entryTime > 1.0f || exitTime < 0.0f) {
+            normals = glm::vec3(0.0f);
+            return 1.0f;
+        }
+
+        if (entryTime < 0.0f) {
+            normals = glm::vec3(0.0f);
+            return 0.0f;
+        }
+
+
+        if (xEntry >= yEntry && xEntry >= zEntry) {
+            normals.x = (xBoxEntry < 0.0f) ? 1.0f : -1.0f;
+            normals.y = 0.0f;
+            normals.z = 0.0f;
+        } else if (yEntry >= zEntry) {
+            normals.x = 0.0f;
+            normals.y = (yBoxEntry < 0.0f) ? 1.0f : -1.0f;
+            normals.z = 0.0f;
+        } else {
+            normals.x = 0.0f;
+            normals.y = 0.0f;
+            normals.z = (zBoxEntry < 0.0f) ? 1.0f : -1.0f;
+        }
+
+        return entryTime;
     }
 
 
     inline Model CreateBoundingModel(BoundingBoxComponent& boundingBox) {
         Model model;
         model.vertexPositions = {
-            glm::vec3(boundingBox.mMin.x, boundingBox.mMin.y, boundingBox.mMin.z),
-            glm::vec3(boundingBox.mMax.x, boundingBox.mMin.y, boundingBox.mMin.z),
-            glm::vec3(boundingBox.mMax.x, boundingBox.mMax.y, boundingBox.mMin.z),
-            glm::vec3(boundingBox.mMin.x, boundingBox.mMax.y, boundingBox.mMin.z),
-            glm::vec3(boundingBox.mMin.x, boundingBox.mMin.y, boundingBox.mMax.z),
-            glm::vec3(boundingBox.mMax.x, boundingBox.mMin.y, boundingBox.mMax.z),
-            glm::vec3(boundingBox.mMax.x, boundingBox.mMax.y, boundingBox.mMax.z),
-            glm::vec3(boundingBox.mMin.x, boundingBox.mMax.y, boundingBox.mMax.z)
+            glm::vec3(boundingBox.mLocalMin.x, boundingBox.mLocalMin.y, boundingBox.mLocalMin.z),
+            glm::vec3(boundingBox.mLocalMax.x, boundingBox.mLocalMin.y, boundingBox.mLocalMin.z),
+            glm::vec3(boundingBox.mLocalMax.x, boundingBox.mLocalMax.y, boundingBox.mLocalMin.z),
+            glm::vec3(boundingBox.mLocalMin.x, boundingBox.mLocalMax.y, boundingBox.mLocalMin.z),
+            glm::vec3(boundingBox.mLocalMin.x, boundingBox.mLocalMin.y, boundingBox.mLocalMax.z),
+            glm::vec3(boundingBox.mLocalMax.x, boundingBox.mLocalMin.y, boundingBox.mLocalMax.z),
+            glm::vec3(boundingBox.mLocalMax.x, boundingBox.mLocalMax.y, boundingBox.mLocalMax.z),
+            glm::vec3(boundingBox.mLocalMin.x, boundingBox.mLocalMax.y, boundingBox.mLocalMax.z)
         };
 
         model.indexBufferData = {
@@ -124882,12 +124991,13 @@ void RendererSystem::DrawAllDebug(EntityManager& entityManager) {
 
     for(const auto& entityPointer : entityManager.GetEntities()) {
         auto boundingBoxComp = entityManager.GetComponent<BoundingBoxComponent>(entityPointer.first);
+        auto boundingPos = entityManager.GetComponent<PositionComponent>(entityPointer.first);
 
         if(boundingBoxComp) {
             glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
             GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-            glad_glUniformMatrix4fv(uModelMatrixLocation, 1, false, &positionComponent->mTransform[0][0]);
+            glad_glUniformMatrix4fv(uModelMatrixLocation, 1, false, &boundingPos->mTransform[0][0]);
 
             glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
             GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
@@ -124911,12 +125021,13 @@ void RendererSystem::DrawAllDebugSingle(EntityManager& entityManager, std::strin
     static auto positionComponent = entityManager.GetComponent<PositionComponent>("Player");
 
     auto boundingBoxComp = entityManager.GetComponent<BoundingBoxComponent>(entityName);
+    auto boundingPos = entityManager.GetComponent<PositionComponent>(entityName);
 
     if(boundingBoxComp && boundingBoxComp->VAO != 0) {
         glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
         GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-        glad_glUniformMatrix4fv(uModelMatrixLocation, 1, false, &positionComponent->mTransform[0][0]);
+        glad_glUniformMatrix4fv(uModelMatrixLocation, 1, false, &boundingPos->mTransform[0][0]);
 
         glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
         GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");

@@ -416,6 +416,9 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/array \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
+ C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp \
+ C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
+ C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/utility/utility.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/random \
  C:/msys64/mingw64/include/c++/14.2.0/bits/random.h \
@@ -429,8 +432,6 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/numeric \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_numeric.h \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_numeric_defs.h \
- C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
- C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \

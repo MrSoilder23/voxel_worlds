@@ -103419,8 +103419,11 @@ struct ModelComponent : public IComponent {
 # 1 "C:/Projects/voxel_worlds/include/group.hpp" 1
        
 
-enum class Group {
-    nothing,
+
+
+enum class Group : uint8_t {
+    null,
+    render,
     terrain,
     player,
 };
@@ -103428,11 +103431,15 @@ enum class Group {
 
 struct BoundingBoxComponent : public IComponent{
 
-    glm::vec3 mMin;
-    glm::vec3 mMax;
+    glm::vec3 mLocalMin;
+    glm::vec3 mLocalMax;
+
+    glm::vec3 mWorldMin;
+    glm::vec3 mWorldMax;
 
     Group group;
     Group mask;
+
 
     Model mModel;
 

@@ -82,6 +82,11 @@
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/camera.cpp"
 		},
+		"CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_bounding_creation_system.cpp"
+		},
 		"CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj" : 
 		{
 			"language" : "CXX",
@@ -91,6 +96,16 @@
 		{
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_vertex_setup_system.cpp"
+		},
+		"CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/collision_system.cpp"
+		},
+		"CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/physics_system.cpp"
 		},
 		"CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj" : 
 		{
