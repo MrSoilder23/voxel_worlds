@@ -121862,18 +121862,18 @@ namespace utility {
         }
 
 
-        if (xEntry >= yEntry && xEntry >= zEntry) {
-            normals.x = (xBoxEntry < 0.0f) ? 1.0f : -1.0f;
+        if (xEntry > yEntry && xEntry > zEntry) {
+            normals.x = (velocity.x > 0.0f) ? -1.0f : 1.0f;
             normals.y = 0.0f;
             normals.z = 0.0f;
-        } else if (yEntry >= zEntry) {
+        } else if (yEntry > zEntry) {
+            normals.y = (velocity.y > 0.0f) ? -1.0f : 1.0f;
             normals.x = 0.0f;
-            normals.y = (yBoxEntry < 0.0f) ? 1.0f : -1.0f;
             normals.z = 0.0f;
         } else {
+            normals.z = (velocity.z > 0.0f) ? -1.0f : 1.0f;
             normals.x = 0.0f;
             normals.y = 0.0f;
-            normals.z = (zBoxEntry < 0.0f) ? 1.0f : -1.0f;
         }
 
         return entryTime;
@@ -122049,22 +122049,24 @@ void CollisionSystem::UpdateCollision(EntityManager& entityManager, float deltaT
 
         if (currentTime < collisionTime) {
             collisionTime = currentTime;
-            normals += currentNormal;
+            normals = currentNormal;
         }
-# 54 "C:/Projects/voxel_worlds/src/systems/collision_system.cpp"
+
     }
+
+
 
     if(collisionTime < 1.0f) {
+        float remainingTime = 1.0f - collisionTime;
 
-        playerPhysics->mVelocity -= glm::dot(playerPhysics->mVelocity, normals) * normals;
+
+        glm::vec3 velocityAlongNormal = glm::dot(playerPhysics->mVelocity, normals) * normals;
+        playerPhysics->mVelocity -= velocityAlongNormal;
+
+        playerPhysics->mVelocity *= remainingTime;
 
 
 
 
     }
-
-
-
-
-
 }

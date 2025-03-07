@@ -124722,18 +124722,18 @@ namespace utility {
         }
 
 
-        if (xEntry >= yEntry && xEntry >= zEntry) {
-            normals.x = (xBoxEntry < 0.0f) ? 1.0f : -1.0f;
+        if (xEntry > yEntry && xEntry > zEntry) {
+            normals.x = (velocity.x > 0.0f) ? -1.0f : 1.0f;
             normals.y = 0.0f;
             normals.z = 0.0f;
-        } else if (yEntry >= zEntry) {
+        } else if (yEntry > zEntry) {
+            normals.y = (velocity.y > 0.0f) ? -1.0f : 1.0f;
             normals.x = 0.0f;
-            normals.y = (yBoxEntry < 0.0f) ? 1.0f : -1.0f;
             normals.z = 0.0f;
         } else {
+            normals.z = (velocity.z > 0.0f) ? -1.0f : 1.0f;
             normals.x = 0.0f;
             normals.y = 0.0f;
-            normals.z = (zBoxEntry < 0.0f) ? 1.0f : -1.0f;
         }
 
         return entryTime;
@@ -125024,6 +125024,10 @@ void RendererSystem::DrawAllDebugSingle(EntityManager& entityManager, std::strin
     auto boundingPos = entityManager.GetComponent<PositionComponent>(entityName);
 
     if(boundingBoxComp && boundingBoxComp->VAO != 0) {
+        boundingPos->mTransform[0][0] = 1.0f; boundingPos->mTransform[0][1] = 0.0f; boundingPos->mTransform[0][2] = 0.0f;
+        boundingPos->mTransform[1][0] = 0.0f; boundingPos->mTransform[1][1] = 1.0f; boundingPos->mTransform[1][2] = 0.0f;
+        boundingPos->mTransform[2][0] = 0.0f; boundingPos->mTransform[2][1] = 0.0f; boundingPos->mTransform[2][2] = 1.0f;
+
         glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
         GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");

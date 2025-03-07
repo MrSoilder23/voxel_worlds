@@ -229,10 +229,10 @@ int main() {
 
         gPlayerControllerSys.SetFov(45.0f);
         gPlayerControllerSys.SetScreenSize(gSettings.mScreenWidth,gSettings.mScreenHeight);
-        gPlayerControllerSys.SetCamera(gEntityManager, 0.1f);
+        gPlayerControllerSys.SetCamera(gEntityManager, 0.01f);
 
-        playerBox->mLocalMin = glm::vec3(-0.5, -1.5, -0.5);
-        playerBox->mLocalMax = glm::vec3( 0.5,  0.3,  0.5);
+        playerBox->mLocalMin = glm::vec3(-0.4, -1.5, -0.4);
+        playerBox->mLocalMax = glm::vec3( 0.4,  0.4,  0.4);
     }
 
     {
@@ -250,8 +250,8 @@ int main() {
         gEntityManager.AddComponent<PositionComponent>("Test1");
 
         auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test1");
-        boundingBox->mLocalMin = glm::vec3(-0.5f,-0.5f,-0.5f);
-        boundingBox->mLocalMax = glm::vec3(0.5f,0.5f,0.5f);
+        boundingBox->mLocalMin = glm::vec3(-0.5f,-1.5f,-0.5f);
+        boundingBox->mLocalMax = glm::vec3(0.5f,0.4f,0.5f);
     }
 
     gWorldGen.SetEntityManager(gEntityManager);

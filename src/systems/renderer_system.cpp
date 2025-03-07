@@ -133,6 +133,11 @@ void RendererSystem::DrawAllDebug(EntityManager& entityManager) {
         auto boundingPos = entityManager.GetComponent<PositionComponent>(entityPointer.first);
 
         if(boundingBoxComp) { 
+            // Reset Rotations for bounding boxes
+            boundingPos->mTransform[0][0] = 1.0f; boundingPos->mTransform[0][1] = 0.0f; boundingPos->mTransform[0][2] = 0.0f;
+            boundingPos->mTransform[1][0] = 0.0f; boundingPos->mTransform[1][1] = 1.0f; boundingPos->mTransform[1][2] = 0.0f;
+            boundingPos->mTransform[2][0] = 0.0f; boundingPos->mTransform[2][1] = 0.0f; boundingPos->mTransform[2][2] = 1.0f;
+
             glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
             GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
@@ -163,6 +168,11 @@ void RendererSystem::DrawAllDebugSingle(EntityManager& entityManager, std::strin
     auto boundingPos = entityManager.GetComponent<PositionComponent>(entityName);
 
     if(boundingBoxComp && boundingBoxComp->VAO != 0) { 
+        // Reset Rotations for bounding boxes
+        boundingPos->mTransform[0][0] = 1.0f; boundingPos->mTransform[0][1] = 0.0f; boundingPos->mTransform[0][2] = 0.0f;
+        boundingPos->mTransform[1][0] = 0.0f; boundingPos->mTransform[1][1] = 1.0f; boundingPos->mTransform[1][2] = 0.0f;
+        boundingPos->mTransform[2][0] = 0.0f; boundingPos->mTransform[2][1] = 0.0f; boundingPos->mTransform[2][2] = 1.0f;
+
         glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
         GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");

@@ -121858,18 +121858,18 @@ namespace utility {
         }
 
 
-        if (xEntry >= yEntry && xEntry >= zEntry) {
-            normals.x = (xBoxEntry < 0.0f) ? 1.0f : -1.0f;
+        if (xEntry > yEntry && xEntry > zEntry) {
+            normals.x = (velocity.x > 0.0f) ? -1.0f : 1.0f;
             normals.y = 0.0f;
             normals.z = 0.0f;
-        } else if (yEntry >= zEntry) {
+        } else if (yEntry > zEntry) {
+            normals.y = (velocity.y > 0.0f) ? -1.0f : 1.0f;
             normals.x = 0.0f;
-            normals.y = (yBoxEntry < 0.0f) ? 1.0f : -1.0f;
             normals.z = 0.0f;
         } else {
+            normals.z = (velocity.z > 0.0f) ? -1.0f : 1.0f;
             normals.x = 0.0f;
             normals.y = 0.0f;
-            normals.z = (zBoxEntry < 0.0f) ? 1.0f : -1.0f;
         }
 
         return entryTime;

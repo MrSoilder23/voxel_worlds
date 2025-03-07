@@ -40,30 +40,24 @@ void CollisionSystem::UpdateCollision(EntityManager& entityManager, float deltaT
         
         if (currentTime < collisionTime) {
             collisionTime = currentTime;
-            normals += currentNormal;
+            normals = currentNormal;
         }
 
-        // if(utility::Instersects(box, *playerBounding)) {
-        //     glm::vec3 mtv = utility::AxisOfLeastOverlap(box, *playerBounding);
-
-        //     if (std::abs(mtv.x) > std::abs(correction.x)) correction.x = mtv.x;
-        //     if (std::abs(mtv.y) > std::abs(correction.y)) correction.y = mtv.y;
-        //     if (std::abs(mtv.z) > std::abs(correction.z)) correction.z = mtv.z;
-
-        // }
     }
+
     // std::cout << playerPhysics->mVelocity.x << ":" << playerPhysics->mVelocity.y << ":" << playerPhysics->mVelocity.z << std::endl;
-    if(collisionTime < 1.0f) {
-        // playerPhysics->mVelocity *= collisionTime;
-        playerPhysics->mVelocity -= glm::dot(playerPhysics->mVelocity, normals) * normals;
-        // if (glm::length(correction) > 0.0f) {
-        //     // playerPhysics->mVelocity = glm::vec3(0.0f) * correction * deltaTime;
-        //     utility::MovePosition(*playerPosition, playerPosition->mPosition + (correction));
-        // }
-    }
+    // std::cout << normals.x << ":" << normals.y << ":" << normals.z << std::endl;
+    if(collisionTime < 1.0f) {    
+        float remainingTime = 1.0f - collisionTime;
 
-        // std::cout << collisionTime << std::endl;
-        // std::cout << playerPhysics->mVelocity.x << ":" << playerPhysics->mVelocity.y << ":" << playerPhysics->mVelocity.z << std::endl;
-        
+        // Remove velocity component along the collision normal
+        glm::vec3 velocityAlongNormal = glm::dot(playerPhysics->mVelocity, normals) * normals;
+        playerPhysics->mVelocity -= velocityAlongNormal;
+    
+        playerPhysics->mVelocity *= remainingTime;
 
+        // float dotProd = glm::dot(playerPhysics->mVelocity, normals);    
+        // playerPhysics->mVelocity -= dotProd*normals;
+
+    }  
 }
