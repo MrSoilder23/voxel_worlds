@@ -63773,6 +63773,26 @@ class EntityManager {
         }
 
         template <typename ComponentType>
+        void AddComponent(const std::string& entityName, ComponentType& component) {
+            std::unique_lock lock(mMutex);
+            static const std::type_index componentTypeIndex = typeid(ComponentType);
+            auto entityIt = mEntityComponents.find(entityName);
+
+            if(entityIt == mEntityComponents.end()) {
+                std::cerr << "Entity with the name: " << entityName << " do not exist. Could not add the component: " << componentTypeIndex.name() << std::endl;
+                return;
+            }
+
+            auto& componentMap = entityIt->second;
+            if (componentMap.find(componentTypeIndex) != componentMap.end()) {
+                std::cerr << "The component: " << componentTypeIndex.name() << " already exists in this entity: " << entityName << std::endl;
+                return;
+            }
+
+            componentMap[componentTypeIndex] = std::make_shared<ComponentType>(std::move(component));
+        }
+
+        template <typename ComponentType>
         void DeleteComponent(const std::string& entityName) {
             std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
@@ -63835,11 +63855,11 @@ void EntityManager::DeleteEntity(const std::string& entityName) {
     mEntityComponents.erase(entityName);
 }
 
-std::unordered_map<std::type_index, std::shared_ptr<IComponent>>& EntityManager::GetEntity(const std::string& entityName) {
+Entity& EntityManager::GetEntity(const std::string& entityName) {
     return mEntityComponents[entityName];
 }
 
-std::unordered_map<std::string, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& EntityManager::GetEntities() {
+std::unordered_map<std::string, Entity>& EntityManager::GetEntities() {
     return mEntityComponents;
 }
 EntityManager::~EntityManager() {

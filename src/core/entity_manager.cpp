@@ -13,11 +13,11 @@ void EntityManager::DeleteEntity(const std::string& entityName) {
     mEntityComponents.erase(entityName);
 }
 
-std::unordered_map<std::type_index, std::shared_ptr<IComponent>>& EntityManager::GetEntity(const std::string& entityName) {
+Entity& EntityManager::GetEntity(const std::string& entityName) {
     return mEntityComponents[entityName];
 }
 
-std::unordered_map<std::string, std::unordered_map<std::type_index, std::shared_ptr<IComponent>>>& EntityManager::GetEntities() {
+std::unordered_map<std::string, Entity>& EntityManager::GetEntities() {
     return mEntityComponents;
 }
 EntityManager::~EntityManager() {
