@@ -145,9 +145,7 @@ void MainLoop(float deltaTime) {
         // });
 
         gWorldGen.GenerateChunk(loopX, loopY, loopZ);
-        gWorldGen.GenerateModel(loopX, loopY, loopZ);
-        gChunkbBoxCreationSys.CreateChunkBoundingBoxes(loopX, loopY, loopZ);
-        
+        gWorldGen.GenerateModel(loopX, loopY, loopZ);        
 
             // if(delay <= 1) {
             //     gWorldGen.GenerateModel(loopX1, loopY, loopZ1);

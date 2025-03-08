@@ -1,4 +1,7 @@
 #pragma once
+// C++ standard libraries
+#include <array>
+
 // Own libraries
 #include "./core/entity_manager.hpp"
 #include "./components/position_component.hpp"

@@ -66,6 +66,8 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
     for(auto& [handle, _] : textures) {
         textures[handle] = index++;
     }
+
+    BoundingBoxCollectionComponent bBoxCollection;
     
     for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
         for(int blockY = 0; blockY < VoxelWorlds::CHUNK_SIZE; blockY++) {
@@ -123,11 +125,23 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
                 model.indexBufferData.insert(model.indexBufferData.end(), 
                             std::make_move_iterator(tempIndexes.begin()),
                             std::make_move_iterator(tempIndexes.end()));
+
+                BoundingBoxComponent bBox;
+                bBox.mWorldMin = glm::vec3(-0.5f+blockX+VoxelWorlds::CHUNK_SIZE*x,
+                                           -0.5f+blockY+VoxelWorlds::CHUNK_SIZE*y,
+                                           -0.5f+blockZ+VoxelWorlds::CHUNK_SIZE*z);
+
+                bBox.mWorldMax = glm::vec3( 0.5f+blockX+VoxelWorlds::CHUNK_SIZE*x, 
+                                            0.5f+blockY+VoxelWorlds::CHUNK_SIZE*y, 
+                                            0.5f+blockZ+VoxelWorlds::CHUNK_SIZE*z);
+
+                bBoxCollection.boundingBoxes.push_back(std::move(bBox));
             }
         }
     }
     
     auto chunkModel = mEntityManager->GetComponent<ChunkModelComponent>(chunkName);
+    auto chunkBoxes = mEntityManager->GetComponent<BoundingBoxCollectionComponent>(chunkName);
     if(chunkModel->mChangeSize != model.indexBufferData.size()) {
         chunkModel->mTexturePositions.clear();
         chunkModel->mTextures.clear();
@@ -139,6 +153,8 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
 
         chunkModel->mChangeSize = chunkModel->mModel.indexBufferData.size();
         chunkModel->mGenerated = false;
+
+        *chunkBoxes = std::move(bBoxCollection);
     }
 }
 

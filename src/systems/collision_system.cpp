@@ -14,10 +14,16 @@ void CollisionSystem::UpdateCollision(EntityManager& entityManager, float deltaT
     int playerZ = static_cast<int>(std::floor(playerPosition->mPosition.z/VoxelWorlds::CHUNK_SIZE));
     
     char chunkName[32];
-    snprintf(chunkName, sizeof(chunkName), "%d:%d:%d", playerX, playerY, playerZ);
-    auto chunkBounding = entityManager.GetComponent<BoundingBoxCollectionComponent>(chunkName);
-    if(!chunkBounding) {
-        return;
+    std::array<std::shared_ptr<BoundingBoxCollectionComponent>, 27> chunksBoundings;
+    int i = 0;
+    for(int chunkX = -1; chunkX <= 1; chunkX++) {
+        for(int chunkY = -1; chunkY <= 1; chunkY++) {
+            for(int chunkZ = -1; chunkZ <= 1; chunkZ++) {
+                snprintf(chunkName, sizeof(chunkName), "%d:%d:%d", playerX+chunkX, playerY+chunkY, playerZ+chunkZ);
+                chunksBoundings[i] = entityManager.GetComponent<BoundingBoxCollectionComponent>(chunkName);
+                i++;
+            }
+        }
     }
     
     glm::vec3 normals = glm::vec3(0.0f);
@@ -26,20 +32,27 @@ void CollisionSystem::UpdateCollision(EntityManager& entityManager, float deltaT
     for(int i = 0; i <= 3; i++) {
 
         float collisionTime = 1.0f;
-        for(const auto& box : chunkBounding->boundingBoxes) {   
-            glm::vec3 currentNormal;
-            float currentTime = utility::SweptAABB(
-                *playerBounding, 
-                playerPhysics->mVelocity * deltaTime, 
-                box, 
-                currentNormal
-            );
-            
-            if (currentTime < collisionTime) {
-                collisionTime = currentTime;
-                normals = currentNormal;
-            }
 
+        for(const auto& chunkBounding : chunksBoundings) {
+            if(!chunkBounding) {
+                continue;
+            }
+            
+            for(const auto& box : chunkBounding->boundingBoxes) {   
+                glm::vec3 currentNormal;
+                float currentTime = utility::SweptAABB(
+                    *playerBounding, 
+                    playerPhysics->mVelocity * deltaTime, 
+                    box, 
+                    currentNormal
+                );
+                
+                if (currentTime < collisionTime) {
+                    collisionTime = currentTime;
+                    normals = currentNormal;
+                }
+    
+            }
         }
         
         if(collisionTime < 1.0f) {
