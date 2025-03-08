@@ -69,6 +69,8 @@ WorldGenerationSystem gWorldGen;
 World gWorld;
 
 void Input(float deltaTime) {
+    gPlayerControllerSys.Update(gEntityManager, deltaTime);
+
     SDL_Event e;
 
     while(SDL_PollEvent(&e) != 0) {
@@ -176,10 +178,15 @@ void MainLoop(float deltaTime) {
     if(gSettings.mBoundingDebug) {
         collisionSystem.UpdateCollision(gEntityManager, deltaTime);
     }
+    
+    physSystem.UpdatePosition(gEntityManager, "Player", deltaTime);
+    posUpdateSystem.UpdatePositionTransformSingle(gEntityManager, "Player");
 
     for(const auto& componentPointer : gEntityManager.GetEntities()) {
-        physSystem.UpdatePosition(gEntityManager, componentPointer.first, deltaTime);
-        posUpdateSystem.UpdatePositionTransformSingle(gEntityManager, componentPointer.first);
+        if(componentPointer.first != "Player") {
+            physSystem.UpdatePosition(gEntityManager, componentPointer.first, deltaTime);
+            posUpdateSystem.UpdatePositionTransformSingle(gEntityManager, componentPointer.first);
+        }
 
         gRendererSystem.DrawAllSingle(gEntityManager, componentPointer.first);
         
@@ -191,8 +198,6 @@ void MainLoop(float deltaTime) {
         vSetupSystem.CreateVertexSpecificationSingle(gEntityManager, componentPointer.first);
         chunkVSS.CreateVertexSpecificationSingle(gEntityManager, componentPointer.first);
     }
-
-    gPlayerControllerSys.Update(gEntityManager, deltaTime);
 }
 
 int main() {

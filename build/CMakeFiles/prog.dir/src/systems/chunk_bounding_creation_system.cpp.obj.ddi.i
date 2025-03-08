@@ -92252,17 +92252,6 @@ struct Texture {
 # 10 "C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp" 2
 
 struct ChunkModelComponent : public IComponent {
-    ~ChunkModelComponent() {
-        if(mVAO != 0) {
-            glad_glDeleteVertexArrays(1, &mVAO);
-            glad_glDeleteBuffers(1, &mVBO);
-            glad_glDeleteBuffers(1, &mEBO);
-            glad_glDeleteBuffers(1, &mTexId);
-            glad_glDeleteBuffers(1, &mTexBO);
-            glad_glDeleteBuffers(1, &mTexCoords);
-        }
-    }
-
     std::vector<glm::vec3> mTexturePositions;
     std::vector<GLuint> mTextures;
 
@@ -92277,6 +92266,17 @@ struct ChunkModelComponent : public IComponent {
 
     size_t mChangeSize = 0;
     bool mGenerated = false;
+
+    ~ChunkModelComponent() {
+        if(mVAO != 0) {
+            glad_glDeleteVertexArrays(1, &mVAO);
+            glad_glDeleteBuffers(1, &mVBO);
+            glad_glDeleteBuffers(1, &mEBO);
+            glad_glDeleteBuffers(1, &mTexId);
+            glad_glDeleteBuffers(1, &mTexBO);
+            glad_glDeleteBuffers(1, &mTexCoords);
+        }
+    }
 };
 # 6 "C:/Projects/voxel_worlds/include/systems/chunk_bounding_creation_system.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/core/entity_manager.hpp" 1
