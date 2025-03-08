@@ -23,4 +23,10 @@ struct BoundingBoxComponent : public IComponent{
     GLuint VAO = 0;
     GLuint VBO = 0;
     GLuint EBO = 0;
+
+    ~BoundingBoxComponent() {
+        glDeleteVertexArrays(1, &VAO);
+        glDeleteBuffers(1, &VBO);
+        glDeleteBuffers(1, &EBO);
+    }
 };

@@ -6062,8 +6062,8 @@ extern "C" {
 
   void __attribute__((__cdecl__)) _Exit(int) __attribute__ ((__noreturn__));
 
-
-
+  inline __attribute__ ((__noreturn__)) void __attribute__((__cdecl__)) _Exit(int status)
+  { _exit(status); }
 
 
 
@@ -12570,6 +12570,9 @@ int swprintf (wchar_t *__stream, const wchar_t *__format, ...)
 
   __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _wremove(const wchar_t *_Filename);
   __attribute__ ((__dllimport__)) wchar_t *__attribute__((__cdecl__)) _wtmpnam(wchar_t *_Buffer);
+# 1178 "C:/msys64/mingw64/include/wchar.h" 3
+  inline wint_t __attribute__((__cdecl__)) getwchar() {return (fgetwc((__acrt_iob_func(0)))); }
+  inline wint_t __attribute__((__cdecl__)) putwchar(wchar_t _C) {return (fputwc(_C,(__acrt_iob_func(1)))); }
 # 1193 "C:/msys64/mingw64/include/wchar.h" 3
   __attribute__ ((__dllimport__)) wchar_t *__attribute__((__cdecl__)) _itow(int _Value,wchar_t *_Dest,int _Radix) ;
   __attribute__ ((__dllimport__)) wchar_t *__attribute__((__cdecl__)) _ltow(long _Value,wchar_t *_Dest,int _Radix) ;
@@ -12737,6 +12740,41 @@ int swprintf (wchar_t *__stream, const wchar_t *__format, ...)
 
   void *__attribute__((__cdecl__)) memmove(void *_Dst,const void *_Src,size_t _MaxCount);
   void *__attribute__((__cdecl__)) memcpy(void * __restrict__ _Dst,const void * __restrict__ _Src,size_t _MaxCount) ;
+
+  inline int __attribute__((__cdecl__)) fwide(FILE *_F,int _M) { (void)_F; return (_M); }
+
+  inline int __attribute__((__cdecl__)) mbsinit(const mbstate_t *_P) { return (!_P || *_P==0); }
+
+  inline wchar_t *__attribute__((__cdecl__)) wmemchr(const wchar_t *_S,wchar_t _C,size_t _N) {
+    if (_S) {
+      for ( ; 0 < _N; ++_S, --_N)
+ if (*_S == _C)
+   return ( wchar_t *)(_S);
+    }
+    return ( wchar_t *) __null;
+  }
+  inline int __attribute__((__cdecl__)) wmemcmp(const wchar_t *_S1,const wchar_t *_S2,size_t _N) {
+    if (_N == 0 || _S1 == _S2)
+      return 0;
+    if ((_S1 && !(_S2)) || (_S2 && !(_S1)))
+      return !(_S2) ? 1 : -1;
+    for ( ; 0 < _N; ++_S1, ++_S2, --_N)
+      if (*_S1 != *_S2)
+ return (*_S1 < *_S2 ? -1 : +1);
+    return 0;
+  }
+  inline wchar_t *__attribute__((__cdecl__)) wmemcpy(wchar_t * __restrict__ _S1,const wchar_t * __restrict__ _S2,size_t _N)
+  {
+    return (wchar_t *) memcpy (_S1,_S2,_N*sizeof(wchar_t));
+  }
+  inline wchar_t *__attribute__((__cdecl__)) wmemmove(wchar_t *_S1,const wchar_t *_S2,size_t _N) { return (wchar_t *)memmove(_S1,_S2,_N*sizeof(wchar_t)); }
+  inline wchar_t *__attribute__((__cdecl__)) wmemset(wchar_t *_S,wchar_t _C,size_t _N) {
+    wchar_t *_Su = _S;
+    for (;0<_N;++_Su,--_N) {
+      *_Su = _C;
+    }
+    return (_S);
+  }
 # 1492 "C:/msys64/mingw64/include/wchar.h" 3
 int __attribute__((__cdecl__)) __mingw_str_wide_utf8 (const wchar_t * const wptr, char **mbptr, size_t * buflen);
 # 1506 "C:/msys64/mingw64/include/wchar.h" 3
@@ -34050,7 +34088,7 @@ unsigned long __attribute__((__cdecl__)) _lrotr(unsigned long,int);
 
   __extension__ long long __attribute__((__cdecl__)) llabs(long long);
 
-
+  __extension__ inline long long __attribute__((__cdecl__)) llabs(long long _j) { return (_j >= 0 ? _j : -_j); }
 
 
   __extension__ long long __attribute__((__cdecl__)) strtoll(const char * __restrict__, char ** __restrict, int);
@@ -34065,7 +34103,20 @@ unsigned long __attribute__((__cdecl__)) _lrotr(unsigned long,int);
   __extension__ char *__attribute__((__cdecl__)) ulltoa (unsigned long long , char *, int);
   __extension__ wchar_t *__attribute__((__cdecl__)) lltow (long long, wchar_t *, int);
   __extension__ wchar_t *__attribute__((__cdecl__)) ulltow (unsigned long long, wchar_t *, int);
-# 713 "C:/msys64/mingw64/include/stdlib.h" 3
+
+
+
+  __extension__ inline char *__attribute__((__cdecl__)) lltoa (long long _n, char * _c, int _i) { return _i64toa (_n, _c, _i); }
+  __extension__ inline char *__attribute__((__cdecl__)) ulltoa (unsigned long long _n, char * _c, int _i) { return _ui64toa (_n, _c, _i); }
+  __extension__ inline long long __attribute__((__cdecl__)) wtoll (const wchar_t * _w) { return _wtoi64 (_w); }
+  __extension__ inline wchar_t *__attribute__((__cdecl__)) lltow (long long _n, wchar_t * _w, int _i) { return _i64tow (_n, _w, _i); }
+  __extension__ inline wchar_t *__attribute__((__cdecl__)) ulltow (unsigned long long _n, wchar_t * _w, int _i) { return _ui64tow (_n, _w, _i); }
+
+
+
+
+
+
 }
 
 
