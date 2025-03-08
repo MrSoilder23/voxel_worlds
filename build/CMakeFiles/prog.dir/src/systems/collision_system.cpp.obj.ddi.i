@@ -108206,6 +108206,14 @@ struct BoundingBoxComponent : public IComponent{
     GLuint VAO = 0;
     GLuint VBO = 0;
     GLuint EBO = 0;
+
+    ~BoundingBoxComponent() {
+        if(VAO != 0) {
+            glad_glDeleteVertexArrays(1, &VAO);
+            glad_glDeleteBuffers(1, &VBO);
+            glad_glDeleteBuffers(1, &EBO);
+        }
+    }
 };
 # 8 "C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp" 2
 

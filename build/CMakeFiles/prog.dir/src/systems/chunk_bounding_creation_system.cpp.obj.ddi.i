@@ -64854,6 +64854,14 @@ struct BoundingBoxComponent : public IComponent{
     GLuint VAO = 0;
     GLuint VBO = 0;
     GLuint EBO = 0;
+
+    ~BoundingBoxComponent() {
+        if(VAO != 0) {
+            glad_glDeleteVertexArrays(1, &VAO);
+            glad_glDeleteBuffers(1, &VBO);
+            glad_glDeleteBuffers(1, &EBO);
+        }
+    }
 };
 # 8 "C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp" 2
 
@@ -92245,12 +92253,14 @@ struct Texture {
 
 struct ChunkModelComponent : public IComponent {
     ~ChunkModelComponent() {
-        glad_glDeleteVertexArrays(1, &mVAO);
-        glad_glDeleteBuffers(1, &mVBO);
-        glad_glDeleteBuffers(1, &mEBO);
-        glad_glDeleteBuffers(1, &mTexId);
-        glad_glDeleteBuffers(1, &mTexBO);
-        glad_glDeleteBuffers(1, &mTexCoords);
+        if(mVAO != 0) {
+            glad_glDeleteVertexArrays(1, &mVAO);
+            glad_glDeleteBuffers(1, &mVBO);
+            glad_glDeleteBuffers(1, &mEBO);
+            glad_glDeleteBuffers(1, &mTexId);
+            glad_glDeleteBuffers(1, &mTexBO);
+            glad_glDeleteBuffers(1, &mTexCoords);
+        }
     }
 
     std::vector<glm::vec3> mTexturePositions;

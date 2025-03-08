@@ -15,4 +15,12 @@ struct ModelComponent : public IComponent {
     GLuint VAO;
     GLuint VBO;
     GLuint EBO;
+
+    ~ModelComponent() {
+        if(VAO != 0) {
+            glDeleteVertexArrays(1, &VAO);
+            glDeleteBuffers(1, &VBO);
+            glDeleteBuffers(1, &EBO);
+        }
+    }
 };

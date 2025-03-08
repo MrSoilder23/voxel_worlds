@@ -64835,6 +64835,14 @@ struct BoundingBoxComponent : public IComponent{
     GLuint VAO = 0;
     GLuint VBO = 0;
     GLuint EBO = 0;
+
+    ~BoundingBoxComponent() {
+        if(VAO != 0) {
+            glad_glDeleteVertexArrays(1, &VAO);
+            glad_glDeleteBuffers(1, &VBO);
+            glad_glDeleteBuffers(1, &EBO);
+        }
+    }
 };
 # 4 "C:/Projects/voxel_worlds/include/systems/bounding_box_system.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/components/position_component.hpp" 1
@@ -96465,6 +96473,14 @@ struct ModelComponent : public IComponent {
     GLuint VAO;
     GLuint VBO;
     GLuint EBO;
+
+    ~ModelComponent() {
+        if(VAO != 0) {
+            glad_glDeleteVertexArrays(1, &VAO);
+            glad_glDeleteBuffers(1, &VBO);
+            glad_glDeleteBuffers(1, &EBO);
+        }
+    }
 };
 # 6 "C:/Projects/voxel_worlds/include/systems/bounding_box_system.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 1
