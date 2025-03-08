@@ -75,7 +75,7 @@ namespace utility {
                (box1.mWorldMin.z <= box2.mWorldMax.z && box1.mWorldMax.z >= box2.mWorldMin.z);
     }
 
-    inline glm::vec3 AxisOfLeastOverlap(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
+    inline glm::vec3 mtv(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
         constexpr float epsilon = 0.001f;
 
         const float overlapX = std::min(box1.mWorldMax.x, box2.mWorldMax.x) - std::max(box1.mWorldMin.x, box2.mWorldMin.x);

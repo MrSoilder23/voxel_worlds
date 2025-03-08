@@ -21,7 +21,6 @@ void CollisionSystem::UpdateCollision(EntityManager& entityManager, float deltaT
     }
     
     glm::vec3 normals = glm::vec3(0.0f);
-    glm::vec3 correction(0.0f);
     float remainingTime = 1.0f;
 
     for(int i = 0; i <= 3; i++) {
@@ -43,8 +42,9 @@ void CollisionSystem::UpdateCollision(EntityManager& entityManager, float deltaT
 
         }
         
-        if(collisionTime < 1.0f) {    
-            playerPhysics->mVelocity -= glm::dot(playerPhysics->mVelocity, normals)*normals;
-        }  
+        if(collisionTime < 1.0f) {
+            glm::vec3 velocityAlongNormal = glm::dot(playerPhysics->mVelocity, normals) * normals;
+            playerPhysics->mVelocity -= velocityAlongNormal;            
+        }
     }
 }

@@ -7,5 +7,6 @@
 
 class PhysicsSystem {
     public:
-        void UpdatePosition(EntityManager& entityManager, std::string entityName, float deltaTime);  
+        void UpdatePosition(EntityManager& entityManager, float deltaTime);
+        void UpdatePositionSingle(EntityManager& entityManager, std::string entityName, float deltaTime);  
 };

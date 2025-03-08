@@ -121781,7 +121781,7 @@ namespace utility {
                (box1.mWorldMin.z <= box2.mWorldMax.z && box1.mWorldMax.z >= box2.mWorldMin.z);
     }
 
-    inline glm::vec3 AxisOfLeastOverlap(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
+    inline glm::vec3 mtv(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
         constexpr float epsilon = 0.001f;
 
         const float overlapX = std::min(box1.mWorldMax.x, box2.mWorldMax.x) - std::max(box1.mWorldMin.x, box2.mWorldMin.x);
@@ -122009,18 +122009,37 @@ namespace utility {
 
 class PhysicsSystem {
     public:
-        void UpdatePosition(EntityManager& entityManager, std::string entityName, float deltaTime);
+        void UpdatePosition(EntityManager& entityManager, float deltaTime);
+        void UpdatePositionSingle(EntityManager& entityManager, std::string entityName, float deltaTime);
 };
 # 2 "C:/Projects/voxel_worlds/src/systems/physics_system.cpp" 2
 
-void PhysicsSystem::UpdatePosition(EntityManager& entityManager, std::string entityName, float deltaTime) {
-    auto entityPhysics = entityManager.GetComponent<PhysicsComponent>(entityName);
+void PhysicsSystem::UpdatePosition(EntityManager& entityManager, float deltaTime) {
+    for(const auto& entityPointer : entityManager.GetEntities()) {
+        auto entityPhysics = entityManager.GetComponent<PhysicsComponent>(entityPointer.first);
+        if(!entityPhysics) {
+            continue;
+        }
 
+        auto entityPosition = entityManager.GetComponent<PositionComponent>(entityPointer.first);
+        if(!entityPosition) {
+            continue;
+        }
+
+        utility::MovePosition(*entityPosition, entityPosition->mPosition + (entityPhysics->mVelocity * deltaTime));
+    }
+}
+
+void PhysicsSystem::UpdatePositionSingle(EntityManager& entityManager, std::string entityName, float deltaTime) {
+    auto entityPhysics = entityManager.GetComponent<PhysicsComponent>(entityName);
     if(!entityPhysics) {
         return;
     }
 
     auto entityPosition = entityManager.GetComponent<PositionComponent>(entityName);
+    if(!entityPosition) {
+        return;
+    }
 
     utility::MovePosition(*entityPosition, entityPosition->mPosition + (entityPhysics->mVelocity * deltaTime));
 }

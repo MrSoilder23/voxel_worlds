@@ -121785,7 +121785,7 @@ namespace utility {
                (box1.mWorldMin.z <= box2.mWorldMax.z && box1.mWorldMax.z >= box2.mWorldMin.z);
     }
 
-    inline glm::vec3 AxisOfLeastOverlap(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
+    inline glm::vec3 mtv(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
         constexpr float epsilon = 0.001f;
 
         const float overlapX = std::min(box1.mWorldMax.x, box2.mWorldMax.x) - std::max(box1.mWorldMin.x, box2.mWorldMin.x);
@@ -122038,7 +122038,6 @@ void CollisionSystem::UpdateCollision(EntityManager& entityManager, float deltaT
     }
 
     glm::vec3 normals = glm::vec3(0.0f);
-    glm::vec3 correction(0.0f);
     float remainingTime = 1.0f;
 
     for(int i = 0; i <= 3; i++) {
@@ -122061,7 +122060,8 @@ void CollisionSystem::UpdateCollision(EntityManager& entityManager, float deltaT
         }
 
         if(collisionTime < 1.0f) {
-            playerPhysics->mVelocity -= glm::dot(playerPhysics->mVelocity, normals)*normals;
+            glm::vec3 velocityAlongNormal = glm::dot(playerPhysics->mVelocity, normals) * normals;
+            playerPhysics->mVelocity -= velocityAlongNormal;
         }
     }
 }

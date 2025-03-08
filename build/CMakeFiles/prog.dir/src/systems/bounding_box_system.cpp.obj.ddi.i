@@ -111604,7 +111604,7 @@ namespace utility {
                (box1.mWorldMin.z <= box2.mWorldMax.z && box1.mWorldMax.z >= box2.mWorldMin.z);
     }
 
-    inline glm::vec3 AxisOfLeastOverlap(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
+    inline glm::vec3 mtv(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
         constexpr float epsilon = 0.001f;
 
         const float overlapX = std::min(box1.mWorldMax.x, box2.mWorldMax.x) - std::max(box1.mWorldMin.x, box2.mWorldMin.x);
@@ -122065,18 +122065,19 @@ class BoundingBoxSystem {
 void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
     for(const auto& componentPointer : entityManager.GetEntities()) {
         auto boundingBox = entityManager.GetComponent<BoundingBoxComponent>(componentPointer.first);
-        if(!boundingBox || boundingBox->VAO != 0) {
-            return;
+        if(!boundingBox) {
+            continue;
         }
 
         auto position = entityManager.GetComponent<PositionComponent>(componentPointer.first);
-
-        if(position && boundingBox->VAO == 0) {
-            boundingBox->mWorldMax = boundingBox->mLocalMax + position->mPosition;
-            boundingBox->mWorldMin = boundingBox->mLocalMin + position->mPosition;
-
-            boundingBox->mModel = std::move(utility::CreateBoundingModel(*boundingBox));
+        if(!position) {
+            continue;
         }
+
+        boundingBox->mWorldMax = boundingBox->mLocalMax + position->mPosition;
+        boundingBox->mWorldMin = boundingBox->mLocalMin + position->mPosition;
+
+        boundingBox->mModel = std::move(utility::CreateBoundingModel(*boundingBox));
 
     }
 }
@@ -122088,6 +122089,9 @@ void BoundingBoxSystem::GenerateBoundingBoxSingle(EntityManager& entityManager, 
     }
 
     auto position = entityManager.GetComponent<PositionComponent>(entityName);
+    if(!position) {
+        return;
+    }
 
     boundingBox->mWorldMax = boundingBox->mLocalMax + position->mPosition;
     boundingBox->mWorldMin = boundingBox->mLocalMin + position->mPosition;

@@ -123,7 +123,7 @@ void MainLoop(float deltaTime) {
     gCameraOldX = cameraX;
     gCameraOldY = cameraY;
     gCameraOldZ = cameraZ;
-    
+
     {   
         gWorld.SetCameraPosition(camera);
         
@@ -178,25 +178,17 @@ void MainLoop(float deltaTime) {
     if(gSettings.mBoundingDebug) {
         collisionSystem.UpdateCollision(gEntityManager, deltaTime);
     }
+
+    physSystem.UpdatePosition(gEntityManager, deltaTime);
+    posUpdateSystem.UpdatePositionTransform(gEntityManager);
     
-    physSystem.UpdatePosition(gEntityManager, "Player", deltaTime);
-    posUpdateSystem.UpdatePositionTransformSingle(gEntityManager, "Player");
+    boundingBoxSystem.GenerateBoundingBox(gEntityManager);
+    vSetupSystem.CreateVertexSpecification(gEntityManager);
+    chunkVSS.CreateVertexSpecification(gEntityManager);
 
-    for(const auto& componentPointer : gEntityManager.GetEntities()) {
-        if(componentPointer.first != "Player") {
-            physSystem.UpdatePosition(gEntityManager, componentPointer.first, deltaTime);
-            posUpdateSystem.UpdatePositionTransformSingle(gEntityManager, componentPointer.first);
-        }
-
-        gRendererSystem.DrawAllSingle(gEntityManager, componentPointer.first);
-        
-        if(gSettings.mBoundingDebug) {
-            gRendererSystem.DrawAllDebugSingle(gEntityManager, componentPointer.first);
-        }
-        
-        boundingBoxSystem.GenerateBoundingBoxSingle(gEntityManager, componentPointer.first);
-        vSetupSystem.CreateVertexSpecificationSingle(gEntityManager, componentPointer.first);
-        chunkVSS.CreateVertexSpecificationSingle(gEntityManager, componentPointer.first);
+    gRendererSystem.DrawAll(gEntityManager);
+    if(gSettings.mBoundingDebug) {
+        gRendererSystem.DrawAllDebug(gEntityManager);
     }
 }
 
