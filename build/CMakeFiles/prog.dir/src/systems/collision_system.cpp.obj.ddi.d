@@ -420,4 +420,5 @@ CMakeFiles\prog.dir\src\systems\collision_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/numeric \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_numeric.h \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_numeric_defs.h \
- C:/Projects/voxel_worlds/include/world/transform.hpp
+ C:/Projects/voxel_worlds/include/world/transform.hpp \
+ C:/Projects/voxel_worlds/include/line.hpp

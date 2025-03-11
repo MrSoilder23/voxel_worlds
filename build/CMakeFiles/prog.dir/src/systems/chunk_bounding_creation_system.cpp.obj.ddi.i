@@ -65409,7 +65409,7 @@ namespace ChunkStorage {
         chunk.mBlocks[GetIndex(x,y,z)] = block;
     }
 
-    inline BlockTypes GetBlock(ChunkStorageComponent& chunk, int x, int y, int z) {
+    inline BlockTypes& GetBlock(ChunkStorageComponent& chunk, int x, int y, int z) {
         
 # 32 "C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp" 3
        (void) ((!!(

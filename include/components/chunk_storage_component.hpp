@@ -28,7 +28,7 @@ namespace ChunkStorage {
         chunk.mBlocks[GetIndex(x,y,z)] = block;
     }
 
-    inline BlockTypes GetBlock(ChunkStorageComponent& chunk, int x, int y, int z) {
+    inline BlockTypes& GetBlock(ChunkStorageComponent& chunk, int x, int y, int z) {
         assert(x >= 0 && x < VoxelWorlds::CHUNK_SIZE);
         assert(y >= 0 && y < VoxelWorlds::CHUNK_SIZE);
         assert(z >= 0 && z < VoxelWorlds::CHUNK_SIZE);    

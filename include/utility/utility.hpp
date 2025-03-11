@@ -21,6 +21,7 @@
 #include "./components/position_component.hpp"
 #include "constant.hpp"
 #include "./model.hpp"
+#include "./line.hpp"
 
 #ifndef M_PI
 #define M_PI (3.14159265358979323846)
@@ -175,6 +176,42 @@ namespace utility {
         }
 
         return entryTime;
+    }
+
+    inline bool IfPointInAABB(const glm::vec3& point, const BoundingBoxComponent& box) {
+        return (box.mWorldMin.x <= point.x && point.x <= box.mWorldMax.x) &&
+               (box.mWorldMin.y <= point.y && point.y <= box.mWorldMax.y) &&
+               (box.mWorldMin.z <= point.z && point.z <= box.mWorldMax.z);
+    }
+
+    // Outputs distance from the starting point of the ray to the bounding box
+    // Outputs -1.0f if line never hits the object.
+    inline float LineIntersectsAABB(const Line& line, const BoundingBoxComponent& box) {
+        float scaleMin = -std::numeric_limits<float>::infinity();
+        float scaleMax = std::numeric_limits<float>::infinity();
+
+        if (glm::length(line.mDirection) == 0) {
+            return IfPointInAABB(line.mPosition, box) ? 0.0f : -1.0f;
+        }
+
+        for(int i = 0; i < 3; i++) {
+            float linePos = (&line.mPosition.x)[i];
+            float lineDir = (&line.mDirection.x)[i];
+
+            float boxMin = (&box.mWorldMin.x)[i];
+            float boxMax = (&box.mWorldMax.x)[i];
+
+            if(lineDir != 0) {
+                float scale1 = (boxMin - linePos) / lineDir;
+                float scale2 = (boxMax - linePos) / lineDir;
+                scaleMin = std::max(scaleMin, std::min(scale1, scale2));
+                scaleMax = std::min(scaleMax, std::max(scale1, scale2));
+            } else if(linePos < boxMin || linePos > boxMax) {
+                return -1.0f;
+            }
+        }
+        
+        return (scaleMin <= scaleMax && scaleMax >= 0) ? std::max(scaleMin, 0.0f) : -1.0f;
     }
 
     // Bounding box model creation

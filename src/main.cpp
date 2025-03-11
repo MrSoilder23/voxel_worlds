@@ -29,6 +29,7 @@
 #include "./systems/chunk_bounding_creation_system.hpp"
 #include "./systems/collision_system.hpp"
 #include "./systems/physics_system.hpp"
+#include "./systems/player_target_system.hpp"
 
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
@@ -172,9 +173,11 @@ void MainLoop(float deltaTime) {
     static ChunkVertexSetupSystem chunkVSS;
     static CollisionSystem collisionSystem;
     static PhysicsSystem physSystem;
-
+    static PlayerTargetSystem pTarget;
+    
     if(gSettings.mBoundingDebug) {
         collisionSystem.UpdateCollision(gEntityManager, deltaTime);
+        pTarget.PlayerRaycast(gEntityManager);
     }
 
     physSystem.UpdatePosition(gEntityManager, deltaTime);

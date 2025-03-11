@@ -580,4 +580,5 @@ CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/model.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/array
+ C:/msys64/mingw64/include/c++/14.2.0/array \
+ C:/Projects/voxel_worlds/include/line.hpp

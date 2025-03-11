@@ -406,6 +406,7 @@ CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_numeric_defs.h \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/array \
+ C:/Projects/voxel_worlds/include/line.hpp \
  C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/unordered_map \
  C:/msys64/mingw64/include/c++/14.2.0/bits/unordered_map.h \

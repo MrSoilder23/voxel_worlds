@@ -422,6 +422,7 @@ CMakeFiles\prog.dir\src\core\world.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
+ C:/Projects/voxel_worlds/include/line.hpp \
  C:/Projects/voxel_worlds/include/world/chunk_manager.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
