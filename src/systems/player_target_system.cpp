@@ -14,7 +14,7 @@ void PlayerTargetSystem::PlayerRaycast(EntityManager& entityManager) {
         if (e.type == SDL_MOUSEBUTTONDOWN) {
             if (e.button.button == SDL_BUTTON_LEFT) {
                 DestroyBlock(entityManager, blockWorldCoords);
-            
+                std::cout << "asda" << std::endl;
             }
         }
     }
@@ -45,7 +45,6 @@ glm::vec3 PlayerTargetSystem::GetBlock(EntityManager& entityManager, const Posit
 
     float collisionDistance = std::numeric_limits<float>::infinity();
     glm::vec3 globalCoords = glm::vec3(0);
-    int chunk = 0;
 
     for(const auto& chunkBounding : chunksBoundings) {
         if(!chunkBounding) {
@@ -57,10 +56,9 @@ glm::vec3 PlayerTargetSystem::GetBlock(EntityManager& entityManager, const Posit
             
             if(distance != -1 && distance < collisionDistance) {
                 collisionDistance = distance;
-                globalCoords = ray.mPosition + ray.mDirection * distance;
+                globalCoords = ray.mPosition + ray.mDirection * (distance+0.0001f);
             }
         }
-        chunk++;
     }
     
     return (glm::length(globalCoords) != 0) ? globalCoords : playerPos.mPosition;
@@ -83,6 +81,7 @@ void PlayerTargetSystem::DestroyBlock(EntityManager& entityManager, glm::vec3& g
                                         chunkZ * VoxelWorlds::CHUNK_SIZE);
 
     glm::vec3 localBlockCoordinates = globalBlockCoordinates - chunkWorldPos;
+    std::cout << localBlockCoordinates.x << ":" << localBlockCoordinates.y << ":" << localBlockCoordinates.z << std::endl;
 
     int localBlockX = static_cast<int>(std::round(localBlockCoordinates.x));
     int localBlockY = static_cast<int>(std::round(localBlockCoordinates.y));
