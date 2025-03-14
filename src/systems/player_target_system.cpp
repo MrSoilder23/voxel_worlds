@@ -9,13 +9,19 @@ void PlayerTargetSystem::PlayerRaycast(EntityManager& entityManager) {
         
     EventManager& eventManager = EventManager::GetInstance();
     eventManager.RegisterEvent(InputAction::left_mouse_click, [this, entityManagerPtr = &entityManager, playerPos, playerCam](float _){
-        glm::vec3 blockWorldCoords = this->GetBlock(*entityManagerPtr, *playerPos, *playerCam);
+        glm::vec3 blockWorldCoords = this->GetBlock(*entityManagerPtr, *playerPos, *playerCam, 0.0001f);
         this->DestroyBlock(*entityManagerPtr, blockWorldCoords);
+    });
+
+    eventManager.RegisterEvent(InputAction::right_mouse_click, [this, entityManagerPtr = &entityManager, playerPos, playerCam](float _){
+        glm::vec3 blockWorldCoords = this->GetBlock(*entityManagerPtr, *playerPos, *playerCam, -0.0001f);
+        this->PlaceBlock(*entityManagerPtr, blockWorldCoords);
+        std::cout << "asda" << std::endl;
     });
 }
 
 // Private
-glm::vec3 PlayerTargetSystem::GetBlock(EntityManager& entityManager, const PositionComponent& playerPos, const CameraComponent& playerCam) {
+glm::vec3 PlayerTargetSystem::GetBlock(EntityManager& entityManager, const PositionComponent& playerPos, const CameraComponent& playerCam, float epsilon) {
     Line ray;
     ray.mPosition = playerPos.mPosition;
     ray.mDirection = glm::normalize(playerCam.mViewDirection);
@@ -50,7 +56,7 @@ glm::vec3 PlayerTargetSystem::GetBlock(EntityManager& entityManager, const Posit
             
             if(distance != -1 && distance < collisionDistance) {
                 collisionDistance = distance;
-                globalCoords = ray.mPosition + ray.mDirection * (distance+0.0001f);
+                globalCoords = ray.mPosition + ray.mDirection * (distance+epsilon);
             }
         }
     }
@@ -87,5 +93,35 @@ void PlayerTargetSystem::DestroyBlock(EntityManager& entityManager, glm::vec3& g
     wGen.GenerateModel(chunkX, chunkY, chunkZ);
 }
 void PlayerTargetSystem::PlaceBlock(EntityManager& entityManager, glm::vec3& globalBlockCoordinates) {
+    int chunkX = static_cast<int>(std::floor(std::round(globalBlockCoordinates.x)/VoxelWorlds::CHUNK_SIZE));
+    int chunkY = static_cast<int>(std::floor(std::round(globalBlockCoordinates.y)/VoxelWorlds::CHUNK_SIZE));
+    int chunkZ = static_cast<int>(std::floor(std::round(globalBlockCoordinates.z)/VoxelWorlds::CHUNK_SIZE));
 
+    char chunkName[32];
+    snprintf(chunkName, sizeof(chunkName), "%d:%d:%d", chunkX, chunkY, chunkZ);
+
+    auto chunkData = entityManager.GetComponent<ChunkStorageComponent>(chunkName);
+    if(!chunkData) {
+        return;
+    }
+
+    glm::vec3 chunkWorldPos = glm::vec3(chunkX * VoxelWorlds::CHUNK_SIZE, 
+                                        chunkY * VoxelWorlds::CHUNK_SIZE, 
+                                        chunkZ * VoxelWorlds::CHUNK_SIZE);
+
+    glm::vec3 localBlockCoordinates = globalBlockCoordinates - chunkWorldPos;
+
+    int localBlockX = static_cast<int>(std::round(localBlockCoordinates.x));
+    int localBlockY = static_cast<int>(std::round(localBlockCoordinates.y));
+    int localBlockZ = static_cast<int>(std::round(localBlockCoordinates.z));
+
+    auto& block = ChunkStorage::GetBlock(*chunkData, localBlockX, localBlockY, localBlockZ);
+
+    if(block == BlockTypes::air) {
+        block = BlockTypes::stone_block;
+    }
+
+    WorldGenerationSystem wGen;
+    wGen.SetEntityManager(entityManager);
+    wGen.GenerateModel(chunkX, chunkY, chunkZ);
 }

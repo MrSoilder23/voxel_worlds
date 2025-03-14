@@ -97,6 +97,9 @@ void Input(float deltaTime) {
             if (e.button.button == SDL_BUTTON_LEFT) {
                 gEventManager.GetEvent(InputAction::left_mouse_click, deltaTime);
             }
+            if(e.button.button == SDL_BUTTON_RIGHT) {
+                gEventManager.GetEvent(InputAction::right_mouse_click, deltaTime);
+            }
         }
     }
 
