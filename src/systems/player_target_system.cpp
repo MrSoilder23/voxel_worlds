@@ -50,7 +50,7 @@ glm::vec3 PlayerTargetSystem::GetBlock(EntityManager& entityManager, const Posit
             
             if(distance != -1 && distance < collisionDistance) {
                 collisionDistance = distance;
-                globalCoords = ray.mPosition + ray.mDirection * (distance+0.00001f);
+                globalCoords = ray.mPosition + ray.mDirection * (distance+0.0001f);
             }
         }
     }
@@ -58,9 +58,9 @@ glm::vec3 PlayerTargetSystem::GetBlock(EntityManager& entityManager, const Posit
     return (glm::length(globalCoords) != 0) ? globalCoords : playerPos.mPosition;
 }
 void PlayerTargetSystem::DestroyBlock(EntityManager& entityManager, glm::vec3& globalBlockCoordinates) {
-    int chunkX = static_cast<int>(std::floor(globalBlockCoordinates.x/VoxelWorlds::CHUNK_SIZE));
-    int chunkY = static_cast<int>(std::floor(globalBlockCoordinates.y/VoxelWorlds::CHUNK_SIZE));
-    int chunkZ = static_cast<int>(std::floor(globalBlockCoordinates.z/VoxelWorlds::CHUNK_SIZE));
+    int chunkX = static_cast<int>(std::floor(std::round(globalBlockCoordinates.x)/VoxelWorlds::CHUNK_SIZE));
+    int chunkY = static_cast<int>(std::floor(std::round(globalBlockCoordinates.y)/VoxelWorlds::CHUNK_SIZE));
+    int chunkZ = static_cast<int>(std::floor(std::round(globalBlockCoordinates.z)/VoxelWorlds::CHUNK_SIZE));
 
     char chunkName[32];
     snprintf(chunkName, sizeof(chunkName), "%d:%d:%d", chunkX, chunkY, chunkZ);
@@ -75,7 +75,6 @@ void PlayerTargetSystem::DestroyBlock(EntityManager& entityManager, glm::vec3& g
                                         chunkZ * VoxelWorlds::CHUNK_SIZE);
 
     glm::vec3 localBlockCoordinates = globalBlockCoordinates - chunkWorldPos;
-    std::cout << localBlockCoordinates.x << ":" << localBlockCoordinates.y << ":" << localBlockCoordinates.z << std::endl;
 
     int localBlockX = static_cast<int>(std::round(localBlockCoordinates.x));
     int localBlockY = static_cast<int>(std::round(localBlockCoordinates.y));
@@ -85,7 +84,6 @@ void PlayerTargetSystem::DestroyBlock(EntityManager& entityManager, glm::vec3& g
 
     WorldGenerationSystem wGen;
     wGen.SetEntityManager(entityManager);
-
     wGen.GenerateModel(chunkX, chunkY, chunkZ);
 }
 void PlayerTargetSystem::PlaceBlock(EntityManager& entityManager, glm::vec3& globalBlockCoordinates) {
