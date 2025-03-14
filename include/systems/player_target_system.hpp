@@ -12,6 +12,7 @@
 #include "./components/position_component.hpp"
 #include "./components/camera_component.hpp"
 #include "./systems/world_generation_system.hpp"
+#include "./core/event_manager.hpp"
 
 class PlayerTargetSystem {
     public:

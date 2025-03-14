@@ -597,4 +597,8 @@ CMakeFiles\prog.dir\src\systems\player_target_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
- C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h
+ C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h \
+ C:/Projects/voxel_worlds/include/core/event_manager.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/functional \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
+ C:/Projects/voxel_worlds/include/core/inputs.hpp

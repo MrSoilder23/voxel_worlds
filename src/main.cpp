@@ -34,6 +34,7 @@
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
 #include "./utility/spiral_loop.hpp"
+#include "./core/event_manager.hpp"
 
 #include "./components/player_controller_component.hpp"
 #include "./components/position_component.hpp"
@@ -69,24 +70,56 @@ ThreadPool& gThreadPool = ThreadPool::GetInstance();
 WorldGenerationSystem gWorldGen;
 World gWorld;
 
+EventManager& gEventManager = EventManager::GetInstance();
+
 void Input(float deltaTime) {
-    gPlayerControllerSys.Update(gEntityManager, deltaTime);
-
     SDL_Event e;
-
     while(SDL_PollEvent(&e) != 0) {
         if(e.type == SDL_QUIT) {
             gGame.StopLoop();
         }
+        if(e.type == SDL_KEYDOWN) {
+            if(e.key.keysym.sym == SDLK_ESCAPE) {
+                gGame.StopLoop();
+            }
+
+            if (e.key.keysym.sym == SDLK_F12) {
+                gEventManager.GetEvent(InputAction::toggle_debug, deltaTime);
+            }
+        }
+        if(e.type == SDL_MOUSEMOTION) {
+            int mouseX = e.motion.xrel;
+            int mouseY = e.motion.yrel;
+            
+            gEventManager.GetMouseMotionEvent(InputAction::mouse_motion, deltaTime, mouseX, mouseY);
+        }
+        if(e.type == SDL_MOUSEBUTTONDOWN) {
+            if (e.button.button == SDL_BUTTON_LEFT) {
+                gEventManager.GetEvent(InputAction::left_mouse_click, deltaTime);
+            }
+        }
     }
 
     const Uint8* state = SDL_GetKeyboardState(NULL);
-    if(state[SDL_SCANCODE_ESCAPE]) {
-        gGame.StopLoop();
+    if(state[SDL_SCANCODE_W]) {
+        gEventManager.GetEvent(InputAction::move_forward, deltaTime);
     }
-    if(state[SDL_SCANCODE_F12]) {
-        gSettings.mBoundingDebug = !gSettings.mBoundingDebug;
+    if(state[SDL_SCANCODE_A]) {
+        gEventManager.GetEvent(InputAction::move_left, deltaTime);
     }
+    if(state[SDL_SCANCODE_S]) {
+        gEventManager.GetEvent(InputAction::move_backwards, deltaTime);
+    }
+    if(state[SDL_SCANCODE_D]) {
+        gEventManager.GetEvent(InputAction::move_right, deltaTime);
+    }
+    if(state[SDL_SCANCODE_LSHIFT]) {
+        gEventManager.GetEvent(InputAction::move_down, deltaTime);
+    }
+    if(state[SDL_SCANCODE_SPACE]) {
+        gEventManager.GetEvent(InputAction::move_up, deltaTime);
+    }
+
 }
 
 void MainLoop(float deltaTime) {
@@ -173,11 +206,9 @@ void MainLoop(float deltaTime) {
     static ChunkVertexSetupSystem chunkVSS;
     static CollisionSystem collisionSystem;
     static PhysicsSystem physSystem;
-    static PlayerTargetSystem pTarget;
     
     if(gSettings.mBoundingDebug) {
         collisionSystem.UpdateCollision(gEntityManager, deltaTime);
-        pTarget.PlayerRaycast(gEntityManager);
     }
 
     physSystem.UpdatePosition(gEntityManager, deltaTime);
@@ -191,6 +222,15 @@ void MainLoop(float deltaTime) {
     if(gSettings.mBoundingDebug) {
         gRendererSystem.DrawAllDebug(gEntityManager);
     }
+}
+
+void InitializeKeys() {
+    static PlayerTargetSystem pTarget;
+
+    gEventManager.RegisterEvent(InputAction::exit, [game = &gGame](float _){game->StopLoop();});
+    gEventManager.RegisterEvent(InputAction::toggle_debug, [settings = &gSettings](float _){settings->mBoundingDebug = !settings->mBoundingDebug;});
+
+    pTarget.PlayerRaycast(gEntityManager);
 }
 
 int main() {
@@ -227,10 +267,12 @@ int main() {
         gPlayerControllerSys.SetFov(45.0f);
         gPlayerControllerSys.SetScreenSize(gSettings.mScreenWidth,gSettings.mScreenHeight);
         gPlayerControllerSys.SetCamera(gEntityManager, 0.01f);
+        gPlayerControllerSys.Update(gEntityManager);
 
         playerBox->mLocalMin = glm::vec3(-0.4, -1.5, -0.4);
         playerBox->mLocalMax = glm::vec3( 0.4,  0.4,  0.4);
     }
+
 
     {
         gEntityManager.CreateEntity("Test");
@@ -250,6 +292,8 @@ int main() {
         boundingBox->mLocalMin = glm::vec3(-0.5f,-1.5f,-0.5f);
         boundingBox->mLocalMax = glm::vec3(0.5f,0.4f,0.5f);
     }
+
+    InitializeKeys();
 
     gWorldGen.SetEntityManager(gEntityManager);
     gChunkbBoxCreationSys.SetEntityManager(gEntityManager);

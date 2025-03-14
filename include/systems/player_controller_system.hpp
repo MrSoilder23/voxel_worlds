@@ -11,6 +11,7 @@
 #include "./components/camera_component.hpp"
 #include "./components/physics_component.hpp"
 #include "./utility/utility.hpp"
+#include "./core/event_manager.hpp"
 
 class PlayerControllerSystem {
     public:
@@ -18,7 +19,11 @@ class PlayerControllerSystem {
         void SetScreenSize(float screenWidth, float screenHeight);
         void SetCamera(EntityManager& entityManager, float near);
 
-        void Update(EntityManager& entityManager, float deltaTime);
+        void Update(EntityManager& entityManager);
+    
+    private:
+        void RegisterMovementEvent(EventManager& eventManager, InputAction action, PhysicsComponent& playerVelocity,
+                                PlayerControllerComponent& player, CameraComponent& playerCamera, glm::vec3 movementDirection);
 
     private:
         float mFov;

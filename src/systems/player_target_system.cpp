@@ -6,18 +6,12 @@ void PlayerTargetSystem::PlayerRaycast(EntityManager& entityManager) {
     auto playerCam = entityManager.GetComponent<CameraComponent>("Player");
     
     assert(playerPos && playerCam);
-
-    glm::vec3 blockWorldCoords = GetBlock(entityManager, *playerPos, *playerCam);
-    
-    SDL_Event e;
-    while(SDL_PollEvent(&e) != 0) {
-        if (e.type == SDL_MOUSEBUTTONDOWN) {
-            if (e.button.button == SDL_BUTTON_LEFT) {
-                DestroyBlock(entityManager, blockWorldCoords);
-                std::cout << "asda" << std::endl;
-            }
-        }
-    }
+        
+    EventManager& eventManager = EventManager::GetInstance();
+    eventManager.RegisterEvent(InputAction::left_mouse_click, [this, entityManagerPtr = &entityManager, playerPos, playerCam](float _){
+        glm::vec3 blockWorldCoords = this->GetBlock(*entityManagerPtr, *playerPos, *playerCam);
+        this->DestroyBlock(*entityManagerPtr, blockWorldCoords);
+    });
 }
 
 // Private
@@ -56,7 +50,7 @@ glm::vec3 PlayerTargetSystem::GetBlock(EntityManager& entityManager, const Posit
             
             if(distance != -1 && distance < collisionDistance) {
                 collisionDistance = distance;
-                globalCoords = ray.mPosition + ray.mDirection * (distance+0.0001f);
+                globalCoords = ray.mPosition + ray.mDirection * (distance+0.00001f);
             }
         }
     }
