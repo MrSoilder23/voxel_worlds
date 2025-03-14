@@ -1,5 +1,4 @@
 #include "./systems/player_target_system.hpp"
-#include <iostream>
 
 void PlayerTargetSystem::PlayerRaycast(EntityManager& entityManager) {
     auto playerPos = entityManager.GetComponent<PositionComponent>("Player");
@@ -16,7 +15,6 @@ void PlayerTargetSystem::PlayerRaycast(EntityManager& entityManager) {
     eventManager.RegisterEvent(InputAction::right_mouse_click, [this, entityManagerPtr = &entityManager, playerPos, playerCam](float _){
         glm::vec3 blockWorldCoords = this->GetBlock(*entityManagerPtr, *playerPos, *playerCam, -0.0001f);
         this->PlaceBlock(*entityManagerPtr, blockWorldCoords);
-        std::cout << "asda" << std::endl;
     });
 }
 
