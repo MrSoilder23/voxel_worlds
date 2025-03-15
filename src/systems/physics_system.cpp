@@ -14,7 +14,7 @@ void PhysicsSystem::UpdatePosition(EntityManager& entityManager, float deltaTime
 
         entityPhysics->mVelocity *= 1.0f - entityPhysics->mFriction * deltaTime;
 
-        if (std::abs(glm::length(entityPhysics->mVelocity)) < 0.001f) {
+        if (glm::length(entityPhysics->mVelocity) < 0.001f) {
             entityPhysics->mVelocity = glm::vec3(0.0f);
         }
         
@@ -35,10 +35,9 @@ void PhysicsSystem::UpdatePositionSingle(EntityManager& entityManager, std::stri
 
     entityPhysics->mVelocity *= 1.0f - entityPhysics->mFriction * deltaTime;
 
-    if (std::abs(glm::length(entityPhysics->mVelocity)) < 0.001f) {
+    if (glm::length(entityPhysics->mVelocity) < 0.001f) {
         entityPhysics->mVelocity = glm::vec3(0.0f);
     }
     
-
     utility::MovePosition(*entityPosition, entityPosition->mPosition + (entityPhysics->mVelocity * deltaTime));
 }
