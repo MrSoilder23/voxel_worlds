@@ -6,6 +6,17 @@ enum class InputAction {
     move_left,
     move_right,
 
+    hotbar_0,
+    hotbar_1,
+    hotbar_2,
+    hotbar_3,
+    hotbar_4,
+    hotbar_5,
+    hotbar_6,
+    hotbar_7,
+    hotbar_8,
+    hotbar_9,
+
     move_up,
     move_down,
 

@@ -6,12 +6,13 @@
 #include <glm/gtx/quaternion.hpp>
 // Own libraries
 #include "./core/entity_manager.hpp"
+#include "./core/event_manager.hpp"
 #include "./components/player_controller_component.hpp"
 #include "./components/position_component.hpp"
 #include "./components/camera_component.hpp"
 #include "./components/physics_component.hpp"
+#include "./components/inventory_component.hpp"
 #include "./utility/utility.hpp"
-#include "./core/event_manager.hpp"
 
 class PlayerControllerSystem {
     public:

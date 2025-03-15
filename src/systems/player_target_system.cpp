@@ -14,7 +14,9 @@ void PlayerTargetSystem::PlayerRaycast(EntityManager& entityManager) {
 
     eventManager.RegisterEvent(InputAction::right_mouse_click, [this, entityManagerPtr = &entityManager, playerPos, playerCam](float _){
         glm::vec3 blockWorldCoords = this->GetBlock(*entityManagerPtr, *playerPos, *playerCam, -0.0001f);
-        this->PlaceBlock(*entityManagerPtr, blockWorldCoords);
+        auto playerInventory = entityManagerPtr->GetComponent<InventoryComponent>("Player");
+        BlockTypes currentBlock = playerInventory->mInventory[playerInventory->mCurrentSlot].mItem;
+        this->PlaceBlock(*entityManagerPtr, currentBlock, blockWorldCoords);
     });
 }
 
@@ -90,7 +92,7 @@ void PlayerTargetSystem::DestroyBlock(EntityManager& entityManager, glm::vec3& g
     wGen.SetEntityManager(entityManager);
     wGen.GenerateModel(chunkX, chunkY, chunkZ);
 }
-void PlayerTargetSystem::PlaceBlock(EntityManager& entityManager, glm::vec3& globalBlockCoordinates) {
+void PlayerTargetSystem::PlaceBlock(EntityManager& entityManager, BlockTypes block, glm::vec3& globalBlockCoordinates) {
     int chunkX = static_cast<int>(std::floor(std::round(globalBlockCoordinates.x)/VoxelWorlds::CHUNK_SIZE));
     int chunkY = static_cast<int>(std::floor(std::round(globalBlockCoordinates.y)/VoxelWorlds::CHUNK_SIZE));
     int chunkZ = static_cast<int>(std::floor(std::round(globalBlockCoordinates.z)/VoxelWorlds::CHUNK_SIZE));
@@ -113,10 +115,10 @@ void PlayerTargetSystem::PlaceBlock(EntityManager& entityManager, glm::vec3& glo
     int localBlockY = static_cast<int>(std::round(localBlockCoordinates.y));
     int localBlockZ = static_cast<int>(std::round(localBlockCoordinates.z));
 
-    auto& block = ChunkStorage::GetBlock(*chunkData, localBlockX, localBlockY, localBlockZ);
+    auto& currentBlock = ChunkStorage::GetBlock(*chunkData, localBlockX, localBlockY, localBlockZ);
 
-    if(block == BlockTypes::air) {
-        block = BlockTypes::stone_block;
+    if(currentBlock == BlockTypes::air) {
+        currentBlock = block;
     }
 
     WorldGenerationSystem wGen;

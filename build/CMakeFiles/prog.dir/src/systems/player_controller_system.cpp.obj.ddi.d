@@ -556,17 +556,23 @@ CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/unique_lock.h \
  C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
- C:/Projects/voxel_worlds/include/components/player_controller_component.hpp \
- C:/Projects/voxel_worlds/include/components/position_component.hpp \
- C:/Projects/voxel_worlds/include/components/camera_component.hpp \
- C:/Projects/voxel_worlds/include/components/physics_component.hpp \
- C:/Projects/voxel_worlds/include/utility/utility.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/random \
- C:/msys64/mingw64/include/c++/14.2.0/bits/random.h \
+ C:/Projects/voxel_worlds/include/core/event_manager.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/vector \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/vector.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/functional \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
+ C:/msys64/mingw64/include/c++/14.2.0/array \
+ C:/Projects/voxel_worlds/include/core/inputs.hpp \
+ C:/Projects/voxel_worlds/include/components/player_controller_component.hpp \
+ C:/Projects/voxel_worlds/include/components/position_component.hpp \
+ C:/Projects/voxel_worlds/include/components/camera_component.hpp \
+ C:/Projects/voxel_worlds/include/components/physics_component.hpp \
+ C:/Projects/voxel_worlds/include/components/inventory_component.hpp \
+ C:/Projects/voxel_worlds/include/utility/utility.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/random \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/random.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/opt_random.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/random.tcc \
@@ -580,9 +586,4 @@ CMakeFiles\prog.dir\src\systems\player_controller_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/model.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/array \
- C:/Projects/voxel_worlds/include/line.hpp \
- C:/Projects/voxel_worlds/include/core/event_manager.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/functional \
- C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
- C:/Projects/voxel_worlds/include/core/inputs.hpp
+ C:/Projects/voxel_worlds/include/line.hpp

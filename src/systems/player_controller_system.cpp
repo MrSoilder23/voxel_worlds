@@ -18,10 +18,56 @@ void PlayerControllerSystem::InitializeMovement(EntityManager& entityManager) {
     auto playerPosition = entityManager.GetComponent<PositionComponent>("Player");
     auto playerCamera = entityManager.GetComponent<CameraComponent>("Player");
     auto playerVelocity = entityManager.GetComponent<PhysicsComponent>("Player");
+    auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
 
-    assert(player || playerPosition || playerCamera || playerVelocity);
-
+    assert(player && playerPosition && playerCamera && playerVelocity && playerInventory);
     EventManager& eventManager = EventManager::GetInstance();
+
+    playerInventory->mInventory[0].mItem = BlockTypes::dirt_block;
+    playerInventory->mInventory[1].mItem = BlockTypes::grass_block;
+    playerInventory->mInventory[2].mItem = BlockTypes::stone_block;
+    playerInventory->mInventory[3].mItem = BlockTypes::dirt_block;
+
+    eventManager.RegisterEvent(InputAction::hotbar_0, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 0;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_1, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 1;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_2, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 2;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_3, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 3;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_4, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 4;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_5, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 5;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_6, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 6;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_7, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 7;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_8, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 8;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_9, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 9;
+    });
 
     RegisterMovementEvent(eventManager, entityManager, InputAction::move_forward,   glm::vec3(0,0,1));
     RegisterMovementEvent(eventManager, entityManager, InputAction::move_backwards, glm::vec3(0,0,-1));

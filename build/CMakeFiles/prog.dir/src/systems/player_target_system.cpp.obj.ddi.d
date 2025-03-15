@@ -581,6 +581,7 @@ CMakeFiles\prog.dir\src\systems\player_target_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/line.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp \
+ C:/Projects/voxel_worlds/include/components/inventory_component.hpp \
  C:/Projects/voxel_worlds/include/components/camera_component.hpp \
  C:/Projects/voxel_worlds/include/systems/world_generation_system.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/sstream \

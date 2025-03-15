@@ -41,6 +41,7 @@
 #include "./components/camera_component.hpp"
 #include "./components/bounding_box_component.hpp"
 #include "./components/physics_component.hpp"
+#include "./components/inventory_component.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
@@ -121,6 +122,37 @@ void Input(float deltaTime) {
     }
     if(state[SDL_SCANCODE_SPACE]) {
         gEventManager.GetEvent(InputAction::move_up, deltaTime);
+    }
+
+    if(state[SDL_SCANCODE_1]) {
+        gEventManager.GetEvent(InputAction::hotbar_0, deltaTime);
+    }
+    if(state[SDL_SCANCODE_2]) {
+        gEventManager.GetEvent(InputAction::hotbar_1, deltaTime);
+    }
+    if(state[SDL_SCANCODE_3]) {
+        gEventManager.GetEvent(InputAction::hotbar_2, deltaTime);
+    }
+    if(state[SDL_SCANCODE_4]) {
+        gEventManager.GetEvent(InputAction::hotbar_3, deltaTime);
+    }
+    if(state[SDL_SCANCODE_5]) {
+        gEventManager.GetEvent(InputAction::hotbar_4, deltaTime);
+    }
+    if(state[SDL_SCANCODE_6]) {
+        gEventManager.GetEvent(InputAction::hotbar_5, deltaTime);
+    }
+    if(state[SDL_SCANCODE_7]) {
+        gEventManager.GetEvent(InputAction::hotbar_6, deltaTime);
+    }
+    if(state[SDL_SCANCODE_8]) {
+        gEventManager.GetEvent(InputAction::hotbar_7, deltaTime);
+    }
+    if(state[SDL_SCANCODE_9]) {
+        gEventManager.GetEvent(InputAction::hotbar_8, deltaTime);
+    }
+    if(state[SDL_SCANCODE_0]) {
+        gEventManager.GetEvent(InputAction::hotbar_9, deltaTime);
     }
 
 }
@@ -262,6 +294,7 @@ int main() {
         gEntityManager.AddComponent<CameraComponent>("Player");
         gEntityManager.AddComponent<BoundingBoxComponent>("Player");
         gEntityManager.AddComponent<PhysicsComponent>("Player");
+        gEntityManager.AddComponent<InventoryComponent>("Player");
 
         auto player = gEntityManager.GetComponent<PlayerControllerComponent>("Player");
         player->mSensitivity = gSettings.mSensitivity;
