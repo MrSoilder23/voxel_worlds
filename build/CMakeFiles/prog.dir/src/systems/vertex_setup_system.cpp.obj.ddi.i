@@ -74404,6 +74404,26 @@ class EntityManager {
         }
 
         template <typename ComponentType>
+        void AddComponent(const std::string& entityName, ComponentType& component) {
+            std::unique_lock lock(mMutex);
+            static const std::type_index componentTypeIndex = typeid(ComponentType);
+            auto entityIt = mEntityComponents.find(entityName);
+
+            if(entityIt == mEntityComponents.end()) {
+                std::cerr << "Entity with the name: " << entityName << " do not exist. Could not add the component: " << componentTypeIndex.name() << std::endl;
+                return;
+            }
+
+            auto& componentMap = entityIt->second;
+            if (componentMap.find(componentTypeIndex) != componentMap.end()) {
+                std::cerr << "The component: " << componentTypeIndex.name() << " already exists in this entity: " << entityName << std::endl;
+                return;
+            }
+
+            componentMap[componentTypeIndex] = std::make_shared<ComponentType>(std::move(component));
+        }
+
+        template <typename ComponentType>
         void DeleteComponent(const std::string& entityName) {
             std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
@@ -103407,6 +103427,14 @@ struct ModelComponent : public IComponent {
     GLuint VAO;
     GLuint VBO;
     GLuint EBO;
+
+    ~ModelComponent() {
+        if(VAO != 0) {
+            glad_glDeleteVertexArrays(1, &VAO);
+            glad_glDeleteBuffers(1, &VBO);
+            glad_glDeleteBuffers(1, &EBO);
+        }
+    }
 };
 # 11 "C:/Projects/voxel_worlds/include/systems/vertex_setup_system.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 1
@@ -103419,8 +103447,11 @@ struct ModelComponent : public IComponent {
 # 1 "C:/Projects/voxel_worlds/include/group.hpp" 1
        
 
-enum class Group {
-    nothing,
+
+
+enum class Group : uint8_t {
+    null,
+    render,
     terrain,
     player,
 };
@@ -103428,17 +103459,29 @@ enum class Group {
 
 struct BoundingBoxComponent : public IComponent{
 
-    glm::vec3 mMin;
-    glm::vec3 mMax;
+    glm::vec3 mLocalMin;
+    glm::vec3 mLocalMax;
+
+    glm::vec3 mWorldMin;
+    glm::vec3 mWorldMax;
 
     Group group;
     Group mask;
+
 
     Model mModel;
 
     GLuint VAO = 0;
     GLuint VBO = 0;
     GLuint EBO = 0;
+
+    ~BoundingBoxComponent() {
+        if(VAO != 0) {
+            glad_glDeleteVertexArrays(1, &VAO);
+            glad_glDeleteBuffers(1, &VBO);
+            glad_glDeleteBuffers(1, &EBO);
+        }
+    }
 };
 # 12 "C:/Projects/voxel_worlds/include/systems/vertex_setup_system.hpp" 2
 

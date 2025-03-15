@@ -412,6 +412,7 @@ CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
+ C:/Projects/voxel_worlds/include/line.hpp \
  C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/unordered_map \
  C:/msys64/mingw64/include/c++/14.2.0/bits/unordered_map.h \

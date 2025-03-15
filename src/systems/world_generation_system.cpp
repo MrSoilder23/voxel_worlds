@@ -14,24 +14,23 @@ void WorldGenerationSystem::GenerateChunk(int x, int y, int z) {
     if(!mEntityManager->CreateEntity(chunkName)) {
         return;
     }
-    mEntityManager->AddComponent<PositionComponent>(chunkName);
-    mEntityManager->AddComponent<ChunkModelComponent>(chunkName);
-    mEntityManager->AddComponent<ChunkStorageComponent>(chunkName);
-    mEntityManager->AddComponent<BoundingBoxComponent>(chunkName);
     
     BoundingBoxComponent bBoxComponent;
-    bBoxComponent.mMin = glm::vec3(-0.5f,-0.5f,-0.5);
-    bBoxComponent.mMax = glm::vec3(VoxelWorlds::CHUNK_SIZE-0.5f,VoxelWorlds::CHUNK_SIZE-0.5f,VoxelWorlds::CHUNK_SIZE-0.5f);
+    bBoxComponent.group = Group::render;
+    bBoxComponent.mLocalMin = glm::vec3(-0.5f,-0.5f,-0.5f);
+    bBoxComponent.mLocalMax = glm::vec3(VoxelWorlds::CHUNK_SIZE-0.5f,
+                                   VoxelWorlds::CHUNK_SIZE-0.5f,
+                                   VoxelWorlds::CHUNK_SIZE-0.5f);
     
     PositionComponent posComponent;
     utility::MovePosition(posComponent, glm::vec3(x*VoxelWorlds::CHUNK_SIZE,
         y*VoxelWorlds::CHUNK_SIZE, z*VoxelWorlds::CHUNK_SIZE));
 
-    auto boundingBox = mEntityManager->GetComponent<BoundingBoxComponent>(chunkName);
-    auto position = mEntityManager->GetComponent<PositionComponent>(chunkName);
-
-    *boundingBox = std::move(bBoxComponent);
-    *position = std::move(posComponent);
+    mEntityManager->AddComponent<PositionComponent>(chunkName, posComponent);
+    mEntityManager->AddComponent<ChunkStorageComponent>(chunkName);
+    mEntityManager->AddComponent<ChunkModelComponent>(chunkName);
+    mEntityManager->AddComponent<BoundingBoxComponent>(chunkName, bBoxComponent);
+    mEntityManager->AddComponent<BoundingBoxCollectionComponent>(chunkName);
 
     GeneratePerlin(x,y,z, chunkName);
 }
@@ -62,6 +61,8 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
     for(auto& [handle, _] : textures) {
         textures[handle] = index++;
     }
+
+    BoundingBoxCollectionComponent bBoxCollection;
     
     for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
         for(int blockY = 0; blockY < VoxelWorlds::CHUNK_SIZE; blockY++) {
@@ -119,31 +120,41 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
                 model.indexBufferData.insert(model.indexBufferData.end(), 
                             std::make_move_iterator(tempIndexes.begin()),
                             std::make_move_iterator(tempIndexes.end()));
+
+                BoundingBoxComponent bBox;
+                bBox.mWorldMin = glm::vec3(-0.5f+blockX+VoxelWorlds::CHUNK_SIZE*x,
+                                           -0.5f+blockY+VoxelWorlds::CHUNK_SIZE*y,
+                                           -0.5f+blockZ+VoxelWorlds::CHUNK_SIZE*z);
+
+                bBox.mWorldMax = glm::vec3( 0.5f+blockX+VoxelWorlds::CHUNK_SIZE*x, 
+                                            0.5f+blockY+VoxelWorlds::CHUNK_SIZE*y, 
+                                            0.5f+blockZ+VoxelWorlds::CHUNK_SIZE*z);
+
+                bBoxCollection.boundingBoxes.push_back(std::move(bBox));
             }
         }
     }
     
     auto chunkModel = mEntityManager->GetComponent<ChunkModelComponent>(chunkName);
-    if(chunkModel->mChangeSize != model.indexBufferData.size()) {
+    if(chunkModel->mModel.indexBufferData.size() != model.indexBufferData.size() || chunkModel->mModel.vertexPositions.size() != model.indexBufferData.size()) {
         chunkModel->mTexturePositions.clear();
         chunkModel->mTextures.clear();
         chunkModel->mModel = Model();
-
+        
         chunkModel->mTexturePositions = std::move(texturePositions);
         chunkModel->mTextures = std::move(textureIdVector);
         chunkModel->mModel = std::move(model);
-
-        chunkModel->mChangeSize = chunkModel->mModel.indexBufferData.size();
+        
         chunkModel->mGenerated = false;
+        
+        auto chunkBoxes = mEntityManager->GetComponent<BoundingBoxCollectionComponent>(chunkName);
+        *chunkBoxes = std::move(bBoxCollection);
     }
 }
 
 // Private functions
 void WorldGenerationSystem::GeneratePerlin(int x, int y, int z, std::string chunkName) {
     auto chunkData = mEntityManager->GetComponent<ChunkStorageComponent>(chunkName);
-    if(!chunkData || chunkData->mWasGenerated) {
-        return;
-    }
 
     // Perlin chunk size
     const int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(x)/VoxelWorlds::PERLIN_SCALE));

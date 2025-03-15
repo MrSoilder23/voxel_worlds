@@ -17,6 +17,7 @@
 #include "./core/entity_manager.hpp"
 #include "./core/world.hpp"
 #include "./core/game.hpp"
+
 #include "./systems/renderer_system.hpp"
 #include "./systems/chunk_renderer_system.hpp"
 #include "./systems/player_controller_system.hpp"
@@ -25,14 +26,22 @@
 #include "./systems/position_update_system.hpp"
 #include "./systems/chunk_vertex_setup_system.hpp"
 #include "./systems/world_generation_system.hpp"
+#include "./systems/chunk_bounding_creation_system.hpp"
+#include "./systems/collision_system.hpp"
+#include "./systems/physics_system.hpp"
+#include "./systems/player_target_system.hpp"
+
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
 #include "./utility/spiral_loop.hpp"
+#include "./core/event_manager.hpp"
 
 #include "./components/player_controller_component.hpp"
 #include "./components/position_component.hpp"
 #include "./components/camera_component.hpp"
 #include "./components/bounding_box_component.hpp"
+#include "./components/physics_component.hpp"
+#include "./components/inventory_component.hpp"
 
 struct Settings {
     GLuint mGraphicsShaderProgram = 0;
@@ -40,7 +49,7 @@ struct Settings {
     int mScreenWidth = 1366;
     int mScreenHeight = 768;
 
-    float mSpeed = 20.0f;
+    float mSpeed = 100.0f;
     float mSensitivity = 24.0f;
 
     bool mBoundingDebug = false;
@@ -51,6 +60,7 @@ Game gGame;
 std::shared_ptr<GraphicsApp> gGraphicsApp = std::make_shared<GraphicsApp>();
 EntityManager& gEntityManager = EntityManager::GetInstance();
 PlayerControllerSystem gPlayerControllerSys;
+ChunkBoundingCreationSystem gChunkbBoxCreationSys;
 
 RendererSystem& gRendererSystem = RendererSystem::GetInstance();
 ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
@@ -61,22 +71,90 @@ ThreadPool& gThreadPool = ThreadPool::GetInstance();
 WorldGenerationSystem gWorldGen;
 World gWorld;
 
+EventManager& gEventManager = EventManager::GetInstance();
+
 void Input(float deltaTime) {
     SDL_Event e;
-
     while(SDL_PollEvent(&e) != 0) {
         if(e.type == SDL_QUIT) {
             gGame.StopLoop();
         }
+        if(e.type == SDL_KEYDOWN) {
+            if(e.key.keysym.sym == SDLK_ESCAPE) {
+                gGame.StopLoop();
+            }
+
+            if (e.key.keysym.sym == SDLK_F12) {
+                gEventManager.GetEvent(InputAction::toggle_debug, deltaTime);
+            }
+        }
+        if(e.type == SDL_MOUSEMOTION) {
+            int mouseX = e.motion.xrel;
+            int mouseY = e.motion.yrel;
+            
+            gEventManager.GetMouseMotionEvent(InputAction::mouse_motion, deltaTime, mouseX, mouseY);
+        }
+        if(e.type == SDL_MOUSEBUTTONDOWN) {
+            if (e.button.button == SDL_BUTTON_LEFT) {
+                gEventManager.GetEvent(InputAction::left_mouse_click, deltaTime);
+            }
+            if(e.button.button == SDL_BUTTON_RIGHT) {
+                gEventManager.GetEvent(InputAction::right_mouse_click, deltaTime);
+            }
+        }
     }
 
     const Uint8* state = SDL_GetKeyboardState(NULL);
-    if(state[SDL_SCANCODE_ESCAPE]) {
-        gGame.StopLoop();
+    if(state[SDL_SCANCODE_W]) {
+        gEventManager.GetEvent(InputAction::move_forward, deltaTime);
     }
-    if(state[SDL_SCANCODE_F12]) {
-        gSettings.mBoundingDebug = !gSettings.mBoundingDebug;
+    if(state[SDL_SCANCODE_A]) {
+        gEventManager.GetEvent(InputAction::move_left, deltaTime);
     }
+    if(state[SDL_SCANCODE_S]) {
+        gEventManager.GetEvent(InputAction::move_backwards, deltaTime);
+    }
+    if(state[SDL_SCANCODE_D]) {
+        gEventManager.GetEvent(InputAction::move_right, deltaTime);
+    }
+    if(state[SDL_SCANCODE_LSHIFT]) {
+        gEventManager.GetEvent(InputAction::move_down, deltaTime);
+    }
+    if(state[SDL_SCANCODE_SPACE]) {
+        gEventManager.GetEvent(InputAction::move_up, deltaTime);
+    }
+
+    if(state[SDL_SCANCODE_1]) {
+        gEventManager.GetEvent(InputAction::hotbar_0, deltaTime);
+    }
+    if(state[SDL_SCANCODE_2]) {
+        gEventManager.GetEvent(InputAction::hotbar_1, deltaTime);
+    }
+    if(state[SDL_SCANCODE_3]) {
+        gEventManager.GetEvent(InputAction::hotbar_2, deltaTime);
+    }
+    if(state[SDL_SCANCODE_4]) {
+        gEventManager.GetEvent(InputAction::hotbar_3, deltaTime);
+    }
+    if(state[SDL_SCANCODE_5]) {
+        gEventManager.GetEvent(InputAction::hotbar_4, deltaTime);
+    }
+    if(state[SDL_SCANCODE_6]) {
+        gEventManager.GetEvent(InputAction::hotbar_5, deltaTime);
+    }
+    if(state[SDL_SCANCODE_7]) {
+        gEventManager.GetEvent(InputAction::hotbar_6, deltaTime);
+    }
+    if(state[SDL_SCANCODE_8]) {
+        gEventManager.GetEvent(InputAction::hotbar_7, deltaTime);
+    }
+    if(state[SDL_SCANCODE_9]) {
+        gEventManager.GetEvent(InputAction::hotbar_8, deltaTime);
+    }
+    if(state[SDL_SCANCODE_0]) {
+        gEventManager.GetEvent(InputAction::hotbar_9, deltaTime);
+    }
+
 }
 
 void MainLoop(float deltaTime) {
@@ -114,7 +192,7 @@ void MainLoop(float deltaTime) {
     gCameraOldX = cameraX;
     gCameraOldY = cameraY;
     gCameraOldZ = cameraZ;
-    
+
     {   
         gWorld.SetCameraPosition(camera);
         
@@ -125,14 +203,18 @@ void MainLoop(float deltaTime) {
         int loopX1 = loop1.GetLoopX() + cameraX;
         int loopZ1 = loop1.GetLoopZ() + cameraZ;
         
-        gThreadPool.enqueue([ptr = &gWorldGen, loopX, loopY, loopZ]() {
-            // std::lock_guard<std::mutex> lock(gWorldMutex);
-            ptr->GenerateChunk(loopX, loopY, loopZ);
-            ptr->GenerateModel(loopX, loopY, loopZ);
-        });
-            
-            // gWorldGen.GenerateChunk(loopX, loopY, loopZ);
-            // gWorldGen.GenerateModel(loopX, loopY, loopZ);
+        // gThreadPool.enqueue([ptr = &gWorldGen, bBox = &gChunkbBoxCreationSys, loopX, loopY, loopZ]() {
+        //     // std::lock_guard<std::mutex> lock(gWorldMutex);
+        //     for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
+        //         int newY = loopY + y;
+        //         ptr->GenerateChunk(loopX, newY, loopZ);
+        //         ptr->GenerateModel(loopX, newY, loopZ);
+        //         // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
+        //     }
+        // });
+
+        gWorldGen.GenerateChunk(loopX, loopY, loopZ);
+        gWorldGen.GenerateModel(loopX, loopY, loopZ);
 
             // if(delay <= 1) {
             //     gWorldGen.GenerateModel(loopX1, loopY, loopZ1);
@@ -149,6 +231,7 @@ void MainLoop(float deltaTime) {
         } else {
             yLoop--;
         }
+ 
 
     }
 
@@ -156,23 +239,35 @@ void MainLoop(float deltaTime) {
     static VertexSetupSystem vSetupSystem;
     static BoundingBoxSystem boundingBoxSystem;
     static ChunkVertexSetupSystem chunkVSS;
+    static CollisionSystem collisionSystem;
+    static PhysicsSystem physSystem;
+    
+    gPlayerControllerSys.Update(gEntityManager);
 
-    for(const auto& componentPointer : gEntityManager.GetEntities()) {
-        
-        boundingBoxSystem.GenerateBoundingBoxSingle(gEntityManager, componentPointer.first);
-        vSetupSystem.CreateVertexSpecificationSingle(gEntityManager, componentPointer.first);
-        chunkVSS.CreateVertexSpecificationSingle(gEntityManager, componentPointer.first);
-        
-        posUpdateSystem.UpdatePositionTransformSingle(gEntityManager, componentPointer.first);
-        
-        gRendererSystem.DrawAllSingle(gEntityManager, componentPointer.first);
-        if(gSettings.mBoundingDebug) {
-            gRendererSystem.DrawAllDebugSingle(gEntityManager, componentPointer.first);
-        }
-    
+    if(gSettings.mBoundingDebug) {
+        collisionSystem.UpdateCollision(gEntityManager, deltaTime);
     }
+
+    physSystem.UpdatePosition(gEntityManager, deltaTime);
+    posUpdateSystem.UpdatePositionTransform(gEntityManager);
     
-    gPlayerControllerSys.Update(gEntityManager, deltaTime);
+    boundingBoxSystem.GenerateBoundingBox(gEntityManager);
+    vSetupSystem.CreateVertexSpecification(gEntityManager);
+    chunkVSS.CreateVertexSpecification(gEntityManager);
+
+    gRendererSystem.DrawAll(gEntityManager);
+    if(gSettings.mBoundingDebug) {
+        gRendererSystem.DrawAllDebug(gEntityManager);
+    }
+}
+
+void InitializeKeys() {
+    static PlayerTargetSystem pTarget;
+
+    gEventManager.RegisterEvent(InputAction::exit, [game = &gGame](float _){game->StopLoop();});
+    gEventManager.RegisterEvent(InputAction::toggle_debug, [settings = &gSettings](float _){settings->mBoundingDebug = !settings->mBoundingDebug;});
+
+    pTarget.PlayerRaycast(gEntityManager);
 }
 
 int main() {
@@ -197,13 +292,27 @@ int main() {
         gEntityManager.AddComponent<PlayerControllerComponent>("Player");
         gEntityManager.AddComponent<PositionComponent>("Player");
         gEntityManager.AddComponent<CameraComponent>("Player");
+        gEntityManager.AddComponent<BoundingBoxComponent>("Player");
+        gEntityManager.AddComponent<PhysicsComponent>("Player");
+        gEntityManager.AddComponent<InventoryComponent>("Player");
 
-        gEntityManager.GetComponent<PlayerControllerComponent>("Player")->mSensitivity = gSettings.mSensitivity;
+        auto player = gEntityManager.GetComponent<PlayerControllerComponent>("Player");
+        player->mSensitivity = gSettings.mSensitivity;
+        player->mSpeed = gSettings.mSpeed;
 
         gPlayerControllerSys.SetFov(45.0f);
         gPlayerControllerSys.SetScreenSize(gSettings.mScreenWidth,gSettings.mScreenHeight);
-        gPlayerControllerSys.SetCamera(gEntityManager, 0.1f);
+        gPlayerControllerSys.SetCamera(gEntityManager, 0.01f);
+        gPlayerControllerSys.InitializeMovement(gEntityManager);
+        
+        auto playerBox = gEntityManager.GetComponent<BoundingBoxComponent>("Player");
+        playerBox->mLocalMin = glm::vec3(-0.4, -1.5, -0.4);
+        playerBox->mLocalMax = glm::vec3( 0.4,  0.4,  0.4);
+
+        auto playerPhysics = gEntityManager.GetComponent<PhysicsComponent>("Player");
+        playerPhysics->mFriction = 2.0f;
     }
+
 
     {
         gEntityManager.CreateEntity("Test");
@@ -211,8 +320,8 @@ int main() {
         gEntityManager.AddComponent<PositionComponent>("Test");
 
         auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test");
-        boundingBox->mMin = glm::vec3(0.0f,0.0f,0.0f);
-        boundingBox->mMax = glm::vec3(1.0f,1.0f,1.0f);
+        boundingBox->mLocalMin = glm::vec3(0.0f,0.0f,0.0f);
+        boundingBox->mLocalMax = glm::vec3(1.0f,1.0f,1.0f);
     }
     {
         gEntityManager.CreateEntity("Test1");
@@ -220,11 +329,14 @@ int main() {
         gEntityManager.AddComponent<PositionComponent>("Test1");
 
         auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test1");
-        boundingBox->mMin = glm::vec3(-0.5f,-0.5f,-0.5f);
-        boundingBox->mMax = glm::vec3(0.5f,0.5f,0.5f);
+        boundingBox->mLocalMin = glm::vec3(-0.5f,-1.5f,-0.5f);
+        boundingBox->mLocalMax = glm::vec3(0.5f,0.4f,0.5f);
     }
 
+    InitializeKeys();
+
     gWorldGen.SetEntityManager(gEntityManager);
+    gChunkbBoxCreationSys.SetEntityManager(gEntityManager);
     gWorldGen.SetSeed(seed);
 
     gRendererSystem.AddGraphicsApp(gGraphicsApp);

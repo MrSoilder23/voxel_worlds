@@ -1,0 +1,11 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles/prog.dir/src/systems/collision_system.cpp.o",
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}

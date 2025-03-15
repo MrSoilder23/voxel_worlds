@@ -13,61 +13,119 @@ void PlayerControllerSystem::SetCamera(EntityManager& entityManager, float near)
     playerCamera->mProjectionMatrix = glm::infinitePerspective(mFov, mScreenWidth/mScreenHeight, near);
 }
 
-void PlayerControllerSystem::Update(EntityManager& entityManager, float deltaTime) {
+void PlayerControllerSystem::InitializeMovement(EntityManager& entityManager) {
     auto player = entityManager.GetComponent<PlayerControllerComponent>("Player");
     auto playerPosition = entityManager.GetComponent<PositionComponent>("Player");
     auto playerCamera = entityManager.GetComponent<CameraComponent>("Player");
+    auto playerVelocity = entityManager.GetComponent<PhysicsComponent>("Player");
+    auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
 
-    glm::vec3 rightVector = glm::cross(playerCamera->mViewDirection, playerCamera->mUpVector);
-    rightVector = glm::normalize(rightVector);
+    assert(player && playerPosition && playerCamera && playerVelocity && playerInventory);
+    EventManager& eventManager = EventManager::GetInstance();
+
+    playerInventory->mInventory[0].mItem = BlockTypes::dirt_block;
+    playerInventory->mInventory[1].mItem = BlockTypes::grass_block;
+    playerInventory->mInventory[2].mItem = BlockTypes::stone_block;
+    playerInventory->mInventory[3].mItem = BlockTypes::dirt_block;
+
+    eventManager.RegisterEvent(InputAction::hotbar_0, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 0;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_1, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 1;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_2, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 2;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_3, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 3;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_4, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 4;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_5, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 5;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_6, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 6;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_7, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 7;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_8, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 8;
+    });
+    eventManager.RegisterEvent(InputAction::hotbar_9, [&entityManager](...){
+        auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
+        playerInventory->mCurrentSlot = 9;
+    });
+
+    RegisterMovementEvent(eventManager, entityManager, InputAction::move_forward,   glm::vec3(0,0,1));
+    RegisterMovementEvent(eventManager, entityManager, InputAction::move_backwards, glm::vec3(0,0,-1));
+    RegisterMovementEvent(eventManager, entityManager, InputAction::move_left,      glm::vec3(-1,0,0));
+    RegisterMovementEvent(eventManager, entityManager, InputAction::move_right,     glm::vec3(1,0,0));
+    RegisterMovementEvent(eventManager, entityManager, InputAction::move_up,        glm::vec3(0,1,0));
+    RegisterMovementEvent(eventManager, entityManager, InputAction::move_down,      glm::vec3(0,-1,0));
+
+    eventManager.RegisterMouseMotionEvent(InputAction::mouse_motion, [playerPosition, player, playerCamera](float deltaTime, int mouseX, int mouseY){
+        glm::quat rotation = playerPosition->mRotation;
+
+        float yaw = -glm::radians(mouseX * player->mSensitivity * deltaTime);
+        float pitch = -glm::radians(mouseY * player->mSensitivity * deltaTime);
     
-    glm::vec3 forwardMovement = playerCamera->mViewDirection * player->mSpeed * deltaTime;
-    glm::vec3 sidewaysMovement = rightVector * player->mSpeed * deltaTime;
-    glm::vec3 upMovement = playerCamera->mUpVector * player->mSpeed * deltaTime;
+        glm::quat yawRotation = glm::angleAxis(yaw, glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::quat pitchRotation = glm::angleAxis(pitch, glm::vec3(1.0f, 0.0f, 0.0f));
     
-    const Uint8* state = SDL_GetKeyboardState(NULL);
-    if(state[SDL_SCANCODE_W]) {
-        playerPosition->mPosition += forwardMovement;
-    }
-    if(state[SDL_SCANCODE_S]) {
-        playerPosition->mPosition -= forwardMovement;
-    }
-    if(state[SDL_SCANCODE_A]) {
-        playerPosition->mPosition -= sidewaysMovement;
-    }
-    if(state[SDL_SCANCODE_D]) {
-        playerPosition->mPosition += sidewaysMovement;
-    }
-    if(state[SDL_SCANCODE_SPACE]) {
-        playerPosition->mPosition += upMovement;
-    }
-    if(state[SDL_SCANCODE_LSHIFT]) {
-        playerPosition->mPosition -= upMovement;
-    }
+        rotation = yawRotation * rotation;
+        rotation = rotation * pitchRotation;
+    
+        rotation = glm::normalize(rotation);
 
-    SDL_Event e;
+        utility::RotatePosition(*playerPosition, rotation);
+    
+        playerCamera->mViewDirection = glm::rotate(playerPosition->mRotation, glm::vec3(0.0f, 0.0f, -1.0f));
+    });
+    
+}
 
-    while(SDL_PollEvent(&e) != 0) {
-        if(e.type == SDL_MOUSEMOTION) {
-            int mouseX = e.motion.xrel;
-            int mouseY = e.motion.yrel;
+void PlayerControllerSystem::Update(EntityManager& entityManager) {
+    auto player = entityManager.GetComponent<PlayerControllerComponent>("Player");
+    auto playerVelocity = entityManager.GetComponent<PhysicsComponent>("Player");
 
-            glm::quat rotation = playerPosition->mRotation;
+    if (glm::length(playerVelocity->mVelocity) > player->mSpeed) {
+        playerVelocity->mVelocity = glm::normalize(playerVelocity->mVelocity) * player->mSpeed;
+    }
+}
 
-            float yaw = -glm::radians(mouseX * player->mSensitivity * deltaTime);
-            float pitch = -glm::radians(mouseY * player->mSensitivity * deltaTime);
+void PlayerControllerSystem::RegisterMovementEvent(EventManager& eventManager, EntityManager& entityManager, InputAction action, glm::vec3 movementDirection) {
+
+    eventManager.RegisterEvent(action, [&eventManager, &entityManager, movementDirection](float deltaTime) mutable {
+        auto player = entityManager.GetComponent<PlayerControllerComponent>("Player");
+        auto playerPosition = entityManager.GetComponent<PositionComponent>("Player");
+        auto playerCamera = entityManager.GetComponent<CameraComponent>("Player");
+        auto playerVelocity = entityManager.GetComponent<PhysicsComponent>("Player");
+
+        glm::vec3 forwardVector = glm::normalize(glm::vec3(playerCamera->mViewDirection.x, 0.0f, playerCamera->mViewDirection.z));
+        glm::vec3 rightVector = glm::cross(playerCamera->mViewDirection, playerCamera->mUpVector);
+        rightVector = glm::normalize(rightVector);
         
-            glm::quat yawRotation = glm::angleAxis(yaw, glm::vec3(0.0f, 1.0f, 0.0f));
-            glm::quat pitchRotation = glm::angleAxis(pitch, glm::vec3(1.0f, 0.0f, 0.0f));
-        
-            rotation = yawRotation * rotation;
-            rotation = rotation * pitchRotation;
-        
-            rotation = glm::normalize(rotation);
+        glm::vec3 forwardMovement = forwardVector * player->mSpeed;
+        glm::vec3 sidewaysMovement = rightVector * player->mSpeed;
+        glm::vec3 upMovement = playerCamera->mUpVector * player->mSpeed;
 
-            playerPosition->mRotation = rotation;
-        
-            playerCamera->mViewDirection = glm::rotate(playerPosition->mRotation, glm::vec3(0.0f, 0.0f, -1.0f));
-        }
-    }
+        glm::vec3 movement = (movementDirection.x * sidewaysMovement) + 
+                             (movementDirection.y * upMovement) + 
+                             (movementDirection.z * forwardMovement);
+
+        playerVelocity->mVelocity += movement * deltaTime;
+    });
 }

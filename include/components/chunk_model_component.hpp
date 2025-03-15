@@ -9,15 +9,6 @@
 #include "./graphics/texture.hpp"
 
 struct ChunkModelComponent : public IComponent {
-    ~ChunkModelComponent() {
-        glDeleteVertexArrays(1, &mVAO);
-        glDeleteBuffers(1, &mVBO);
-        glDeleteBuffers(1, &mEBO);
-        glDeleteBuffers(1, &mTexId);
-        glDeleteBuffers(1, &mTexBO);
-        glDeleteBuffers(1, &mTexCoords);
-    }
-
     std::vector<glm::vec3> mTexturePositions;
     std::vector<GLuint> mTextures;
     
@@ -30,6 +21,16 @@ struct ChunkModelComponent : public IComponent {
     GLuint mTexBO = 0;
     GLuint mTexCoords = 0;
 
-    size_t mChangeSize = 0;
     bool mGenerated = false;
+
+    ~ChunkModelComponent() {
+        if(mVAO != 0) {
+            glDeleteVertexArrays(1, &mVAO);
+            glDeleteBuffers(1, &mVBO);
+            glDeleteBuffers(1, &mEBO);
+            glDeleteBuffers(1, &mTexId);
+            glDeleteBuffers(1, &mTexBO);
+            glDeleteBuffers(1, &mTexCoords);
+        }
+    }
 };

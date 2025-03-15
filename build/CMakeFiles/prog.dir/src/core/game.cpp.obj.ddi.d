@@ -608,4 +608,5 @@ CMakeFiles\prog.dir\src\core\game.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/model.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
- C:/Projects/voxel_worlds/include/utility/constant.hpp
+ C:/Projects/voxel_worlds/include/utility/constant.hpp \
+ C:/Projects/voxel_worlds/include/line.hpp
