@@ -93616,6 +93616,7 @@ struct PositionComponent : public IComponent {
 struct PhysicsComponent : public IComponent{
     glm::vec3 mVelocity = glm::vec3(0.0f);
     float mMass = 0.0f;
+    float mFriction = 0.9f;
 };
 # 6 "C:/Projects/voxel_worlds/include/systems/physics_system.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 1
@@ -122090,6 +122091,12 @@ void PhysicsSystem::UpdatePosition(EntityManager& entityManager, float deltaTime
         auto entityPosition = entityManager.GetComponent<PositionComponent>(entityPointer.first);
         if(!entityPosition) {
             continue;
+        }
+
+        entityPhysics->mVelocity *= 1.0f - entityPhysics->mFriction * deltaTime;
+
+        if (std::abs(glm::length(entityPhysics->mVelocity)) < 0.001f) {
+            entityPhysics->mVelocity = glm::vec3(0.0f);
         }
 
         utility::MovePosition(*entityPosition, entityPosition->mPosition + (entityPhysics->mVelocity * deltaTime));
