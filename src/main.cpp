@@ -267,15 +267,17 @@ int main() {
         player->mSensitivity = gSettings.mSensitivity;
         player->mSpeed = gSettings.mSpeed;
 
-        auto playerBox = gEntityManager.GetComponent<BoundingBoxComponent>("Player");
-
         gPlayerControllerSys.SetFov(45.0f);
         gPlayerControllerSys.SetScreenSize(gSettings.mScreenWidth,gSettings.mScreenHeight);
         gPlayerControllerSys.SetCamera(gEntityManager, 0.01f);
         gPlayerControllerSys.InitializeMovement(gEntityManager);
-
+        
+        auto playerBox = gEntityManager.GetComponent<BoundingBoxComponent>("Player");
         playerBox->mLocalMin = glm::vec3(-0.4, -1.5, -0.4);
         playerBox->mLocalMax = glm::vec3( 0.4,  0.4,  0.4);
+
+        auto playerPhysics = gEntityManager.GetComponent<PhysicsComponent>("Player");
+        playerPhysics->mFriction = 2.0f;
     }
 
 
