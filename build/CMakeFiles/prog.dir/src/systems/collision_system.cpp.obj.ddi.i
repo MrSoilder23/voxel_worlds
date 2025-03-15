@@ -108699,7 +108699,7 @@ struct BoundingBoxCollectionComponent : public IComponent{
 struct PhysicsComponent : public IComponent{
     glm::vec3 mVelocity = glm::vec3(0.0f);
     float mMass = 0.0f;
-    float mFriction = 0.9f;
+    float mFriction = 1.2f;
 };
 # 11 "C:/Projects/voxel_worlds/include/systems/collision_system.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/utility/constant.hpp" 1

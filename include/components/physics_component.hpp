@@ -7,5 +7,5 @@
 struct PhysicsComponent : public IComponent{
     glm::vec3 mVelocity = glm::vec3(0.0f);
     float mMass = 0.0f;
-    float mFriction = 0.9f;
+    float mFriction = 1.2f;
 };
