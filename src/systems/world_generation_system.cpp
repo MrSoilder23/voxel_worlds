@@ -136,7 +136,7 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
     }
     
     auto chunkModel = mEntityManager->GetComponent<ChunkModelComponent>(chunkName);
-    if(chunkModel->mChangeSize != model.indexBufferData.size()) {
+    if(chunkModel->mModel.indexBufferData.size() != model.indexBufferData.size() || chunkModel->mModel.vertexPositions.size() != model.indexBufferData.size()) {
         chunkModel->mTexturePositions.clear();
         chunkModel->mTextures.clear();
         chunkModel->mModel = Model();
@@ -145,7 +145,6 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
         chunkModel->mTextures = std::move(textureIdVector);
         chunkModel->mModel = std::move(model);
         
-        chunkModel->mChangeSize = chunkModel->mModel.indexBufferData.size();
         chunkModel->mGenerated = false;
         
         auto chunkBoxes = mEntityManager->GetComponent<BoundingBoxCollectionComponent>(chunkName);

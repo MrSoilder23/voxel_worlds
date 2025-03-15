@@ -1,5 +1,5 @@
 #include "./systems/physics_system.hpp"
-#include <iostream>
+
 void PhysicsSystem::UpdatePosition(EntityManager& entityManager, float deltaTime) {
     for(const auto& entityPointer : entityManager.GetEntities()) {
         auto entityPhysics = entityManager.GetComponent<PhysicsComponent>(entityPointer.first);

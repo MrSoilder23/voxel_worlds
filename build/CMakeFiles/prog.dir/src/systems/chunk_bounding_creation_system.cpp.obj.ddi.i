@@ -92264,7 +92264,6 @@ struct ChunkModelComponent : public IComponent {
     GLuint mTexBO = 0;
     GLuint mTexCoords = 0;
 
-    size_t mChangeSize = 0;
     bool mGenerated = false;
 
     ~ChunkModelComponent() {
