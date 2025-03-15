@@ -122120,6 +122120,5 @@ void PhysicsSystem::UpdatePositionSingle(EntityManager& entityManager, std::stri
         entityPhysics->mVelocity = glm::vec3(0.0f);
     }
 
-
     utility::MovePosition(*entityPosition, entityPosition->mPosition + (entityPhysics->mVelocity * deltaTime));
 }

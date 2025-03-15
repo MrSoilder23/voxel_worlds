@@ -19,11 +19,11 @@ class PlayerControllerSystem {
         void SetScreenSize(float screenWidth, float screenHeight);
         void SetCamera(EntityManager& entityManager, float near);
 
+        void InitializeMovement(EntityManager& entityManager);
         void Update(EntityManager& entityManager);
     
     private:
-        void RegisterMovementEvent(EventManager& eventManager, InputAction action, PhysicsComponent& playerVelocity,
-                                PlayerControllerComponent& player, CameraComponent& playerCamera, glm::vec3 movementDirection);
+        void RegisterMovementEvent(EventManager& eventManager, EntityManager& entityManager, InputAction action, glm::vec3 movementDirection);
 
     private:
         float mFov;

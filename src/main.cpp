@@ -210,6 +210,8 @@ void MainLoop(float deltaTime) {
     static CollisionSystem collisionSystem;
     static PhysicsSystem physSystem;
     
+    gPlayerControllerSys.Update(gEntityManager);
+
     if(gSettings.mBoundingDebug) {
         collisionSystem.UpdateCollision(gEntityManager, deltaTime);
     }
@@ -270,7 +272,7 @@ int main() {
         gPlayerControllerSys.SetFov(45.0f);
         gPlayerControllerSys.SetScreenSize(gSettings.mScreenWidth,gSettings.mScreenHeight);
         gPlayerControllerSys.SetCamera(gEntityManager, 0.01f);
-        gPlayerControllerSys.Update(gEntityManager);
+        gPlayerControllerSys.InitializeMovement(gEntityManager);
 
         playerBox->mLocalMin = glm::vec3(-0.4, -1.5, -0.4);
         playerBox->mLocalMax = glm::vec3( 0.4,  0.4,  0.4);
