@@ -74385,7 +74385,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void AddComponent(const std::string& entityName) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -74405,7 +74404,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void AddComponent(const std::string& entityName, ComponentType& component) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -74425,7 +74423,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void DeleteComponent(const std::string& entityName) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -74440,7 +74437,6 @@ class EntityManager {
 
         template <typename ComponentType>
         std::shared_ptr<ComponentType> GetComponent(const std::string& entityName){
-            std::shared_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -74455,7 +74451,6 @@ class EntityManager {
                 return nullptr;
             }
 
-            lock.unlock();
             return std::static_pointer_cast<ComponentType>(componentIt->second);
         }
 
@@ -103421,24 +103416,25 @@ struct Model {
 # 10 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
 
 struct ModelComponent : public IComponent {
-    std::shared_ptr<Texture> mTextures;
+    std::shared_ptr<Texture> mTexture;
     Model mModel;
 
-    GLuint VAO;
-    GLuint VBO;
-    GLuint EBO;
+    GLuint mVAO = 0;
+    GLuint mVBO = 0;
+    GLuint mEBO = 0;
 
-    ~ModelComponent() {
-        if(VAO != 0) {
-            glad_glDeleteVertexArrays(1, &VAO);
-            glad_glDeleteBuffers(1, &VBO);
-            glad_glDeleteBuffers(1, &EBO);
+    virtual ~ModelComponent() {
+        if(mVAO != 0) {
+            glad_glDeleteVertexArrays(1, &mVAO);
+            glad_glDeleteBuffers(1, &mVBO);
+            glad_glDeleteBuffers(1, &mEBO);
         }
     }
 };
 # 11 "C:/Projects/voxel_worlds/include/systems/vertex_setup_system.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 1
        
+
 
 
 
@@ -103455,9 +103451,9 @@ enum class Group : uint8_t {
     terrain,
     player,
 };
-# 8 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 2
+# 9 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 2
 
-struct BoundingBoxComponent : public IComponent{
+struct BoundingBoxComponent : public ModelComponent{
 
     glm::vec3 mLocalMin;
     glm::vec3 mLocalMax;
@@ -103467,21 +103463,6 @@ struct BoundingBoxComponent : public IComponent{
 
     Group group;
     Group mask;
-
-
-    Model mModel;
-
-    GLuint VAO = 0;
-    GLuint VBO = 0;
-    GLuint EBO = 0;
-
-    ~BoundingBoxComponent() {
-        if(VAO != 0) {
-            glad_glDeleteVertexArrays(1, &VAO);
-            glad_glDeleteBuffers(1, &VBO);
-            glad_glDeleteBuffers(1, &EBO);
-        }
-    }
 };
 # 12 "C:/Projects/voxel_worlds/include/systems/vertex_setup_system.hpp" 2
 
@@ -103499,33 +103480,33 @@ void VertexSetupSystem::CreateVertexSpecification(EntityManager& entityManager) 
         auto model = entityManager.GetComponent<ModelComponent>(componentPointer.first);
         auto boundingBox = entityManager.GetComponent<BoundingBoxComponent>(componentPointer.first);
 
-        if(model && model->VAO == 0) {
+        if(model && model->mVAO == 0) {
 
-            glad_glGenVertexArrays(1, &model->VAO);
-            glad_glBindVertexArray(model->VAO);
+            glad_glGenVertexArrays(1, &model->mVAO);
+            glad_glBindVertexArray(model->mVAO);
 
-            glad_glGenBuffers(1, &model->VBO);
-            glad_glBindBuffer(0x8892, model->VBO);
+            glad_glGenBuffers(1, &model->mVBO);
+            glad_glBindBuffer(0x8892, model->mVBO);
             glad_glBufferData(0x8892, model->mModel.vertexPositions.size()*sizeof(glm::vec3), model->mModel.vertexPositions.data(), 0x88E4);
 
-            glad_glGenBuffers(1, &model->EBO);
-            glad_glBindBuffer(0x8893, model->EBO);
+            glad_glGenBuffers(1, &model->mEBO);
+            glad_glBindBuffer(0x8893, model->mEBO);
             glad_glBufferData(0x8893, model->mModel.indexBufferData.size()*sizeof(GLuint), model->mModel.indexBufferData.data(), 0x88E4);
 
             glad_glEnableVertexAttribArray(0);
             glad_glVertexAttribPointer(0, 3, 0x1406, 0, 3 * sizeof(GLfloat), (void*)0);
             glad_glBindVertexArray(0);
 
-        } else if(boundingBox && boundingBox->VAO == 0) {
-            glad_glGenVertexArrays(1, &boundingBox->VAO);
-            glad_glBindVertexArray(boundingBox->VAO);
+        } else if(boundingBox && boundingBox->mVAO == 0) {
+            glad_glGenVertexArrays(1, &boundingBox->mVAO);
+            glad_glBindVertexArray(boundingBox->mVAO);
 
-            glad_glGenBuffers(1, &boundingBox->VBO);
-            glad_glBindBuffer(0x8892, boundingBox->VBO);
+            glad_glGenBuffers(1, &boundingBox->mVBO);
+            glad_glBindBuffer(0x8892, boundingBox->mVBO);
             glad_glBufferData(0x8892, boundingBox->mModel.vertexPositions.size()*sizeof(glm::vec3), boundingBox->mModel.vertexPositions.data(), 0x88E4);
 
-            glad_glGenBuffers(1, &boundingBox->EBO);
-            glad_glBindBuffer(0x8893, boundingBox->EBO);
+            glad_glGenBuffers(1, &boundingBox->mEBO);
+            glad_glBindBuffer(0x8893, boundingBox->mEBO);
             glad_glBufferData(0x8893, boundingBox->mModel.indexBufferData.size()*sizeof(GLuint), boundingBox->mModel.indexBufferData.data(), 0x88E4);
 
             glad_glEnableVertexAttribArray(0);
@@ -103539,33 +103520,33 @@ void VertexSetupSystem::CreateVertexSpecificationSingle(EntityManager& entityMan
     auto model = entityManager.GetComponent<ModelComponent>(entityName);
     auto boundingBox = entityManager.GetComponent<BoundingBoxComponent>(entityName);
 
-    if(model && model->VAO == 0) {
+    if(model && model->mVAO == 0) {
 
-        glad_glGenVertexArrays(1, &model->VAO);
-        glad_glBindVertexArray(model->VAO);
+        glad_glGenVertexArrays(1, &model->mVAO);
+        glad_glBindVertexArray(model->mVAO);
 
-        glad_glGenBuffers(1, &model->VBO);
-        glad_glBindBuffer(0x8892, model->VBO);
+        glad_glGenBuffers(1, &model->mVBO);
+        glad_glBindBuffer(0x8892, model->mVBO);
         glad_glBufferData(0x8892, model->mModel.vertexPositions.size()*sizeof(glm::vec3), model->mModel.vertexPositions.data(), 0x88E4);
 
-        glad_glGenBuffers(1, &model->EBO);
-        glad_glBindBuffer(0x8893, model->EBO);
+        glad_glGenBuffers(1, &model->mEBO);
+        glad_glBindBuffer(0x8893, model->mEBO);
         glad_glBufferData(0x8893, model->mModel.indexBufferData.size()*sizeof(GLuint), model->mModel.indexBufferData.data(), 0x88E4);
 
         glad_glEnableVertexAttribArray(0);
         glad_glVertexAttribPointer(0, 3, 0x1406, 0, 3 * sizeof(GLfloat), (void*)0);
         glad_glBindVertexArray(0);
 
-    } else if(boundingBox && boundingBox->VAO == 0) {
-        glad_glGenVertexArrays(1, &boundingBox->VAO);
-        glad_glBindVertexArray(boundingBox->VAO);
+    } else if(boundingBox && boundingBox->mVAO == 0) {
+        glad_glGenVertexArrays(1, &boundingBox->mVAO);
+        glad_glBindVertexArray(boundingBox->mVAO);
 
-        glad_glGenBuffers(1, &boundingBox->VBO);
-        glad_glBindBuffer(0x8892, boundingBox->VBO);
+        glad_glGenBuffers(1, &boundingBox->mVBO);
+        glad_glBindBuffer(0x8892, boundingBox->mVBO);
         glad_glBufferData(0x8892, boundingBox->mModel.vertexPositions.size()*sizeof(glm::vec3), boundingBox->mModel.vertexPositions.data(), 0x88E4);
 
-        glad_glGenBuffers(1, &boundingBox->EBO);
-        glad_glBindBuffer(0x8893, boundingBox->EBO);
+        glad_glGenBuffers(1, &boundingBox->mEBO);
+        glad_glBindBuffer(0x8893, boundingBox->mEBO);
         glad_glBufferData(0x8893, boundingBox->mModel.indexBufferData.size()*sizeof(GLuint), boundingBox->mModel.indexBufferData.data(), 0x88E4);
 
         glad_glEnableVertexAttribArray(0);

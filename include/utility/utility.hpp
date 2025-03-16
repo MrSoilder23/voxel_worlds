@@ -214,6 +214,38 @@ namespace utility {
         return (scaleMin <= scaleMax && scaleMax >= 0) ? std::max(scaleMin, 0.0f) : -1.0f;
     }
 
+    inline bool IsAABBInFrustum(const BoundingBoxComponent& box, const std::array<glm::vec4, 5>& frustumPlanes) {
+        glm::vec3 center = (box.mWorldMin + box.mWorldMax) * 0.5f;
+        glm::vec3 halfExtents = (box.mWorldMax - box.mWorldMin) * 0.5f;
+
+        for (int i = 0; i < 5; i++) {
+            glm::vec3 normal = glm::vec3(frustumPlanes[i]);
+            float distance = frustumPlanes[i].w;
+
+            float radius = glm::dot(halfExtents, glm::abs(normal));
+            float centerDistance = glm::dot(normal, center) + distance;
+
+            if (centerDistance + radius < 0) return false;
+        }
+        return true;
+    }
+
+    inline void ExtractInfiniteFrustumPlanes(const glm::mat4& viewProj, std::array<glm::vec4, 5>& planes) {
+        glm::mat4 transposed = glm::transpose(viewProj);
+
+        // Left, Right, Bottom, Top, Near (using rows 0,1,2 of the original matrix)
+        planes[0] = transposed[3] + transposed[0];
+        planes[1] = transposed[3] - transposed[0];
+        planes[2] = transposed[3] + transposed[1];
+        planes[3] = transposed[3] - transposed[1];
+        planes[4] = transposed[3] + transposed[2];
+        
+        for (auto& plane : planes) {
+            float length = glm::length(glm::vec3(plane));
+            plane /= length;
+        }
+    }
+
     // Bounding box model creation
     inline Model CreateBoundingModel(BoundingBoxComponent& boundingBox) {
         Model model;

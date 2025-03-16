@@ -400,9 +400,12 @@ CMakeFiles\prog.dir\src\systems\collision_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/vector.tcc \
  C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
- C:/Projects/voxel_worlds/include/model.hpp \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
+ C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/Projects/voxel_worlds/third_party/include/glad/glad.h \
  C:/Projects/voxel_worlds/third_party/include/KHR/khrplatform.h \
+ C:/Projects/voxel_worlds/include/world/transform.hpp \
+ C:/Projects/voxel_worlds/include/model.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/components/physics_component.hpp \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
@@ -420,5 +423,4 @@ CMakeFiles\prog.dir\src\systems\collision_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/numeric \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_numeric.h \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_numeric_defs.h \
- C:/Projects/voxel_worlds/include/world/transform.hpp \
  C:/Projects/voxel_worlds/include/line.hpp

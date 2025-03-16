@@ -23,7 +23,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void AddComponent(const std::string& entityName) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -43,7 +42,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void AddComponent(const std::string& entityName, ComponentType& component) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -63,7 +61,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void DeleteComponent(const std::string& entityName) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -78,7 +75,6 @@ class EntityManager {
 
         template <typename ComponentType>
         std::shared_ptr<ComponentType> GetComponent(const std::string& entityName){
-            std::shared_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -93,7 +89,6 @@ class EntityManager {
                 return nullptr;
             }
 
-            lock.unlock();
             return std::static_pointer_cast<ComponentType>(componentIt->second);
         }
 

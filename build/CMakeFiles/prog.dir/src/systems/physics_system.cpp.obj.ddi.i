@@ -63757,7 +63757,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void AddComponent(const std::string& entityName) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -63777,7 +63776,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void AddComponent(const std::string& entityName, ComponentType& component) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -63797,7 +63795,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void DeleteComponent(const std::string& entityName) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -63812,7 +63809,6 @@ class EntityManager {
 
         template <typename ComponentType>
         std::shared_ptr<ComponentType> GetComponent(const std::string& entityName){
-            std::shared_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -63827,7 +63823,6 @@ class EntityManager {
                 return nullptr;
             }
 
-            lock.unlock();
             return std::static_pointer_cast<ComponentType>(componentIt->second);
         }
 
@@ -121233,6 +121228,27 @@ struct Transform {
 
 
 
+# 1 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 1
+       
+
+
+
+
+# 1 "C:/Projects/voxel_worlds/include/graphics/texture.hpp" 1
+       
+
+
+
+
+
+
+
+struct Texture {
+    GLuint64 textureHandle;
+};
+# 7 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
+
+
 # 1 "C:/Projects/voxel_worlds/include/model.hpp" 1
        
 
@@ -121246,7 +121262,26 @@ struct Model {
     std::vector<glm::vec3> vertexPositions;
     std::vector<GLuint> indexBufferData;
 };
+# 10 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
+
+struct ModelComponent : public IComponent {
+    std::shared_ptr<Texture> mTexture;
+    Model mModel;
+
+    GLuint mVAO = 0;
+    GLuint mVBO = 0;
+    GLuint mEBO = 0;
+
+    virtual ~ModelComponent() {
+        if(mVAO != 0) {
+            glad_glDeleteVertexArrays(1, &mVAO);
+            glad_glDeleteBuffers(1, &mVBO);
+            glad_glDeleteBuffers(1, &mEBO);
+        }
+    }
+};
 # 7 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 2
+
 # 1 "C:/Projects/voxel_worlds/include/group.hpp" 1
        
 
@@ -121258,9 +121293,9 @@ enum class Group : uint8_t {
     terrain,
     player,
 };
-# 8 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 2
+# 9 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 2
 
-struct BoundingBoxComponent : public IComponent{
+struct BoundingBoxComponent : public ModelComponent{
 
     glm::vec3 mLocalMin;
     glm::vec3 mLocalMax;
@@ -121270,21 +121305,6 @@ struct BoundingBoxComponent : public IComponent{
 
     Group group;
     Group mask;
-
-
-    Model mModel;
-
-    GLuint VAO = 0;
-    GLuint VBO = 0;
-    GLuint EBO = 0;
-
-    ~BoundingBoxComponent() {
-        if(VAO != 0) {
-            glad_glDeleteVertexArrays(1, &VAO);
-            glad_glDeleteBuffers(1, &VBO);
-            glad_glDeleteBuffers(1, &EBO);
-        }
-    }
 };
 # 21 "C:/Projects/voxel_worlds/include/utility/utility.hpp" 2
 
@@ -121948,6 +121968,38 @@ namespace utility {
         }
 
         return (scaleMin <= scaleMax && scaleMax >= 0) ? std::max(scaleMin, 0.0f) : -1.0f;
+    }
+
+    inline bool IsAABBInFrustum(const BoundingBoxComponent& box, const std::array<glm::vec4, 5>& frustumPlanes) {
+        glm::vec3 center = (box.mWorldMin + box.mWorldMax) * 0.5f;
+        glm::vec3 halfExtents = (box.mWorldMax - box.mWorldMin) * 0.5f;
+
+        for (int i = 0; i < 5; i++) {
+            glm::vec3 normal = glm::vec3(frustumPlanes[i]);
+            float distance = frustumPlanes[i].w;
+
+            float radius = glm::dot(halfExtents, glm::abs(normal));
+            float centerDistance = glm::dot(normal, center) + distance;
+
+            if (centerDistance + radius < 0) return false;
+        }
+        return true;
+    }
+
+    inline void ExtractInfiniteFrustumPlanes(const glm::mat4& viewProj, std::array<glm::vec4, 5>& planes) {
+        glm::mat4 transposed = glm::transpose(viewProj);
+
+
+        planes[0] = transposed[3] + transposed[0];
+        planes[1] = transposed[3] - transposed[0];
+        planes[2] = transposed[3] + transposed[1];
+        planes[3] = transposed[3] - transposed[1];
+        planes[4] = transposed[3] + transposed[2];
+
+        for (auto& plane : planes) {
+            float length = glm::length(glm::vec3(plane));
+            plane /= length;
+        }
     }
 
 

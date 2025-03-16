@@ -420,6 +420,8 @@ CMakeFiles\prog.dir\src\core\world.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
  C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
  C:/Projects/voxel_worlds/include/core/component.hpp \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
+ C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
  C:/Projects/voxel_worlds/include/line.hpp \
@@ -584,7 +586,6 @@ CMakeFiles\prog.dir\src\core\world.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_version.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_locale.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_misc.h \
- C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/typeindex \
  C:/msys64/mingw64/include/c++/14.2.0/shared_mutex \
@@ -598,5 +599,4 @@ CMakeFiles\prog.dir\src\core\world.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/fstream.tcc \
- C:/Projects/voxel_worlds/include/components/model_component.hpp \
  C:/Projects/voxel_worlds/include/components/camera_component.hpp

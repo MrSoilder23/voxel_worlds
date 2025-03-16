@@ -106898,7 +106898,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void AddComponent(const std::string& entityName) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -106918,7 +106917,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void AddComponent(const std::string& entityName, ComponentType& component) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -106938,7 +106936,6 @@ class EntityManager {
 
         template <typename ComponentType>
         void DeleteComponent(const std::string& entityName) {
-            std::unique_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -106953,7 +106950,6 @@ class EntityManager {
 
         template <typename ComponentType>
         std::shared_ptr<ComponentType> GetComponent(const std::string& entityName){
-            std::shared_lock lock(mMutex);
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -106968,7 +106964,6 @@ class EntityManager {
                 return nullptr;
             }
 
-            lock.unlock();
             return std::static_pointer_cast<ComponentType>(componentIt->second);
         }
 
@@ -106992,7 +106987,13 @@ class EntityManager {
 
 
 
-# 1 "C:/Projects/voxel_worlds/include/model.hpp" 1
+# 1 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 1
+       
+
+
+
+
+# 1 "C:/Projects/voxel_worlds/include/graphics/texture.hpp" 1
        
 
 # 1 "C:/msys64/mingw64/include/c++/14.2.0/vector" 1 3
@@ -110951,19 +110952,61 @@ namespace std
     }
 
 }
-# 4 "C:/Projects/voxel_worlds/include/model.hpp" 2
+# 4 "C:/Projects/voxel_worlds/include/graphics/texture.hpp" 2
 
 
 
 
 
 
-# 9 "C:/Projects/voxel_worlds/include/model.hpp"
+# 9 "C:/Projects/voxel_worlds/include/graphics/texture.hpp"
+struct Texture {
+    GLuint64 textureHandle;
+};
+# 7 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
+# 1 "C:/Projects/voxel_worlds/include/world/transform.hpp" 1
+       
+
+
+
+struct Transform {
+    glm::mat4 mModelMatrix{glm::mat4(1.0f)};
+};
+# 8 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
+
+# 1 "C:/Projects/voxel_worlds/include/model.hpp" 1
+       
+
+
+
+
+
+
+
 struct Model {
     std::vector<glm::vec3> vertexPositions;
     std::vector<GLuint> indexBufferData;
 };
+# 10 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
+
+struct ModelComponent : public IComponent {
+    std::shared_ptr<Texture> mTexture;
+    Model mModel;
+
+    GLuint mVAO = 0;
+    GLuint mVBO = 0;
+    GLuint mEBO = 0;
+
+    virtual ~ModelComponent() {
+        if(mVAO != 0) {
+            glad_glDeleteVertexArrays(1, &mVAO);
+            glad_glDeleteBuffers(1, &mVBO);
+            glad_glDeleteBuffers(1, &mEBO);
+        }
+    }
+};
 # 7 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 2
+
 # 1 "C:/Projects/voxel_worlds/include/group.hpp" 1
        
 
@@ -110975,9 +111018,9 @@ enum class Group : uint8_t {
     terrain,
     player,
 };
-# 8 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 2
+# 9 "C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp" 2
 
-struct BoundingBoxComponent : public IComponent{
+struct BoundingBoxComponent : public ModelComponent{
 
     glm::vec3 mLocalMin;
     glm::vec3 mLocalMax;
@@ -110987,21 +111030,6 @@ struct BoundingBoxComponent : public IComponent{
 
     Group group;
     Group mask;
-
-
-    Model mModel;
-
-    GLuint VAO = 0;
-    GLuint VBO = 0;
-    GLuint EBO = 0;
-
-    ~BoundingBoxComponent() {
-        if(VAO != 0) {
-            glad_glDeleteVertexArrays(1, &VAO);
-            glad_glDeleteBuffers(1, &VBO);
-            glad_glDeleteBuffers(1, &EBO);
-        }
-    }
 };
 # 12 "C:/Projects/voxel_worlds/include/systems/renderer_system.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/components/position_component.hpp" 1
@@ -111019,86 +111047,456 @@ struct PositionComponent : public IComponent {
 # 1 "C:/Projects/voxel_worlds/include/components/camera_component.hpp" 1
        
 
+# 1 "C:/msys64/mingw64/include/c++/14.2.0/array" 1 3
+# 32 "C:/msys64/mingw64/include/c++/14.2.0/array" 3
+       
+# 33 "C:/msys64/mingw64/include/c++/14.2.0/array" 3
+# 52 "C:/msys64/mingw64/include/c++/14.2.0/array" 3
+# 1 "C:/msys64/mingw64/include/c++/14.2.0/bits/version.h" 1 3
+# 47 "C:/msys64/mingw64/include/c++/14.2.0/bits/version.h" 3
+       
+# 48 "C:/msys64/mingw64/include/c++/14.2.0/bits/version.h" 3
+# 53 "C:/msys64/mingw64/include/c++/14.2.0/array" 2 3
+
+
+# 54 "C:/msys64/mingw64/include/c++/14.2.0/array" 3
+namespace std
+{
+
+
+  template<typename _Tp, size_t _Nm>
+    struct __array_traits
+    {
+      using _Type = _Tp[_Nm];
+      using _Is_swappable = __is_swappable<_Tp>;
+      using _Is_nothrow_swappable = __is_nothrow_swappable<_Tp>;
+    };
+
+ template<typename _Tp>
+   struct __array_traits<_Tp, 0>
+   {
+
+     struct _Type
+     {
+
+       __attribute__((__always_inline__,__noreturn__))
+       _Tp& operator[](size_t) const noexcept { __builtin_trap(); }
+
+
+       __attribute__((__always_inline__))
+       constexpr explicit operator _Tp*() const noexcept { return nullptr; }
+     };
+
+     using _Is_swappable = true_type;
+     using _Is_nothrow_swappable = true_type;
+   };
+# 99 "C:/msys64/mingw64/include/c++/14.2.0/array" 3
+  template<typename _Tp, std::size_t _Nm>
+    struct array
+    {
+      typedef _Tp value_type;
+      typedef value_type* pointer;
+      typedef const value_type* const_pointer;
+      typedef value_type& reference;
+      typedef const value_type& const_reference;
+      typedef value_type* iterator;
+      typedef const value_type* const_iterator;
+      typedef std::size_t size_type;
+      typedef std::ptrdiff_t difference_type;
+      typedef std::reverse_iterator<iterator> reverse_iterator;
+      typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+
+
+      typename __array_traits<_Tp, _Nm>::_Type _M_elems;
+
+
+
+
+      constexpr void
+      fill(const value_type& __u)
+      { std::fill_n(begin(), size(), __u); }
+
+      constexpr void
+      swap(array& __other)
+      noexcept(__array_traits<_Tp, _Nm>::_Is_nothrow_swappable::value)
+      { std::swap_ranges(begin(), end(), __other.begin()); }
+
+
+      [[__gnu__::__const__, __nodiscard__]]
+      constexpr iterator
+      begin() noexcept
+      { return iterator(data()); }
+
+      [[__nodiscard__]]
+      constexpr const_iterator
+      begin() const noexcept
+      { return const_iterator(data()); }
+
+      [[__gnu__::__const__, __nodiscard__]]
+      constexpr iterator
+      end() noexcept
+      { return iterator(data() + _Nm); }
+
+      [[__nodiscard__]]
+      constexpr const_iterator
+      end() const noexcept
+      { return const_iterator(data() + _Nm); }
+
+      [[__gnu__::__const__, __nodiscard__]]
+      constexpr reverse_iterator
+      rbegin() noexcept
+      { return reverse_iterator(end()); }
+
+      [[__nodiscard__]]
+      constexpr const_reverse_iterator
+      rbegin() const noexcept
+      { return const_reverse_iterator(end()); }
+
+      [[__gnu__::__const__, __nodiscard__]]
+      constexpr reverse_iterator
+      rend() noexcept
+      { return reverse_iterator(begin()); }
+
+      [[__nodiscard__]]
+      constexpr const_reverse_iterator
+      rend() const noexcept
+      { return const_reverse_iterator(begin()); }
+
+      [[__nodiscard__]]
+      constexpr const_iterator
+      cbegin() const noexcept
+      { return const_iterator(data()); }
+
+      [[__nodiscard__]]
+      constexpr const_iterator
+      cend() const noexcept
+      { return const_iterator(data() + _Nm); }
+
+      [[__nodiscard__]]
+      constexpr const_reverse_iterator
+      crbegin() const noexcept
+      { return const_reverse_iterator(end()); }
+
+      [[__nodiscard__]]
+      constexpr const_reverse_iterator
+      crend() const noexcept
+      { return const_reverse_iterator(begin()); }
+
+
+      [[__nodiscard__, __gnu__::__const__, __gnu__::__always_inline__]]
+      constexpr size_type
+      size() const noexcept { return _Nm; }
+
+      [[__nodiscard__, __gnu__::__const__, __gnu__::__always_inline__]]
+      constexpr size_type
+      max_size() const noexcept { return _Nm; }
+
+      [[__nodiscard__, __gnu__::__const__, __gnu__::__always_inline__]]
+      constexpr bool
+      empty() const noexcept { return size() == 0; }
+
+
+      [[__nodiscard__]]
+      constexpr reference
+      operator[](size_type __n) noexcept
+      {
+ ;
+ return _M_elems[__n];
+      }
+
+      [[__nodiscard__]]
+      constexpr const_reference
+      operator[](size_type __n) const noexcept
+      {
+
+ ;
+
+ return _M_elems[__n];
+      }
+
+      constexpr reference
+      at(size_type __n)
+      {
+ if (__n >= _Nm)
+   std::__throw_out_of_range_fmt(("array::at: __n (which is %zu) " ">= _Nm (which is %zu)")
+                                 ,
+     __n, _Nm);
+ return _M_elems[__n];
+      }
+
+      constexpr const_reference
+      at(size_type __n) const
+      {
+
+
+ return __n < _Nm ? _M_elems[__n]
+   : (std::__throw_out_of_range_fmt(("array::at: __n (which is %zu) " ">= _Nm (which is %zu)")
+                                    ,
+        __n, _Nm),
+      _M_elems[__n]);
+      }
+
+      [[__nodiscard__]]
+      constexpr reference
+      front() noexcept
+      {
+ ;
+ return _M_elems[(size_type)0];
+      }
+
+      [[__nodiscard__]]
+      constexpr const_reference
+      front() const noexcept
+      {
+
+ ;
+
+ return _M_elems[(size_type)0];
+      }
+
+      [[__nodiscard__]]
+      constexpr reference
+      back() noexcept
+      {
+ ;
+ return _M_elems[_Nm - 1];
+      }
+
+      [[__nodiscard__]]
+      constexpr const_reference
+      back() const noexcept
+      {
+
+ ;
+
+ return _M_elems[_Nm - 1];
+      }
+
+      [[__nodiscard__, __gnu__::__const__, __gnu__::__always_inline__]]
+      constexpr pointer
+      data() noexcept
+      { return static_cast<pointer>(_M_elems); }
+
+      [[__nodiscard__]]
+      constexpr const_pointer
+      data() const noexcept
+      { return static_cast<const_pointer>(_M_elems); }
+    };
+
+
+  template<typename _Tp, typename... _Up>
+    array(_Tp, _Up...)
+      -> array<enable_if_t<(is_same_v<_Tp, _Up> && ...), _Tp>,
+        1 + sizeof...(_Up)>;
+
+
+
+  template<typename _Tp, std::size_t _Nm>
+    [[__nodiscard__]]
+    constexpr
+    inline bool
+    operator==(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
+    { return std::equal(__one.begin(), __one.end(), __two.begin()); }
+
+
+  template<typename _Tp, size_t _Nm>
+    [[nodiscard]]
+    constexpr __detail::__synth3way_t<_Tp>
+    operator<=>(const array<_Tp, _Nm>& __a, const array<_Tp, _Nm>& __b)
+    {
+      if constexpr (_Nm && __is_memcmp_ordered<_Tp>::__value)
+ if (!std::__is_constant_evaluated())
+   {
+     constexpr size_t __n = _Nm * sizeof(_Tp);
+     return __builtin_memcmp(__a.data(), __b.data(), __n) <=> 0;
+   }
+
+      for (size_t __i = 0; __i < _Nm; ++__i)
+ {
+   auto __c = __detail::__synth3way(__a[__i], __b[__i]);
+   if (__c != 0)
+     return __c;
+ }
+      return strong_ordering::equal;
+    }
+# 368 "C:/msys64/mingw64/include/c++/14.2.0/array" 3
+  template<typename _Tp, std::size_t _Nm>
+    constexpr
+    inline
+
+
+    __enable_if_t<__array_traits<_Tp, _Nm>::_Is_swappable::value>
+
+
+
+    swap(array<_Tp, _Nm>& __one, array<_Tp, _Nm>& __two)
+    noexcept(noexcept(__one.swap(__two)))
+    { __one.swap(__two); }
+
+
+  template<typename _Tp, std::size_t _Nm>
+    __enable_if_t<!__array_traits<_Tp, _Nm>::_Is_swappable::value>
+    swap(array<_Tp, _Nm>&, array<_Tp, _Nm>&) = delete;
+
+
+  template<std::size_t _Int, typename _Tp, std::size_t _Nm>
+    [[__nodiscard__]]
+    constexpr _Tp&
+    get(array<_Tp, _Nm>& __arr) noexcept
+    {
+      static_assert(_Int < _Nm, "array index is within bounds");
+      return __arr._M_elems[_Int];
+    }
+
+  template<std::size_t _Int, typename _Tp, std::size_t _Nm>
+    [[__nodiscard__]]
+    constexpr _Tp&&
+    get(array<_Tp, _Nm>&& __arr) noexcept
+    {
+      static_assert(_Int < _Nm, "array index is within bounds");
+      return std::move(std::get<_Int>(__arr));
+    }
+
+  template<std::size_t _Int, typename _Tp, std::size_t _Nm>
+    [[__nodiscard__]]
+    constexpr const _Tp&
+    get(const array<_Tp, _Nm>& __arr) noexcept
+    {
+      static_assert(_Int < _Nm, "array index is within bounds");
+      return __arr._M_elems[_Int];
+    }
+
+  template<std::size_t _Int, typename _Tp, std::size_t _Nm>
+    [[__nodiscard__]]
+    constexpr const _Tp&&
+    get(const array<_Tp, _Nm>&& __arr) noexcept
+    {
+      static_assert(_Int < _Nm, "array index is within bounds");
+      return std::move(std::get<_Int>(__arr));
+    }
+
+
+  template<typename _Tp, size_t _Nm>
+    [[nodiscard]]
+    constexpr array<remove_cv_t<_Tp>, _Nm>
+    to_array(_Tp (&__a)[_Nm])
+    noexcept(is_nothrow_constructible_v<_Tp, _Tp&>)
+    {
+      static_assert(!is_array_v<_Tp>);
+      static_assert(is_constructible_v<_Tp, _Tp&>);
+      if constexpr (is_constructible_v<_Tp, _Tp&>)
+ {
+   if constexpr (is_trivially_copyable_v<_Tp>
+     && is_trivially_default_constructible_v<_Tp>
+     && is_copy_assignable_v<_Tp>)
+     {
+       array<remove_cv_t<_Tp>, _Nm> __arr;
+       if (!__is_constant_evaluated() && _Nm != 0)
+  __builtin_memcpy((void*)__arr.data(), (void*)__a, sizeof(__a));
+       else
+  for (size_t __i = 0; __i < _Nm; ++__i)
+    __arr._M_elems[__i] = __a[__i];
+       return __arr;
+     }
+   else
+     return [&__a]<size_t... _Idx>(index_sequence<_Idx...>) {
+       return array<remove_cv_t<_Tp>, _Nm>{{ __a[_Idx]... }};
+     }(make_index_sequence<_Nm>{});
+ }
+      else
+ __builtin_unreachable();
+    }
+
+  template<typename _Tp, size_t _Nm>
+    [[nodiscard]]
+    constexpr array<remove_cv_t<_Tp>, _Nm>
+    to_array(_Tp (&&__a)[_Nm])
+    noexcept(is_nothrow_move_constructible_v<_Tp>)
+    {
+      static_assert(!is_array_v<_Tp>);
+      static_assert(is_move_constructible_v<_Tp>);
+      if constexpr (is_move_constructible_v<_Tp>)
+ {
+   if constexpr (is_trivially_copyable_v<_Tp>
+     && is_trivially_default_constructible_v<_Tp>
+     && is_copy_assignable_v<_Tp>)
+     {
+       array<remove_cv_t<_Tp>, _Nm> __arr;
+       if (!__is_constant_evaluated() && _Nm != 0)
+  __builtin_memcpy((void*)__arr.data(), (void*)__a, sizeof(__a));
+       else
+  for (size_t __i = 0; __i < _Nm; ++__i)
+    __arr._M_elems[__i] = __a[__i];
+       return __arr;
+     }
+   else
+     return [&__a]<size_t... _Idx>(index_sequence<_Idx...>) {
+       return array<remove_cv_t<_Tp>, _Nm>{{ std::move(__a[_Idx])... }};
+     }(make_index_sequence<_Nm>{});
+ }
+      else
+ __builtin_unreachable();
+    }
 
 
 
 
 
+  template<typename _Tp, size_t _Nm>
+    struct tuple_size<array<_Tp, _Nm>>
+    : public integral_constant<size_t, _Nm> { };
 
+
+  template<size_t _Ind, typename _Tp, size_t _Nm>
+    struct tuple_element<_Ind, array<_Tp, _Nm>>
+    {
+      static_assert(_Ind < _Nm, "array index is in range");
+      using type = _Tp;
+    };
+
+
+  template<typename _Tp, size_t _Nm>
+    inline constexpr size_t tuple_size_v<array<_Tp, _Nm>> = _Nm;
+
+  template<typename _Tp, size_t _Nm>
+    inline constexpr size_t tuple_size_v<const array<_Tp, _Nm>> = _Nm;
+
+
+  template<typename _Tp, size_t _Nm>
+    struct __is_tuple_like_impl<array<_Tp, _Nm>> : true_type
+    { };
+
+
+}
+# 4 "C:/Projects/voxel_worlds/include/components/camera_component.hpp" 2
+# 13 "C:/Projects/voxel_worlds/include/components/camera_component.hpp"
+
+# 13 "C:/Projects/voxel_worlds/include/components/camera_component.hpp"
 struct CameraComponent : public IComponent {
     glm::mat4 mProjectionMatrix;
+    glm::mat4 mViewMatrix;
 
     glm::vec3 mUpVector = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::vec3 mViewDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+
+    std::array<glm::vec4, 5> frustumPlanes;
 };
 # 14 "C:/Projects/voxel_worlds/include/systems/renderer_system.hpp" 2
-# 1 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 1
-       
 
-
-
-
-# 1 "C:/Projects/voxel_worlds/include/graphics/texture.hpp" 1
-       
-
-
-
-
-
-
-
-struct Texture {
-    GLuint64 textureHandle;
-};
-# 7 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
-# 1 "C:/Projects/voxel_worlds/include/world/transform.hpp" 1
-       
-
-
-
-struct Transform {
-    glm::mat4 mModelMatrix{glm::mat4(1.0f)};
-};
-# 8 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
-
-
-
-struct ModelComponent : public IComponent {
-    std::shared_ptr<Texture> mTextures;
-    Model mModel;
-
-    GLuint VAO;
-    GLuint VBO;
-    GLuint EBO;
-
-    ~ModelComponent() {
-        if(VAO != 0) {
-            glad_glDeleteVertexArrays(1, &VAO);
-            glad_glDeleteBuffers(1, &VBO);
-            glad_glDeleteBuffers(1, &EBO);
-        }
-    }
-};
-# 15 "C:/Projects/voxel_worlds/include/systems/renderer_system.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp" 1
        
-# 11 "C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp"
-struct ChunkModelComponent : public IComponent {
+# 12 "C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp"
+struct ChunkModelComponent : public ModelComponent {
     std::vector<glm::vec3> mTexturePositions;
     std::vector<GLuint> mTextures;
 
-    Model mModel;
-
-    GLuint mVAO = 0;
-    GLuint mVBO = 0;
-    GLuint mEBO = 0;
     GLuint mTexId = 0;
     GLuint mTexBO = 0;
     GLuint mTexCoords = 0;
 
     bool mGenerated = false;
 
-    ~ChunkModelComponent() {
+    ~ChunkModelComponent() override {
         if(mVAO != 0) {
             glad_glDeleteVertexArrays(1, &mVAO);
             glad_glDeleteBuffers(1, &mVBO);
@@ -111132,6 +111530,10 @@ class RendererSystem {
 
     private:
         std::shared_ptr<GraphicsApp> mGraphicsApp;
+
+        GLint mModelMatrixLocation;
+        GLint mViewLocation;
+        GLint mProjectionLocation;
 };
 # 2 "C:/Projects/voxel_worlds/src/systems/renderer_system.cpp" 2
 
@@ -124165,426 +124567,7 @@ namespace __detail
 # 1 "C:/Projects/voxel_worlds/include/utility/constant.hpp" 1
        
 
-# 1 "C:/msys64/mingw64/include/c++/14.2.0/array" 1 3
-# 32 "C:/msys64/mingw64/include/c++/14.2.0/array" 3
-       
-# 33 "C:/msys64/mingw64/include/c++/14.2.0/array" 3
-# 52 "C:/msys64/mingw64/include/c++/14.2.0/array" 3
-# 1 "C:/msys64/mingw64/include/c++/14.2.0/bits/version.h" 1 3
-# 47 "C:/msys64/mingw64/include/c++/14.2.0/bits/version.h" 3
-       
-# 48 "C:/msys64/mingw64/include/c++/14.2.0/bits/version.h" 3
-# 53 "C:/msys64/mingw64/include/c++/14.2.0/array" 2 3
 
-namespace std
-{
-
-
-  template<typename _Tp, size_t _Nm>
-    struct __array_traits
-    {
-      using _Type = _Tp[_Nm];
-      using _Is_swappable = __is_swappable<_Tp>;
-      using _Is_nothrow_swappable = __is_nothrow_swappable<_Tp>;
-    };
-
- template<typename _Tp>
-   struct __array_traits<_Tp, 0>
-   {
-
-     struct _Type
-     {
-
-       __attribute__((__always_inline__,__noreturn__))
-       _Tp& operator[](size_t) const noexcept { __builtin_trap(); }
-
-
-       __attribute__((__always_inline__))
-       constexpr explicit operator _Tp*() const noexcept { return nullptr; }
-     };
-
-     using _Is_swappable = true_type;
-     using _Is_nothrow_swappable = true_type;
-   };
-# 99 "C:/msys64/mingw64/include/c++/14.2.0/array" 3
-  template<typename _Tp, std::size_t _Nm>
-    struct array
-    {
-      typedef _Tp value_type;
-      typedef value_type* pointer;
-      typedef const value_type* const_pointer;
-      typedef value_type& reference;
-      typedef const value_type& const_reference;
-      typedef value_type* iterator;
-      typedef const value_type* const_iterator;
-      typedef std::size_t size_type;
-      typedef std::ptrdiff_t difference_type;
-      typedef std::reverse_iterator<iterator> reverse_iterator;
-      typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
-
-
-      typename __array_traits<_Tp, _Nm>::_Type _M_elems;
-
-
-
-
-      constexpr void
-      fill(const value_type& __u)
-      { std::fill_n(begin(), size(), __u); }
-
-      constexpr void
-      swap(array& __other)
-      noexcept(__array_traits<_Tp, _Nm>::_Is_nothrow_swappable::value)
-      { std::swap_ranges(begin(), end(), __other.begin()); }
-
-
-      [[__gnu__::__const__, __nodiscard__]]
-      constexpr iterator
-      begin() noexcept
-      { return iterator(data()); }
-
-      [[__nodiscard__]]
-      constexpr const_iterator
-      begin() const noexcept
-      { return const_iterator(data()); }
-
-      [[__gnu__::__const__, __nodiscard__]]
-      constexpr iterator
-      end() noexcept
-      { return iterator(data() + _Nm); }
-
-      [[__nodiscard__]]
-      constexpr const_iterator
-      end() const noexcept
-      { return const_iterator(data() + _Nm); }
-
-      [[__gnu__::__const__, __nodiscard__]]
-      constexpr reverse_iterator
-      rbegin() noexcept
-      { return reverse_iterator(end()); }
-
-      [[__nodiscard__]]
-      constexpr const_reverse_iterator
-      rbegin() const noexcept
-      { return const_reverse_iterator(end()); }
-
-      [[__gnu__::__const__, __nodiscard__]]
-      constexpr reverse_iterator
-      rend() noexcept
-      { return reverse_iterator(begin()); }
-
-      [[__nodiscard__]]
-      constexpr const_reverse_iterator
-      rend() const noexcept
-      { return const_reverse_iterator(begin()); }
-
-      [[__nodiscard__]]
-      constexpr const_iterator
-      cbegin() const noexcept
-      { return const_iterator(data()); }
-
-      [[__nodiscard__]]
-      constexpr const_iterator
-      cend() const noexcept
-      { return const_iterator(data() + _Nm); }
-
-      [[__nodiscard__]]
-      constexpr const_reverse_iterator
-      crbegin() const noexcept
-      { return const_reverse_iterator(end()); }
-
-      [[__nodiscard__]]
-      constexpr const_reverse_iterator
-      crend() const noexcept
-      { return const_reverse_iterator(begin()); }
-
-
-      [[__nodiscard__, __gnu__::__const__, __gnu__::__always_inline__]]
-      constexpr size_type
-      size() const noexcept { return _Nm; }
-
-      [[__nodiscard__, __gnu__::__const__, __gnu__::__always_inline__]]
-      constexpr size_type
-      max_size() const noexcept { return _Nm; }
-
-      [[__nodiscard__, __gnu__::__const__, __gnu__::__always_inline__]]
-      constexpr bool
-      empty() const noexcept { return size() == 0; }
-
-
-      [[__nodiscard__]]
-      constexpr reference
-      operator[](size_type __n) noexcept
-      {
- ;
- return _M_elems[__n];
-      }
-
-      [[__nodiscard__]]
-      constexpr const_reference
-      operator[](size_type __n) const noexcept
-      {
-
- ;
-
- return _M_elems[__n];
-      }
-
-      constexpr reference
-      at(size_type __n)
-      {
- if (__n >= _Nm)
-   std::__throw_out_of_range_fmt(("array::at: __n (which is %zu) " ">= _Nm (which is %zu)")
-                                 ,
-     __n, _Nm);
- return _M_elems[__n];
-      }
-
-      constexpr const_reference
-      at(size_type __n) const
-      {
-
-
- return __n < _Nm ? _M_elems[__n]
-   : (std::__throw_out_of_range_fmt(("array::at: __n (which is %zu) " ">= _Nm (which is %zu)")
-                                    ,
-        __n, _Nm),
-      _M_elems[__n]);
-      }
-
-      [[__nodiscard__]]
-      constexpr reference
-      front() noexcept
-      {
- ;
- return _M_elems[(size_type)0];
-      }
-
-      [[__nodiscard__]]
-      constexpr const_reference
-      front() const noexcept
-      {
-
- ;
-
- return _M_elems[(size_type)0];
-      }
-
-      [[__nodiscard__]]
-      constexpr reference
-      back() noexcept
-      {
- ;
- return _M_elems[_Nm - 1];
-      }
-
-      [[__nodiscard__]]
-      constexpr const_reference
-      back() const noexcept
-      {
-
- ;
-
- return _M_elems[_Nm - 1];
-      }
-
-      [[__nodiscard__, __gnu__::__const__, __gnu__::__always_inline__]]
-      constexpr pointer
-      data() noexcept
-      { return static_cast<pointer>(_M_elems); }
-
-      [[__nodiscard__]]
-      constexpr const_pointer
-      data() const noexcept
-      { return static_cast<const_pointer>(_M_elems); }
-    };
-
-
-  template<typename _Tp, typename... _Up>
-    array(_Tp, _Up...)
-      -> array<enable_if_t<(is_same_v<_Tp, _Up> && ...), _Tp>,
-        1 + sizeof...(_Up)>;
-
-
-
-  template<typename _Tp, std::size_t _Nm>
-    [[__nodiscard__]]
-    constexpr
-    inline bool
-    operator==(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
-    { return std::equal(__one.begin(), __one.end(), __two.begin()); }
-
-
-  template<typename _Tp, size_t _Nm>
-    [[nodiscard]]
-    constexpr __detail::__synth3way_t<_Tp>
-    operator<=>(const array<_Tp, _Nm>& __a, const array<_Tp, _Nm>& __b)
-    {
-      if constexpr (_Nm && __is_memcmp_ordered<_Tp>::__value)
- if (!std::__is_constant_evaluated())
-   {
-     constexpr size_t __n = _Nm * sizeof(_Tp);
-     return __builtin_memcmp(__a.data(), __b.data(), __n) <=> 0;
-   }
-
-      for (size_t __i = 0; __i < _Nm; ++__i)
- {
-   auto __c = __detail::__synth3way(__a[__i], __b[__i]);
-   if (__c != 0)
-     return __c;
- }
-      return strong_ordering::equal;
-    }
-# 368 "C:/msys64/mingw64/include/c++/14.2.0/array" 3
-  template<typename _Tp, std::size_t _Nm>
-    constexpr
-    inline
-
-
-    __enable_if_t<__array_traits<_Tp, _Nm>::_Is_swappable::value>
-
-
-
-    swap(array<_Tp, _Nm>& __one, array<_Tp, _Nm>& __two)
-    noexcept(noexcept(__one.swap(__two)))
-    { __one.swap(__two); }
-
-
-  template<typename _Tp, std::size_t _Nm>
-    __enable_if_t<!__array_traits<_Tp, _Nm>::_Is_swappable::value>
-    swap(array<_Tp, _Nm>&, array<_Tp, _Nm>&) = delete;
-
-
-  template<std::size_t _Int, typename _Tp, std::size_t _Nm>
-    [[__nodiscard__]]
-    constexpr _Tp&
-    get(array<_Tp, _Nm>& __arr) noexcept
-    {
-      static_assert(_Int < _Nm, "array index is within bounds");
-      return __arr._M_elems[_Int];
-    }
-
-  template<std::size_t _Int, typename _Tp, std::size_t _Nm>
-    [[__nodiscard__]]
-    constexpr _Tp&&
-    get(array<_Tp, _Nm>&& __arr) noexcept
-    {
-      static_assert(_Int < _Nm, "array index is within bounds");
-      return std::move(std::get<_Int>(__arr));
-    }
-
-  template<std::size_t _Int, typename _Tp, std::size_t _Nm>
-    [[__nodiscard__]]
-    constexpr const _Tp&
-    get(const array<_Tp, _Nm>& __arr) noexcept
-    {
-      static_assert(_Int < _Nm, "array index is within bounds");
-      return __arr._M_elems[_Int];
-    }
-
-  template<std::size_t _Int, typename _Tp, std::size_t _Nm>
-    [[__nodiscard__]]
-    constexpr const _Tp&&
-    get(const array<_Tp, _Nm>&& __arr) noexcept
-    {
-      static_assert(_Int < _Nm, "array index is within bounds");
-      return std::move(std::get<_Int>(__arr));
-    }
-
-
-  template<typename _Tp, size_t _Nm>
-    [[nodiscard]]
-    constexpr array<remove_cv_t<_Tp>, _Nm>
-    to_array(_Tp (&__a)[_Nm])
-    noexcept(is_nothrow_constructible_v<_Tp, _Tp&>)
-    {
-      static_assert(!is_array_v<_Tp>);
-      static_assert(is_constructible_v<_Tp, _Tp&>);
-      if constexpr (is_constructible_v<_Tp, _Tp&>)
- {
-   if constexpr (is_trivially_copyable_v<_Tp>
-     && is_trivially_default_constructible_v<_Tp>
-     && is_copy_assignable_v<_Tp>)
-     {
-       array<remove_cv_t<_Tp>, _Nm> __arr;
-       if (!__is_constant_evaluated() && _Nm != 0)
-  __builtin_memcpy((void*)__arr.data(), (void*)__a, sizeof(__a));
-       else
-  for (size_t __i = 0; __i < _Nm; ++__i)
-    __arr._M_elems[__i] = __a[__i];
-       return __arr;
-     }
-   else
-     return [&__a]<size_t... _Idx>(index_sequence<_Idx...>) {
-       return array<remove_cv_t<_Tp>, _Nm>{{ __a[_Idx]... }};
-     }(make_index_sequence<_Nm>{});
- }
-      else
- __builtin_unreachable();
-    }
-
-  template<typename _Tp, size_t _Nm>
-    [[nodiscard]]
-    constexpr array<remove_cv_t<_Tp>, _Nm>
-    to_array(_Tp (&&__a)[_Nm])
-    noexcept(is_nothrow_move_constructible_v<_Tp>)
-    {
-      static_assert(!is_array_v<_Tp>);
-      static_assert(is_move_constructible_v<_Tp>);
-      if constexpr (is_move_constructible_v<_Tp>)
- {
-   if constexpr (is_trivially_copyable_v<_Tp>
-     && is_trivially_default_constructible_v<_Tp>
-     && is_copy_assignable_v<_Tp>)
-     {
-       array<remove_cv_t<_Tp>, _Nm> __arr;
-       if (!__is_constant_evaluated() && _Nm != 0)
-  __builtin_memcpy((void*)__arr.data(), (void*)__a, sizeof(__a));
-       else
-  for (size_t __i = 0; __i < _Nm; ++__i)
-    __arr._M_elems[__i] = __a[__i];
-       return __arr;
-     }
-   else
-     return [&__a]<size_t... _Idx>(index_sequence<_Idx...>) {
-       return array<remove_cv_t<_Tp>, _Nm>{{ std::move(__a[_Idx])... }};
-     }(make_index_sequence<_Nm>{});
- }
-      else
- __builtin_unreachable();
-    }
-
-
-
-
-
-  template<typename _Tp, size_t _Nm>
-    struct tuple_size<array<_Tp, _Nm>>
-    : public integral_constant<size_t, _Nm> { };
-
-
-  template<size_t _Ind, typename _Tp, size_t _Nm>
-    struct tuple_element<_Ind, array<_Tp, _Nm>>
-    {
-      static_assert(_Ind < _Nm, "array index is in range");
-      using type = _Tp;
-    };
-
-
-  template<typename _Tp, size_t _Nm>
-    inline constexpr size_t tuple_size_v<array<_Tp, _Nm>> = _Nm;
-
-  template<typename _Tp, size_t _Nm>
-    inline constexpr size_t tuple_size_v<const array<_Tp, _Nm>> = _Nm;
-
-
-  template<typename _Tp, size_t _Nm>
-    struct __is_tuple_like_impl<array<_Tp, _Nm>> : true_type
-    { };
-
-
-}
-# 4 "C:/Projects/voxel_worlds/include/utility/constant.hpp" 2
 
 
 # 5 "C:/Projects/voxel_worlds/include/utility/constant.hpp"
@@ -124822,6 +124805,38 @@ namespace utility {
         return (scaleMin <= scaleMax && scaleMax >= 0) ? std::max(scaleMin, 0.0f) : -1.0f;
     }
 
+    inline bool IsAABBInFrustum(const BoundingBoxComponent& box, const std::array<glm::vec4, 5>& frustumPlanes) {
+        glm::vec3 center = (box.mWorldMin + box.mWorldMax) * 0.5f;
+        glm::vec3 halfExtents = (box.mWorldMax - box.mWorldMin) * 0.5f;
+
+        for (int i = 0; i < 5; i++) {
+            glm::vec3 normal = glm::vec3(frustumPlanes[i]);
+            float distance = frustumPlanes[i].w;
+
+            float radius = glm::dot(halfExtents, glm::abs(normal));
+            float centerDistance = glm::dot(normal, center) + distance;
+
+            if (centerDistance + radius < 0) return false;
+        }
+        return true;
+    }
+
+    inline void ExtractInfiniteFrustumPlanes(const glm::mat4& viewProj, std::array<glm::vec4, 5>& planes) {
+        glm::mat4 transposed = glm::transpose(viewProj);
+
+
+        planes[0] = transposed[3] + transposed[0];
+        planes[1] = transposed[3] - transposed[0];
+        planes[2] = transposed[3] + transposed[1];
+        planes[3] = transposed[3] - transposed[1];
+        planes[4] = transposed[3] + transposed[2];
+
+        for (auto& plane : planes) {
+            float length = glm::length(glm::vec3(plane));
+            plane /= length;
+        }
+    }
+
 
     inline Model CreateBoundingModel(BoundingBoxComponent& boundingBox) {
         Model model;
@@ -124971,147 +124986,112 @@ RendererSystem::~RendererSystem() {
 
 void RendererSystem::AddGraphicsApp(std::shared_ptr<GraphicsApp> graphicsApp) {
     mGraphicsApp = graphicsApp;
+
+    mModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
+    mViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
+    mProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
 }
 void RendererSystem::DrawAll(EntityManager& entityManager) {
     auto cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
-    auto positionComponent = entityManager.GetComponent<PositionComponent>("Player");
+    glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
     for(const auto& entityPointer : entityManager.GetEntities()) {
+        auto boundingBoxComponent = entityManager.GetComponent<BoundingBoxComponent>(entityPointer.first);
+        if(boundingBoxComponent && !utility::IsAABBInFrustum(*boundingBoxComponent, cameraComponent->frustumPlanes)) {
+            continue;
+        }
+
         auto modelPositionComponent = entityManager.GetComponent<PositionComponent>(entityPointer.first);
         auto chunkModelComponent = entityManager.GetComponent<ChunkModelComponent>(entityPointer.first);
+        auto modelComponent = entityManager.GetComponent<ModelComponent>(entityPointer.first);
 
-        if(chunkModelComponent && chunkModelComponent->mVAO != 0) {
-            glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
+        std::shared_ptr<ModelComponent> renderableModel = chunkModelComponent ? static_pointer_cast<ModelComponent>(chunkModelComponent) : modelComponent;
+        if(!renderableModel) {
+            continue;
+        }
 
-            GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-            glad_glUniformMatrix4fv(uModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
+        if(renderableModel && renderableModel->mVAO != 0) {
+            glad_glUniformMatrix4fv(mModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
 
-            glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
-            GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
-            glad_glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
+            glad_glUniformMatrix4fv(mViewLocation, 1, false, &cameraComponent->mViewMatrix[0][0]);
 
             glm::mat4 perspective = cameraComponent->mProjectionMatrix;
-            GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
-            glad_glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
+            glad_glUniformMatrix4fv(mProjectionLocation, 1, false, &perspective[0][0]);
 
-            glad_glBindVertexArray(chunkModelComponent->mVAO);
-            GLClearAllErrors(); glad_glDrawElements(0x0004, chunkModelComponent->mModel.indexBufferData.size(), 0x1405, (void*)0);; GLCheckErrorStatus("glDrawElements(GL_TRIANGLES, chunkModelComponent->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);", 54);
+            glad_glBindVertexArray(renderableModel->mVAO);
 
-        } else {
-            auto modelComponent = entityManager.GetComponent<ModelComponent>(entityPointer.first);
-
-            if(modelComponent && modelComponent->VAO != 0) {
-                glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
-
-                GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-                glad_glUniformMatrix4fv(uModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
-
-                glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
-                GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
-                glad_glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
-
-                glm::mat4 perspective = cameraComponent->mProjectionMatrix;
-                GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
-                glad_glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
-
-                glad_glBindVertexArray(modelComponent->VAO);
-                GLClearAllErrors(); glad_glDrawElements(0x0004, modelComponent->mModel.indexBufferData.size(), 0x1405, (void*)0);; GLCheckErrorStatus("glDrawElements(GL_TRIANGLES, modelComponent->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);", 74);
-            }
+            glad_glDrawElements(0x0004, renderableModel->mModel.indexBufferData.size(), 0x1405, (void*)0);
         }
     }
 }
 void RendererSystem::DrawAllSingle(EntityManager& entityManager, std::string entityName) {
     static auto cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
-    static auto positionComponent = entityManager.GetComponent<PositionComponent>("Player");
 
     auto modelPositionComponent = entityManager.GetComponent<PositionComponent>(entityName);
     auto chunkModelComponent = entityManager.GetComponent<ChunkModelComponent>(entityName);
+    auto modelComponent = entityManager.GetComponent<ModelComponent>(entityName);
 
-    if(chunkModelComponent && chunkModelComponent->mVAO != 0) {
+    std::shared_ptr<ModelComponent> renderableModel = chunkModelComponent ? static_pointer_cast<ModelComponent>(chunkModelComponent) : modelComponent;
+    if(!renderableModel) {
+        return;
+    }
+
+    if(renderableModel && renderableModel->mVAO != 0) {
         glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
-        GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-        glad_glUniformMatrix4fv(uModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
+        glad_glUniformMatrix4fv(mModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
 
-        glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
-        GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
-        glad_glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
+        glad_glUniformMatrix4fv(mViewLocation, 1, false, &cameraComponent->mViewMatrix[0][0]);
 
         glm::mat4 perspective = cameraComponent->mProjectionMatrix;
-        GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
-        glad_glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
+        glad_glUniformMatrix4fv(mProjectionLocation, 1, false, &perspective[0][0]);
 
         glad_glBindVertexArray(chunkModelComponent->mVAO);
-        GLClearAllErrors(); glad_glDrawElements(0x0004, chunkModelComponent->mModel.indexBufferData.size(), 0x1405, (void*)0);; GLCheckErrorStatus("glDrawElements(GL_TRIANGLES, chunkModelComponent->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);", 101);
+        GLClearAllErrors(); glad_glDrawElements(0x0004, chunkModelComponent->mModel.indexBufferData.size(), 0x1405, (void*)0);; GLCheckErrorStatus("glDrawElements(GL_TRIANGLES, chunkModelComponent->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);", 91);
 
-    } else {
-        auto modelComponent = entityManager.GetComponent<ModelComponent>(entityName);
-
-        if(modelComponent && modelComponent->VAO != 0) {
-            glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
-
-            GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-            glad_glUniformMatrix4fv(uModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
-
-            glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
-            GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
-            glad_glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
-
-            glm::mat4 perspective = cameraComponent->mProjectionMatrix;
-            GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
-            glad_glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
-
-            glad_glBindVertexArray(modelComponent->VAO);
-            GLClearAllErrors(); glad_glDrawElements(0x0004, modelComponent->mModel.indexBufferData.size(), 0x1405, (void*)0);; GLCheckErrorStatus("glDrawElements(GL_TRIANGLES, modelComponent->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);", 121);
-        }
     }
 }
 
 
 void RendererSystem::DrawAllDebug(EntityManager& entityManager) {
     auto cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
-    auto positionComponent = entityManager.GetComponent<PositionComponent>("Player");
+    glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
     for(const auto& entityPointer : entityManager.GetEntities()) {
         auto boundingBoxComp = entityManager.GetComponent<BoundingBoxComponent>(entityPointer.first);
+        if(!utility::IsAABBInFrustum(*boundingBoxComp, cameraComponent->frustumPlanes)) {
+            continue;
+        }
+
         auto boundingPos = entityManager.GetComponent<PositionComponent>(entityPointer.first);
 
-        if(boundingBoxComp) {
+        if(boundingBoxComp && boundingBoxComp->mVAO != 0) {
 
             boundingPos->mTransform[0][0] = 1.0f; boundingPos->mTransform[0][1] = 0.0f; boundingPos->mTransform[0][2] = 0.0f;
             boundingPos->mTransform[1][0] = 0.0f; boundingPos->mTransform[1][1] = 1.0f; boundingPos->mTransform[1][2] = 0.0f;
             boundingPos->mTransform[2][0] = 0.0f; boundingPos->mTransform[2][1] = 0.0f; boundingPos->mTransform[2][2] = 1.0f;
 
-            glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
+            glad_glUniformMatrix4fv(mModelMatrixLocation, 1, false, &boundingPos->mTransform[0][0]);
 
-            GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-            glad_glUniformMatrix4fv(uModelMatrixLocation, 1, false, &boundingPos->mTransform[0][0]);
-
-            glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
-            GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
-            glad_glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
+            glad_glUniformMatrix4fv(mViewLocation, 1, false, &cameraComponent->mViewMatrix[0][0]);
 
             glm::mat4 perspective = cameraComponent->mProjectionMatrix;
-            GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
-            glad_glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
+            glad_glUniformMatrix4fv(mProjectionLocation, 1, false, &perspective[0][0]);
 
 
-            glad_glBindVertexArray(boundingBoxComp->VAO);
+            glad_glBindVertexArray(boundingBoxComp->mVAO);
             glad_glDrawElements(0x0001, static_cast<GLsizei>(boundingBoxComp->mModel.indexBufferData.size()), 0x1405, (void*)0);
-        } else {
-
         }
     }
 }
 
 void RendererSystem::DrawAllDebugSingle(EntityManager& entityManager, std::string entityName) {
     static auto cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
-    static auto positionComponent = entityManager.GetComponent<PositionComponent>("Player");
 
     auto boundingBoxComp = entityManager.GetComponent<BoundingBoxComponent>(entityName);
     auto boundingPos = entityManager.GetComponent<PositionComponent>(entityName);
 
-    if(boundingBoxComp && boundingBoxComp->VAO != 0) {
+    if(boundingBoxComp && boundingBoxComp->mVAO != 0) {
 
         boundingPos->mTransform[0][0] = 1.0f; boundingPos->mTransform[0][1] = 0.0f; boundingPos->mTransform[0][2] = 0.0f;
         boundingPos->mTransform[1][0] = 0.0f; boundingPos->mTransform[1][1] = 1.0f; boundingPos->mTransform[1][2] = 0.0f;
@@ -125119,19 +125099,15 @@ void RendererSystem::DrawAllDebugSingle(EntityManager& entityManager, std::strin
 
         glad_glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
-        GLint uModelMatrixLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uModelMatrix");
-        glad_glUniformMatrix4fv(uModelMatrixLocation, 1, false, &boundingPos->mTransform[0][0]);
+        glad_glUniformMatrix4fv(mModelMatrixLocation, 1, false, &boundingPos->mTransform[0][0]);
 
-        glm::mat4 view = glm::lookAt(positionComponent->mPosition, positionComponent->mPosition + cameraComponent->mViewDirection, cameraComponent->mUpVector);
-        GLint uViewLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uViewMatrix");
-        glad_glUniformMatrix4fv(uViewLocation, 1, false, &view[0][0]);
+        glad_glUniformMatrix4fv(mViewLocation, 1, false, &cameraComponent->mViewMatrix[0][0]);
 
         glm::mat4 perspective = cameraComponent->mProjectionMatrix;
-        GLint uProjectionLocation = shader::FindUniformLocation(mGraphicsApp->mGraphicsPipeline, "uProjectionMatrix");
-        glad_glUniformMatrix4fv(uProjectionLocation, 1, false, &perspective[0][0]);
+        glad_glUniformMatrix4fv(mProjectionLocation, 1, false, &perspective[0][0]);
 
 
-        glad_glBindVertexArray(boundingBoxComp->VAO);
+        glad_glBindVertexArray(boundingBoxComp->mVAO);
         glad_glDrawElements(0x0001, static_cast<GLsizei>(boundingBoxComp->mModel.indexBufferData.size()), 0x1405, (void*)0);
     }
 }

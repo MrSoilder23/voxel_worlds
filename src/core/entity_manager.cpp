@@ -1,7 +1,6 @@
 #include "./core/entity_manager.hpp"
 
 bool EntityManager::CreateEntity(const std::string& entityName) {
-    std::unique_lock lock(mMutex);
     if(mEntityComponents.find(entityName) == mEntityComponents.end()) {
         mEntityComponents[entityName] = {};
         return true;

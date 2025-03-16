@@ -605,6 +605,8 @@ CMakeFiles\prog.dir\src\core\game.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/world/transform.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
  C:/Projects/voxel_worlds/include/core/component.hpp \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
+ C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/Projects/voxel_worlds/include/model.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \

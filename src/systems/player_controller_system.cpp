@@ -100,10 +100,18 @@ void PlayerControllerSystem::InitializeMovement(EntityManager& entityManager) {
 void PlayerControllerSystem::Update(EntityManager& entityManager) {
     auto player = entityManager.GetComponent<PlayerControllerComponent>("Player");
     auto playerVelocity = entityManager.GetComponent<PhysicsComponent>("Player");
+    auto playerCamera = entityManager.GetComponent<CameraComponent>("Player");
+    auto playerPosition = entityManager.GetComponent<PositionComponent>("Player");
+
+    playerCamera->mViewMatrix = glm::lookAt(playerPosition->mPosition, playerPosition->mPosition + playerCamera->mViewDirection, playerCamera->mUpVector);
 
     if (glm::length(playerVelocity->mVelocity) > player->mSpeed) {
         playerVelocity->mVelocity = glm::normalize(playerVelocity->mVelocity) * player->mSpeed;
     }
+
+    glm::mat4 viewProj = playerCamera->mProjectionMatrix * playerCamera->mViewMatrix;
+
+    utility::ExtractInfiniteFrustumPlanes(viewProj, playerCamera->frustumPlanes);
 }
 
 void PlayerControllerSystem::RegisterMovementEvent(EventManager& eventManager, EntityManager& entityManager, InputAction action, glm::vec3 movementDirection) {

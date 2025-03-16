@@ -589,6 +589,8 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/utility/tuple_hash.hpp \
  C:/Projects/voxel_worlds/include/utility/utility.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
+ C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
  C:/Projects/voxel_worlds/include/line.hpp \
@@ -596,10 +598,8 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h \
- C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
  C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp \
- C:/Projects/voxel_worlds/include/components/model_component.hpp \
  C:/Projects/voxel_worlds/include/components/camera_component.hpp \
  C:/Projects/voxel_worlds/include/core/game.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/functional \

@@ -3,10 +3,11 @@
 #include <glm/glm.hpp>
 // Own libraries
 #include "./core/component.hpp"
+#include "./components/model_component.hpp"
 #include "./model.hpp"
 #include "./group.hpp"
 
-struct BoundingBoxComponent : public IComponent{
+struct BoundingBoxComponent : public ModelComponent{
     // Corners, with minimum value and maximum value
     glm::vec3 mLocalMin;
     glm::vec3 mLocalMax;
@@ -16,19 +17,4 @@ struct BoundingBoxComponent : public IComponent{
 
     Group group;
     Group mask;
-
-    // Model
-    Model mModel;
-    
-    GLuint VAO = 0;
-    GLuint VBO = 0;
-    GLuint EBO = 0;
-
-    ~BoundingBoxComponent() {
-        if(VAO != 0) {
-            glDeleteVertexArrays(1, &VAO);
-            glDeleteBuffers(1, &VBO);
-            glDeleteBuffers(1, &EBO);
-        }
-    }
 };

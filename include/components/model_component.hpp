@@ -9,18 +9,18 @@
 #include "./model.hpp"
 
 struct ModelComponent : public IComponent {
-    std::shared_ptr<Texture> mTextures;
+    std::shared_ptr<Texture> mTexture;
     Model mModel;
     
-    GLuint VAO;
-    GLuint VBO;
-    GLuint EBO;
+    GLuint mVAO = 0;
+    GLuint mVBO = 0;
+    GLuint mEBO = 0;
 
-    ~ModelComponent() {
-        if(VAO != 0) {
-            glDeleteVertexArrays(1, &VAO);
-            glDeleteBuffers(1, &VBO);
-            glDeleteBuffers(1, &EBO);
+    virtual ~ModelComponent() {
+        if(mVAO != 0) {
+            glDeleteVertexArrays(1, &mVAO);
+            glDeleteBuffers(1, &mVBO);
+            glDeleteBuffers(1, &mEBO);
         }
     }
 };

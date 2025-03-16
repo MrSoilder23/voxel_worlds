@@ -365,8 +365,10 @@ CMakeFiles\prog.dir\src\systems\chunk_vertex_setup_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/detail/type_half.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/integer.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/detail/func_integer.inl \
- C:/Projects/voxel_worlds/include/model.hpp \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
  C:/Projects/voxel_worlds/include/graphics/texture.hpp \
+ C:/Projects/voxel_worlds/include/world/transform.hpp \
+ C:/Projects/voxel_worlds/include/model.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h \

@@ -35,4 +35,8 @@ class RendererSystem {
 
     private:
         std::shared_ptr<GraphicsApp> mGraphicsApp;
+        
+        GLint mModelMatrixLocation;
+        GLint mViewLocation;
+        GLint mProjectionLocation;
 };

@@ -573,6 +573,8 @@ CMakeFiles\prog.dir\src\systems\player_target_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
  C:/Projects/voxel_worlds/include/world/transform.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
+ C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/Projects/voxel_worlds/include/model.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
@@ -592,8 +594,6 @@ CMakeFiles\prog.dir\src\systems\player_target_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
- C:/Projects/voxel_worlds/include/components/model_component.hpp \
- C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
