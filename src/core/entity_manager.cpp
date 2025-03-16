@@ -2,7 +2,7 @@
 
 bool EntityManager::CreateEntity(const std::string& entityName) {
     if(mEntityComponents.find(entityName) == mEntityComponents.end()) {
-        mEntityComponents[entityName] = {};
+        mEntityComponents.emplace(entityName, std::unordered_map<std::type_index, std::unique_ptr<IComponent>>());
         return true;
     }
     return false;

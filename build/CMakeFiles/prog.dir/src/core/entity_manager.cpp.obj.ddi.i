@@ -63743,7 +63743,7 @@ enum class BlockTypes : uint8_t {
 };
 # 14 "C:/Projects/voxel_worlds/include/core/entity_manager.hpp" 2
 
-using Entity = std::unordered_map<std::type_index, std::shared_ptr<IComponent>>;
+using Entity = std::unordered_map<std::type_index, std::unique_ptr<IComponent>>;
 
 class EntityManager {
     public:
@@ -63768,7 +63768,7 @@ class EntityManager {
                 return;
             }
 
-            componentMap[componentTypeIndex] = std::make_shared<ComponentType>();
+            componentMap[componentTypeIndex] = std::make_unique<ComponentType>();
         }
 
         template <typename ComponentType>
@@ -63787,7 +63787,7 @@ class EntityManager {
                 return;
             }
 
-            componentMap[componentTypeIndex] = std::make_shared<ComponentType>(std::move(component));
+            componentMap[componentTypeIndex] = std::make_unique<ComponentType>(std::move(component));
         }
 
         template <typename ComponentType>
@@ -63805,7 +63805,7 @@ class EntityManager {
         }
 
         template <typename ComponentType>
-        std::shared_ptr<ComponentType> GetComponent(const std::string& entityName){
+        ComponentType* GetComponent(const std::string& entityName){
             static const std::type_index componentTypeIndex = typeid(ComponentType);
             auto entityIt = mEntityComponents.find(entityName);
 
@@ -63820,7 +63820,7 @@ class EntityManager {
                 return nullptr;
             }
 
-            return std::static_pointer_cast<ComponentType>(componentIt->second);
+            return static_cast<ComponentType*>(componentIt->second.get());
         }
 
         Entity& GetEntity(const std::string& entityName);
@@ -63839,7 +63839,7 @@ class EntityManager {
 
 bool EntityManager::CreateEntity(const std::string& entityName) {
     if(mEntityComponents.find(entityName) == mEntityComponents.end()) {
-        mEntityComponents[entityName] = {};
+        mEntityComponents.emplace(entityName, std::unordered_map<std::type_index, std::unique_ptr<IComponent>>());
         return true;
     }
     return false;

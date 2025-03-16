@@ -46,7 +46,7 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
         auto chunkModelComponent = entityManager.GetComponent<ChunkModelComponent>(entityPointer.first);
         auto modelComponent = entityManager.GetComponent<ModelComponent>(entityPointer.first);
 
-        std::shared_ptr<ModelComponent> renderableModel = chunkModelComponent ? static_pointer_cast<ModelComponent>(chunkModelComponent) : modelComponent;
+        ModelComponent* renderableModel = chunkModelComponent ? static_cast<ModelComponent*>(chunkModelComponent) : modelComponent;
         if(!renderableModel) {
             continue;
         }
@@ -72,7 +72,7 @@ void RendererSystem::DrawAllSingle(EntityManager& entityManager, std::string ent
     auto chunkModelComponent = entityManager.GetComponent<ChunkModelComponent>(entityName);
     auto modelComponent = entityManager.GetComponent<ModelComponent>(entityName);
 
-    std::shared_ptr<ModelComponent> renderableModel = chunkModelComponent ? static_pointer_cast<ModelComponent>(chunkModelComponent) : modelComponent;
+    ModelComponent* renderableModel = chunkModelComponent ? static_cast<ModelComponent*>(chunkModelComponent) : modelComponent;
     if(!renderableModel) {
         return;
     }

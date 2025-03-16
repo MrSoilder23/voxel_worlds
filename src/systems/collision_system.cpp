@@ -14,7 +14,7 @@ void CollisionSystem::UpdateCollision(EntityManager& entityManager, float deltaT
     int playerZ = static_cast<int>(std::floor(playerPosition->mPosition.z/VoxelWorlds::CHUNK_SIZE));
     
     char chunkName[32];
-    std::array<std::shared_ptr<BoundingBoxCollectionComponent>, 27> chunksBoundings;
+    std::array<BoundingBoxCollectionComponent*, 27> chunksBoundings;
     int i = 0;
     for(int chunkX = -1; chunkX <= 1; chunkX++) {
         for(int chunkY = -1; chunkY <= 1; chunkY++) {
