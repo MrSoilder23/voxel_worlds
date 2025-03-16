@@ -12,11 +12,15 @@ void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
             continue;
         }
         
-        boundingBox->mWorldMax = boundingBox->mLocalMax + position->mPosition;
-        boundingBox->mWorldMin = boundingBox->mLocalMin + position->mPosition;
+        glm::vec3 worldMax = boundingBox->mLocalMax + position->mPosition;
+        glm::vec3 worldMin = boundingBox->mLocalMin + position->mPosition;
 
-        boundingBox->mModel = std::move(utility::CreateBoundingModel(*boundingBox));
-    
+        if(boundingBox->mWorldMax != worldMax || boundingBox->mWorldMin != worldMin) {
+            boundingBox->mWorldMax = std::move(worldMax);
+            boundingBox->mWorldMin = std::move(worldMin);
+
+            boundingBox->mModel = std::move(utility::CreateBoundingModel(*boundingBox));
+        }
     }
 }
 
