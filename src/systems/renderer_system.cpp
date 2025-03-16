@@ -51,7 +51,7 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
             continue;
         }
 
-        if(renderableModel && renderableModel->mVAO != 0) {
+        if(renderableModel->mVAO != 0) {
             glUniformMatrix4fv(mModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
 
             glUniformMatrix4fv(mViewLocation, 1, false, &cameraComponent->mViewMatrix[0][0]);
@@ -77,7 +77,7 @@ void RendererSystem::DrawAllSingle(EntityManager& entityManager, std::string ent
         return;
     }
 
-    if(renderableModel && renderableModel->mVAO != 0) {
+    if(renderableModel->mVAO != 0) {
         glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
         glUniformMatrix4fv(mModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
