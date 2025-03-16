@@ -6,6 +6,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <limits>
+#include <immintrin.h>
 
 // Third_Party libraries
 #include <glad/glad.h>
@@ -290,14 +291,18 @@ namespace utility {
         h = (h ^ (h >> 13)) * 1274126177u;
         h ^= (h >> 16);
         
-        // Map h to a float in [0, 1)
-        constexpr float inverseMax = 1.0f / 4294967296.0f;  // 1 / 2^32
-        float normalized = h * inverseMax;
+        static constexpr float angleFactor = 6.2831853f / 4294967296.0f; // 2π / 2^32
+        float angle = static_cast<float>(h) * angleFactor;
+
+        float sinAngle, cosAngle;
+        #ifdef _GNU_SOURCE
+            sincosf(angle, &sinAngle, &cosAngle);
+        #else
+            cosAngle = std::cosf(angle);
+            sinAngle = std::sinf(angle);
+        #endif
         
-        // Convert to an angle in [0, 2π)
-        float angle = normalized * 6.2831853;
-        
-        return glm::vec2(std::cos(angle), std::sin(angle));
+        return glm::vec2(cosAngle, sinAngle);
     }
 
     inline float Smooth(float t) {
