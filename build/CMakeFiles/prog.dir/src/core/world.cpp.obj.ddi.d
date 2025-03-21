@@ -588,7 +588,6 @@ CMakeFiles\prog.dir\src\core\world.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_misc.h \
  C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/typeindex \
- C:/msys64/mingw64/include/c++/14.2.0/shared_mutex \
  C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
  C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp \
  C:/Projects/voxel_worlds/include/graphics/graphics.hpp \

@@ -5,14 +5,11 @@
 #include <typeindex>
 #include <memory>
 #include <string>
-#include <shared_mutex>
-#include <mutex>
+#include <vector>
 
 // Own libraries
 #include "component.hpp"
 #include "./blocks/block_types.hpp"
-
-using Entity = std::unordered_map<std::type_index, std::unique_ptr<IComponent>>;
 
 class EntityManager {
     public:
@@ -24,83 +21,102 @@ class EntityManager {
         template <typename ComponentType>
         void AddComponent(const std::string& entityName) {
             static const std::type_index componentTypeIndex = typeid(ComponentType);
-            auto entityIt = mEntityComponents.find(entityName);
-
-            if(entityIt == mEntityComponents.end()) {
+            auto entityIt = mIDs.find(entityName);
+            if (entityIt == mIDs.end()) {
                 std::cerr << "Entity with the name: " << entityName << " do not exist. Could not add the component: " << componentTypeIndex.name() << std::endl;
                 return;
             }
 
-            auto& componentMap = entityIt->second;
-            if (componentMap.find(componentTypeIndex) != componentMap.end()) {
-                std::cerr << "The component: " << componentTypeIndex.name() << " already exists in this entity: " << entityName << std::endl;
+            size_t id = entityIt->second;
+            auto& components = mComponents[componentTypeIndex];
+            if (id < components.size() && components[id]) {
+                std::cerr << "Component exists for " << entityName << std::endl;
                 return;
             }
-            
-            componentMap[componentTypeIndex] = std::make_unique<ComponentType>();
+
+            if (components.size() <= id) {
+                components.resize(id + 1);
+            }
+
+            components[id] = std::make_unique<ComponentType>();
         }
 
         template <typename ComponentType>
         void AddComponent(const std::string& entityName, ComponentType& component) {
             static const std::type_index componentTypeIndex = typeid(ComponentType);
-            auto entityIt = mEntityComponents.find(entityName);
+            auto entityIt = mIDs.find(entityName);
 
-            if(entityIt == mEntityComponents.end()) {
+            if (entityIt == mIDs.end()) {
                 std::cerr << "Entity with the name: " << entityName << " do not exist. Could not add the component: " << componentTypeIndex.name() << std::endl;
                 return;
             }
 
-            auto& componentMap = entityIt->second;
-            if (componentMap.find(componentTypeIndex) != componentMap.end()) {
-                std::cerr << "The component: " << componentTypeIndex.name() << " already exists in this entity: " << entityName << std::endl;
+            size_t id = entityIt->second;
+            auto& components = mComponents[componentTypeIndex];
+            if (id < components.size() && components[id]) {
+                std::cerr << "Component exists for " << entityName << std::endl;
                 return;
             }
-            
-            componentMap[componentTypeIndex] = std::make_unique<ComponentType>(std::move(component));
+
+            if (components.size() <= id) {
+                components.resize(id + 1);
+            }
+
+            components[id] = std::make_unique<ComponentType>(std::move(component));
         }
 
         template <typename ComponentType>
         void DeleteComponent(const std::string& entityName) {
             static const std::type_index componentTypeIndex = typeid(ComponentType);
-            auto entityIt = mEntityComponents.find(entityName);
+            auto entityIt = mIDs.find(entityName);
 
-            if(entityIt == mEntityComponents.end()) {
+            if(entityIt == mIDs.end()) {
                 std::cerr << "Entity with the name: " << entityName << " do not exist. Could not delete the component: " << componentTypeIndex.name() << std::endl;
                 return;
             }
 
-            auto& componentMap = entityIt->second;
-            componentMap.erase(componentTypeIndex);
+            size_t id = entityIt->second;
+            auto componentIt = mComponents.find(componentTypeIndex);
+            if(componentIt == mComponents.end()) {
+                return;
+            }
+
+            auto& components = componentIt->second;
+            if (id < components.size()) {
+                components[id].reset();
+            }
         }
 
         template <typename ComponentType>
         ComponentType* GetComponent(const std::string& entityName){
             static const std::type_index componentTypeIndex = typeid(ComponentType);
-            auto entityIt = mEntityComponents.find(entityName);
+            auto entityIt = mIDs.find(entityName);
 
-            if(entityIt == mEntityComponents.end()) {
+            if(entityIt == mIDs.end()) {
                 return nullptr;
             }
+            
+            size_t id = entityIt->second;
+            auto componentIt = mComponents.find(componentTypeIndex);
+            if (componentIt == mComponents.end()) {
+                return nullptr;
+            };
 
-            const auto& componentMap = entityIt->second;
-            auto componentIt = componentMap.find(componentTypeIndex);
-
-            if (componentIt == componentMap.end()) {
+            auto& components = componentIt->second;
+            if (id >= components.size() || !components[id]) {
                 return nullptr;
             }
-
-            return static_cast<ComponentType*>(componentIt->second.get());
+            
+            return static_cast<ComponentType*>(components[id].get());
         }
 
-        Entity& GetEntity(const std::string& entityName);
-
-        std::unordered_map<std::string, Entity>& GetEntities();
+        std::unordered_map<std::string, size_t>& GetEntities();
 
         // void InitializeAllComponents();
 
         static EntityManager& GetInstance();
 
     private:
-        std::unordered_map<std::string, Entity> mEntityComponents;
-        std::shared_mutex mMutex;
+        std::unordered_map<std::type_index, std::vector<std::unique_ptr<IComponent>>> mComponents;
+        std::unordered_map<std::string, size_t> mIDs;
 };

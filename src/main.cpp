@@ -231,8 +231,6 @@ void MainLoop(float deltaTime) {
         } else {
             yLoop--;
         }
- 
-
     }
 
     static PositionUpdateSystem posUpdateSystem;
@@ -241,7 +239,7 @@ void MainLoop(float deltaTime) {
     static ChunkVertexSetupSystem chunkVSS;
     static CollisionSystem collisionSystem;
     static PhysicsSystem physSystem;
-    
+
     gPlayerControllerSys.Update(gEntityManager);
 
     if(gSettings.mBoundingDebug) {
@@ -318,6 +316,7 @@ int main() {
         gEntityManager.CreateEntity("Test");
         gEntityManager.AddComponent<BoundingBoxComponent>("Test");
         gEntityManager.AddComponent<PositionComponent>("Test");
+        gEntityManager.AddComponent<ModelComponent>("Test");
 
         auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test");
         boundingBox->mLocalMin = glm::vec3(0.0f,0.0f,0.0f);
