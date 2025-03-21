@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <atomic>
 
 // Own libraries
 #include "component.hpp"
@@ -135,7 +136,7 @@ class EntityManager {
         static EntityManager& GetInstance();
 
     private:
-        size_t mNextEntityID = 0;
+        std::atomic<size_t> mNextEntityID = 0;
 
         std::unordered_map<std::type_index, std::vector<std::unique_ptr<IComponent>>> mComponents;
         std::unordered_map<std::string, size_t> mIDs;

@@ -46,7 +46,7 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
         const size_t& entityID = entityPair.second;
 
         auto boundingBoxComponent = boundingBoxes[entityID];
-        if(boundingBoxComponent && !utility::IsAABBInFrustum(*boundingBoxComponent, cameraComponent->frustumPlanes)) {
+        if(boundingBoxComponent && !physics::IsAABBInFrustum(*boundingBoxComponent, cameraComponent->frustumPlanes)) {
             continue;
         }
 
@@ -114,7 +114,7 @@ void RendererSystem::DrawAllDebug(EntityManager& entityManager) {
 
         auto boundingBoxComponent = boundingBoxes[entityID];
 
-        if(!utility::IsAABBInFrustum(*boundingBoxComponent, cameraComponent->frustumPlanes)) {
+        if(!physics::IsAABBInFrustum(*boundingBoxComponent, cameraComponent->frustumPlanes)) {
             continue;
         }
 

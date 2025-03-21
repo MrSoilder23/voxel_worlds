@@ -43,12 +43,6 @@
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\core\\world.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\core\\world.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\core\\world.cpp",
-  "file": "C:\\Projects\\voxel_worlds\\src\\core\\world.cpp",
-  "output": "CMakeFiles\\prog.dir\\src\\core\\world.cpp.obj"
-},
-{
-  "directory": "C:/Projects/voxel_worlds/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\graphics\\model_manager.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\graphics\\model_manager.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\graphics\\model_manager.cpp",
   "file": "C:\\Projects\\voxel_worlds\\src\\graphics\\model_manager.cpp",
   "output": "CMakeFiles\\prog.dir\\src\\graphics\\model_manager.cpp.obj"
@@ -157,6 +151,18 @@
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\perlin_noise.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\perlin_noise.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\perlin_noise.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\utility\\perlin_noise.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\utility\\perlin_noise.cpp.obj"
+},
+{
+  "directory": "C:/Projects/voxel_worlds/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\physics.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\physics.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\physics.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\utility\\physics.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\utility\\physics.cpp.obj"
+},
+{
+  "directory": "C:/Projects/voxel_worlds/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\spiral_loop.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\spiral_loop.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\spiral_loop.cpp",
   "file": "C:\\Projects\\voxel_worlds\\src\\utility\\spiral_loop.cpp",
   "output": "CMakeFiles\\prog.dir\\src\\utility\\spiral_loop.cpp.obj"
@@ -166,6 +172,12 @@
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\thread_pool.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\thread_pool.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\thread_pool.cpp",
   "file": "C:\\Projects\\voxel_worlds\\src\\utility\\thread_pool.cpp",
   "output": "CMakeFiles\\prog.dir\\src\\utility\\thread_pool.cpp.obj"
+},
+{
+  "directory": "C:/Projects/voxel_worlds/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\utility.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\utility.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\utility.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\utility\\utility.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\utility\\utility.cpp.obj"
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",

@@ -17,7 +17,7 @@
 #include "./components/chunk_model_component.hpp"
 #include "./components/chunk_storage_component.hpp"
 #include "./components/bounding_box_collection_component.hpp"
-#include "./utility/utility.hpp"
+#include "./utility/perlin_noise.hpp"
 #include "./blocks/block_registry.hpp"
 #include "./blocks/block_texture_creator.hpp"
 

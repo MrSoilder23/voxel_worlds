@@ -356,4 +356,5 @@ CMakeFiles\prog.dir\src\systems\chunk_bounding_creation_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/iostream \
  C:/msys64/mingw64/include/c++/14.2.0/istream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/istream.tcc \
- C:/msys64/mingw64/include/c++/14.2.0/typeindex
+ C:/msys64/mingw64/include/c++/14.2.0/typeindex \
+ C:/msys64/mingw64/include/c++/14.2.0/atomic

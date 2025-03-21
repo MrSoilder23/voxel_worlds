@@ -21,7 +21,7 @@ void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
             boundingBox->mWorldMax = std::move(worldMax);
             boundingBox->mWorldMin = std::move(worldMin);
 
-            boundingBox->mModel = std::move(utility::CreateBoundingModel(*boundingBox));
+            boundingBox->mModel = std::move(physics::CreateBoundingModel(*boundingBox));
         }
     }
 }
@@ -40,6 +40,6 @@ void BoundingBoxSystem::GenerateBoundingBoxSingle(EntityManager& entityManager, 
     boundingBox->mWorldMax = boundingBox->mLocalMax + position->mPosition;
     boundingBox->mWorldMin = boundingBox->mLocalMin + position->mPosition;
     
-    boundingBox->mModel = std::move(utility::CreateBoundingModel(*boundingBox));
+    boundingBox->mModel = std::move(physics::CreateBoundingModel(*boundingBox));
     
 }

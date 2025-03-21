@@ -573,36 +573,13 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
  C:/msys64/mingw64/include/c++/14.2.0/typeindex \
+ C:/msys64/mingw64/include/c++/14.2.0/atomic \
  C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
- C:/Projects/voxel_worlds/include/core/world.hpp \
- C:/Projects/voxel_worlds/include/world/chunk.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/map \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_map.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multimap.h \
- C:/Projects/voxel_worlds/include/model.hpp \
- C:/Projects/voxel_worlds/include/world/transform.hpp \
- C:/Projects/voxel_worlds/include/utility/constant.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/array \
- C:/Projects/voxel_worlds/include/utility/tuple_hash.hpp \
- C:/Projects/voxel_worlds/include/utility/utility.hpp \
- C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
- C:/Projects/voxel_worlds/include/components/model_component.hpp \
- C:/Projects/voxel_worlds/include/graphics/texture.hpp \
- C:/Projects/voxel_worlds/include/group.hpp \
- C:/Projects/voxel_worlds/include/components/position_component.hpp \
- C:/Projects/voxel_worlds/include/line.hpp \
- C:/Projects/voxel_worlds/include/world/chunk_manager.hpp \
- C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
- C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
- C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h \
- C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
- C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp \
- C:/Projects/voxel_worlds/include/components/camera_component.hpp \
  C:/Projects/voxel_worlds/include/core/game.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/functional \
  C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
+ C:/msys64/mingw64/include/c++/14.2.0/array \
  C:/msys64/mingw64/include/c++/14.2.0/chrono \
  C:/msys64/mingw64/include/c++/14.2.0/sstream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/sstream.tcc \
@@ -627,15 +604,34 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/unicode-data.h \
  C:/msys64/mingw64/include/c++/14.2.0/thread \
  C:/msys64/mingw64/include/c++/14.2.0/stop_token \
- C:/msys64/mingw64/include/c++/14.2.0/atomic \
  C:/msys64/mingw64/include/c++/14.2.0/bits/std_thread.h \
  C:/msys64/mingw64/include/c++/14.2.0/semaphore \
  C:/msys64/mingw64/include/c++/14.2.0/bits/semaphore_base.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_timed_wait.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/this_thread_sleep.h \
  C:/msys64/mingw64/include/semaphore.h \
+ C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
+ C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h \
+ C:/Projects/voxel_worlds/include/utility/utility.hpp \
+ C:/Projects/voxel_worlds/include/world/transform.hpp \
+ C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
+ C:/Projects/voxel_worlds/include/graphics/texture.hpp \
+ C:/Projects/voxel_worlds/include/model.hpp \
+ C:/Projects/voxel_worlds/include/group.hpp \
+ C:/Projects/voxel_worlds/include/components/position_component.hpp \
+ C:/Projects/voxel_worlds/include/utility/constant.hpp \
+ C:/Projects/voxel_worlds/include/line.hpp \
  C:/Projects/voxel_worlds/include/systems/renderer_system.hpp \
+ C:/Projects/voxel_worlds/include/utility/physics.hpp \
+ C:/Projects/voxel_worlds/include/components/camera_component.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp \
+ C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp \
+ C:/Projects/voxel_worlds/include/world/chunk.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/map \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_map.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multimap.h \
  C:/Projects/voxel_worlds/include/systems/player_controller_system.hpp \
  C:/Projects/voxel_worlds/include/core/event_manager.hpp \
  C:/Projects/voxel_worlds/include/core/inputs.hpp \
@@ -649,9 +645,12 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/algorithm \
  C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
+ C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/include/systems/world_generation_system.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp \
+ C:/Projects/voxel_worlds/include/utility/perlin_noise.hpp \
+ C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
  C:/Projects/voxel_worlds/include/systems/chunk_bounding_creation_system.hpp \
  C:/Projects/voxel_worlds/include/systems/collision_system.hpp \
  C:/Projects/voxel_worlds/include/systems/physics_system.hpp \

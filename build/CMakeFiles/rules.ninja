@@ -100,7 +100,7 @@ rule RERUN_CMAKE
 # Rule for cleaning all built files.
 
 rule CLEAN
-  command = C:\ProgramData\chocolatey\bin\ninja.exe $FILE_ARG -t clean $TARGETS
+  command = C:\msys64\mingw64\bin\ninja.exe $FILE_ARG -t clean $TARGETS
   description = Cleaning all built files...
 
 
@@ -108,6 +108,6 @@ rule CLEAN
 # Rule for printing all primary targets available.
 
 rule HELP
-  command = C:\ProgramData\chocolatey\bin\ninja.exe -t targets
+  command = C:\msys64\mingw64\bin\ninja.exe -t targets
   description = All primary targets available:
 

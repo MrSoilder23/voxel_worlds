@@ -15,7 +15,6 @@
 #include "./graphics/shader.hpp"
 #include "./graphics/graphics.hpp"
 #include "./core/entity_manager.hpp"
-#include "./core/world.hpp"
 #include "./core/game.hpp"
 
 #include "./systems/renderer_system.hpp"
@@ -69,7 +68,6 @@ ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
 // ChunkSystem chunkSystem;
 ThreadPool& gThreadPool = ThreadPool::GetInstance();
 WorldGenerationSystem gWorldGen;
-World gWorld;
 
 EventManager& gEventManager = EventManager::GetInstance();
 
@@ -194,7 +192,6 @@ void MainLoop(float deltaTime) {
     gCameraOldZ = cameraZ;
 
     {   
-        gWorld.SetCameraPosition(camera);
         
         int loopX = loop.GetLoopX() + cameraX;
         int loopY = yLoop + cameraY;
@@ -212,6 +209,13 @@ void MainLoop(float deltaTime) {
         //         // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
         //     }
         // });
+
+        // for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
+        //     int newY = loopY + y;
+        //     gWorldGen.GenerateChunk(loopX, newY, loopZ);
+        //     gWorldGen.GenerateModel(loopX, newY, loopZ);
+        //     // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
+        // }
 
         gWorldGen.GenerateChunk(loopX, loopY, loopZ);
         gWorldGen.GenerateModel(loopX, loopY, loopZ);
@@ -281,9 +285,6 @@ int main() {
 
     static std::random_device rndDevice;
     unsigned int seed = rndDevice();
-
-    gWorld.SetSeed(seed);
-    gWorld.SetRenderDistance(VoxelWorlds::RENDER_DISTANCE);
 
     {
         gEntityManager.CreateEntity("Player");

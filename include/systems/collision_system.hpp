@@ -9,7 +9,7 @@
 #include "./components/bounding_box_component.hpp"
 #include "./components/physics_component.hpp"
 #include "./utility/constant.hpp"
-#include "./utility/utility.hpp"
+#include "./utility/physics.hpp"
 
 class CollisionSystem {
     public:

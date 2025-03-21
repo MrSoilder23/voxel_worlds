@@ -4,7 +4,7 @@
 
 // Own libraries
 #include "./core/entity_manager.hpp"
-#include "./utility/utility.hpp"
+#include "./utility/physics.hpp"
 #include "./line.hpp"
 #include "./components/bounding_box_component.hpp"
 #include "./components/chunk_storage_component.hpp"

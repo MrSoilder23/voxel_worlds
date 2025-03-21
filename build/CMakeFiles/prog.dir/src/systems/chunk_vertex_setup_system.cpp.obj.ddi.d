@@ -198,6 +198,7 @@ CMakeFiles\prog.dir\src\systems\chunk_vertex_setup_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/vector.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/atomic \
  C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp \

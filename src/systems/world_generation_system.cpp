@@ -176,7 +176,7 @@ void WorldGenerationSystem::GeneratePerlin(int x, int y, int z, std::string chun
     for(float blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
         for(float blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
 
-            float height = utility::LayeredPerlinNoise(
+            float height = perlin_noise::LayeredPerlinNoise(
                 chunkCoordinateX,
                 chunkCoordinateZ,
                 (blockX+(xOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::PERLIN_SCALE),
@@ -187,7 +187,7 @@ void WorldGenerationSystem::GeneratePerlin(int x, int y, int z, std::string chun
                 VoxelWorlds::LACUNARITY
             );
 
-            float continentalness = utility::PerlinNoise(
+            float continentalness = perlin_noise::PerlinNoise(
                 continentCoordinateX,
                 continentCoordinateZ,
                 (blockX+(xContinentalOffset*VoxelWorlds::CHUNK_SIZE))/(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CONTINENTALNESS),

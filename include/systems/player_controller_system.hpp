@@ -12,6 +12,8 @@
 #include "./components/camera_component.hpp"
 #include "./components/physics_component.hpp"
 #include "./components/inventory_component.hpp"
+
+#include "./utility/physics.hpp"
 #include "./utility/utility.hpp"
 
 class PlayerControllerSystem {

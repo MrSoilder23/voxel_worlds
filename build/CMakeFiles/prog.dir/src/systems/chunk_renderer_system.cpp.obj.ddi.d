@@ -516,6 +516,7 @@ CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable_policy.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/enable_special_members.h \
  C:/msys64/mingw64/include/c++/14.2.0/typeindex \
+ C:/msys64/mingw64/include/c++/14.2.0/atomic \
  C:/Projects/voxel_worlds/include/graphics/shader.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/fstream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/codecvt.h \

@@ -40,7 +40,7 @@ void CollisionSystem::UpdateCollision(EntityManager& entityManager, float deltaT
             
             for(const auto& box : chunkBounding->boundingBoxes) {   
                 glm::vec3 currentNormal;
-                float currentTime = utility::SweptAABB(
+                float currentTime = physics::SweptAABB(
                     *playerBounding, 
                     playerPhysics->mVelocity * deltaTime, 
                     box, 
