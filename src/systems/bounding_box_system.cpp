@@ -1,14 +1,16 @@
 #include "./systems/bounding_box_system.hpp"
 
 void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
-    for(const auto& componentPointer : entityManager.GetEntities()) {
-        auto boundingBox = entityManager.GetComponent<BoundingBoxComponent>(componentPointer.first);
-        if(!boundingBox) {
-            continue;
-        }
+    auto boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
+    auto positions = entityManager.GetComponentArray<PositionComponent>();
 
-        auto position = entityManager.GetComponent<PositionComponent>(componentPointer.first);
-        if(!position) {
+    for(const auto& entityPair : entityManager.GetEntities()) {
+        const size_t& entityID = entityPair.second;
+
+        auto boundingBox = boundingBoxes[entityID];
+        auto position = positions[entityID];
+
+        if(!boundingBox || !position) {
             continue;
         }
         

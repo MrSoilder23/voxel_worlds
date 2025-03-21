@@ -1,9 +1,14 @@
 #include "./systems/vertex_setup_system.hpp"
 
 void VertexSetupSystem::CreateVertexSpecification(EntityManager& entityManager) {
-    for(const auto& componentPointer : entityManager.GetEntities()) {
-        auto model = entityManager.GetComponent<ModelComponent>(componentPointer.first);
-        auto boundingBox = entityManager.GetComponent<BoundingBoxComponent>(componentPointer.first);
+    auto models = entityManager.GetComponentArray<ModelComponent>();
+    auto boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
+
+    for(const auto& entityPair : entityManager.GetEntities()) {
+        const size_t& entityID = entityPair.second;
+
+        auto model = models[entityID];
+        auto boundingBox = boundingBoxes[entityID];
 
         if(model && model->mVAO == 0) {
             

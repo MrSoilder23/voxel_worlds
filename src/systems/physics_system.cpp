@@ -1,17 +1,19 @@
 #include "./systems/physics_system.hpp"
 
 void PhysicsSystem::UpdatePosition(EntityManager& entityManager, float deltaTime) {
-    for(const auto& entityPointer : entityManager.GetEntities()) {
-        auto entityPhysics = entityManager.GetComponent<PhysicsComponent>(entityPointer.first);
-        if(!entityPhysics) {
+    auto physics = entityManager.GetComponentArray<PhysicsComponent>();
+    auto positions = entityManager.GetComponentArray<PositionComponent>();
+
+    for(const auto& entityPair : entityManager.GetEntities()) {
+        const size_t& entityID = entityPair.second;
+
+        auto entityPhysics = physics[entityID];
+        auto entityPosition = positions[entityID];
+
+        if(!entityPhysics || !entityPosition) {
             continue;
         }
         
-        auto entityPosition = entityManager.GetComponent<PositionComponent>(entityPointer.first);
-        if(!entityPosition) {
-            continue;
-        }
-
         entityPhysics->mVelocity *= 1.0f - entityPhysics->mFriction * deltaTime;
 
         if (glm::length(entityPhysics->mVelocity) < 0.001f) {

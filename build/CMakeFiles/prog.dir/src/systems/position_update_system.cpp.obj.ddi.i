@@ -94349,6 +94349,24 @@ class EntityManager {
             return static_cast<ComponentType*>(components[id].get());
         }
 
+        template <typename ComponentType>
+        std::vector<ComponentType*> GetComponentArray() {
+            static const std::type_index componentTypeIndex = typeid(ComponentType);
+            auto componentIt = mComponents.find(componentTypeIndex);
+
+            std::vector<ComponentType*> components(mNextEntityID, nullptr);
+            if(componentIt == mComponents.end()) {
+                return components;
+            }
+
+            const auto& componentVector = componentIt->second;
+            for(size_t i = 0; i < componentVector.size(); ++i) {
+                components[i] = static_cast<ComponentType*>(componentVector[i].get());
+            }
+
+            return components;
+        }
+
         std::unordered_map<std::string, size_t>& GetEntities();
 
 
@@ -94356,6 +94374,8 @@ class EntityManager {
         static EntityManager& GetInstance();
 
     private:
+        size_t mNextEntityID = 0;
+
         std::unordered_map<std::type_index, std::vector<std::unique_ptr<IComponent>>> mComponents;
         std::unordered_map<std::string, size_t> mIDs;
 };
@@ -94370,8 +94390,12 @@ class PositionUpdateSystem {
 
 
 void PositionUpdateSystem::UpdatePositionTransform(EntityManager& entityManager) {
-    for(const auto& entityPointer : entityManager.GetEntities()) {
-        auto position = entityManager.GetComponent<PositionComponent>(entityPointer.first);
+    auto positions = entityManager.GetComponentArray<PositionComponent>();
+
+    for(const auto& entityPair : entityManager.GetEntities()) {
+        const size_t& entityID = entityPair.second;
+
+        auto position = positions[entityID];
 
         if(position && position->mDirty) {
             glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position->mPosition);

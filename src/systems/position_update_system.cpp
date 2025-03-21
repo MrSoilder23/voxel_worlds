@@ -2,8 +2,12 @@
 #include <iostream>
 
 void PositionUpdateSystem::UpdatePositionTransform(EntityManager& entityManager) {
-    for(const auto& entityPointer : entityManager.GetEntities()) {
-        auto position = entityManager.GetComponent<PositionComponent>(entityPointer.first);
+    auto positions = entityManager.GetComponentArray<PositionComponent>();
+
+    for(const auto& entityPair : entityManager.GetEntities()) {
+        const size_t& entityID = entityPair.second;
+        
+        auto position = positions[entityID];
         
         if(position && position->mDirty) {
             glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position->mPosition);

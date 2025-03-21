@@ -5,8 +5,7 @@ bool EntityManager::CreateEntity(const std::string& entityName) {
         return false;
     }
 
-    size_t newID = mIDs.size();
-    mIDs[entityName] = newID;
+    mIDs[entityName] = mNextEntityID++;
 
     return true;
 }

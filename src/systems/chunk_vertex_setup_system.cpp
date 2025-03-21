@@ -1,18 +1,22 @@
 #include "./systems/chunk_vertex_setup_system.hpp"
 
 void ChunkVertexSetupSystem::CreateVertexSpecification(EntityManager& entityManager) {
-    for(const auto& componentPointer : entityManager.GetEntities()) {
-        auto model = entityManager.GetComponent<ChunkModelComponent>(componentPointer.first);
+    auto models = entityManager.GetComponentArray<ChunkModelComponent>();
 
+    BlockTextureCreator& blockTexture = BlockTextureCreator::GetInstance();
+    std::vector<GLuint64> textures;
+
+    for (const auto& pair : blockTexture.GetTextures()) {
+        textures.push_back(pair.second);
+    }
+    std::sort(textures.begin(), textures.end());
+
+    for(const auto& entityPair : entityManager.GetEntities()) {
+        const size_t& entityID = entityPair.second;
+
+        auto model = models[entityID];
+        
         if(model && !model->mGenerated && model->mModel.vertexPositions.size() != 0) {
-            BlockTextureCreator& blockTexture = BlockTextureCreator::GetInstance();
-
-            std::vector<GLuint64> textures;
-
-            for (const auto& pair : blockTexture.GetTextures()) {
-                textures.push_back(pair.second);
-            }
-            std::sort(textures.begin(), textures.end());
 
             if(model->mVAO != 0) {
                 glDeleteVertexArrays(1, &model->mVAO);
