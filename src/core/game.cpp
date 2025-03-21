@@ -76,6 +76,10 @@ void Game::SetBackgroundColor(uint8_t _r, uint8_t _g, uint8_t _b) {
     g = (float)_g/255;
     b = (float)_b/255;
 }
+
+void Game::SetSystemCallback(const std::function<void(float)>& func){
+    mSystemCallback = func;
+}
 void Game::SetEventCallback(const std::function<void(float)>& func) {
     mEventCallback = func;
 }
@@ -122,6 +126,8 @@ void Game::RunLoop() {
         glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
         mUpdateCallback(deltaTime);
+
+        mSystemCallback(deltaTime);
 
         SDL_GL_SwapWindow(mWindow);
 
