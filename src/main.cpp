@@ -53,6 +53,7 @@ struct Settings {
     float mSensitivity = 24.0f;
 
     bool mBoundingDebug = false;
+    bool mPhysics = false;
 };
 Settings gSettings;
 Game gGame;
@@ -78,7 +79,8 @@ void InitializeKeys() {
     static PlayerTargetSystem pTarget;
 
     gEventManager.RegisterEvent(InputAction::exit, [game = &gGame](float _){game->StopLoop();});
-    gEventManager.RegisterEvent(InputAction::toggle_debug, [settings = &gSettings](float _){settings->mBoundingDebug = !settings->mBoundingDebug;});
+    gEventManager.RegisterEvent(InputAction::toggle_debug, [settings = &gSettings](float _){settings->mPhysics = !settings->mPhysics;});
+    gEventManager.RegisterEvent(InputAction::toggle_debug2, [settings = &gSettings](float _){settings->mBoundingDebug = !settings->mBoundingDebug;});
 
     pTarget.PlayerRaycast(gEntityManager);
 }
@@ -168,8 +170,11 @@ void Input(float deltaTime) {
                 gGame.StopLoop();
             }
 
-            if (e.key.keysym.sym == SDLK_F12) {
+            if (e.key.keysym.sym == SDLK_F11) {
                 gEventManager.GetEvent(InputAction::toggle_debug, deltaTime);
+            }
+            if (e.key.keysym.sym == SDLK_F12) {
+                gEventManager.GetEvent(InputAction::toggle_debug2, deltaTime);
             }
         }
         if(e.type == SDL_MOUSEMOTION) {
@@ -324,7 +329,7 @@ void System(float deltaTime) {
 
     gPlayerControllerSys.Update(gEntityManager);
 
-    if(gSettings.mBoundingDebug) {
+    if(gSettings.mPhysics) {
         collisionSystem.UpdateCollision(gEntityManager, deltaTime);
     }
 

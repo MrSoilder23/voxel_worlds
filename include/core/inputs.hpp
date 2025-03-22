@@ -29,5 +29,6 @@ enum class InputAction {
     right_mouse_hold,
 
     toggle_debug,
+    toggle_debug2,
     exit,
 };

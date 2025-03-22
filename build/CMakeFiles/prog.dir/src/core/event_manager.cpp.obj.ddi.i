@@ -45044,6 +45044,7 @@ enum class InputAction {
     right_mouse_hold,
 
     toggle_debug,
+    toggle_debug2,
     exit,
 };
 # 10 "C:/Projects/voxel_worlds/include/core/event_manager.hpp" 2
