@@ -58,7 +58,7 @@ add_dependencies(${PROG_NAME} copy_assets copy_shaders)
 set_target_properties(${PROG_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 if(PLATFORM STREQUAL "Windows")
-    target_link_libraries(${PROG_NAME} mingw32 ${SDL2_MAIN_LIB} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIB} glad)
+    target_link_libraries(${PROG_NAME} mingw32 ${SDL2_MAIN_LIB} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIB} glad tbb)
 elseif(PLATFORM STREQUAL "Linux")
     target_link_libraries(${PROG_NAME} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIB} glad)
 endif()

@@ -10,9 +10,17 @@
 #include <shared_mutex>
 #include <mutex>
 
+// Third_party libraries
+#include <tbb/concurrent_hash_map.h>
+#include <tbb/concurrent_vector.h>
+
 // Own libraries
 #include "component.hpp"
 #include "./blocks/block_types.hpp"
+
+using entityIDs = tbb::concurrent_hash_map<std::string, size_t>;
+using components = tbb::concurrent_vector<std::shared_ptr<IComponent>>;
+using componentsMap = tbb::concurrent_hash_map<std::type_index, tbb::concurrent_vector<std::shared_ptr<IComponent>>>;
 
 class EntityManager {
     public:
@@ -24,18 +32,20 @@ class EntityManager {
         template <typename ComponentType>
         void AddComponent(const std::string& entityName) {
             static const std::type_index componentTypeIndex = typeid(ComponentType);
-            std::shared_lock lockID(mMutexIDs);
 
-            auto entityIt = mIDs.find(entityName);
-            if (entityIt == mIDs.end()) {
+            entityIDs::const_accessor entityAccessor;
+
+            if (!mIDs.find(entityAccessor, entityName)) {
                 std::cerr << "Entity with the name: " << entityName << " do not exist. Could not add the component: " << componentTypeIndex.name() << std::endl;
                 return;
             }
-            lockID.unlock();
-            std::unique_lock lockComp(mMutexComponents);
 
-            size_t id = entityIt->second;
-            auto& components = mComponents[componentTypeIndex];
+            componentsMap::accessor componentsAccessor;
+            
+            mComponents.insert(componentsAccessor, componentTypeIndex);
+            
+            const size_t& id = entityAccessor->second;
+            auto& components = componentsAccessor->second;
             if (id < components.size() && components[id]) {
                 std::cerr << "Component exists for " << entityName << std::endl;
                 return;
@@ -51,18 +61,18 @@ class EntityManager {
         template <typename ComponentType>
         void AddComponent(const std::string& entityName, ComponentType& component) {
             static const std::type_index componentTypeIndex = typeid(ComponentType);
-            std::shared_lock lockID(mMutexIDs);
-            auto entityIt = mIDs.find(entityName);
+            entityIDs::const_accessor entityAccessor;
 
-            if (entityIt == mIDs.end()) {
+            if (!mIDs.find(entityAccessor, entityName)) {
                 std::cerr << "Entity with the name: " << entityName << " do not exist. Could not add the component: " << componentTypeIndex.name() << std::endl;
                 return;
             }
-            lockID.unlock();
-            std::unique_lock lockComp(mMutexComponents);
 
-            size_t id = entityIt->second;
-            auto& components = mComponents[componentTypeIndex];
+            const size_t& id = entityAccessor->second;
+            componentsMap::accessor componentsAccessor;
+            mComponents.insert(componentsAccessor, componentTypeIndex);
+
+            auto& components = componentsAccessor->second;
             if (id < components.size() && components[id]) {
                 std::cerr << "Component exists for " << entityName << std::endl;
                 return;
@@ -78,23 +88,20 @@ class EntityManager {
         template <typename ComponentType>
         void DeleteComponent(const std::string& entityName) {
             static const std::type_index componentTypeIndex = typeid(ComponentType);
-            std::shared_lock lockID(mMutexIDs);
+            entityIDs::const_accessor entityAccessor;
 
-            auto entityIt = mIDs.find(entityName);
-
-            if(entityIt == mIDs.end()) {
+            if(!mIDs.find(entityAccessor, entityName)) {
                 std::cerr << "Entity with the name: " << entityName << " do not exist. Could not delete the component: " << componentTypeIndex.name() << std::endl;
                 return;
             }
-            lockID.unlock();
-            std::unique_lock lockComp(mMutexComponents);
-            size_t id = entityIt->second;
-            auto componentIt = mComponents.find(componentTypeIndex);
-            if(componentIt == mComponents.end()) {
+
+            componentsMap::accessor componentsAccessor;
+            if(!mComponents.find(componentsAccessor, componentTypeIndex)) {
                 return;
             }
-
-            auto& components = componentIt->second;
+            
+            const size_t& id = entityAccessor->second;
+            auto& components = componentsAccessor->second;
             if (id < components.size()) {
                 components[id].reset();
             }
@@ -103,23 +110,19 @@ class EntityManager {
         template <typename ComponentType>
         ComponentType* GetComponent(const std::string& entityName){
             static const std::type_index componentTypeIndex = typeid(ComponentType);
-            std::shared_lock lockID(mMutexIDs);
-            auto entityIt = mIDs.find(entityName);
+            entityIDs::const_accessor entityAccessor;
 
-            if(entityIt == mIDs.end()) {
+            if(!mIDs.find(entityAccessor, entityName)) {
                 return nullptr;
             }
-            
-            size_t id = entityIt->second;
-            lockID.unlock();
-            std::shared_lock lockComp(mMutexComponents);
 
-            auto componentIt = mComponents.find(componentTypeIndex);
-            if (componentIt == mComponents.end()) {
+            componentsMap::accessor componentsAccessor;
+            if (!mComponents.find(componentsAccessor, componentTypeIndex)) {
                 return nullptr;
             };
-
-            auto& components = componentIt->second;
+            
+            const size_t id = entityAccessor->second;
+            auto& components = componentsAccessor->second;
             if (id >= components.size() || !components[id]) {
                 return nullptr;
             }
@@ -130,16 +133,14 @@ class EntityManager {
         template <typename ComponentType>
         std::vector<ComponentType*> GetComponentArray() {
             static const std::type_index componentTypeIndex = typeid(ComponentType);
-            std::shared_lock lockComp(mMutexComponents);
-
-            auto componentIt = mComponents.find(componentTypeIndex);
+            componentsMap::accessor componentsAccessor;
 
             std::vector<ComponentType*> components(mNextEntityID, nullptr);
-            if(componentIt == mComponents.end()) {
+            if(!mComponents.find(componentsAccessor, componentTypeIndex)) {
                 return components;
             }
 
-            const auto& componentVector = componentIt->second;
+            const auto& componentVector = componentsAccessor->second;
             for(size_t i = 0; i < componentVector.size(); ++i) {
                 components[i] = static_cast<ComponentType*>(componentVector[i].get());
             }
@@ -147,18 +148,15 @@ class EntityManager {
             return components;
         }
 
-        std::unordered_map<std::string, size_t>& GetEntities();
+        tbb::concurrent_hash_map<std::string, size_t>& GetEntities();
 
         // void InitializeAllComponents();
 
         static EntityManager& GetInstance();
 
     private:
-        std::shared_mutex mMutexIDs;
-        std::shared_mutex mMutexComponents;
-
         std::atomic<size_t> mNextEntityID = 0;
 
-        std::unordered_map<std::type_index, std::vector<std::shared_ptr<IComponent>>> mComponents;
-        std::unordered_map<std::string, size_t> mIDs;
+        tbb::concurrent_hash_map<std::type_index, tbb::concurrent_vector<std::shared_ptr<IComponent>>> mComponents;
+        tbb::concurrent_hash_map<std::string, size_t> mIDs;
 };

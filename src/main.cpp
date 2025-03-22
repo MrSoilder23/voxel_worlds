@@ -10,6 +10,8 @@
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <tbb/task_arena.h>
+#include <tbb/parallel_for.h>
 
 // Own libraries
 #include "./graphics/shader.hpp"
@@ -70,6 +72,7 @@ ThreadPool& gThreadPool = ThreadPool::GetInstance();
 WorldGenerationSystem gWorldGen;
 
 EventManager& gEventManager = EventManager::GetInstance();
+tbb::task_arena gArena(VoxelWorlds::THREAD_AMOUNT);
 
 // Initialization
 void InitializeKeys() {
@@ -281,16 +284,24 @@ void MainLoop(float deltaTime) {
         int loopY = cameraY;
         int loopZ = loop.GetLoopZ() + cameraZ;
         
-        gThreadPool.enqueue([ptr = &gWorldGen, bBox = &gChunkbBoxCreationSys, loopX, loopY, loopZ]() {
-            // std::lock_guard<std::mutex> lock(gWorldMutex);
-            for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
+        // gThreadPool.enqueue([ptr = &gWorldGen, bBox = &gChunkbBoxCreationSys, loopX, loopY, loopZ]() {
+        //     // std::lock_guard<std::mutex> lock(gWorldMutex);
+        //     for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
+        //         int newY = loopY + y;
+        //         ptr->GenerateChunk(loopX, newY, loopZ);
+        //         ptr->GenerateModel(loopX, newY, loopZ);
+        //         // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
+        //     }
+        // });
+        gArena.execute([ptr = &gWorldGen, loopX, loopY, loopZ](){
+            tbb::parallel_for(-VoxelWorlds::RENDER_DISTANCE, VoxelWorlds::RENDER_DISTANCE, [ptr = &gWorldGen, loopX, loopY, loopZ](int y){
                 int newY = loopY + y;
                 ptr->GenerateChunk(loopX, newY, loopZ);
                 ptr->GenerateModel(loopX, newY, loopZ);
                 // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
-            }
-        });
 
+            });
+        });
         // for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
         //     int newY = loopY + y;
         //     gWorldGen.GenerateChunk(loopX, newY, loopZ);

@@ -509,6 +509,73 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/detail/type_half.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/integer.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/detail/func_integer.inl \
+ C:/Projects/voxel_worlds/third_party/include/tbb/task_arena.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/task_arena.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_config.h \
+ C:/msys64/mingw64/include/c++/14.2.0/version \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_export.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_aligned_space.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_template_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_utils.h \
+ C:/msys64/mingw64/include/c++/14.2.0/atomic \
+ C:/msys64/mingw64/include/c++/14.2.0/functional \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
+ C:/msys64/mingw64/include/c++/14.2.0/unordered_map \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unordered_map.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable_policy.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/enable_special_members.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
+ C:/msys64/mingw64/include/c++/14.2.0/array \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_config.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_assert.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_machine.h \
+ C:/msys64/mingw64/include/c++/14.2.0/thread \
+ C:/msys64/mingw64/include/c++/14.2.0/stop_token \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_thread.h \
+ C:/msys64/mingw64/include/c++/14.2.0/semaphore \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/semaphore_base.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_timed_wait.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/this_thread_sleep.h \
+ C:/msys64/mingw64/include/semaphore.h \
+ C:/msys64/mingw64/include/c++/14.2.0/utility \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_relops.h \
+ C:/msys64/mingw64/include/c++/14.2.0/iterator \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stream_iterator.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_attach.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_exception.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_namespace_injection.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_small_object_pool.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/profiling.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_string_resource.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_task.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_small_object_pool.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_task_handle.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_task.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/info.h \
+ C:/Projects/voxel_worlds/third_party/include/tbb/parallel_for.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/parallel_for.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/profiling.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/partitioner.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_utils.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_template_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_range_common.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/cache_aligned_allocator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/memory_resource \
+ C:/msys64/mingw64/include/c++/14.2.0/shared_mutex \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/task_group.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_assert.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_intrusive_list_node.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/task_arena.h \
+ C:/msys64/mingw64/include/c++/14.2.0/algorithm \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/blocked_range.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/version.h \
  C:/Projects/voxel_worlds/include/graphics/shader.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/fstream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/codecvt.h \
@@ -565,28 +632,34 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
  C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/unordered_map \
- C:/msys64/mingw64/include/c++/14.2.0/bits/unordered_map.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable_policy.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/enable_special_members.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
  C:/msys64/mingw64/include/c++/14.2.0/typeindex \
- C:/msys64/mingw64/include/c++/14.2.0/atomic \
- C:/msys64/mingw64/include/c++/14.2.0/shared_mutex \
+ C:/Projects/voxel_worlds/third_party/include/tbb/concurrent_hash_map.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/concurrent_hash_map.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_allocator_traits.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_containers_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_allocator_traits.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_hash_compare.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_containers_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/tbb_allocator.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_utils.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/spin_rw_mutex.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_mutex_common.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_scoped_lock.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_rtm_rw_mutex.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/spin_rw_mutex.h \
+ C:/msys64/mingw64/include/c++/14.2.0/cstring \
+ C:/msys64/mingw64/include/string.h \
+ C:/msys64/mingw64/include/sec_api/string_s.h \
+ C:/Projects/voxel_worlds/third_party/include/tbb/concurrent_vector.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/concurrent_vector.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_segment_table.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_exception.h \
  C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
  C:/Projects/voxel_worlds/include/core/game.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/functional \
- C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
- C:/msys64/mingw64/include/c++/14.2.0/array \
  C:/msys64/mingw64/include/c++/14.2.0/chrono \
  C:/msys64/mingw64/include/c++/14.2.0/sstream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/sstream.tcc \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/chrono_io.h \
  C:/msys64/mingw64/include/c++/14.2.0/iomanip \
  C:/msys64/mingw64/include/c++/14.2.0/locale \
@@ -603,14 +676,6 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/variant \
  C:/msys64/mingw64/include/c++/14.2.0/bits/unicode.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/unicode-data.h \
- C:/msys64/mingw64/include/c++/14.2.0/thread \
- C:/msys64/mingw64/include/c++/14.2.0/stop_token \
- C:/msys64/mingw64/include/c++/14.2.0/bits/std_thread.h \
- C:/msys64/mingw64/include/c++/14.2.0/semaphore \
- C:/msys64/mingw64/include/c++/14.2.0/bits/semaphore_base.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_timed_wait.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/this_thread_sleep.h \
- C:/msys64/mingw64/include/semaphore.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h \
  C:/Projects/voxel_worlds/include/utility/utility.hpp \
@@ -643,9 +708,6 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/systems/bounding_box_system.hpp \
  C:/Projects/voxel_worlds/include/systems/position_update_system.hpp \
  C:/Projects/voxel_worlds/include/systems/chunk_vertex_setup_system.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/algorithm \
- C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
- C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/include/systems/world_generation_system.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp \
