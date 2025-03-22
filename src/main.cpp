@@ -278,7 +278,7 @@ void MainLoop(float deltaTime) {
     {   
         
         int loopX = loop.GetLoopX() + cameraX;
-        int loopY = yLoop + cameraY;
+        int loopY = cameraY;
         int loopZ = loop.GetLoopZ() + cameraZ;
         
         // gThreadPool.enqueue([ptr = &gWorldGen, bBox = &gChunkbBoxCreationSys, loopX, loopY, loopZ]() {
@@ -291,26 +291,26 @@ void MainLoop(float deltaTime) {
         //     }
         // });
 
-        // for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
-        //     int newY = loopY + y;
-        //     gWorldGen.GenerateChunk(loopX, newY, loopZ);
-        //     gWorldGen.GenerateModel(loopX, newY, loopZ);
-        //     // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
-        // }
+        for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
+            int newY = loopY + y;
+            gWorldGen.GenerateChunk(loopX, newY, loopZ);
+            gWorldGen.GenerateModel(loopX, newY, loopZ);
+            // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
+        }
 
-        gWorldGen.GenerateChunk(loopX, loopY, loopZ);
-        gWorldGen.GenerateModel(loopX, loopY, loopZ);
+        // gWorldGen.GenerateChunk(loopX, loopY, loopZ);
+        // gWorldGen.GenerateModel(loopX, loopY, loopZ);
 
             // if(delay <= 1) {
             //     gWorldGen.GenerateModel(loopX1, loopY, loopZ1);
             // }
             
-        if(yLoop <= -VoxelWorlds::RENDER_DISTANCE) {
+        // if(yLoop <= -VoxelWorlds::RENDER_DISTANCE) {
             loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
-            yLoop = VoxelWorlds::RENDER_DISTANCE;
-        } else {
-            yLoop--;
-        }
+        //     yLoop = VoxelWorlds::RENDER_DISTANCE;
+        // } else {
+        //     yLoop--;
+        // }
     }
 }
 

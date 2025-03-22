@@ -33,6 +33,9 @@ class WorldGenerationSystem {
         void GeneratePerlin(int x, int y, int z, std::string chunkName);
         float GetHeightMultiplier(float continentalness);
         bool CheckBlock(ChunkStorageComponent& currentChunkData, int chunkX, int chunkY, int chunkZ, int x, int y, int z);
+
+        char* FastIntToString(char* ptr, int value);
+        void FastChunkName(char* ptr, int chunkX, int chunkY, int chunkZ);
     
     private:
         unsigned int mSeed;

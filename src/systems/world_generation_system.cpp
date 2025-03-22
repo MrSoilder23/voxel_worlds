@@ -9,7 +9,7 @@ void WorldGenerationSystem::SetSeed(unsigned int seed) {
 #include <iostream>
 void WorldGenerationSystem::GenerateChunk(int x, int y, int z) {
     char chunkName[32];
-    snprintf(chunkName, sizeof(chunkName), "%d:%d:%d", x, y, z);
+    FastChunkName(chunkName, x, y, z);
 
     if(!mEntityManager->CreateEntity(chunkName)) {
         return;
@@ -36,7 +36,7 @@ void WorldGenerationSystem::GenerateChunk(int x, int y, int z) {
 }
 void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
     char chunkName[32];
-    snprintf(chunkName, sizeof(chunkName), "%d:%d:%d", x, y, z);
+    FastChunkName(chunkName, x, y, z);
 
     auto chunkData = mEntityManager->GetComponent<ChunkStorageComponent>(chunkName);
     if(!chunkData->mWasGenerated) {
@@ -241,8 +241,11 @@ float WorldGenerationSystem::GetHeightMultiplier(float continentalness) {
     return continentalness < CONTINENTAL_KEY_POINTS.front().first ? CONTINENTAL_KEY_POINTS.front().second : CONTINENTAL_KEY_POINTS.back().second;
 }
 
-bool WorldGenerationSystem::CheckBlock(ChunkStorageComponent& currentChunkData, int chunkX, int chunkY, int chunkZ, int x, int y, int z) {
-    int chunkSum = chunkX + chunkY + chunkZ;
+inline bool WorldGenerationSystem::CheckBlock(ChunkStorageComponent& currentChunkData, int chunkX, int chunkY, int chunkZ, int x, int y, int z) {
+    const int originalChunkX = chunkX;
+    const int originalChunkY = chunkY;
+    const int originalChunkZ = chunkZ;
+    
     if(x < 0) {
         x = VoxelWorlds::CHUNK_SIZE-1;
         chunkX--;
@@ -263,25 +266,52 @@ bool WorldGenerationSystem::CheckBlock(ChunkStorageComponent& currentChunkData, 
         chunkZ++;
     }
     
-    int chunkSum1 = chunkX + chunkY + chunkZ;
-    char chunkName[32];
-    if(chunkSum1 != chunkSum) {
-        snprintf(chunkName, sizeof(chunkName), "%d:%d:%d", chunkX, chunkY, chunkZ);
-        auto chunkData = mEntityManager->GetComponent<ChunkStorageComponent>(chunkName);
+    if(originalChunkX != chunkX || originalChunkY != chunkY || originalChunkZ != chunkZ) {
+        char chunkName[32];
+        FastChunkName(chunkName, chunkX, chunkY, chunkZ);
 
-        if(!chunkData) {
-            return false;
+        if(auto chunkData = mEntityManager->GetComponent<ChunkStorageComponent>(chunkName)) {
+            return ChunkStorage::GetBlock(*chunkData, x,y,z) == BlockTypes::air;
         }
         
-        if(ChunkStorage::GetBlock(*chunkData, x,y,z) == BlockTypes::air) {
-            return true; 
-        }
         return false;
     }
 
-    if(ChunkStorage::GetBlock(currentChunkData, x,y,z) == BlockTypes::air) {
-        return true; 
+    return ChunkStorage::GetBlock(currentChunkData, x,y,z) == BlockTypes::air;
+}
+
+inline char* WorldGenerationSystem::FastIntToString(char* ptr, int value) {
+    if (value == 0) {
+        *ptr++ = '0';
+        return ptr;
     }
 
-    return false;
+    const bool negative = value < 0;
+    if (negative) {
+        *ptr++ = '-';
+        value = -value;
+    }
+
+    char buffer[16];
+    int i = 0;
+    while (value > 0) {
+        buffer[i++] = '0' + (value % 10);
+        value /= 10;
+    }
+
+    while (i > 0) {
+        *ptr++ = buffer[--i];
+    }
+
+    return ptr;
+}
+
+
+void WorldGenerationSystem::FastChunkName(char* ptr, int chunkX, int chunkY, int chunkZ) {
+    ptr = FastIntToString(ptr, chunkX);
+    *ptr++ = ':';
+    ptr = FastIntToString(ptr, chunkY);
+    *ptr++ = ':';
+    ptr = FastIntToString(ptr, chunkZ);
+    *ptr++ = '\0';
 }

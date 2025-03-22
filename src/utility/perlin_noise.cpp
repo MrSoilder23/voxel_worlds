@@ -1,24 +1,24 @@
 #include "./utility/perlin_noise.hpp"
 
 glm::vec2 perlin_noise::Gradient(int x, int y, unsigned int seed) {
+    static constexpr size_t LOOKUP_SIZE = 4096;
+    static constexpr float ANGLE_STEP = 2.0f * glm::pi<float>() / LOOKUP_SIZE;
+    static const auto gradientLookUp = []() {
+        std::array<glm::vec2, LOOKUP_SIZE> LookUpTable;
+        for (size_t i = 0; i < LOOKUP_SIZE; ++i) {
+            float angle = i * ANGLE_STEP;
+            LookUpTable[i] = {std::cos(angle), std::sin(angle)};
+        }
+        return LookUpTable;
+    }();
+
     uint32_t h = seed;
     h ^= static_cast<uint32_t>(x) * 374761393u;
     h ^= static_cast<uint32_t>(y) * 668265263u;
     h = (h ^ (h >> 13)) * 1274126177u;
     h ^= (h >> 16);
     
-    static constexpr float angleFactor = 6.2831853f / 4294967296.0f; // 2π / 2^32
-    float angle = static_cast<float>(h) * angleFactor;
-
-    float sinAngle, cosAngle;
-    #ifdef _GNU_SOURCE
-        sincosf(angle, &sinAngle, &cosAngle);
-    #else
-        cosAngle = std::cosf(angle);
-        sinAngle = std::sinf(angle);
-    #endif
-    
-    return glm::vec2(cosAngle, sinAngle);
+    return gradientLookUp[(h >> 20) & (LOOKUP_SIZE - 1)];
 }
 
 float perlin_noise::PerlinNoiseNormalized(int chunkX, int chunkY,float x, float y, unsigned int seed) {
