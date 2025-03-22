@@ -10,8 +10,7 @@
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
-#include <tbb/task_arena.h>
-#include <tbb/parallel_for.h>
+#include <tbb/tbb.h>
 
 // Own libraries
 #include "./graphics/shader.hpp"
@@ -290,23 +289,21 @@ void MainLoop(float deltaTime) {
         //         int newY = loopY + y;
         //         ptr->GenerateChunk(loopX, newY, loopZ);
         //         ptr->GenerateModel(loopX, newY, loopZ);
-        //         // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
         //     }
         // });
         gArena.execute([ptr = &gWorldGen, loopX, loopY, loopZ](){
-            tbb::parallel_for(-VoxelWorlds::RENDER_DISTANCE, VoxelWorlds::RENDER_DISTANCE, [ptr = &gWorldGen, loopX, loopY, loopZ](int y){
-                int newY = loopY + y;
-                ptr->GenerateChunk(loopX, newY, loopZ);
-                ptr->GenerateModel(loopX, newY, loopZ);
-                // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
-
+            tbb::parallel_for(-VoxelWorlds::RENDER_DISTANCE, VoxelWorlds::RENDER_DISTANCE,
+            [ptr = &gWorldGen, loopX, loopY, loopZ](int y){
+                    int newY = loopY + y;
+                    ptr->GenerateChunk(loopX, newY, loopZ);
+                    ptr->GenerateModel(loopX, newY, loopZ);
+                
             });
         });
         // for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
         //     int newY = loopY + y;
         //     gWorldGen.GenerateChunk(loopX, newY, loopZ);
         //     gWorldGen.GenerateModel(loopX, newY, loopZ);
-        //     // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
         // }
 
         // gWorldGen.GenerateChunk(loopX, loopY, loopZ);
