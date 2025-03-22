@@ -7,6 +7,10 @@ void PhysicsSystem::UpdatePosition(EntityManager& entityManager, float deltaTime
     for(const auto& entityPair : entityManager.GetEntities()) {
         const size_t& entityID = entityPair.second;
 
+        if(entityID >= physics.size() || entityID >= positions.size()) {
+            continue;
+        }
+
         auto entityPhysics = physics[entityID];
         auto entityPosition = positions[entityID];
 

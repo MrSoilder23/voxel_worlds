@@ -7,6 +7,10 @@ void PositionUpdateSystem::UpdatePositionTransform(EntityManager& entityManager)
     for(const auto& entityPair : entityManager.GetEntities()) {
         const size_t& entityID = entityPair.second;
         
+        if(entityID >= positions.size()) {
+            continue;
+        }
+        
         auto position = positions[entityID];
         
         if(position && position->mDirty) {

@@ -14,6 +14,10 @@ void ChunkVertexSetupSystem::CreateVertexSpecification(EntityManager& entityMana
     for(const auto& entityPair : entityManager.GetEntities()) {
         const size_t& entityID = entityPair.second;
 
+        if(entityID >= models.size()) {
+            continue;
+        }
+
         auto model = models[entityID];
         
         if(model && !model->mGenerated && model->mModel.vertexPositions.size() != 0) {

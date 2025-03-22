@@ -281,22 +281,22 @@ void MainLoop(float deltaTime) {
         int loopY = cameraY;
         int loopZ = loop.GetLoopZ() + cameraZ;
         
-        // gThreadPool.enqueue([ptr = &gWorldGen, bBox = &gChunkbBoxCreationSys, loopX, loopY, loopZ]() {
-        //     // std::lock_guard<std::mutex> lock(gWorldMutex);
-        //     for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
-        //         int newY = loopY + y;
-        //         ptr->GenerateChunk(loopX, newY, loopZ);
-        //         ptr->GenerateModel(loopX, newY, loopZ);
-        //         // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
-        //     }
-        // });
+        gThreadPool.enqueue([ptr = &gWorldGen, bBox = &gChunkbBoxCreationSys, loopX, loopY, loopZ]() {
+            // std::lock_guard<std::mutex> lock(gWorldMutex);
+            for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
+                int newY = loopY + y;
+                ptr->GenerateChunk(loopX, newY, loopZ);
+                ptr->GenerateModel(loopX, newY, loopZ);
+                // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
+            }
+        });
 
-        for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
-            int newY = loopY + y;
-            gWorldGen.GenerateChunk(loopX, newY, loopZ);
-            gWorldGen.GenerateModel(loopX, newY, loopZ);
-            // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
-        }
+        // for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
+        //     int newY = loopY + y;
+        //     gWorldGen.GenerateChunk(loopX, newY, loopZ);
+        //     gWorldGen.GenerateModel(loopX, newY, loopZ);
+        //     // bBox->CreateChunkBoundingBoxes(loopX, newY, loopZ);
+        // }
 
         // gWorldGen.GenerateChunk(loopX, loopY, loopZ);
         // gWorldGen.GenerateModel(loopX, loopY, loopZ);

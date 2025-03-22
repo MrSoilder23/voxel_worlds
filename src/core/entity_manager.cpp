@@ -1,6 +1,7 @@
 #include "./core/entity_manager.hpp"
 
 bool EntityManager::CreateEntity(const std::string& entityName) {
+    std::unique_lock lockID(mMutexIDs);
     if (mIDs.find(entityName) != mIDs.end()) {
         return false;
     }
@@ -10,6 +11,7 @@ bool EntityManager::CreateEntity(const std::string& entityName) {
     return true;
 }
 void EntityManager::DeleteEntity(const std::string& entityName) {
+    std::unique_lock lockID(mMutexIDs);
     auto entityIt = mIDs.find(entityName);
 
     if (entityIt == mIDs.end()) return;

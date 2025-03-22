@@ -45,6 +45,10 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
     for(const auto& entityPair : entityManager.GetEntities()) {
         const size_t& entityID = entityPair.second;
 
+        if(entityID >= boundingBoxes.size() || entityID >= positions.size() || entityID >= chunkModels.size() || entityID >= models.size()) {
+            continue;
+        }
+
         auto boundingBoxComponent = boundingBoxes[entityID];
         if(boundingBoxComponent && !physics::IsAABBInFrustum(*boundingBoxComponent, cameraComponent->frustumPlanes)) {
             continue;

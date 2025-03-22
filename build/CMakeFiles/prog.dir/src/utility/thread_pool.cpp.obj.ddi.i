@@ -74648,6 +74648,8 @@ class ThreadPool {
             condition.notify_one();
         }
 
+        void StopAll();
+
         static ThreadPool& GetInstance();
 
     private:
@@ -74691,4 +74693,11 @@ ThreadPool::~ThreadPool() {
 ThreadPool& ThreadPool::GetInstance() {
     static ThreadPool sInstance(VoxelWorlds::THREAD_AMOUNT);
     return sInstance;
+}
+
+void ThreadPool::StopAll() {
+    std::unique_lock<std::mutex> lock(queueMutex);
+    stop = true;
+    lock.unlock();
+    condition.notify_all();
 }

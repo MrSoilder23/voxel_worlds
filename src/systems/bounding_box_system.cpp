@@ -7,6 +7,10 @@ void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
     for(const auto& entityPair : entityManager.GetEntities()) {
         const size_t& entityID = entityPair.second;
 
+        if(entityID >= boundingBoxes.size() || entityID >= positions.size()) {
+            continue;
+        }
+
         auto boundingBox = boundingBoxes[entityID];
         auto position = positions[entityID];
 
