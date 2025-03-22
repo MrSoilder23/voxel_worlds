@@ -52,7 +52,7 @@ glm::vec3 PlayerTargetSystem::GetBlock(EntityManager& entityManager, const Posit
         }
 
         for(const auto& box : chunkBounding->boundingBoxes) {   
-            float distance = utility::LineIntersectsAABB(ray, box);
+            float distance = physics::LineIntersectsAABB(ray, box);
             
             if(distance != -1 && distance < collisionDistance) {
                 collisionDistance = distance;

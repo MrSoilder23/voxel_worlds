@@ -118,7 +118,7 @@ CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/VoxelWorlds
 CMAKE_LINKER:FILEPATH=C:/msys64/mingw64/bin/ld.exe
 
 //Program used to build from build.ninja files.
-CMAKE_MAKE_PROGRAM:FILEPATH=C:/ProgramData/chocolatey/bin/ninja.exe
+CMAKE_MAKE_PROGRAM:FILEPATH=C:/msys64/mingw64/bin/ninja.exe
 
 //Flags used by the linker during the creation of modules during
 // all build types.

@@ -1,9 +1,18 @@
 #include "./systems/vertex_setup_system.hpp"
 
 void VertexSetupSystem::CreateVertexSpecification(EntityManager& entityManager) {
-    for(const auto& componentPointer : entityManager.GetEntities()) {
-        auto model = entityManager.GetComponent<ModelComponent>(componentPointer.first);
-        auto boundingBox = entityManager.GetComponent<BoundingBoxComponent>(componentPointer.first);
+    auto models = entityManager.GetComponentArray<ModelComponent>();
+    auto boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
+
+    for(const auto& entityPair : entityManager.GetEntities()) {
+        const size_t& entityID = entityPair.second;
+
+        if(entityID >= models.size() || entityID >= boundingBoxes.size()) {
+            continue;
+        }
+
+        auto model = models[entityID];
+        auto boundingBox = boundingBoxes[entityID];
 
         if(model && model->mVAO == 0) {
             
@@ -22,7 +31,8 @@ void VertexSetupSystem::CreateVertexSpecification(EntityManager& entityManager) 
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
             glBindVertexArray(0);
             
-        } else if(boundingBox && boundingBox->mVAO == 0) {
+        }
+        if(boundingBox && boundingBox->mVAO == 0) {
             glGenVertexArrays(1, &boundingBox->mVAO);
             glBindVertexArray(boundingBox->mVAO);
             

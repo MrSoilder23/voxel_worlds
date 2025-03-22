@@ -357,82 +357,27 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/backward/auto_ptr.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_uninitialized.h \
  C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_memory_defs.h \
- C:/msys64/mingw64/include/c++/14.2.0/shared_mutex \
- C:/Projects/voxel_worlds/include/core/component.hpp \
- C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
- C:/Projects/voxel_worlds/include/components/model_component.hpp \
- C:/Projects/voxel_worlds/include/graphics/texture.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/vector \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_vector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/vector.tcc \
- C:/Projects/voxel_worlds/include/world/transform.hpp \
- C:/Projects/voxel_worlds/include/model.hpp \
- C:/Projects/voxel_worlds/include/components/position_component.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/quaternion.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_clip_space.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_clip_space.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/vector_relational.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/vector_relational.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/detail/type_float.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_common.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_geometric.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_geometric.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_common.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_float.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/detail/type_quat.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_relational.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_relational.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/detail/type_quat.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_float_precision.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_double.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_double_precision.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_trigonometric.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_trigonometric.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_transform.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_transform.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/quaternion.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/epsilon.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/detail/setup.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/epsilon.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_exponential.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_exponential.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/component_wise.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/detail/setup.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/component_wise.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
- C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp \
- C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/atomic \
+ C:/msys64/mingw64/include/c++/14.2.0/shared_mutex \
+ C:/Projects/voxel_worlds/third_party/include/tbb/concurrent_hash_map.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/concurrent_hash_map.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_namespace_injection.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_utils.h \
+ C:/msys64/mingw64/include/c++/14.2.0/functional \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
  C:/msys64/mingw64/include/c++/14.2.0/array \
- C:/Projects/voxel_worlds/include/utility/constant.hpp \
- C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp \
- C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
- C:/Projects/voxel_worlds/include/group.hpp \
- C:/Projects/voxel_worlds/include/utility/utility.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/random \
- C:/msys64/mingw64/include/c++/14.2.0/bits/random.h \
- C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/opt_random.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pmmintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xmmintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mmintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitintrin.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/random.tcc \
- C:/msys64/mingw64/include/c++/14.2.0/numeric \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_numeric.h \
- C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_numeric_defs.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/immintrin.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_config.h \
+ C:/msys64/mingw64/include/c++/14.2.0/version \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_export.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_assert.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_machine.h \
+ C:/msys64/mingw64/include/intrin.h C:/msys64/mingw64/include/setjmp.h \
+ C:/msys64/mingw64/include/psdk_inc/intrin-impl.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/x86intrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/x86gprintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ia32intrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
@@ -449,6 +394,7 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/lzcntintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/lwpintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/movdirintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitxintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pconfigintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/popcntintrin.h \
@@ -471,6 +417,11 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xtestintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/hresetintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/usermsrintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/immintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mmintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xmmintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pmmintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/tmmintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/smmintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/wmmintrin.h \
@@ -526,6 +477,119 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/prfchwintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/keylockerintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxfp16intrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm3dnow.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/fma4intrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xopintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cpuid.h \
+ C:/msys64/mingw64/include/c++/14.2.0/thread \
+ C:/msys64/mingw64/include/c++/14.2.0/stop_token \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_thread.h \
+ C:/msys64/mingw64/include/c++/14.2.0/semaphore \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/semaphore_base.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_timed_wait.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/this_thread_sleep.h \
+ C:/msys64/mingw64/include/semaphore.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_assert.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_allocator_traits.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_template_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_utils.h \
+ C:/msys64/mingw64/include/c++/14.2.0/utility \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_relops.h \
+ C:/msys64/mingw64/include/c++/14.2.0/iterator \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stream_iterator.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_containers_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_allocator_traits.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_template_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_hash_compare.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_containers_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_range_common.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/tbb_allocator.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_utils.h \
+ C:/msys64/mingw64/include/c++/14.2.0/memory_resource \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/spin_rw_mutex.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_mutex_common.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/profiling.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_config.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_string_resource.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_scoped_lock.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_rtm_rw_mutex.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/spin_rw_mutex.h \
+ C:/msys64/mingw64/include/c++/14.2.0/cstring \
+ C:/msys64/mingw64/include/string.h \
+ C:/msys64/mingw64/include/sec_api/string_s.h \
+ C:/Projects/voxel_worlds/third_party/include/tbb/concurrent_vector.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/concurrent_vector.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_segment_table.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_exception.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/blocked_range.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/version.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/cache_aligned_allocator.h \
+ C:/Projects/voxel_worlds/include/core/component.hpp \
+ C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
+ C:/Projects/voxel_worlds/include/components/model_component.hpp \
+ C:/Projects/voxel_worlds/include/graphics/texture.hpp \
+ C:/Projects/voxel_worlds/include/world/transform.hpp \
+ C:/Projects/voxel_worlds/include/model.hpp \
+ C:/Projects/voxel_worlds/include/components/position_component.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/quaternion.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_clip_space.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_clip_space.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/vector_relational.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/vector_relational.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/detail/type_float.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_common.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_geometric.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_geometric.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_common.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_float.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/detail/type_quat.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_relational.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_relational.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/detail/type_quat.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_float_precision.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_double.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_double_precision.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_trigonometric.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_trigonometric.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_transform.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_transform.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/quaternion.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/epsilon.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/detail/setup.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/epsilon.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_exponential.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_exponential.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/component_wise.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/detail/setup.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/component_wise.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
+ C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp \
+ C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp \
+ C:/Projects/voxel_worlds/include/utility/constant.hpp \
+ C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp \
+ C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
+ C:/Projects/voxel_worlds/include/group.hpp \
+ C:/Projects/voxel_worlds/include/utility/perlin_noise.hpp \
+ C:/Projects/voxel_worlds/include/utility/utility.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/random \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/random.h \
+ C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/opt_random.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/random.tcc \
+ C:/msys64/mingw64/include/c++/14.2.0/numeric \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_numeric.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_numeric_defs.h \
  C:/Projects/voxel_worlds/include/line.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
@@ -553,14 +617,6 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_rwops.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_clipboard.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_cpuinfo.h \
- C:/msys64/mingw64/include/intrin.h C:/msys64/mingw64/include/setjmp.h \
- C:/msys64/mingw64/include/psdk_inc/intrin-impl.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/x86intrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm3dnow.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/fma4intrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xopintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cpuid.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_events.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_video.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_pixels.h \

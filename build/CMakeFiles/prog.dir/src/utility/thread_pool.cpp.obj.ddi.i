@@ -74630,7 +74630,7 @@ namespace VoxelWorlds {
     static constexpr float LACUNARITY = 2.7f;
 
 
-    static constexpr size_t THREAD_AMOUNT = 5;
+    static constexpr size_t THREAD_AMOUNT = 6;
     static constexpr float FRAME_RATE = 240;
 }
 # 12 "C:/Projects/voxel_worlds/include/utility/thread_pool.hpp" 2

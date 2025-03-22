@@ -17,7 +17,7 @@
 #include "./components/chunk_model_component.hpp"
 #include "./components/chunk_storage_component.hpp"
 #include "./components/bounding_box_collection_component.hpp"
-#include "./utility/utility.hpp"
+#include "./utility/perlin_noise.hpp"
 #include "./blocks/block_registry.hpp"
 #include "./blocks/block_texture_creator.hpp"
 
@@ -33,6 +33,9 @@ class WorldGenerationSystem {
         void GeneratePerlin(int x, int y, int z, std::string chunkName);
         float GetHeightMultiplier(float continentalness);
         bool CheckBlock(ChunkStorageComponent& currentChunkData, int chunkX, int chunkY, int chunkZ, int x, int y, int z);
+
+        char* FastIntToString(char* ptr, int value);
+        void FastChunkName(char* ptr, int chunkX, int chunkY, int chunkZ);
     
     private:
         unsigned int mSeed;

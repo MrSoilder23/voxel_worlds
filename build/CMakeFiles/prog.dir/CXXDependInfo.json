@@ -52,11 +52,6 @@
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/core/game.cpp"
 		},
-		"CMakeFiles/prog.dir/src/core/world.cpp.obj" : 
-		{
-			"language" : "CXX",
-			"source" : "C:/Projects/voxel_worlds/src/core/world.cpp"
-		},
 		"CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj" : 
 		{
 			"language" : "CXX",
@@ -147,6 +142,16 @@
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/world_generation_system.cpp"
 		},
+		"CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/utility/perlin_noise.cpp"
+		},
+		"CMakeFiles/prog.dir/src/utility/physics.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/utility/physics.cpp"
+		},
 		"CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj" : 
 		{
 			"language" : "CXX",
@@ -156,6 +161,11 @@
 		{
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/utility/thread_pool.cpp"
+		},
+		"CMakeFiles/prog.dir/src/utility/utility.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/utility/utility.cpp"
 		},
 		"CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj" : 
 		{

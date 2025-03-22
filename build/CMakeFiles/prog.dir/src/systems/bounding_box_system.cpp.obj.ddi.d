@@ -387,24 +387,43 @@ CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
- C:/Projects/voxel_worlds/include/utility/utility.hpp \
+ C:/Projects/voxel_worlds/include/utility/physics.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/array \
+ C:/Projects/voxel_worlds/include/line.hpp \
+ C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/unordered_map \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unordered_map.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable_policy.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/enable_special_members.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
  C:/msys64/mingw64/include/c++/14.2.0/iostream \
  C:/msys64/mingw64/include/c++/14.2.0/istream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/istream.tcc \
- C:/msys64/mingw64/include/c++/14.2.0/random \
- C:/msys64/mingw64/include/c++/14.2.0/bits/random.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
- C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/opt_random.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pmmintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xmmintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mmintrin.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitintrin.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/random.tcc \
- C:/msys64/mingw64/include/c++/14.2.0/numeric \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_numeric.h \
- C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_numeric_defs.h \
- C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/immintrin.h \
+ C:/msys64/mingw64/include/c++/14.2.0/typeindex \
+ C:/msys64/mingw64/include/c++/14.2.0/atomic \
+ C:/msys64/mingw64/include/c++/14.2.0/shared_mutex \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/chrono.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ratio \
+ C:/msys64/mingw64/include/c++/14.2.0/ctime \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/parse_numbers.h \
+ C:/msys64/mingw64/include/c++/14.2.0/mutex \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unique_lock.h \
+ C:/Projects/voxel_worlds/third_party/include/tbb/concurrent_hash_map.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/concurrent_hash_map.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_namespace_injection.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_utils.h \
+ C:/msys64/mingw64/include/c++/14.2.0/functional \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_function.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_config.h \
+ C:/msys64/mingw64/include/c++/14.2.0/version \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_export.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_assert.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_machine.h \
+ C:/msys64/mingw64/include/intrin.h C:/msys64/mingw64/include/setjmp.h \
+ C:/msys64/mingw64/include/psdk_inc/intrin-impl.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/x86intrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/x86gprintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ia32intrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/adxintrin.h \
@@ -421,6 +440,7 @@ CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi: \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/lzcntintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/lwpintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/movdirintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mwaitxintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pconfigintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/popcntintrin.h \
@@ -443,6 +463,11 @@ CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi: \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xtestintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/hresetintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/usermsrintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/immintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mmintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xmmintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pmmintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/tmmintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/smmintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/wmmintrin.h \
@@ -498,23 +523,59 @@ CMakeFiles\prog.dir\src\systems\bounding_box_system.cpp.obj.ddi: \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/prfchwintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/keylockerintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/amxfp16intrin.h \
- C:/Projects/voxel_worlds/include/utility/constant.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/array \
- C:/Projects/voxel_worlds/include/line.hpp \
- C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/unordered_map \
- C:/msys64/mingw64/include/c++/14.2.0/bits/unordered_map.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/hashtable_policy.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/enable_special_members.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/node_handle.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/erase_if.h \
- C:/msys64/mingw64/include/c++/14.2.0/typeindex \
- C:/msys64/mingw64/include/c++/14.2.0/shared_mutex \
- C:/msys64/mingw64/include/c++/14.2.0/bits/chrono.h \
- C:/msys64/mingw64/include/c++/14.2.0/ratio \
- C:/msys64/mingw64/include/c++/14.2.0/ctime \
- C:/msys64/mingw64/include/c++/14.2.0/bits/parse_numbers.h \
- C:/msys64/mingw64/include/c++/14.2.0/mutex \
- C:/msys64/mingw64/include/c++/14.2.0/bits/unique_lock.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm3dnow.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/fma4intrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/ammintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/xopintrin.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/cpuid.h \
+ C:/msys64/mingw64/include/c++/14.2.0/thread \
+ C:/msys64/mingw64/include/c++/14.2.0/stop_token \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_thread.h \
+ C:/msys64/mingw64/include/c++/14.2.0/semaphore \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/semaphore_base.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_timed_wait.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/this_thread_sleep.h \
+ C:/msys64/mingw64/include/semaphore.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_assert.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_allocator_traits.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_template_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_utils.h \
+ C:/msys64/mingw64/include/c++/14.2.0/utility \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_relops.h \
+ C:/msys64/mingw64/include/c++/14.2.0/iterator \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stream_iterator.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_containers_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_allocator_traits.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_template_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_hash_compare.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_containers_helpers.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_range_common.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/tbb_allocator.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_utils.h \
+ C:/msys64/mingw64/include/c++/14.2.0/memory_resource \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/spin_rw_mutex.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_mutex_common.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/profiling.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_config.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_string_resource.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_scoped_lock.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_rtm_rw_mutex.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/spin_rw_mutex.h \
+ C:/msys64/mingw64/include/c++/14.2.0/cstring \
+ C:/msys64/mingw64/include/string.h \
+ C:/msys64/mingw64/include/sec_api/string_s.h \
+ C:/Projects/voxel_worlds/third_party/include/tbb/concurrent_vector.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/concurrent_vector.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_segment_table.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_exception.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/blocked_range.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/version.h \
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/cache_aligned_allocator.h \
+ C:/msys64/mingw64/include/c++/14.2.0/algorithm \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
  C:/Projects/voxel_worlds/include/blocks/block_types.hpp

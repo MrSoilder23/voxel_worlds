@@ -36,15 +36,27 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
     auto cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
     glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
-    for(const auto& entityPointer : entityManager.GetEntities()) {
-        auto boundingBoxComponent = entityManager.GetComponent<BoundingBoxComponent>(entityPointer.first);
-        if(boundingBoxComponent && !utility::IsAABBInFrustum(*boundingBoxComponent, cameraComponent->frustumPlanes)) {
+    auto boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
+    auto positions = entityManager.GetComponentArray<PositionComponent>();
+
+    auto chunkModels = entityManager.GetComponentArray<ChunkModelComponent>();
+    auto models = entityManager.GetComponentArray<ModelComponent>();
+
+    for(const auto& entityPair : entityManager.GetEntities()) {
+        const size_t& entityID = entityPair.second;
+
+        if(entityID >= boundingBoxes.size() || entityID >= positions.size() || entityID >= chunkModels.size() || entityID >= models.size()) {
             continue;
         }
 
-        auto modelPositionComponent = entityManager.GetComponent<PositionComponent>(entityPointer.first);
-        auto chunkModelComponent = entityManager.GetComponent<ChunkModelComponent>(entityPointer.first);
-        auto modelComponent = entityManager.GetComponent<ModelComponent>(entityPointer.first);
+        auto boundingBoxComponent = boundingBoxes[entityID];
+        if(boundingBoxComponent && !physics::IsAABBInFrustum(*boundingBoxComponent, cameraComponent->frustumPlanes)) {
+            continue;
+        }
+
+        auto modelPositionComponent = positions[entityID];
+        auto chunkModelComponent = chunkModels[entityID];
+        auto modelComponent = models[entityID];
 
         ModelComponent* renderableModel = chunkModelComponent ? static_cast<ModelComponent*>(chunkModelComponent) : modelComponent;
         if(!renderableModel) {
@@ -97,16 +109,26 @@ void RendererSystem::DrawAllSingle(EntityManager& entityManager, std::string ent
 void RendererSystem::DrawAllDebug(EntityManager& entityManager) {
     auto cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
     glUseProgram(mGraphicsApp->mGraphicsPipeline);
-    
-    for(const auto& entityPointer : entityManager.GetEntities()) {
-        auto boundingBoxComp = entityManager.GetComponent<BoundingBoxComponent>(entityPointer.first);
-        if(!utility::IsAABBInFrustum(*boundingBoxComp, cameraComponent->frustumPlanes)) {
+
+    auto boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
+    auto positions = entityManager.GetComponentArray<PositionComponent>();
+
+    for(const auto& entityPair : entityManager.GetEntities()) {
+        const size_t& entityID = entityPair.second;
+
+        if(entityID >= boundingBoxes.size() || entityID >= positions.size()) {
             continue;
         }
 
-        auto boundingPos = entityManager.GetComponent<PositionComponent>(entityPointer.first);
+        auto boundingBoxComponent = boundingBoxes[entityID];
 
-        if(boundingBoxComp && boundingBoxComp->mVAO != 0) { 
+        if(boundingBoxComponent && !physics::IsAABBInFrustum(*boundingBoxComponent, cameraComponent->frustumPlanes)) {
+            continue;
+        }
+
+        auto boundingPos = positions[entityID];
+
+        if(boundingBoxComponent && boundingBoxComponent->mVAO != 0) { 
             // Reset Rotations for bounding boxes
             boundingPos->mTransform[0][0] = 1.0f; boundingPos->mTransform[0][1] = 0.0f; boundingPos->mTransform[0][2] = 0.0f;
             boundingPos->mTransform[1][0] = 0.0f; boundingPos->mTransform[1][1] = 1.0f; boundingPos->mTransform[1][2] = 0.0f;
@@ -120,8 +142,8 @@ void RendererSystem::DrawAllDebug(EntityManager& entityManager) {
             glUniformMatrix4fv(mProjectionLocation, 1, false, &perspective[0][0]);
 
             // componentPointer->GetMeshData().Bind();
-            glBindVertexArray(boundingBoxComp->mVAO);
-            glDrawElements(GL_LINES, static_cast<GLsizei>(boundingBoxComp->mModel.indexBufferData.size()), GL_UNSIGNED_INT, (void*)0);
+            glBindVertexArray(boundingBoxComponent->mVAO);
+            glDrawElements(GL_LINES, static_cast<GLsizei>(boundingBoxComponent->mModel.indexBufferData.size()), GL_UNSIGNED_INT, (void*)0);
         }
     }
 }

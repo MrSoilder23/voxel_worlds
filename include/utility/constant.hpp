@@ -29,6 +29,6 @@ namespace VoxelWorlds {
     static constexpr float LACUNARITY =  2.7f;
 
     // Game default settings
-    static constexpr size_t THREAD_AMOUNT = 5;
+    static constexpr size_t THREAD_AMOUNT = 6;
     static constexpr float FRAME_RATE = 240;
 }

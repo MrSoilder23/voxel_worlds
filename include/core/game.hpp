@@ -21,8 +21,10 @@ class Game {
         void InitializeProgram(std::string name, int x, int y, int w, int h);
         
         void SetBackgroundColor(uint8_t _r, uint8_t _g, uint8_t _b);
+        
         void SetEventCallback(const std::function<void(float)>& func);
         void SetUpdateCallback(const std::function<void(float)>& func);
+        void SetSystemCallback(const std::function<void(float)>& func);
 
         SDL_Window* GetWindow();
 
@@ -35,6 +37,7 @@ class Game {
     private:
         std::function<void(float)> mEventCallback;
         std::function<void(float)> mUpdateCallback;
+        std::function<void(float)> mSystemCallback;
     
         SDL_GLContext mOpenGLContext;
         SDL_Window* mWindow;

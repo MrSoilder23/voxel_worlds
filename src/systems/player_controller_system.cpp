@@ -111,7 +111,7 @@ void PlayerControllerSystem::Update(EntityManager& entityManager) {
 
     glm::mat4 viewProj = playerCamera->mProjectionMatrix * playerCamera->mViewMatrix;
 
-    utility::ExtractInfiniteFrustumPlanes(viewProj, playerCamera->frustumPlanes);
+    physics::ExtractInfiniteFrustumPlanes(viewProj, playerCamera->frustumPlanes);
 }
 
 void PlayerControllerSystem::RegisterMovementEvent(EventManager& eventManager, EntityManager& entityManager, InputAction action, glm::vec3 movementDirection) {

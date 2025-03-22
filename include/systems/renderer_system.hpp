@@ -7,6 +7,7 @@
 #include "./graphics/graphics.hpp"
 #include "./graphics/shader.hpp"
 #include "./core/entity_manager.hpp"
+#include "./utility/physics.hpp"
 
 #include "./components/bounding_box_component.hpp"
 #include "./components/position_component.hpp"

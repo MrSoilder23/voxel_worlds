@@ -1,14 +1,20 @@
 #include "./systems/bounding_box_system.hpp"
 
 void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
-    for(const auto& componentPointer : entityManager.GetEntities()) {
-        auto boundingBox = entityManager.GetComponent<BoundingBoxComponent>(componentPointer.first);
-        if(!boundingBox) {
+    auto boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
+    auto positions = entityManager.GetComponentArray<PositionComponent>();
+
+    for(const auto& entityPair : entityManager.GetEntities()) {
+        const size_t& entityID = entityPair.second;
+
+        if(entityID >= boundingBoxes.size() || entityID >= positions.size()) {
             continue;
         }
 
-        auto position = entityManager.GetComponent<PositionComponent>(componentPointer.first);
-        if(!position) {
+        auto boundingBox = boundingBoxes[entityID];
+        auto position = positions[entityID];
+
+        if(!boundingBox || !position) {
             continue;
         }
         
@@ -19,7 +25,7 @@ void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
             boundingBox->mWorldMax = std::move(worldMax);
             boundingBox->mWorldMin = std::move(worldMin);
 
-            boundingBox->mModel = std::move(utility::CreateBoundingModel(*boundingBox));
+            boundingBox->mModel = std::move(physics::CreateBoundingModel(*boundingBox));
         }
     }
 }
@@ -38,6 +44,6 @@ void BoundingBoxSystem::GenerateBoundingBoxSingle(EntityManager& entityManager, 
     boundingBox->mWorldMax = boundingBox->mLocalMax + position->mPosition;
     boundingBox->mWorldMin = boundingBox->mLocalMin + position->mPosition;
     
-    boundingBox->mModel = std::move(utility::CreateBoundingModel(*boundingBox));
+    boundingBox->mModel = std::move(physics::CreateBoundingModel(*boundingBox));
     
 }

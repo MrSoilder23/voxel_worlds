@@ -1,23 +1,35 @@
 #include "./core/entity_manager.hpp"
 
 bool EntityManager::CreateEntity(const std::string& entityName) {
-    if(mEntityComponents.find(entityName) == mEntityComponents.end()) {
-        mEntityComponents.emplace(entityName, std::unordered_map<std::type_index, std::unique_ptr<IComponent>>());
-        return true;
+    entityIDs::accessor entityAccessor;
+
+    if (!mIDs.insert(entityAccessor, entityName)) {
+        return false;
     }
-    return false;
+
+    entityAccessor->second = mNextEntityID++;
+
+    return true;
 }
 void EntityManager::DeleteEntity(const std::string& entityName) {
-    std::unique_lock lock(mMutex);
-    mEntityComponents.erase(entityName);
+    entityIDs::accessor entityAccessor;
+    if (!mIDs.find(entityAccessor, entityName)) {
+        return;
+    }
+    
+    mIDs.erase(entityAccessor);
+    
+    const size_t& id = entityAccessor->second;
+    for (auto& [type, components] : mComponents) {
+        if (id < components.size()) {
+            components[id].reset();
+        }
+    }
+
 }
 
-Entity& EntityManager::GetEntity(const std::string& entityName) {
-    return mEntityComponents[entityName];
-}
-
-std::unordered_map<std::string, Entity>& EntityManager::GetEntities() {
-    return mEntityComponents;
+tbb::concurrent_hash_map<std::string, size_t>& EntityManager::GetEntities() {
+    return mIDs;
 }
 EntityManager::~EntityManager() {
     std::cout << "EntityManager bye bye" << std::endl;
