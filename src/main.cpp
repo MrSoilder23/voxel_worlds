@@ -261,8 +261,6 @@ void MainLoop(float deltaTime) {
     static float gCameraOldY = 0;
     static float gCameraOldZ = 0;
 
-    static int yLoop = VoxelWorlds::RENDER_DISTANCE;
-
     glm::vec3 camera = gEntityManager.GetComponent<PositionComponent>("Player")->mPosition;
 
     int cameraX = static_cast<int>(std::floor(camera.x/VoxelWorlds::CHUNK_SIZE));
@@ -297,7 +295,6 @@ void MainLoop(float deltaTime) {
                     int newY = loopY + y;
                     ptr->GenerateChunk(loopX, newY, loopZ);
                     ptr->GenerateModel(loopX, newY, loopZ);
-                
             });
         });
         // for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
@@ -313,12 +310,7 @@ void MainLoop(float deltaTime) {
             //     gWorldGen.GenerateModel(loopX1, loopY, loopZ1);
             // }
             
-        // if(yLoop <= -VoxelWorlds::RENDER_DISTANCE) {
-            loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
-        //     yLoop = VoxelWorlds::RENDER_DISTANCE;
-        // } else {
-        //     yLoop--;
-        // }
+        loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
     }
 }
 
