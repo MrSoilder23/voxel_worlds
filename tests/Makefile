@@ -1,5 +1,11 @@
-SOURCE = ./ray_casting.cpp
-OUT = raycast
+CC = g++
+CFLAGS = -std=c++20 -O3 -g
+TARGETS = ray_casting perlin
+LIBRARIES = -I ../third_party/include -I ../include -L ../lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+SOURCES := $(wildcard ../src/utility/*.cpp)
+GLAD = ../third_party/glad.c
 
-all:
-	g++ -std=c++20 ../third_party/glad.c -I ../third_party/include -I ../include -L ../lib $(SOURCE) -O3 -o ./$(OUT) -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
+all: $(TARGETS)
+
+%: %.cpp
+	$(CC) $(CFLAGS) $(GLAD) $(LIBRARIES) $(SOURCES) -o $@ $<
