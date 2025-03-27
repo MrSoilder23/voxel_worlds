@@ -23,7 +23,7 @@ namespace open_simplex_noise {
 
     float Gradient(long long x, long long y, float dx, float dy, unsigned int seed);
 
-    float Noise2D(int x, int y, unsigned int seed);
+    float Noise2D(double x, double y, unsigned int seed);
     float Noise2DUnskewedBase(double x, double y, unsigned int seed);
     float LayeredNoise2D(double x, double y, unsigned int seed, int octaves = 4, float persistence = 0.5f, float lacunarity = 2.0f);
 }

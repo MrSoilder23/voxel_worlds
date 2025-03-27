@@ -46,12 +46,12 @@ float open_simplex_noise::Gradient(long long x, long long y, float dx, float dy,
 
     hash *= HASH_MULTIPLIER;
     hash ^= hash >> (64 - N_GRADS_2D_EXPONENT + 1);
-    int gi = (int)hash & ((N_GRADS_2D - 1) << 1);
+    int gi = static_cast<int>(hash) & ((N_GRADS_2D - 1) << 1);
 
     return GRADIENTS_2D[gi | 0] * dx + GRADIENTS_2D[gi | 1] * dy;
 }
 
-float open_simplex_noise::Noise2D(int x, int y, unsigned int seed) {
+float open_simplex_noise::Noise2D(double x, double y, unsigned int seed) {
     double s = SKEW_2D * (x + y);
     double xs = x + s, ys = y + s;
 
@@ -70,7 +70,8 @@ float open_simplex_noise::Noise2DUnskewedBase(double x, double y, unsigned int s
     long long ysbp = ysb * PRIME_Y;
 
     float t = (xi + yi) * static_cast<float>(UNSKEW_2D);
-    float dx0 = xi + t, dy0 = yi + t;
+    float dx0 = xi + t;
+    float dy0 = yi + t;
 
     // First vertex.
     float value = 0;
@@ -95,9 +96,7 @@ float open_simplex_noise::Noise2DUnskewedBase(double x, double y, unsigned int s
         if (a2 > 0) {
             value += (a2 * a2) * (a2 * a2) * Gradient(xsbp, ysbp + PRIME_Y, dx2, dy2, seed);
         }
-    }
-    else
-    {
+    } else {
         float dx2 = dx0 - static_cast<float>(UNSKEW_2D + 1);
         float dy2 = dy0 - static_cast<float>(UNSKEW_2D);
         float a2 = RSQUARED_2D - dx2 * dx2 - dy2 * dy2;
