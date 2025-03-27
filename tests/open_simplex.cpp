@@ -16,7 +16,7 @@ void WindowInit() {
         return;
     }
 
-    window = SDL_CreateWindow("Pixel Drawing", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("OpenSimplex2", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_SHOWN);
     if (!window) {
         exit(1);
         return;
