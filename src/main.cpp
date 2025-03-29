@@ -54,6 +54,7 @@ struct Settings {
 
     bool mBoundingDebug = false;
     bool mPhysics = false;
+    bool mWorldGen = true;
 };
 Settings gSettings;
 Game gGame;
@@ -81,6 +82,7 @@ void InitializeKeys() {
     gEventManager.RegisterEvent(InputAction::exit, [game = &gGame](float _){game->StopLoop();});
     gEventManager.RegisterEvent(InputAction::toggle_debug, [settings = &gSettings](float _){settings->mPhysics = !settings->mPhysics;});
     gEventManager.RegisterEvent(InputAction::toggle_debug2, [settings = &gSettings](float _){settings->mBoundingDebug = !settings->mBoundingDebug;});
+    gEventManager.RegisterEvent(InputAction::toggle_debug3, [settings = &gSettings](float _){settings->mWorldGen = !settings->mWorldGen;});
 
     pTarget.PlayerRaycast(gEntityManager);
 }
@@ -170,6 +172,9 @@ void Input(float deltaTime) {
                 gGame.StopLoop();
             }
 
+            if (e.key.keysym.sym == SDLK_F10) {
+                gEventManager.GetEvent(InputAction::toggle_debug3, deltaTime);
+            }
             if (e.key.keysym.sym == SDLK_F11) {
                 gEventManager.GetEvent(InputAction::toggle_debug, deltaTime);
             }
@@ -294,14 +299,16 @@ void MainLoop(float deltaTime) {
         //         ptr->GenerateModel(loopX, newY, loopZ);
         //     }
         // });
-        gArena.execute([ptr = &gWorldGen, loopX, loopY, loopZ](){
-            tbb::parallel_for(-VoxelWorlds::RENDER_DISTANCE, VoxelWorlds::RENDER_DISTANCE,
-            [ptr = &gWorldGen, loopX, loopY, loopZ](int y){
-                    int newY = loopY + y;
-                    ptr->GenerateChunk(loopX, newY, loopZ);
-                    ptr->GenerateModel(loopX, newY, loopZ);
+        if(gSettings.mWorldGen) {
+            gArena.execute([ptr = &gWorldGen, loopX, loopY, loopZ](){
+                tbb::parallel_for(-VoxelWorlds::RENDER_DISTANCE, VoxelWorlds::RENDER_DISTANCE,
+                [ptr = &gWorldGen, loopX, loopY, loopZ](int y){
+                        int newY = loopY + y;
+                        ptr->GenerateChunk(loopX, newY, loopZ);
+                        ptr->GenerateModel(loopX, newY, loopZ);
+                });
             });
-        });
+        }
         // for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
         //     int newY = loopY + y;
         //     gWorldGen.GenerateChunk(loopX, newY, loopZ);
