@@ -343,6 +343,14 @@ CMakeFiles\prog.dir\src\systems\chunk_bounding_creation_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/array \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
+ C:/Projects/voxel_worlds/include/utility/spline.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/algorithm \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
  C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp \
  C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
@@ -525,11 +533,4 @@ CMakeFiles\prog.dir\src\systems\chunk_bounding_creation_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/detail/_exception.h \
  C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/blocked_range.h \
  C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/version.h \
- C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/cache_aligned_allocator.h \
- C:/msys64/mingw64/include/c++/14.2.0/algorithm \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
- C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h
+ C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/cache_aligned_allocator.h

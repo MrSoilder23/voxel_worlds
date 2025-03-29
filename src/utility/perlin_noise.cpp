@@ -21,7 +21,7 @@ glm::vec2 perlin_noise::Gradient(int x, int y, unsigned int seed) {
     return gradientLookUp[(h >> 20) & (LOOKUP_SIZE - 1)];
 }
 
-float perlin_noise::PerlinNoiseNormalized(int chunkX, int chunkY,float x, float y, unsigned int seed) {
+float perlin_noise::Noise2DNormalized(int chunkX, int chunkY,float x, float y, unsigned int seed) {
     float dot1 = glm::dot(Gradient(chunkX,chunkY , seed), glm::vec2(x,-y));
     float dot2 = glm::dot(Gradient(chunkX+1,chunkY, seed), glm::vec2(x-1.0f,-y));
     float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x,1.0f-y));
@@ -34,15 +34,16 @@ float perlin_noise::PerlinNoiseNormalized(int chunkX, int chunkY,float x, float 
     float CD = dot3 + (x * (dot4-dot3));
 
     float result = AB + (y * (CD-AB));
+    result = (result + 1.0f) / 2.0f;
 
-    return (result + 1.0f) / 2.0f;
+    return result * 1.414f;
 }
 
-float perlin_noise::PerlinNoise(int chunkX, int chunkY,float x, float y, unsigned int seed) {
-    float dot1 = glm::dot(Gradient(chunkX,chunkY , seed), glm::vec2(x,-y));
-    float dot2 = glm::dot(Gradient(chunkX+1,chunkY, seed), glm::vec2(x-1.0f,-y));
-    float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x,1.0f-y));
-    float dot4 = glm::dot(Gradient(chunkX+1,chunkY+1, seed), glm::vec2(x-1.0f,1.0f-y));
+float perlin_noise::Noise2D(int chunkX, int chunkY,float x, float y, unsigned int seed) {
+    float dot1 = glm::dot(Gradient(chunkX,chunkY , seed), glm::vec2(x, y));
+    float dot2 = glm::dot(Gradient(chunkX+1,chunkY, seed), glm::vec2(x-1.0f, y));
+    float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x, y-1.0f));
+    float dot4 = glm::dot(Gradient(chunkX+1,chunkY+1, seed), glm::vec2(x-1.0f, y-1.0f));
 
     x = utility::Smooth(x);
     y = utility::Smooth(y);
@@ -52,12 +53,12 @@ float perlin_noise::PerlinNoise(int chunkX, int chunkY,float x, float y, unsigne
 
     float result = AB + (y * (CD-AB));
 
-    return result;
+    return result * 1.414f;
 }
 
 // Persistance - More Pronouced peaks and valleys
 // Lacunarity -  More detailed terrain
-float perlin_noise::LayeredPerlinNoise(int chunkX, int chunkY, float x, float y, unsigned int seed, int octaves, float persistence, float lacunarity) {
+float perlin_noise::LayeredNoise2DNormalized(int chunkX, int chunkY, float x, float y, unsigned int seed, int octaves, float persistence, float lacunarity) {
     float total = 0.0f;
     float frequency = 1.0f;
     float amplitude = 1.0f; 
@@ -72,7 +73,32 @@ float perlin_noise::LayeredPerlinNoise(int chunkX, int chunkY, float x, float y,
         float localX = (scaledX - newChunkX * VoxelWorlds::CHUNK_SIZE) / VoxelWorlds::CHUNK_SIZE;
         float localY = (scaledY - newChunkY * VoxelWorlds::CHUNK_SIZE) / VoxelWorlds::CHUNK_SIZE;
 
-        float noise = PerlinNoiseNormalized(newChunkX, newChunkY, localX, localY, seed);
+        float noise = Noise2DNormalized(newChunkX, newChunkY, localX, localY, seed);
+        total += noise * amplitude;
+
+        maxAmplitude += amplitude;
+        amplitude *= persistence; 
+        frequency *= lacunarity; 
+    }
+
+    return total / maxAmplitude;
+}
+float perlin_noise::LayeredNoise2D(int chunkX, int chunkY, float x, float y, unsigned int seed, int octaves, float persistence, float lacunarity) {
+    float total = 0.0f;
+    float frequency = 1.0f;
+    float amplitude = 1.0f; 
+    float maxAmplitude = 0.0f;
+
+    for (int i = 0; i < octaves; ++i) {
+        float scaledX = (chunkX * VoxelWorlds::CHUNK_SIZE + x * VoxelWorlds::CHUNK_SIZE) * frequency;
+        float scaledY = (chunkY * VoxelWorlds::CHUNK_SIZE + y * VoxelWorlds::CHUNK_SIZE) * frequency;
+
+        int newChunkX = static_cast<int>(floor(scaledX / VoxelWorlds::CHUNK_SIZE));
+        int newChunkY = static_cast<int>(floor(scaledY / VoxelWorlds::CHUNK_SIZE));
+        float localX = (scaledX - newChunkX * VoxelWorlds::CHUNK_SIZE) / VoxelWorlds::CHUNK_SIZE;
+        float localY = (scaledY - newChunkY * VoxelWorlds::CHUNK_SIZE) / VoxelWorlds::CHUNK_SIZE;
+
+        float noise = Noise2D(newChunkX, newChunkY, localX, localY, seed);
         total += noise * amplitude;
 
         maxAmplitude += amplitude;

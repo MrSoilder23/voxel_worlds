@@ -67,6 +67,8 @@ build CMakeFiles/glad.dir/third_party/glad.c.obj: C_COMPILER__glad_unscanned_Deb
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\glad.dir
   OBJECT_FILE_DIR = CMakeFiles\glad.dir\third_party
+  TARGET_COMPILE_PDB = CMakeFiles\glad.dir\glad.pdb
+  TARGET_PDB = libglad.pdb
 
 
 # =============================================================================
@@ -81,8 +83,9 @@ build libglad.a: C_STATIC_LIBRARY_LINKER__glad_Debug CMakeFiles/glad.dir/third_p
   OBJECT_DIR = CMakeFiles\glad.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
+  TARGET_COMPILE_PDB = CMakeFiles\glad.dir\glad.pdb
   TARGET_FILE = libglad.a
-  TARGET_PDB = glad.a.dbg
+  TARGET_PDB = libglad.pdb
 
 # =============================================================================
 # Object build statements for EXECUTABLE target prog
@@ -108,6 +111,8 @@ build CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj: CXX_COMPILER__prog_
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\blocks
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/blocks/block_texture_creator.cpp || cmake_object_order_depends_target_prog
@@ -125,6 +130,8 @@ build CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj: CXX_COMPILER
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\blocks
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/blocks/blocks.cpp || cmake_object_order_depends_target_prog
@@ -142,6 +149,8 @@ build CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj: CXX_COMPILER__prog_scanned_
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\blocks
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/core/entity_manager.cpp || cmake_object_order_depends_target_prog
@@ -159,6 +168,8 @@ build CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj: CXX_COMPILER__prog_sc
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\core
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/core/event_manager.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/core/event_manager.cpp || cmake_object_order_depends_target_prog
@@ -176,6 +187,8 @@ build CMakeFiles/prog.dir/src/core/event_manager.cpp.obj: CXX_COMPILER__prog_sca
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\core
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/core/game.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/core/game.cpp || cmake_object_order_depends_target_prog
@@ -193,6 +206,8 @@ build CMakeFiles/prog.dir/src/core/game.cpp.obj: CXX_COMPILER__prog_scanned_Debu
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\core
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/graphics/model_manager.cpp || cmake_object_order_depends_target_prog
@@ -210,6 +225,8 @@ build CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj: CXX_COMPILER__prog
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\graphics
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/graphics/shader.cpp || cmake_object_order_depends_target_prog
@@ -227,6 +244,8 @@ build CMakeFiles/prog.dir/src/graphics/shader.cpp.obj: CXX_COMPILER__prog_scanne
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\graphics
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/main.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/main.cpp || cmake_object_order_depends_target_prog
@@ -244,6 +263,8 @@ build CMakeFiles/prog.dir/src/main.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/mesh_data.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/mesh_data.cpp || cmake_object_order_depends_target_prog
@@ -261,6 +282,8 @@ build CMakeFiles/prog.dir/src/mesh_data.cpp.obj: CXX_COMPILER__prog_scanned_Debu
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/bounding_box_system.cpp || cmake_object_order_depends_target_prog
@@ -278,6 +301,8 @@ build CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj: CXX_COMPILER_
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/camera.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/camera.cpp || cmake_object_order_depends_target_prog
@@ -295,6 +320,8 @@ build CMakeFiles/prog.dir/src/systems/camera.cpp.obj: CXX_COMPILER__prog_scanned
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/chunk_bounding_creation_system.cpp || cmake_object_order_depends_target_prog
@@ -312,6 +339,8 @@ build CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj: CX
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/chunk_renderer_system.cpp || cmake_object_order_depends_target_prog
@@ -329,6 +358,8 @@ build CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj: CXX_COMPILE
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/chunk_vertex_setup_system.cpp || cmake_object_order_depends_target_prog
@@ -346,6 +377,8 @@ build CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj: CXX_COM
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/collision_system.cpp || cmake_object_order_depends_target_prog
@@ -363,6 +396,8 @@ build CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj: CXX_COMPILER__pr
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/physics_system.cpp || cmake_object_order_depends_target_prog
@@ -380,6 +415,8 @@ build CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj: CXX_COMPILER__prog
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/player_controller_system.cpp || cmake_object_order_depends_target_prog
@@ -397,6 +434,8 @@ build CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj: CXX_COMP
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/player_target_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/player_target_system.cpp || cmake_object_order_depends_target_prog
@@ -414,6 +453,8 @@ build CMakeFiles/prog.dir/src/systems/player_target_system.cpp.obj: CXX_COMPILER
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/position_update_system.cpp || cmake_object_order_depends_target_prog
@@ -431,6 +472,8 @@ build CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj: CXX_COMPIL
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/renderer_system.cpp || cmake_object_order_depends_target_prog
@@ -448,6 +491,8 @@ build CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj: CXX_COMPILER__pro
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/texture_manager.cpp || cmake_object_order_depends_target_prog
@@ -465,6 +510,8 @@ build CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj: CXX_COMPILER__pro
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/vertex_setup_system.cpp || cmake_object_order_depends_target_prog
@@ -482,6 +529,8 @@ build CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj: CXX_COMPILER_
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/systems/world_generation_system.cpp || cmake_object_order_depends_target_prog
@@ -499,6 +548,27 @@ build CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj: CXX_COMPI
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\systems
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
+  dyndep = CMakeFiles/prog.dir/CXX.dd
+
+build CMakeFiles/prog.dir/src/utility/open_simplex_noise2.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/utility/open_simplex_noise2.cpp || cmake_object_order_depends_target_prog
+  DEP_FILE = CMakeFiles\prog.dir\src\utility\open_simplex_noise2.cpp.obj.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\utility\open_simplex_noise2.cpp.obj.ddi
+  FLAGS = -g -O3 -g -std=gnu++20
+  INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
+  OBJ_FILE = CMakeFiles\prog.dir\src\utility\open_simplex_noise2.cpp.obj
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\utility\open_simplex_noise2.cpp.obj.ddi.i
+
+build CMakeFiles/prog.dir/src/utility/open_simplex_noise2.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/utility/open_simplex_noise2.cpp | CMakeFiles/prog.dir/src/utility/open_simplex_noise2.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
+  DEP_FILE = CMakeFiles\prog.dir\src\utility\open_simplex_noise2.cpp.obj.d
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\utility\open_simplex_noise2.cpp.obj.modmap
+  FLAGS = -g -O3 -g -std=gnu++20
+  INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
+  OBJECT_DIR = CMakeFiles\prog.dir
+  OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\utility
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/utility/perlin_noise.cpp || cmake_object_order_depends_target_prog
@@ -516,6 +586,8 @@ build CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj: CXX_COMPILER__prog_s
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\utility
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/utility/physics.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/utility/physics.cpp || cmake_object_order_depends_target_prog
@@ -533,6 +605,8 @@ build CMakeFiles/prog.dir/src/utility/physics.cpp.obj: CXX_COMPILER__prog_scanne
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\utility
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/utility/spiral_loop.cpp || cmake_object_order_depends_target_prog
@@ -550,6 +624,27 @@ build CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj: CXX_COMPILER__prog_sc
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\utility
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
+  dyndep = CMakeFiles/prog.dir/CXX.dd
+
+build CMakeFiles/prog.dir/src/utility/spline.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/utility/spline.cpp || cmake_object_order_depends_target_prog
+  DEP_FILE = CMakeFiles\prog.dir\src\utility\spline.cpp.obj.ddi.d
+  DYNDEP_INTERMEDIATE_FILE = CMakeFiles\prog.dir\src\utility\spline.cpp.obj.ddi
+  FLAGS = -g -O3 -g -std=gnu++20
+  INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
+  OBJ_FILE = CMakeFiles\prog.dir\src\utility\spline.cpp.obj
+  PREPROCESSED_OUTPUT_FILE = CMakeFiles\prog.dir\src\utility\spline.cpp.obj.ddi.i
+
+build CMakeFiles/prog.dir/src/utility/spline.cpp.obj: CXX_COMPILER__prog_scanned_Debug C$:/Projects/voxel_worlds/src/utility/spline.cpp | CMakeFiles/prog.dir/src/utility/spline.cpp.obj.modmap || cmake_object_order_depends_target_prog CMakeFiles/prog.dir/CXX.dd
+  DEP_FILE = CMakeFiles\prog.dir\src\utility\spline.cpp.obj.d
+  DYNDEP_MODULE_MAP_FILE = CMakeFiles\prog.dir\src\utility\spline.cpp.obj.modmap
+  FLAGS = -g -O3 -g -std=gnu++20
+  INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
+  OBJECT_DIR = CMakeFiles\prog.dir
+  OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\utility
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/utility/thread_pool.cpp || cmake_object_order_depends_target_prog
@@ -567,6 +662,8 @@ build CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj: CXX_COMPILER__prog_sc
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\utility
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/utility/utility.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/utility/utility.cpp || cmake_object_order_depends_target_prog
@@ -584,6 +681,8 @@ build CMakeFiles/prog.dir/src/utility/utility.cpp.obj: CXX_COMPILER__prog_scanne
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\utility
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
 build CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.ddi: CXX_SCAN__prog_Debug C$:/Projects/voxel_worlds/src/world/chunk_manager.cpp || cmake_object_order_depends_target_prog
@@ -601,9 +700,11 @@ build CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj: CXX_COMPILER__prog_sc
   INCLUDES = -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include
   OBJECT_DIR = CMakeFiles\prog.dir
   OBJECT_FILE_DIR = CMakeFiles\prog.dir\src\world
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
   dyndep = CMakeFiles/prog.dir/CXX.dd
 
-build CMakeFiles/prog.dir/CXX.dd | C$:/Projects/voxel_worlds/build/CMakeFiles/prog.dir/CXXModules.json CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj.modmap CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.modmap CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.modmap CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/core/event_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/core/game.cpp.obj.modmap CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.modmap CMakeFiles/prog.dir/src/main.cpp.obj.modmap CMakeFiles/prog.dir/src/mesh_data.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/camera.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/player_target_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/physics.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/utility.cpp.obj.modmap CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.modmap: CXX_DYNDEP__prog_Debug CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj.ddi CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.ddi CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.ddi CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/core/event_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/core/game.cpp.obj.ddi CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.ddi CMakeFiles/prog.dir/src/main.cpp.obj.ddi CMakeFiles/prog.dir/src/mesh_data.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/camera.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/player_target_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/physics.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/utility.cpp.obj.ddi CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.ddi | C$:/Projects/voxel_worlds/build/CMakeFiles/prog.dir/CXXDependInfo.json
+build CMakeFiles/prog.dir/CXX.dd | C$:/Projects/voxel_worlds/build/CMakeFiles/prog.dir/CXXModules.json CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj.modmap CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.modmap CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.modmap CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/core/event_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/core/game.cpp.obj.modmap CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.modmap CMakeFiles/prog.dir/src/main.cpp.obj.modmap CMakeFiles/prog.dir/src/mesh_data.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/camera.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/player_target_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.modmap CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/open_simplex_noise2.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/physics.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/spline.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.modmap CMakeFiles/prog.dir/src/utility/utility.cpp.obj.modmap CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.modmap: CXX_DYNDEP__prog_Debug CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj.ddi CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj.ddi CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj.ddi CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/core/event_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/core/game.cpp.obj.ddi CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/graphics/shader.cpp.obj.ddi CMakeFiles/prog.dir/src/main.cpp.obj.ddi CMakeFiles/prog.dir/src/mesh_data.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/camera.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/player_target_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj.ddi CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/open_simplex_noise2.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/physics.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/spline.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj.ddi CMakeFiles/prog.dir/src/utility/utility.cpp.obj.ddi CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj.ddi | C$:/Projects/voxel_worlds/build/CMakeFiles/prog.dir/CXXDependInfo.json
 
 
 # =============================================================================
@@ -613,16 +714,17 @@ build CMakeFiles/prog.dir/CXX.dd | C$:/Projects/voxel_worlds/build/CMakeFiles/pr
 #############################################
 # Link the executable C:\Projects\voxel_worlds\bin\prog.exe
 
-build C$:/Projects/voxel_worlds/bin/prog.exe: CXX_EXECUTABLE_LINKER__prog_Debug CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj CMakeFiles/prog.dir/src/core/event_manager.cpp.obj CMakeFiles/prog.dir/src/core/game.cpp.obj CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj CMakeFiles/prog.dir/src/graphics/shader.cpp.obj CMakeFiles/prog.dir/src/main.cpp.obj CMakeFiles/prog.dir/src/mesh_data.cpp.obj CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj CMakeFiles/prog.dir/src/systems/camera.cpp.obj CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj CMakeFiles/prog.dir/src/systems/player_target_system.cpp.obj CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj CMakeFiles/prog.dir/src/utility/physics.cpp.obj CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj CMakeFiles/prog.dir/src/utility/utility.cpp.obj CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj | C$:/Projects/voxel_worlds/lib/libSDL2main.a C$:/Projects/voxel_worlds/lib/libSDL2.dll.a C$:/Projects/voxel_worlds/lib/libSDL2_image.dll.a libglad.a || copy_assets copy_shaders libglad.a
+build C$:/Projects/voxel_worlds/bin/prog.exe: CXX_EXECUTABLE_LINKER__prog_Debug CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj CMakeFiles/prog.dir/src/core/event_manager.cpp.obj CMakeFiles/prog.dir/src/core/game.cpp.obj CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj CMakeFiles/prog.dir/src/graphics/shader.cpp.obj CMakeFiles/prog.dir/src/main.cpp.obj CMakeFiles/prog.dir/src/mesh_data.cpp.obj CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj CMakeFiles/prog.dir/src/systems/camera.cpp.obj CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj CMakeFiles/prog.dir/src/systems/player_target_system.cpp.obj CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj CMakeFiles/prog.dir/src/utility/open_simplex_noise2.cpp.obj CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj CMakeFiles/prog.dir/src/utility/physics.cpp.obj CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj CMakeFiles/prog.dir/src/utility/spline.cpp.obj CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj CMakeFiles/prog.dir/src/utility/utility.cpp.obj CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj | C$:/Projects/voxel_worlds/lib/libSDL2main.a C$:/Projects/voxel_worlds/lib/libSDL2.dll.a C$:/Projects/voxel_worlds/lib/libSDL2_image.dll.a libglad.a || copy_assets copy_shaders libglad.a
   FLAGS = -g -O3 -g
   LINK_LIBRARIES = -lmingw32  C:/Projects/voxel_worlds/lib/libSDL2main.a  C:/Projects/voxel_worlds/lib/libSDL2.dll.a  C:/Projects/voxel_worlds/lib/libSDL2_image.dll.a  libglad.a  -ltbb  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LC:/Projects/voxel_worlds/lib
   OBJECT_DIR = CMakeFiles\prog.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
+  TARGET_COMPILE_PDB = CMakeFiles\prog.dir\
   TARGET_FILE = C:\Projects\voxel_worlds\bin\prog.exe
   TARGET_IMPLIB = libprog.dll.a
-  TARGET_PDB = prog.exe.dbg
+  TARGET_PDB = C:\Projects\voxel_worlds\bin\prog.pdb
 
 
 #############################################
@@ -695,14 +797,14 @@ build all: phony copy_assets copy_shaders libglad.a C$:/Projects/voxel_worlds/bi
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/WindowsPaths.cmake C$:/Projects/voxel_worlds/CMakeLists.txt CMakeCache.txt CMakeFiles/3.31.3/CMakeCCompiler.cmake CMakeFiles/3.31.3/CMakeCXXCompiler.cmake CMakeFiles/3.31.3/CMakeRCCompiler.cmake CMakeFiles/3.31.3/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCCompilerABI.c C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCompilerIdDetection.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerSupport.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineRCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeFindBinUtils.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeNinjaFindMake.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseImplicitIncludeInfo.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseImplicitLinkInfo.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseLibraryArchitecture.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystem.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCompilerCommon.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestRCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ADSP-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ARMCC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ARMClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/AppleClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Borland-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Bruce-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompilerInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Compaq-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Cray-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CrayClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Embarcadero-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Fujitsu-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GHS-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-FindBinUtils.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/HP-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/HP-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IAR-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Intel-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/LCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/MSVC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/NVHPC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/NVIDIA-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/OrangeC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/PGI-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/PathScale-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SCO-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SDCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SunPro-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TI-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TIClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Tasking-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Watcom-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XL-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XL-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XLClang-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/zOS-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/FeatureTesting.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Determine-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/WindowsPaths.cmake C$:/Projects/voxel_worlds/CMakeLists.txt CMakeCache.txt CMakeFiles/3.31.3/CMakeCCompiler.cmake CMakeFiles/3.31.3/CMakeCXXCompiler.cmake CMakeFiles/3.31.3/CMakeRCCompiler.cmake CMakeFiles/3.31.3/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/WindowsPaths.cmake C$:/Projects/voxel_worlds/CMakeLists.txt CMakeCache.txt CMakeFiles/3.31.3/CMakeCCompiler.cmake CMakeFiles/3.31.3/CMakeCXXCompiler.cmake CMakeFiles/3.31.3/CMakeRCCompiler.cmake CMakeFiles/3.31.3/CMakeSystem.cmake: phony
+build C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCCompilerABI.c C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCXXInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeCompilerIdDetection.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerSupport.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineRCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeFindBinUtils.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeGenericSystem.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeInitializeConfigs.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeLanguageInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeNinjaFindMake.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseImplicitIncludeInfo.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseImplicitLinkInfo.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeParseLibraryArchitecture.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCCompiler.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeRCInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystem.cmake.in C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInitialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestCompilerCommon.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/CMakeTestRCCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ADSP-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ARMCC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/ARMClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/AppleClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Borland-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Bruce-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CMakeCommonCompilerMacros.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Clang-DetermineCompilerInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Compaq-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Cray-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/CrayClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Embarcadero-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Fujitsu-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GHS-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU-FindBinUtils.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/HP-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/HP-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IAR-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-C-DetermineVersionInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMClang-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Intel-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/LCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/MSVC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/NVHPC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/NVIDIA-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/OrangeC-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/PGI-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/PathScale-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SCO-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SDCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SunPro-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TI-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TIClang-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Tasking-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/TinyCC-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/VisualAge-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/Watcom-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XL-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XL-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XLClang-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/zOS-C-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCXXLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Internal/FeatureTesting.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Determine-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-C.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX-ABI.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU-CXX.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-GNU.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Initialize.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows-windres.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/Windows.cmake C$:/Program$ Files/CMake/share/cmake-3.31/Modules/Platform/WindowsPaths.cmake C$:/Projects/voxel_worlds/CMakeLists.txt CMakeCache.txt CMakeFiles/3.31.3/CMakeCCompiler.cmake CMakeFiles/3.31.3/CMakeCXXCompiler.cmake CMakeFiles/3.31.3/CMakeRCCompiler.cmake CMakeFiles/3.31.3/CMakeSystem.cmake: phony
 
 
 #############################################

@@ -588,6 +588,7 @@ CMakeFiles\prog.dir\src\systems\player_target_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/line.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
+ C:/Projects/voxel_worlds/include/utility/spline.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.hpp \
@@ -656,5 +657,6 @@ CMakeFiles\prog.dir\src\systems\player_target_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h \
+ C:/Projects/voxel_worlds/include/utility/open_simplex_noise2.hpp \
  C:/Projects/voxel_worlds/include/core/event_manager.hpp \
  C:/Projects/voxel_worlds/include/core/inputs.hpp

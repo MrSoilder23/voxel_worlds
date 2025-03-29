@@ -89,6 +89,8 @@
         "mutex": "cpp",
         "queue": "cpp",
         "future": "cpp",
-        "text_encoding": "cpp"
+        "text_encoding": "cpp",
+        "forward_list": "cpp",
+        "cfenv": "cpp"
     }
 }

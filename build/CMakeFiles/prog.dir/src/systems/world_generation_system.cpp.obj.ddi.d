@@ -578,6 +578,7 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
+ C:/Projects/voxel_worlds/include/utility/spline.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
@@ -649,4 +650,5 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_timer.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_version.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_locale.h \
- C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_misc.h
+ C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_misc.h \
+ C:/Projects/voxel_worlds/include/utility/open_simplex_noise2.hpp

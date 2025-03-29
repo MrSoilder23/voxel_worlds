@@ -47,11 +47,15 @@ build CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj: dyndep
 
+build CMakeFiles/prog.dir/src/utility/open_simplex_noise2.cpp.obj: dyndep
+
 build CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/utility/physics.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/spline.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj: dyndep
 

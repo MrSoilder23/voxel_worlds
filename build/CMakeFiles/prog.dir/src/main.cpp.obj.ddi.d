@@ -884,6 +884,7 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/group.hpp \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
+ C:/Projects/voxel_worlds/include/utility/spline.hpp \
  C:/Projects/voxel_worlds/include/line.hpp \
  C:/Projects/voxel_worlds/include/systems/renderer_system.hpp \
  C:/Projects/voxel_worlds/include/utility/physics.hpp \
@@ -911,6 +912,7 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp \
  C:/Projects/voxel_worlds/include/utility/perlin_noise.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
+ C:/Projects/voxel_worlds/include/utility/open_simplex_noise2.hpp \
  C:/Projects/voxel_worlds/include/systems/chunk_bounding_creation_system.hpp \
  C:/Projects/voxel_worlds/include/systems/collision_system.hpp \
  C:/Projects/voxel_worlds/include/systems/physics_system.hpp \

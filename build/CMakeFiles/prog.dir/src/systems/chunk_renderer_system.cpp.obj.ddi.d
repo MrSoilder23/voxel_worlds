@@ -394,10 +394,17 @@ CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/world/transform.hpp \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/array \
+ C:/Projects/voxel_worlds/include/utility/spline.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/algorithm \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
  C:/Projects/voxel_worlds/include/utility/utility.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/random \
  C:/msys64/mingw64/include/c++/14.2.0/bits/random.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/opt_random.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/pmmintrin.h \
  C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h \
@@ -586,12 +593,6 @@ CMakeFiles\prog.dir\src\systems\chunk_renderer_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/blocked_range.h \
  C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/version.h \
  C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/cache_aligned_allocator.h \
- C:/msys64/mingw64/include/c++/14.2.0/algorithm \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
- C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
  C:/Projects/voxel_worlds/include/graphics/shader.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/fstream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/codecvt.h \

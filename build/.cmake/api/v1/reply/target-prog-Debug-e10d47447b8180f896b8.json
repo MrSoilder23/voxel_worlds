@@ -126,7 +126,9 @@
 				26,
 				27,
 				28,
-				29
+				29,
+				30,
+				31
 			]
 		}
 	],
@@ -138,11 +140,11 @@
 		},
 		{
 			"backtrace" : 4,
-			"id" : "copy_assets::@6890427a1f51a3e7e1df"
+			"id" : "copy_shaders::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 4,
-			"id" : "copy_shaders::@6890427a1f51a3e7e1df"
+			"id" : "copy_assets::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "prog::@6890427a1f51a3e7e1df",
@@ -242,7 +244,9 @@
 				26,
 				27,
 				28,
-				29
+				29,
+				30,
+				31
 			]
 		}
 	],
@@ -395,6 +399,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
+			"path" : "src/utility/open_simplex_noise2.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
 			"path" : "src/utility/perlin_noise.cpp",
 			"sourceGroupIndex" : 0
 		},
@@ -408,6 +418,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/utility/spiral_loop.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/utility/spline.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

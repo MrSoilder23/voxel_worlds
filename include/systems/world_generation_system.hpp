@@ -20,6 +20,8 @@
 #include "./utility/perlin_noise.hpp"
 #include "./blocks/block_registry.hpp"
 #include "./blocks/block_texture_creator.hpp"
+#include "./utility/open_simplex_noise2.hpp"
+#include "./utility/spline.hpp"
 
 class WorldGenerationSystem {
     public:
@@ -30,8 +32,9 @@ class WorldGenerationSystem {
         void GenerateModel(int x, int y, int z);
 
     private:
-        void GeneratePerlin(int x, int y, int z, std::string chunkName);
-        float GetHeightMultiplier(float continentalness);
+        void GenerateNoise(int x, int y, int z, std::string chunkName);
+        float GenerateHeight(int x, int z);
+
         bool CheckBlock(ChunkStorageComponent& currentChunkData, int chunkX, int chunkY, int chunkZ, int x, int y, int z);
 
         char* FastIntToString(char* ptr, int value);

@@ -2,31 +2,50 @@
 // C++ standard libraries
 #include <array>
 
-namespace VoxelWorlds {
-    static constexpr int RENDER_DISTANCE = 6;
-    static constexpr float CHUNK_SIZE = 32;
-    static constexpr int CHUNK_GENERATION_OFFSET = 5;
-    
-    // Perlin noise settings
-    static constexpr int PERLIN_SCALE =    4;  // Scale of perlin noise
-    static constexpr int CONTINENTALNESS = 20; // Scale of continents
+// Own libraries
+#include "./utility/spline.hpp"
 
-    // continentalness, height multiplier
-    static constexpr std::array<std::pair<float, float>, 9> CONTINENTAL_KEY_POINTS = {{
-        {-1.0f, 600.0f},
-        {-0.8f, 100.0f},
-        {-0.4f, 150.0f},
-        {-0.1f, 150.0f},
-        { 0.0f, 400.0f},
-        { 0.6f, 400.0f},
-        { 0.8f, 500.0f},
-        { 0.9f, 900.0f},
-        { 1.0f, 1000.0f}
-    }};
+namespace VoxelWorlds {
+    static constexpr int RENDER_DISTANCE = 8;
+    static constexpr float CHUNK_SIZE = 32;
+    static constexpr int CHUNK_GENERATION_OFFSET = 12;
     
+    // Noise paint settings
+    static constexpr int SCALE = 3;
     static constexpr int   OCTAVES =     6;
     static constexpr float PERSISTANCE = 0.3f;
     static constexpr float LACUNARITY =  2.7f;
+
+    static Spline CONTINENTAL_SPLINE({
+        {-1.0f, 400.0f},
+        {-0.8f, 30.0f},
+        {-0.55f, 30.0f},
+        {-0.25f, 130.0f},
+        {-0.2f, 130.0f},
+        { 0.05f, 135.0f},
+        { 0.45f, 250.0f},
+        { 1.0f, 500.0f}
+    });
+    static Spline EROSION_SPLINE({
+        {-1.0f, 400.0f},
+        {-0.8f, 30.0f},
+        {-0.55f, 30.0f},
+        {-0.25f, 130.0f},
+        {-0.2f, 130.0f},
+        { 0.05f, 135.0f},
+        { 0.45f, 250.0f},
+        { 1.0f, 500.0f}
+    });
+    static Spline PEAKS_VALLEYS_SPLINE({
+        {-1.0f, 100.0f},
+        {-0.6f, 50.0f},
+        {-0.1f, -100.0f},
+        { 0.0f, -100.0f},
+        { 0.2f, 50.0f},
+        { 0.4f, 80.0f},
+        { 0.7f, 85.0f},
+        { 1.0f, 100.0f}
+    });
 
     // Game default settings
     static constexpr size_t THREAD_AMOUNT = 6;
