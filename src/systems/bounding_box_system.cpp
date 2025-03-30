@@ -22,8 +22,8 @@ void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
         glm::vec3 worldMin = boundingBox->mLocalMin + position->mPosition;
 
         if(boundingBox->mWorldMax != worldMax || boundingBox->mWorldMin != worldMin) {
-            boundingBox->mWorldMax = std::move(worldMax);
-            boundingBox->mWorldMin = std::move(worldMin);
+            boundingBox->mWorldMax = worldMax;
+            boundingBox->mWorldMin = worldMin;
 
             boundingBox->mModel = std::move(physics::CreateBoundingModel(*boundingBox));
         }

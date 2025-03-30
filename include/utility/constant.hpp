@@ -6,12 +6,14 @@
 #include "./utility/spline.hpp"
 
 namespace VoxelWorlds {
-    static constexpr int RENDER_DISTANCE = 8;
-    static constexpr float CHUNK_SIZE = 32;
-    static constexpr int CHUNK_GENERATION_OFFSET = 12;
+    static constexpr int   CHUNK_GENERATION_OFFSET = 12;
+    static constexpr int   RENDER_DISTANCE = 8;
+    static constexpr float CHUNK_SIZE =      32;
     
     // Noise paint settings
-    static constexpr int SCALE = 3;
+    static constexpr int PERLIN_SCALE =  4;
+
+    static constexpr int   SCALE =       3;
     static constexpr int   OCTAVES =     6;
     static constexpr float PERSISTANCE = 0.3f;
     static constexpr float LACUNARITY =  2.7f;

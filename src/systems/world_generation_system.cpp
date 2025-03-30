@@ -6,8 +6,7 @@ void WorldGenerationSystem::SetEntityManager(EntityManager& entityManager) {
 void WorldGenerationSystem::SetSeed(unsigned int seed) {
     mSeed = seed;
 }
-#include <iostream>
-void WorldGenerationSystem::GenerateChunk(int x, int y, int z) {
+void WorldGenerationSystem::GenerateChunk(float (&heightMap)[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE], int x, int y, int z) {
     char chunkName[32];
     FastChunkName(chunkName, x, y, z);
 
@@ -32,7 +31,7 @@ void WorldGenerationSystem::GenerateChunk(int x, int y, int z) {
     mEntityManager->AddComponent<BoundingBoxComponent>(chunkName, bBoxComponent);
     mEntityManager->AddComponent<BoundingBoxCollectionComponent>(chunkName);
 
-    GenerateNoise(x,y,z, chunkName);
+    GenerateNoise(heightMap, x,y,z, chunkName);
 }
 void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
     char chunkName[32];
@@ -152,69 +151,6 @@ void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
     }
 }
 
-// Private functions
-void WorldGenerationSystem::GenerateNoise(int x, int y, int z, std::string chunkName) {
-    auto chunkData = mEntityManager->GetComponent<ChunkStorageComponent>(chunkName);
-    static float chunkCoords = VoxelWorlds::CHUNK_SIZE-1.0f;
-
-    ChunkStorageComponent chunkStorage;
-    chunkStorage = *chunkData;
-
-    for(float blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
-        for(float blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
-            //
-            float noise = open_simplex_noise::LayeredNoise2D(
-                (blockX + (x * VoxelWorlds::CHUNK_SIZE)) * (0.005f / (2 * VoxelWorlds::SCALE)),
-                (blockZ + (z * VoxelWorlds::CHUNK_SIZE)) * (0.005f / (2 * VoxelWorlds::SCALE)),
-                mSeed,
-                VoxelWorlds::OCTAVES,
-                VoxelWorlds::PERSISTANCE + 0.3f,
-                VoxelWorlds::LACUNARITY + 2
-            );
-
-            float height = GenerateHeight(blockX + (x * VoxelWorlds::CHUNK_SIZE),
-                                          blockZ + (z * VoxelWorlds::CHUNK_SIZE));
-
-            height = std::round(height);
-
-            int numChunks = static_cast<int>(height / VoxelWorlds::CHUNK_SIZE);
-            int remainder = static_cast<int>(height) % static_cast<int>(VoxelWorlds::CHUNK_SIZE); // Extra blocks for the top chunk
-
-            int blocksToPlace = (y < numChunks) ? VoxelWorlds::CHUNK_SIZE : 0;
-            if(y == numChunks) {
-                blocksToPlace = remainder;
-            }
-
-            for(float blockY = 0; blockY < blocksToPlace; blockY++) {
-
-                int globalY = (y * VoxelWorlds::CHUNK_SIZE) + blockY;
-
-                if(globalY == height-1) {
-                    if(globalY < 100.0f) {
-                        if(noise >= 0.0f && noise <= 0.6f) {
-                            ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::dirt_block, blockX, blockY, blockZ);
-                        } else {
-                            ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::sand_block, blockX, blockY, blockZ);
-                        }
-         
-                    } else if(globalY < 110.0f) {
-                        ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::sand_block, blockX, blockY, blockZ);
-                    } else {
-                        ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::grass_block, blockX, blockY, blockZ);
-                    }
-
-                } else if(globalY <= height-2 && globalY >= height-5){
-                    ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::dirt_block, blockX, blockY, blockZ);
-                } else {
-                    ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::stone_block, blockX, blockY, blockZ);
-                }
-            }
-        }
-    }
-    chunkStorage.mWasGenerated = true;
-    *chunkData = std::move(chunkStorage);
-}
-
 float WorldGenerationSystem::GenerateHeight(int x, int z) {
     float continentalness = open_simplex_noise::LayeredNoise2D(
         x * (0.005f / (4 * VoxelWorlds::SCALE)),
@@ -246,6 +182,77 @@ float WorldGenerationSystem::GenerateHeight(int x, int z) {
     float peaksValleysAdj = VoxelWorlds::PEAKS_VALLEYS_SPLINE.evaluate(peaksAndValleys);
 
     return (continentalAdj * 0.5f) + (erosionAdj * 0.3f) + (peaksValleysAdj * 0.2f);
+}
+
+// Private functions
+void WorldGenerationSystem::GenerateNoise(float (&heightMap)[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE], int x, int y, int z, std::string chunkName) {
+    auto chunkData = mEntityManager->GetComponent<ChunkStorageComponent>(chunkName);
+    static float chunkCoords = VoxelWorlds::CHUNK_SIZE-1.0f;
+
+    // Perlin chunk size
+    const int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(x)/VoxelWorlds::PERLIN_SCALE));
+    const int chunkCoordinateZ = static_cast<int>(std::floor(static_cast<float>(z)/VoxelWorlds::PERLIN_SCALE));
+
+    const int xOffset = (x % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+    const int zOffset = (z % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+
+    ChunkStorageComponent chunkStorage;
+    chunkStorage = *chunkData;
+
+    for(float blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
+        for(float blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
+            
+            float perlin = perlin_noise::LayeredNoise2D(
+                chunkCoordinateX,
+                chunkCoordinateZ,
+                (blockX+(xOffset*chunkCoords))/(chunkCoords*VoxelWorlds::PERLIN_SCALE),
+                (blockZ+(zOffset*chunkCoords))/(chunkCoords*VoxelWorlds::PERLIN_SCALE),
+                mSeed,
+                3,
+                VoxelWorlds::PERSISTANCE + 0.3f,
+                VoxelWorlds::LACUNARITY + 2
+            );
+
+            float height = heightMap[static_cast<size_t>(blockX)][static_cast<size_t>(blockZ)];
+
+            height = std::round(height);
+
+            int numChunks = static_cast<int>(height / VoxelWorlds::CHUNK_SIZE);
+            int remainder = static_cast<int>(height) % static_cast<int>(VoxelWorlds::CHUNK_SIZE); // Extra blocks for the top chunk
+
+            int blocksToPlace = (y < numChunks) ? VoxelWorlds::CHUNK_SIZE : 0;
+            if(y == numChunks) {
+                blocksToPlace = remainder;
+            }
+
+            for(float blockY = 0; blockY < blocksToPlace; blockY++) {
+
+                int globalY = (y * VoxelWorlds::CHUNK_SIZE) + blockY;
+
+                if(globalY == height-1) {
+                    if(globalY < 100.0f) {
+                        if(perlin >= 0.0f && perlin <= 0.6f) {
+                            ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::dirt_block, blockX, blockY, blockZ);
+                        } else {
+                            ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::sand_block, blockX, blockY, blockZ);
+                        }
+         
+                    } else if(globalY < 110.0f) {
+                        ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::sand_block, blockX, blockY, blockZ);
+                    } else {
+                        ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::grass_block, blockX, blockY, blockZ);
+                    }
+
+                } else if(globalY <= height-2 && globalY >= height-5){
+                    ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::dirt_block, blockX, blockY, blockZ);
+                } else {
+                    ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::stone_block, blockX, blockY, blockZ);
+                }
+            }
+        }
+    }
+    chunkStorage.mWasGenerated = true;
+    *chunkData = std::move(chunkStorage);
 }
 
 inline bool WorldGenerationSystem::CheckBlock(ChunkStorageComponent& currentChunkData, int chunkX, int chunkY, int chunkZ, int x, int y, int z) {

@@ -23,23 +23,27 @@
 #include "./utility/open_simplex_noise2.hpp"
 #include "./utility/spline.hpp"
 
+namespace WorldGeneration {
+    constexpr size_t CHUNK_SIZE = static_cast<size_t>(VoxelWorlds::CHUNK_SIZE);
+}
+
 class WorldGenerationSystem {
     public:
         void SetEntityManager(EntityManager& entityManager);
         void SetSeed(unsigned int seed);
 
-        void GenerateChunk(int x, int y, int z);
+        void GenerateChunk(float (&heightMap)[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE], int x, int y, int z);
         void GenerateModel(int x, int y, int z);
-
-    private:
-        void GenerateNoise(int x, int y, int z, std::string chunkName);
+        
         float GenerateHeight(int x, int z);
+    private:
+        void GenerateNoise(float (&heightMap)[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE], int x, int y, int z, std::string chunkName);
 
         bool CheckBlock(ChunkStorageComponent& currentChunkData, int chunkX, int chunkY, int chunkZ, int x, int y, int z);
 
         char* FastIntToString(char* ptr, int value);
         void FastChunkName(char* ptr, int chunkX, int chunkY, int chunkZ);
-    
+
     private:
         unsigned int mSeed;
         float mRenderDistance;
