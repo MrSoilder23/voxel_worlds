@@ -301,6 +301,12 @@ void MainLoop(float deltaTime) {
         //     }
         // });
         if(gSettings.mWorldGen) {
+            float heightMap[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE]; 
+            for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
+                for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
+                    heightMap[blockX][blockZ] = gWorldGen.GenerateHeight(blockX + (loopX * VoxelWorlds::CHUNK_SIZE),blockZ + (loopZ * VoxelWorlds::CHUNK_SIZE));
+                }
+            }
             // gArena.execute([ptr = &gWorldGen, loopX, loopY, loopZ](){
                 // tbb::parallel_for(-VoxelWorlds::RENDER_DISTANCE, VoxelWorlds::RENDER_DISTANCE,
                 // [ptr = &gWorldGen, &heightMap, loopX, loopY, loopZ](int y){
@@ -309,12 +315,6 @@ void MainLoop(float deltaTime) {
                     //         // ptr->GenerateModel(loopX, newY, loopZ);
                     // });
                 // });
-            float heightMap[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE]; 
-            for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
-                for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
-                    heightMap[blockX][blockZ] = gWorldGen.GenerateHeight(blockX + (loopX * VoxelWorlds::CHUNK_SIZE),blockZ + (loopZ * VoxelWorlds::CHUNK_SIZE));
-                }
-            }
             for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
                 int newY = loopY + y;
                 gWorldGen.GenerateChunk(heightMap, loopX, newY, loopZ);
