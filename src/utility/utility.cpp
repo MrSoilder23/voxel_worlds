@@ -42,3 +42,38 @@ void utility::ScalePosition(PositionComponent& positionComponent, const glm::vec
 float utility::Smooth(float t) {
     return t * t * t * (t * (t * 6 - 15) + 10);
 }
+
+inline char* utility::FastIntToString(char* ptr, int value) {
+    if (value == 0) {
+        *ptr++ = '0';
+        return ptr;
+    }
+
+    const bool negative = value < 0;
+    if (negative) {
+        *ptr++ = '-';
+        value = -value;
+    }
+
+    char buffer[16];
+    int i = 0;
+    while (value > 0) {
+        buffer[i++] = '0' + (value % 10);
+        value /= 10;
+    }
+
+    while (i > 0) {
+        *ptr++ = buffer[--i];
+    }
+
+    return ptr;
+}
+
+void utility::FastChunkName(char* ptr, int chunkX, int chunkY, int chunkZ) {
+    ptr = FastIntToString(ptr, chunkX);
+    *ptr++ = ':';
+    ptr = FastIntToString(ptr, chunkY);
+    *ptr++ = ':';
+    ptr = FastIntToString(ptr, chunkZ);
+    *ptr++ = '\0';
+}

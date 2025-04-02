@@ -25,6 +25,8 @@ build CMakeFiles/prog.dir/src/systems/camera.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj: dyndep
 
+build CMakeFiles/prog.dir/src/systems/chunk_meshing_system.cpp.obj: dyndep
+
 build CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj: dyndep

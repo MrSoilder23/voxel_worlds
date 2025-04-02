@@ -582,6 +582,8 @@ CMakeFiles\prog.dir\src\systems\world_generation_system.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
  C:/Projects/voxel_worlds/include/group.hpp \
+ C:/Projects/voxel_worlds/include/components/chunk_state_component.hpp \
+ C:/Projects/voxel_worlds/include/chunk_progress.hpp \
  C:/Projects/voxel_worlds/include/utility/perlin_noise.hpp \
  C:/Projects/voxel_worlds/include/utility/utility.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/random \

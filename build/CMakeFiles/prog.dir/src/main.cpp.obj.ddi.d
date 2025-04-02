@@ -910,6 +910,8 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/systems/world_generation_system.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_collection_component.hpp \
+ C:/Projects/voxel_worlds/include/components/chunk_state_component.hpp \
+ C:/Projects/voxel_worlds/include/chunk_progress.hpp \
  C:/Projects/voxel_worlds/include/utility/perlin_noise.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_registry.hpp \
  C:/Projects/voxel_worlds/include/utility/open_simplex_noise2.hpp \
@@ -917,6 +919,7 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/systems/collision_system.hpp \
  C:/Projects/voxel_worlds/include/systems/physics_system.hpp \
  C:/Projects/voxel_worlds/include/systems/player_target_system.hpp \
+ C:/Projects/voxel_worlds/include/systems/chunk_meshing_system.hpp \
  C:/Projects/voxel_worlds/include/blocks/blocks.hpp \
  C:/Projects/voxel_worlds/include/graphics/model_manager.hpp \
  C:/Projects/voxel_worlds/include/systems/texture_manager.hpp \

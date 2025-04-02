@@ -30,6 +30,7 @@ void WorldGenerationSystem::GenerateChunk(float (&heightMap)[WorldGeneration::CH
     mEntityManager->AddComponent<ChunkModelComponent>(chunkName);
     mEntityManager->AddComponent<BoundingBoxComponent>(chunkName, bBoxComponent);
     mEntityManager->AddComponent<BoundingBoxCollectionComponent>(chunkName);
+    mEntityManager->AddComponent<ChunkStateComponent>(chunkName);
 
     GenerateNoise(heightMap, x,y,z, chunkName);
 }

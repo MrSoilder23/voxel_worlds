@@ -644,6 +644,8 @@ CMakeFiles\prog.dir\src\systems\player_target_system.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/sstream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/sstream.tcc \
  C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp \
+ C:/Projects/voxel_worlds/include/components/chunk_state_component.hpp \
+ C:/Projects/voxel_worlds/include/chunk_progress.hpp \
  C:/Projects/voxel_worlds/include/utility/perlin_noise.hpp \
  C:/Projects/voxel_worlds/include/utility/utility.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/random \

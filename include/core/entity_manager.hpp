@@ -133,7 +133,7 @@ class EntityManager {
         template <typename ComponentType>
         std::vector<ComponentType*> GetComponentArray() {
             static const std::type_index componentTypeIndex = typeid(ComponentType);
-            componentsMap::accessor componentsAccessor;
+            componentsMap::const_accessor componentsAccessor;
 
             std::vector<ComponentType*> components(mNextEntityID, nullptr);
             if(!mComponents.find(componentsAccessor, componentTypeIndex)) {

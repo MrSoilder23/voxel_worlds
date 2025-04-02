@@ -85,6 +85,12 @@
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\systems\\chunk_meshing_system.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\systems\\chunk_meshing_system.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\systems\\chunk_meshing_system.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\systems\\chunk_meshing_system.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\systems\\chunk_meshing_system.cpp.obj"
+},
+{
+  "directory": "C:/Projects/voxel_worlds/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\systems\\chunk_renderer_system.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\systems\\chunk_renderer_system.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\systems\\chunk_renderer_system.cpp",
   "file": "C:\\Projects\\voxel_worlds\\src\\systems\\chunk_renderer_system.cpp",
   "output": "CMakeFiles\\prog.dir\\src\\systems\\chunk_renderer_system.cpp.obj"
