@@ -11,8 +11,7 @@ void ChunkVertexSetupSystem::CreateVertexSpecification(EntityManager& entityMana
     }
     std::sort(textures.begin(), textures.end());
 
-    for(const auto& entityPair : entityManager.GetEntities()) {
-        const size_t& entityID = entityPair.second;
+    for(size_t entityID = 0; entityID < models.size(); entityID++) {
 
         if(entityID >= models.size()) {
             continue;

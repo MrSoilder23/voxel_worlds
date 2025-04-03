@@ -7,8 +7,7 @@ void WorldGenerationSystem::SetSeed(unsigned int seed) {
     mSeed = seed;
 }
 void WorldGenerationSystem::GenerateChunk(float (&heightMap)[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE], int x, int y, int z) {
-    char chunkName[32];
-    FastChunkName(chunkName, x, y, z);
+    glm::ivec3 chunkName = {x, y, z};
 
     if(!mEntityManager->CreateEntity(chunkName)) {
         return;
@@ -32,11 +31,10 @@ void WorldGenerationSystem::GenerateChunk(float (&heightMap)[WorldGeneration::CH
     mEntityManager->AddComponent<BoundingBoxCollectionComponent>(chunkName);
     mEntityManager->AddComponent<ChunkStateComponent>(chunkName);
 
-    GenerateNoise(heightMap, x,y,z, chunkName);
+    GenerateNoise(heightMap, x,y,z);
 }
 void WorldGenerationSystem::GenerateModel(int x, int y, int z) {
-    char chunkName[32];
-    FastChunkName(chunkName, x, y, z);
+    glm::ivec3 chunkName = {x, y, z};
 
     auto chunkData = mEntityManager->GetComponent<ChunkStorageComponent>(chunkName);
     if(!chunkData->mWasGenerated) {
@@ -186,7 +184,9 @@ float WorldGenerationSystem::GenerateHeight(int x, int z) {
 }
 
 // Private functions
-void WorldGenerationSystem::GenerateNoise(float (&heightMap)[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE], int x, int y, int z, std::string chunkName) {
+void WorldGenerationSystem::GenerateNoise(float (&heightMap)[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE], int x, int y, int z) {
+    glm::ivec3 chunkName = {x,y,z};
+
     auto chunkData = mEntityManager->GetComponent<ChunkStorageComponent>(chunkName);
     static float chunkCoords = VoxelWorlds::CHUNK_SIZE-1.0f;
 

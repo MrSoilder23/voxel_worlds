@@ -1,36 +1,39 @@
 #include "./systems/chunk_meshing_system.hpp"
-#include <tbb/tbb.h>
 
-inline ChunkStorageComponent* GetNeighbouringChunk(EntityManager& entityManager, const tbb::concurrent_hash_map<std::string, size_t>& entityMap, 
-const std::vector<ChunkStorageComponent*>& storageComponents, int x, int y, int z) {
-    char chunkName[32];
-    utility::FastChunkName(chunkName, x, y, z);
+inline ChunkStorageComponent* ChunkMeshingSystem::GetNeighbouringChunk(
+    EntityManager& entityManager, const tbb::concurrent_hash_map<glm::ivec3, size_t, Vec3Hash>& entityMap, 
+    const std::vector<ChunkStorageComponent*>& storageComponents, int x, int y, int z
+) {
+    glm::ivec3 coords = {x,y,z};
 
-    entityIDs::const_accessor entityAccessor;
-    if(!entityMap.find(entityAccessor, chunkName)) {
+    chunkEntityIDs::const_accessor chunkEntityAccessor;
+    if(!entityMap.find(chunkEntityAccessor, coords)) {
         return nullptr;
     }
 
-    return storageComponents[entityAccessor->second];
+    return storageComponents[chunkEntityAccessor->second];
 }
 
 void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
-    auto models = entityManager.GetComponentArray<ChunkModelComponent>();
-    auto states = entityManager.GetComponentArray<ChunkStateComponent>();
-    auto storages = entityManager.GetComponentArray<ChunkStorageComponent>();
-    auto positions = entityManager.GetComponentArray<PositionComponent>();
-    auto boundingCollections = entityManager.GetComponentArray<BoundingBoxCollectionComponent>();
+    const auto models = entityManager.GetComponentArray<ChunkModelComponent>();
+    const auto states = entityManager.GetComponentArray<ChunkStateComponent>();
+    const auto storages = entityManager.GetComponentArray<ChunkStorageComponent>();
+    const auto positions = entityManager.GetComponentArray<PositionComponent>();
+    const auto boundingCollections = entityManager.GetComponentArray<BoundingBoxCollectionComponent>();
     
-    BlockRegistry& blockRegistry = BlockRegistry::GetInstance();
-
+    static BlockRegistry& blockRegistry = BlockRegistry::GetInstance();
     static std::unordered_map<GLuint64, GLuint> textures = TextureMap();
 
-    const auto& entities = entityManager.GetEntities();
-    for(const auto& entityPair : entities) {
-        const size_t& entityID = entityPair.second;
+    const auto& entities = entityManager.GetChunkEntities();
+    static tbb::task_arena arena;
+
+    arena.execute([&](){
+    const int size = models.size();
+
+    tbb::parallel_for(0, size,  [&](int entityID){
 
         if(entityID >= models.size()) {
-            continue;
+            return;
         }
 
         auto& model = models[entityID];
@@ -40,37 +43,35 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
         auto& boundingCollection = boundingCollections[entityID];
 
         if(!model || !state || !storage || !position || !boundingCollection) {
-            continue;
+            return;
         }
 
         if(state->mProgress == ChunkProgress::fully_generated) {
-            continue;
+            return;
         }
 
-        glm::vec3 chunkPos = position->mPosition / VoxelWorlds::CHUNK_SIZE; 
+        const glm::vec3 chunkPos = position->mPosition / VoxelWorlds::CHUNK_SIZE;
         
-        auto chunkRight = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x+1, chunkPos.y, chunkPos.z);
-        auto chunkLeft  = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x-1, chunkPos.y, chunkPos.z);
-        auto chunkTop   = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x, chunkPos.y+1, chunkPos.z);
-        auto chunkBot   = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x, chunkPos.y-1, chunkPos.z);
-        auto chunkFront = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x, chunkPos.y, chunkPos.z+1);
-        auto chunkBack  = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x, chunkPos.y, chunkPos.z-1);
+        const auto& chunkRight = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x+1, chunkPos.y, chunkPos.z);
+        const auto& chunkLeft  = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x-1, chunkPos.y, chunkPos.z);
+        const auto& chunkTop   = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x, chunkPos.y+1, chunkPos.z);
+        const auto& chunkBot   = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x, chunkPos.y-1, chunkPos.z);
+        const auto& chunkFront = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x, chunkPos.y, chunkPos.z+1);
+        const auto& chunkBack  = GetNeighbouringChunk(entityManager, entities, storages, chunkPos.x, chunkPos.y, chunkPos.z-1);
 
         if(state->mProgress == ChunkProgress::partially_generated) {
             if(!chunkRight || !chunkLeft || !chunkTop || !chunkBot || !chunkFront || !chunkBack) {
-                continue;
+                return;
             }
         }
 
-        Model tempModel;
         BoundingBoxCollectionComponent bBoxCollection;
-        std::vector<GLuint> textureIdVector;
-        std::vector<glm::vec3> texturePositions;
+        ChunkModelComponent chunkModel;
         
         for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
             for(int blockY = 0; blockY < VoxelWorlds::CHUNK_SIZE; blockY++) {
                 for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
-                    BlockTypes block = ChunkStorage::GetBlock(*storage, blockX, blockY, blockZ);
+                    const BlockTypes& block = ChunkStorage::GetBlock(*storage, blockX, blockY, blockZ);
                     
                     if(block == BlockTypes::air) {
                         continue;
@@ -149,32 +150,32 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
                     }
     
                     for(int i = 0; i < tempIndexes.size(); i++) {
-                        tempIndexes[i] = tempIndexes[i] + tempModel.vertexPositions.size();
+                        tempIndexes[i] = tempIndexes[i] + chunkModel.mModel.vertexPositions.size();
                     }
                     
                     auto& blockObject = blockRegistry.GetBlock(block);
-                    glm::vec3 chunkOffset = glm::vec3(blockX,blockY,blockZ);
+                    const glm::vec3 chunkOffset = glm::vec3(blockX,blockY,blockZ);
                     for (auto chunkVertex : blockObject.model.vertexPositions) {
-                        tempModel.vertexPositions.push_back(chunkVertex + chunkOffset);
+                        chunkModel.mModel.vertexPositions.push_back(chunkVertex + chunkOffset);
                     }
                     
-                    texturePositions.insert(texturePositions.end(), 
+                    chunkModel.mTexturePositions.insert(chunkModel.mTexturePositions.end(), 
                                                     blockObject.model.vertexPositions.begin(),
                                                     blockObject.model.vertexPositions.end());
                     
-                    GLuint64 textureIDs = blockObject.textures->textureHandle;
-                    textureIdVector.insert(textureIdVector.end(), 
+                    const GLuint64& textureIDs = blockObject.textures->textureHandle;
+                    chunkModel.mTextures.insert(chunkModel.mTextures.end(), 
                                                     blockObject.model.vertexPositions.size(),
                                                     textures[textureIDs]);
     
-                    tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), 
+                    chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), 
                                 std::make_move_iterator(tempIndexes.begin()),
                                 std::make_move_iterator(tempIndexes.end()));
     
                     BoundingBoxComponent bBox;
                     bBox.mWorldMin = glm::vec3(-0.5f+blockX+VoxelWorlds::CHUNK_SIZE*chunkPos.x,
-                                               -0.5f+blockY+VoxelWorlds::CHUNK_SIZE*chunkPos.y,
-                                               -0.5f+blockZ+VoxelWorlds::CHUNK_SIZE*chunkPos.z);
+                                                -0.5f+blockY+VoxelWorlds::CHUNK_SIZE*chunkPos.y,
+                                                -0.5f+blockZ+VoxelWorlds::CHUNK_SIZE*chunkPos.z);
     
                     bBox.mWorldMax = glm::vec3( 0.5f+blockX+VoxelWorlds::CHUNK_SIZE*chunkPos.x, 
                                                 0.5f+blockY+VoxelWorlds::CHUNK_SIZE*chunkPos.y, 
@@ -185,14 +186,7 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
             }
         }
 
-        model->mTexturePositions.clear();
-        model->mTextures.clear();
-        model->mModel = Model();
-        
-        model->mTexturePositions = std::move(texturePositions);
-        model->mTextures = std::move(textureIdVector);
-        model->mModel = std::move(tempModel);
-        
+        *model = std::move(chunkModel);
         model->mGenerated = false;
         
         *boundingCollection = std::move(bBoxCollection);
@@ -201,7 +195,9 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
         } else {
             state->mProgress = ChunkProgress::fully_generated;
         }
-    }
+    });
+
+    });
 }
 
 // Private

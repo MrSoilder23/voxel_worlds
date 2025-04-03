@@ -42,8 +42,7 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
     const auto chunkModels = entityManager.GetComponentArray<ChunkModelComponent>();
     const auto models = entityManager.GetComponentArray<ModelComponent>();
 
-    for(const auto& entityPair : entityManager.GetEntities()) {
-        const size_t& entityID = entityPair.second;
+    for(size_t entityID = 0; entityID < boundingBoxes.size(); entityID++) {
 
         if(entityID >= boundingBoxes.size() || entityID >= positions.size() || entityID >= chunkModels.size() || entityID >= models.size()) {
             continue;
@@ -59,7 +58,7 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
         const auto& modelComponent = models[entityID];
 
         const ModelComponent* renderableModel = chunkModelComponent ? static_cast<ModelComponent*>(chunkModelComponent) : modelComponent;
-        if(!renderableModel) {
+        if(!renderableModel || renderableModel->mModel.vertexPositions.size() == 0) {
             continue;
         }
 

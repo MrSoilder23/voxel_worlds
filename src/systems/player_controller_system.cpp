@@ -7,10 +7,10 @@ void PlayerControllerSystem::SetScreenSize(float screenWidth, float screenHeight
     mScreenWidth = screenWidth;
     mScreenHeight = screenHeight;
 }
-void PlayerControllerSystem::SetCamera(EntityManager& entityManager, float near) {
+void PlayerControllerSystem::SetCamera(EntityManager& entityManager, float zNear) {
     auto playerCamera = entityManager.GetComponent<CameraComponent>("Player");
 
-    playerCamera->mProjectionMatrix = glm::infinitePerspective(mFov, mScreenWidth/mScreenHeight, near);
+    playerCamera->mProjectionMatrix = glm::infinitePerspective(mFov, mScreenWidth/mScreenHeight, zNear);
 }
 
 void PlayerControllerSystem::InitializeMovement(EntityManager& entityManager) {

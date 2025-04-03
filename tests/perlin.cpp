@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
 
     for (float x = 0; x < PerlinSize; x++) {
         for (float y = 0; y < PerlinSize; y++) {
-            float perlinHeight = perlin_noise::Noise(
+            float perlinHeight = perlin_noise::Noise2D(
                 0,
                 0,
                 x/(PerlinSize-1.0f),

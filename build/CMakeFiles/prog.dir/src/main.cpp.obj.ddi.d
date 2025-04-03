@@ -866,10 +866,6 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
  C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/typeindex \
- C:/Projects/voxel_worlds/third_party/include/tbb/concurrent_hash_map.h \
- C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/concurrent_hash_map.h \
- C:/Projects/voxel_worlds/third_party/include/tbb/concurrent_vector.h \
- C:/Projects/voxel_worlds/third_party/include/oneapi/tbb/concurrent_vector.h \
  C:/Projects/voxel_worlds/include/core/component.hpp \
  C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
  C:/Projects/voxel_worlds/include/core/game.hpp \

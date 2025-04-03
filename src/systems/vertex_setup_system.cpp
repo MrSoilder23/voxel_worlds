@@ -4,8 +4,7 @@ void VertexSetupSystem::CreateVertexSpecification(EntityManager& entityManager) 
     auto models = entityManager.GetComponentArray<ModelComponent>();
     auto boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
 
-    for(const auto& entityPair : entityManager.GetEntities()) {
-        const size_t& entityID = entityPair.second;
+    for(size_t entityID = 0; entityID < models.size(); entityID++) {
 
         if(entityID >= models.size() || entityID >= boundingBoxes.size()) {
             continue;

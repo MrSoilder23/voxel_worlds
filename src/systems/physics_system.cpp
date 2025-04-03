@@ -4,8 +4,7 @@ void PhysicsSystem::UpdatePosition(EntityManager& entityManager, float deltaTime
     auto physics = entityManager.GetComponentArray<PhysicsComponent>();
     auto positions = entityManager.GetComponentArray<PositionComponent>();
 
-    for(const auto& entityPair : entityManager.GetEntities()) {
-        const size_t& entityID = entityPair.second;
+    for(size_t entityID = 0; entityID < physics.size(); entityID++) {
 
         if(entityID >= physics.size() || entityID >= positions.size()) {
             continue;

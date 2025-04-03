@@ -4,6 +4,7 @@
 
 // Third_party libraries
 #include <glad/glad.h>
+#include <tbb/tbb.h>
 
 // Own libraries
 #include "./core/entity_manager.hpp"
@@ -21,5 +22,9 @@ class ChunkMeshingSystem {
         void CreateChunksMesh(EntityManager& entityManager);
     private:
         std::unordered_map<GLuint64, GLuint> TextureMap();
+        
+        ChunkStorageComponent* GetNeighbouringChunk(EntityManager& entityManager, const tbb::concurrent_hash_map<glm::ivec3, size_t, Vec3Hash>& entityMap, 
+        const std::vector<ChunkStorageComponent*>& storageComponents, int x, int y, int z);
+
         bool CheckBlock(EntityManager& entityManager, ChunkStorageComponent& currentChunkData, int chunkX, int chunkY, int chunkZ, int x, int y, int z);
 };
