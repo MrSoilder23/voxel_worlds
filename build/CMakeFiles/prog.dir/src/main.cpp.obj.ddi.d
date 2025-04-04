@@ -923,4 +923,5 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/future \
  C:/msys64/mingw64/include/c++/14.2.0/condition_variable \
  C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_futex.h \
- C:/Projects/voxel_worlds/include/utility/spiral_loop.hpp
+ C:/Projects/voxel_worlds/include/utility/spiral_loop.hpp \
+ C:/Projects/voxel_worlds/include/utility/circle_loop.hpp

@@ -1,0 +1,11 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles/prog.dir/src/utility/circle_loop.cpp.o",
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}

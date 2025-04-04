@@ -147,6 +147,11 @@
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/world_generation_system.cpp"
 		},
+		"CMakeFiles/prog.dir/src/utility/circle_loop.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/utility/circle_loop.cpp"
+		},
 		"CMakeFiles/prog.dir/src/utility/open_simplex_noise2.cpp.obj" : 
 		{
 			"language" : "CXX",

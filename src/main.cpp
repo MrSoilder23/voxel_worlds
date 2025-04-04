@@ -35,6 +35,7 @@
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
 #include "./utility/spiral_loop.hpp"
+#include "./utility/circle_loop.hpp"
 #include "./core/event_manager.hpp"
 
 #include "./components/player_controller_component.hpp"
@@ -74,7 +75,7 @@ ThreadPool& gThreadPool = ThreadPool::GetInstance();
 WorldGenerationSystem gWorldGen;
 
 EventManager& gEventManager = EventManager::GetInstance();
-tbb::task_arena gArena(VoxelWorlds::THREAD_AMOUNT);
+tbb::task_arena gArena;
 
 // Initialization
 void InitializeKeys() {
@@ -106,6 +107,9 @@ void InitializeBaseEntities() {
     gPlayerControllerSys.SetScreenSize(gSettings.mScreenWidth,gSettings.mScreenHeight);
     gPlayerControllerSys.SetCamera(gEntityManager, 0.01f);
     gPlayerControllerSys.InitializeMovement(gEntityManager);
+
+    auto playerPosition = gEntityManager.GetComponent<PositionComponent>("Player");
+    playerPosition->mPosition.y = gWorldGen.GenerateHeight(0,0)+1.1;
     
     auto playerBox = gEntityManager.GetComponent<BoundingBoxComponent>("Player");
     playerBox->mLocalMin = glm::vec3(-0.4, -1.5, -0.4);
@@ -150,10 +154,10 @@ void Initialize() {
     InitializeTextures();
     InitializeBlocks();
 
+    InitializeWorld();
+
     InitializeBaseEntities();
     InitializeKeys();
-
-    InitializeWorld();
 }
 
 void InitializeRender() {
@@ -266,7 +270,7 @@ void FpsCounter(float deltaTime) {
 void MainLoop(float deltaTime) {
     FpsCounter(deltaTime);
 
-    static SpiralLoop loop;
+    static CircleLoop cLoop;
 
     static float gCameraOldX = 0;
     static float gCameraOldY = 0;
@@ -278,8 +282,13 @@ void MainLoop(float deltaTime) {
     int cameraY = static_cast<int>(std::floor(camera.y/VoxelWorlds::CHUNK_SIZE));
     int cameraZ = static_cast<int>(std::floor(camera.z/VoxelWorlds::CHUNK_SIZE));
     
+    static int radius = 0;
+    static int i = 0;
+    cLoop.SetCenter(cameraX, cameraZ);
+    static std::vector<std::pair<int, int>> coords = cLoop.Loop(radius);
+
     if(cameraX != gCameraOldX || cameraY != gCameraOldY || cameraZ != gCameraOldZ) {
-        loop.Reset();
+        coords = {};
     }
 
     gCameraOldX = cameraX;
@@ -288,10 +297,10 @@ void MainLoop(float deltaTime) {
 
     {   
         
-        int loopX = loop.GetLoopX() + cameraX;
+        int loopX = coords[i].first;
         int loopY = cameraY;
-        int loopZ = loop.GetLoopZ() + cameraZ;
-        
+        int loopZ = coords[i].second;
+
         if(gSettings.mWorldGen) {
             gArena.execute([ptr = &gWorldGen, loopX, loopY, loopZ](){
                 float heightMap[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE]; 
@@ -308,8 +317,18 @@ void MainLoop(float deltaTime) {
             });
 
         }
-            
-        loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
+
+        if(i < coords.size()) {
+            i++;
+        } else {
+            if(radius < VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET) {
+                radius++;
+            } else {
+                radius = 0;
+            }
+            i = 0;
+            coords = cLoop.Loop(radius);
+        }
     }
 }
 

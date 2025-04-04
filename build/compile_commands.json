@@ -157,6 +157,12 @@
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\circle_loop.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\circle_loop.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\circle_loop.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\utility\\circle_loop.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\utility\\circle_loop.cpp.obj"
+},
+{
+  "directory": "C:/Projects/voxel_worlds/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\open_simplex_noise2.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\open_simplex_noise2.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\open_simplex_noise2.cpp",
   "file": "C:\\Projects\\voxel_worlds\\src\\utility\\open_simplex_noise2.cpp",
   "output": "CMakeFiles\\prog.dir\\src\\utility\\open_simplex_noise2.cpp.obj"
