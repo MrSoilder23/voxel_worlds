@@ -33,11 +33,12 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
     }
 
     entitiesSize = entities.size();
+    const int& size = models.size();
+    arena.execute([&](){
 
-    const int size = models.size();
-    for(size_t entityID = 0; entityID < models.size(); entityID++) {
+    tbb::parallel_for(0, size, [&](const auto& entityID){
         if(entityID >= models.size()) {
-            continue;
+            return;
         }
 
         auto& model = models[entityID];
@@ -47,11 +48,11 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
         auto& boundingCollection = boundingCollections[entityID];
 
         if(!model || !state || !storage || !position || !boundingCollection) {
-            continue;
+            return;
         }
 
         if(state->mProgress == ChunkProgress::fully_generated) {
-            continue;
+            return;
         }
 
         const glm::vec3 chunkPos = position->mPosition / VoxelWorlds::CHUNK_SIZE;
@@ -65,7 +66,7 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
 
         if(state->mProgress == ChunkProgress::partially_generated) {
             if(!chunkRight || !chunkLeft || !chunkTop || !chunkBot || !chunkFront || !chunkBack) {
-                continue;
+                return;
             }
         }
 
@@ -176,10 +177,10 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
                                 std::make_move_iterator(tempIndexes.begin()),
                                 std::make_move_iterator(tempIndexes.end()));
     
-                    BoundingBoxComponent bBox;
+                    thread_local BoundingBoxComponent bBox;
                     bBox.mWorldMin = glm::vec3(-0.5f+blockX+VoxelWorlds::CHUNK_SIZE*chunkPos.x,
-                                               -0.5f+blockY+VoxelWorlds::CHUNK_SIZE*chunkPos.y,
-                                               -0.5f+blockZ+VoxelWorlds::CHUNK_SIZE*chunkPos.z);
+                                                -0.5f+blockY+VoxelWorlds::CHUNK_SIZE*chunkPos.y,
+                                                -0.5f+blockZ+VoxelWorlds::CHUNK_SIZE*chunkPos.z);
     
                     bBox.mWorldMax = glm::vec3( 0.5f+blockX+VoxelWorlds::CHUNK_SIZE*chunkPos.x, 
                                                 0.5f+blockY+VoxelWorlds::CHUNK_SIZE*chunkPos.y, 
@@ -199,7 +200,9 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
         } else {
             state->mProgress = ChunkProgress::fully_generated;
         }
-    }
+    });
+
+    });
 }
 
 // Private
