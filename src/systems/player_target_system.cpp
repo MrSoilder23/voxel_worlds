@@ -30,13 +30,12 @@ glm::vec3 PlayerTargetSystem::GetBlock(EntityManager& entityManager, const Posit
     int playerY = static_cast<int>(std::floor(playerPos.mPosition.y/VoxelWorlds::CHUNK_SIZE));
     int playerZ = static_cast<int>(std::floor(playerPos.mPosition.z/VoxelWorlds::CHUNK_SIZE));
 
-    char chunkName[32];
     std::array<BoundingBoxCollectionComponent*, 27> chunksBoundings;
     int i = 0;
     for(int chunkX = -1; chunkX <= 1; chunkX++) {
         for(int chunkY = -1; chunkY <= 1; chunkY++) {
             for(int chunkZ = -1; chunkZ <= 1; chunkZ++) {
-                snprintf(chunkName, sizeof(chunkName), "%d:%d:%d", playerX+chunkX, playerY+chunkY, playerZ+chunkZ);
+                glm::ivec3 chunkName = {playerX+chunkX, playerY+chunkY, playerZ+chunkZ};
                 chunksBoundings[i] = entityManager.GetComponent<BoundingBoxCollectionComponent>(chunkName);
                 i++;
             }
@@ -68,19 +67,18 @@ void PlayerTargetSystem::DestroyBlock(EntityManager& entityManager, glm::vec3& g
     int chunkY = static_cast<int>(std::floor(std::round(globalBlockCoordinates.y)/VoxelWorlds::CHUNK_SIZE));
     int chunkZ = static_cast<int>(std::floor(std::round(globalBlockCoordinates.z)/VoxelWorlds::CHUNK_SIZE));
 
-    char chunkName[32];
-    snprintf(chunkName, sizeof(chunkName), "%d:%d:%d", chunkX, chunkY, chunkZ);
+    const glm::ivec3 chunkName = {chunkX, chunkY, chunkZ};
 
     auto chunkData = entityManager.GetComponent<ChunkStorageComponent>(chunkName);
     if(!chunkData) {
         return;
     }
 
-    glm::vec3 chunkWorldPos = glm::vec3(chunkX * VoxelWorlds::CHUNK_SIZE, 
+    const glm::vec3 chunkWorldPos = glm::vec3(chunkX * VoxelWorlds::CHUNK_SIZE, 
                                         chunkY * VoxelWorlds::CHUNK_SIZE, 
                                         chunkZ * VoxelWorlds::CHUNK_SIZE);
 
-    glm::vec3 localBlockCoordinates = globalBlockCoordinates - chunkWorldPos;
+    const glm::vec3 localBlockCoordinates = globalBlockCoordinates - chunkWorldPos;
 
     int localBlockX = static_cast<int>(std::round(localBlockCoordinates.x));
     int localBlockY = static_cast<int>(std::round(localBlockCoordinates.y));
@@ -97,9 +95,8 @@ void PlayerTargetSystem::PlaceBlock(EntityManager& entityManager, BlockTypes blo
     int chunkY = static_cast<int>(std::floor(std::round(globalBlockCoordinates.y)/VoxelWorlds::CHUNK_SIZE));
     int chunkZ = static_cast<int>(std::floor(std::round(globalBlockCoordinates.z)/VoxelWorlds::CHUNK_SIZE));
 
-    char chunkName[32];
-    snprintf(chunkName, sizeof(chunkName), "%d:%d:%d", chunkX, chunkY, chunkZ);
-
+    const glm::ivec3 chunkName = {chunkX, chunkY, chunkZ};
+    
     auto chunkData = entityManager.GetComponent<ChunkStorageComponent>(chunkName);
     if(!chunkData) {
         return;

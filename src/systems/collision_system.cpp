@@ -13,13 +13,12 @@ void CollisionSystem::UpdateCollision(EntityManager& entityManager, float deltaT
     int playerY = static_cast<int>(std::floor(playerPosition->mPosition.y/VoxelWorlds::CHUNK_SIZE));
     int playerZ = static_cast<int>(std::floor(playerPosition->mPosition.z/VoxelWorlds::CHUNK_SIZE));
     
-    char chunkName[32];
     std::array<BoundingBoxCollectionComponent*, 27> chunksBoundings;
     int i = 0;
     for(int chunkX = -1; chunkX <= 1; chunkX++) {
         for(int chunkY = -1; chunkY <= 1; chunkY++) {
             for(int chunkZ = -1; chunkZ <= 1; chunkZ++) {
-                snprintf(chunkName, sizeof(chunkName), "%d:%d:%d", playerX+chunkX, playerY+chunkY, playerZ+chunkZ);
+                const glm::ivec3 chunkName = {playerX+chunkX, playerY+chunkY, playerZ+chunkZ};
                 chunksBoundings[i] = entityManager.GetComponent<BoundingBoxCollectionComponent>(chunkName);
                 i++;
             }

@@ -14,8 +14,11 @@ struct ChunkStorageComponent : public IComponent {
 };
 
 namespace ChunkStorage {
-    inline size_t GetIndex(int x, int y, int z) {
-        return x + y * VoxelWorlds::CHUNK_SIZE + z * VoxelWorlds::CHUNK_SIZE * VoxelWorlds::CHUNK_SIZE;
+    inline size_t GetIndex(unsigned int x, unsigned int y, unsigned int z) {
+        constexpr int chunkSize = VoxelWorlds::CHUNK_SIZE;
+        constexpr int chunkSizeSquared = chunkSize * chunkSize;
+
+        return x + y * chunkSize + z * chunkSizeSquared;
     }
 
     // Insert block coordinates from 0
@@ -24,7 +27,6 @@ namespace ChunkStorage {
         assert(y >= 0 && y < VoxelWorlds::CHUNK_SIZE);
         assert(z >= 0 && z < VoxelWorlds::CHUNK_SIZE);
     
-
         chunk.mBlocks[GetIndex(x,y,z)] = block;
     }
 

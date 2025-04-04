@@ -112,8 +112,7 @@ void RendererSystem::DrawAllDebug(EntityManager& entityManager) {
     const auto& boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
     const auto& positions = entityManager.GetComponentArray<PositionComponent>();
 
-    for(const auto& entityPair : entityManager.GetEntities()) {
-        const size_t& entityID = entityPair.second;
+    for(size_t entityID = 0; entityID < boundingBoxes.size(); entityID++) {
 
         if(entityID >= boundingBoxes.size() || entityID >= positions.size()) {
             continue;
