@@ -16,7 +16,7 @@ SDL_Renderer* renderer;
 
 bool isRunning = true;
 
-struct Spline {
+struct Spline1 {
     std::vector<std::pair<float, float>> keypoints;
 
     float evaluate(float x) {
@@ -71,7 +71,7 @@ void WindowExit() {
     SDL_Quit();
 }
 
-Spline continentalSpline, erosionSpline, peaksValleysSpline;
+Spline1 continentalSpline, erosionSpline, peaksValleysSpline;
 void initSplines() {
     continentalSpline.keypoints = {
         {-1.0f, 400.0f},
@@ -127,13 +127,13 @@ int main(int argc, char* argv[]) {
     static std::random_device rndDevice;
     unsigned int seed = rndDevice();
     
-    float noiseSize = 800;
+    float noiseSize = 400;
 
     WindowInit();
     initSplines();
 
-    for (float x = 0; x < noiseSize; x++) {
-        for (float y = 0; y < noiseSize; y++) {
+    for (float x = -noiseSize; x < noiseSize; x++) {
+        for (float y = -noiseSize; y < noiseSize; y++) {
             float continentalness = open_simplex_noise::LayeredNoise2D(
                 x * (0.005f / 2),
                 y * (0.005f / 2),
@@ -163,7 +163,7 @@ int main(int argc, char* argv[]) {
             float erosionAdj = erosionSpline.evaluate(erosion);
             float peaksValleysAdj = peaksValleysSpline.evaluate(peaksAndValleys);
 
-            float noiseHeight = continentalAdj * 0.5f + erosionAdj * 0.3f + peaksValleysAdj * 0.2f;
+            float noiseHeight = (continentalAdj * 0.5f) + (erosionAdj * 0.3f) + (peaksValleysAdj * 0.2f);
 
               
             noiseMin = std::min(noiseMin, noiseHeight);
@@ -228,7 +228,7 @@ int main(int argc, char* argv[]) {
             // }
 
             SDL_SetRenderDrawColor(renderer, color, color, color, 255);
-            SDL_RenderDrawPoint(renderer, x, y);
+            SDL_RenderDrawPoint(renderer, (x+noiseSize), (y+noiseSize));
 
         }
     }
