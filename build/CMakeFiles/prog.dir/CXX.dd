@@ -19,6 +19,8 @@ build CMakeFiles/prog.dir/src/main.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/mesh_data.cpp.obj: dyndep
 
+build CMakeFiles/prog.dir/src/systems/block_event_system.cpp.obj: dyndep
+
 build CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/camera.cpp.obj: dyndep

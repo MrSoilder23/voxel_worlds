@@ -27,14 +27,14 @@ void EntityManager::DeleteEntity(const std::string& entityName) {
         return;
     }
     
-    mIDs.erase(entityAccessor);
-    
     const size_t& id = entityAccessor->second;
     for (auto& [type, components] : mComponents) {
         if (id < components.size()) {
             components[id].reset();
         }
     }
+    
+    mIDs.erase(entityAccessor);
 }
 void EntityManager::DeleteEntity(const glm::ivec3& entityName) {
     chunkEntityIDs::accessor chunkAccessor;

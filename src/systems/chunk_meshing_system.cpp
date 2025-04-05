@@ -25,14 +25,8 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
     static std::unordered_map<GLuint64, GLuint> textures = TextureMap();
 
     const auto& entities = entityManager.GetChunkEntities();
-    static size_t entitiesSize;
     static tbb::task_arena arena;
     
-    if(entitiesSize == entities.size()) {
-        return;
-    }
-
-    entitiesSize = entities.size();
     const int& size = models.size();
     arena.execute([&](){
 

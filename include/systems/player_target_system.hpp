@@ -1,4 +1,8 @@
 #pragma once
+// C++ standard libraries
+#include <format>
+#include <chrono>
+
 // Third_party libraries
 #include <SDL2/SDL.h>
 
@@ -14,6 +18,9 @@
 #include "./components/camera_component.hpp"
 #include "./systems/world_generation_system.hpp"
 #include "./core/event_manager.hpp"
+#include "./components/block_break_event_component.hpp"
+#include "./components/block_place_event_component.hpp"
+#include "./components/block_event_component.hpp"
 
 class PlayerTargetSystem {
     public:

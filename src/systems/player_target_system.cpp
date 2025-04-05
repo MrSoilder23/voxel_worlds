@@ -9,14 +9,36 @@ void PlayerTargetSystem::PlayerRaycast(EntityManager& entityManager) {
     EventManager& eventManager = EventManager::GetInstance();
     eventManager.RegisterEvent(InputAction::left_mouse_click, [this, entityManagerPtr = &entityManager, playerPos, playerCam](float _){
         glm::vec3 blockWorldCoords = this->GetBlock(*entityManagerPtr, *playerPos, *playerCam, 0.0001f);
-        this->DestroyBlock(*entityManagerPtr, blockWorldCoords);
+        std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+        std::string timestamp = std::format("{:%Y-%m-%d %H:%M:%S}", now);
+
+        BlockEventComponent blockEvent;
+        blockEvent.mPosition = blockWorldCoords;
+        blockEvent.mTimestamp = now;
+
+        entityManagerPtr->CreateEntity(timestamp);
+        entityManagerPtr->AddComponent<BlockEventComponent>(timestamp, blockEvent);
+        entityManagerPtr->AddComponent<BlockBreakEventComponent>(timestamp);
     });
 
     eventManager.RegisterEvent(InputAction::right_mouse_click, [this, entityManagerPtr = &entityManager, playerPos, playerCam](float _){
         glm::vec3 blockWorldCoords = this->GetBlock(*entityManagerPtr, *playerPos, *playerCam, -0.0001f);
         auto playerInventory = entityManagerPtr->GetComponent<InventoryComponent>("Player");
         BlockTypes currentBlock = playerInventory->mInventory[playerInventory->mCurrentSlot].mItem;
-        this->PlaceBlock(*entityManagerPtr, currentBlock, blockWorldCoords);
+
+        auto now = std::chrono::system_clock::now();
+        std::string timestamp = std::format("{:%Y-%m-%d %H:%M:%S}", now);
+
+        BlockEventComponent blockEvent;
+        blockEvent.mPosition = blockWorldCoords;
+        blockEvent.mTimestamp = now;
+
+        BlockPlaceEventComponent blockPlaceEvent;
+        blockPlaceEvent.mBlockPlaced = currentBlock;
+
+        entityManagerPtr->CreateEntity(timestamp);
+        entityManagerPtr->AddComponent<BlockEventComponent>(timestamp, blockEvent);
+        entityManagerPtr->AddComponent<BlockPlaceEventComponent>(timestamp, blockPlaceEvent);
     });
 }
 

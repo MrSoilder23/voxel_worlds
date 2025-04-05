@@ -31,6 +31,7 @@
 #include "./systems/physics_system.hpp"
 #include "./systems/player_target_system.hpp"
 #include "./systems/chunk_meshing_system.hpp"
+#include "./systems/block_event_system.hpp"
 
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
@@ -282,13 +283,14 @@ void MainLoop(float deltaTime) {
     int cameraY = static_cast<int>(std::floor(camera.y/VoxelWorlds::CHUNK_SIZE));
     int cameraZ = static_cast<int>(std::floor(camera.z/VoxelWorlds::CHUNK_SIZE));
     
-    static int radius = 0;
+    static int radius = 4;
     static int i = 0;
     cLoop.SetCenter(cameraX, cameraZ);
     static std::vector<std::pair<int, int>> coords = cLoop.Loop(radius);
 
     if(cameraX != gCameraOldX || cameraY != gCameraOldY || cameraZ != gCameraOldZ) {
         coords = {};
+        radius = 4;
     }
 
     gCameraOldX = cameraX;
@@ -322,9 +324,9 @@ void MainLoop(float deltaTime) {
             i++;
         } else {
             if(radius < VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET) {
-                radius++;
+                radius += 4;
             } else {
-                radius = 0;
+                radius = 4;
             }
             i = 0;
             coords = cLoop.Loop(radius);
@@ -340,6 +342,7 @@ void System(float deltaTime) {
     static CollisionSystem collisionSystem;
     static PhysicsSystem physSystem;
     static ChunkMeshingSystem chunkMeshSystem;
+    static BlockEventSystem blockEventSystem;
 
     gPlayerControllerSys.Update(gEntityManager);
 
@@ -349,6 +352,9 @@ void System(float deltaTime) {
 
     physSystem.UpdatePosition(gEntityManager, deltaTime);
     posUpdateSystem.UpdatePositionTransform(gEntityManager);
+
+    blockEventSystem.UpdateChunks(gEntityManager);
+
     chunkMeshSystem.CreateChunksMesh(gEntityManager);
     
     boundingBoxSystem.GenerateBoundingBox(gEntityManager);

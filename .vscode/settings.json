@@ -91,6 +91,7 @@
         "future": "cpp",
         "text_encoding": "cpp",
         "forward_list": "cpp",
-        "cfenv": "cpp"
+        "cfenv": "cpp",
+        "ranges": "cpp"
     }
 }
