@@ -14,12 +14,10 @@
 
 // Own libraries
 #include "./graphics/shader.hpp"
-#include "./graphics/graphics.hpp"
 #include "./core/entity_manager.hpp"
 #include "./core/game.hpp"
 
 #include "./systems/renderer_system.hpp"
-#include "./systems/chunk_renderer_system.hpp"
 #include "./systems/player_controller_system.hpp"
 #include "./systems/vertex_setup_system.hpp"
 #include "./systems/bounding_box_system.hpp"
@@ -38,6 +36,7 @@
 #include "./utility/spiral_loop.hpp"
 #include "./utility/circle_loop.hpp"
 #include "./core/event_manager.hpp"
+#include "./graphics/graphics.hpp"
 
 #include "./components/player_controller_component.hpp"
 #include "./components/position_component.hpp"
@@ -68,7 +67,6 @@ PlayerControllerSystem gPlayerControllerSys;
 ChunkBoundingCreationSystem gChunkbBoxCreationSys;
 
 RendererSystem& gRendererSystem = RendererSystem::GetInstance();
-ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
 // ChunkManager& gChunkManager = ChunkManager::GetInstance();
 
 // ChunkSystem chunkSystem;
@@ -163,9 +161,7 @@ void Initialize() {
 
 void InitializeRender() {
     gRendererSystem.AddGraphicsApp(gGraphicsApp);
-    gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);
 }
-
 
 void Input(float deltaTime) {
     SDL_Event e;

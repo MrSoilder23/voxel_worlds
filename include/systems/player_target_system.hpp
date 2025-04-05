@@ -27,6 +27,4 @@ class PlayerTargetSystem {
         void PlayerRaycast(EntityManager& entityManager);
     private:
         glm::vec3 GetBlock(EntityManager& entityManager, const PositionComponent& playerPos, const CameraComponent& playerCam, float epsilon);
-        void DestroyBlock(EntityManager& entityManager, glm::vec3& globalBlockCoordinates);
-        void PlaceBlock(EntityManager& entityManager, BlockTypes block, glm::vec3& globalBlockCoordinates);
 };

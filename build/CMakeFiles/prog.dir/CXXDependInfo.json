@@ -82,11 +82,6 @@
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/bounding_box_system.cpp"
 		},
-		"CMakeFiles/prog.dir/src/systems/camera.cpp.obj" : 
-		{
-			"language" : "CXX",
-			"source" : "C:/Projects/voxel_worlds/src/systems/camera.cpp"
-		},
 		"CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj" : 
 		{
 			"language" : "CXX",
@@ -96,11 +91,6 @@
 		{
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_meshing_system.cpp"
-		},
-		"CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj" : 
-		{
-			"language" : "CXX",
-			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_renderer_system.cpp"
 		},
 		"CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj" : 
 		{

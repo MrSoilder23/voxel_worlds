@@ -384,19 +384,6 @@ CMakeFiles\prog.dir\src\mesh_data.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/stl_bvector.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/vector.tcc \
  C:/Projects/voxel_worlds/include/graphics/texture.hpp \
- C:/Projects/voxel_worlds/include/graphics/graphics.hpp \
- C:/Projects/voxel_worlds/include/systems/camera.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_exponential.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/quaternion_exponential.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/component_wise.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/detail/setup.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/component_wise.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
  C:/Projects/voxel_worlds/include/graphics/shader.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/iostream \
  C:/msys64/mingw64/include/c++/14.2.0/istream \

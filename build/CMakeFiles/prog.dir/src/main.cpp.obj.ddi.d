@@ -815,22 +815,28 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \
  C:/msys64/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
  C:/msys64/mingw64/include/c++/14.2.0/bits/fstream.tcc \
- C:/Projects/voxel_worlds/include/graphics/graphics.hpp \
- C:/Projects/voxel_worlds/include/systems/camera.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.hpp \
+ C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/typeindex \
+ C:/Projects/voxel_worlds/include/core/component.hpp \
+ C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
+ C:/Projects/voxel_worlds/include/core/game.hpp \
+ C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
+ C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h \
+ C:/Projects/voxel_worlds/include/utility/utility.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/gtc/constants.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_constants.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_constants.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtc/constants.inl \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/quaternion.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.hpp \
- C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_projection.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_clip_space.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_clip_space.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/matrix_transform.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtc/matrix_transform.inl \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.hpp \
+ C:/Projects/voxel_worlds/third_party/include/glm/gtc/quaternion.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/vector_relational.hpp \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/vector_relational.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/detail/type_float.hpp \
@@ -864,14 +870,6 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/glm/ext/scalar_common.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/norm.inl \
  C:/Projects/voxel_worlds/third_party/include/glm/gtx/quaternion.inl \
- C:/Projects/voxel_worlds/include/core/entity_manager.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/typeindex \
- C:/Projects/voxel_worlds/include/core/component.hpp \
- C:/Projects/voxel_worlds/include/blocks/block_types.hpp \
- C:/Projects/voxel_worlds/include/core/game.hpp \
- C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_image.h \
- C:/Projects/voxel_worlds/third_party/include/SDL2/SDL.h \
- C:/Projects/voxel_worlds/include/utility/utility.hpp \
  C:/Projects/voxel_worlds/include/world/transform.hpp \
  C:/Projects/voxel_worlds/include/components/bounding_box_component.hpp \
  C:/Projects/voxel_worlds/include/components/model_component.hpp \
@@ -886,12 +884,7 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/utility/physics.hpp \
  C:/Projects/voxel_worlds/include/components/camera_component.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_model_component.hpp \
- C:/Projects/voxel_worlds/include/systems/chunk_renderer_system.hpp \
- C:/Projects/voxel_worlds/include/world/chunk.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/map \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_map.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multimap.h \
+ C:/Projects/voxel_worlds/include/graphics/graphics.hpp \
  C:/Projects/voxel_worlds/include/systems/player_controller_system.hpp \
  C:/Projects/voxel_worlds/include/core/event_manager.hpp \
  C:/Projects/voxel_worlds/include/core/inputs.hpp \
@@ -902,6 +895,10 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/systems/bounding_box_system.hpp \
  C:/Projects/voxel_worlds/include/systems/position_update_system.hpp \
  C:/Projects/voxel_worlds/include/systems/chunk_vertex_setup_system.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/map \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_tree.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_map.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_multimap.h \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/Projects/voxel_worlds/include/systems/world_generation_system.hpp \
  C:/Projects/voxel_worlds/include/components/chunk_storage_component.hpp \

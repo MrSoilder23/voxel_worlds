@@ -34,17 +34,10 @@ class WorldGenerationSystem {
         void SetSeed(unsigned int seed);
 
         void GenerateChunk(float (&heightMap)[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE], int x, int y, int z);
-        void GenerateModel(int x, int y, int z);
         
         float GenerateHeight(int x, int z);
     private:
         void GenerateNoise(float (&heightMap)[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE], int x, int y, int z);
-
-        bool CheckBlock(ChunkStorageComponent& currentChunkData, int chunkX, int chunkY, int chunkZ, int x, int y, int z);
-
-        char* FastIntToString(char* ptr, int value);
-        void FastChunkName(char* ptr, int chunkX, int chunkY, int chunkZ);
-
     private:
         unsigned int mSeed;
         float mRenderDistance;

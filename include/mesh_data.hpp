@@ -10,7 +10,6 @@
 // Own libraries
 #include "model.hpp"
 #include "./graphics/texture.hpp"
-#include "./graphics/graphics.hpp"
 #include "./graphics/shader.hpp"
 
 class MeshData {
