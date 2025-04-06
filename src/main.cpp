@@ -30,6 +30,7 @@
 #include "./systems/player_target_system.hpp"
 #include "./systems/chunk_meshing_system.hpp"
 #include "./systems/block_event_system.hpp"
+#include "./systems/chunk_unload_system.hpp"
 
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
@@ -339,8 +340,10 @@ void System(float deltaTime) {
     static PhysicsSystem physSystem;
     static ChunkMeshingSystem chunkMeshSystem;
     static BlockEventSystem blockEventSystem;
+    static ChunkUnloadSystem chunkUnloadSystem;
 
     gPlayerControllerSys.Update(gEntityManager);
+    chunkUnloadSystem.UnloadChunks(gEntityManager);
 
     if(gSettings.mPhysics) {
         collisionSystem.UpdateCollision(gEntityManager, deltaTime);

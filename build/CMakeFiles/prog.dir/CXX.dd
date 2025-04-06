@@ -27,6 +27,8 @@ build CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj: dy
 
 build CMakeFiles/prog.dir/src/systems/chunk_meshing_system.cpp.obj: dyndep
 
+build CMakeFiles/prog.dir/src/systems/chunk_unload_system.cpp.obj: dyndep
+
 build CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj: dyndep

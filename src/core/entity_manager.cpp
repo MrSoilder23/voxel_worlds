@@ -42,14 +42,14 @@ void EntityManager::DeleteEntity(const glm::ivec3& entityName) {
         return;
     }
     
-    mChunkSpatialIndex.erase(chunkAccessor);
-    
     const size_t& id = chunkAccessor->second;
     for (auto& [type, components] : mComponents) {
         if (id < components.size()) {
             components[id].reset();
         }
     }
+    
+    mChunkSpatialIndex.erase(chunkAccessor);
 }
 
 bool EntityManager::CheckIfChunkEntity(const std::string& entityName, glm::ivec3& coords) {

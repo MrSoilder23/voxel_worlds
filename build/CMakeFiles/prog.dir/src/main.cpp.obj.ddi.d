@@ -917,6 +917,7 @@ CMakeFiles\prog.dir\src\main.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/components/block_event_component.hpp \
  C:/Projects/voxel_worlds/include/systems/chunk_meshing_system.hpp \
  C:/Projects/voxel_worlds/include/systems/block_event_system.hpp \
+ C:/Projects/voxel_worlds/include/systems/chunk_unload_system.hpp \
  C:/Projects/voxel_worlds/include/blocks/blocks.hpp \
  C:/Projects/voxel_worlds/include/graphics/model_manager.hpp \
  C:/Projects/voxel_worlds/include/systems/texture_manager.hpp \
