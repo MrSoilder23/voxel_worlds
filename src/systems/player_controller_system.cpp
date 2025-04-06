@@ -27,6 +27,7 @@ void PlayerControllerSystem::InitializeMovement(EntityManager& entityManager) {
     playerInventory->mInventory[1].mItem = BlockTypes::grass_block;
     playerInventory->mInventory[2].mItem = BlockTypes::stone_block;
     playerInventory->mInventory[3].mItem = BlockTypes::dirt_block;
+    playerInventory->mInventory[4].mItem = BlockTypes::sand_block;
 
     eventManager.RegisterEvent(InputAction::hotbar_0, [&entityManager](...){
         auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");

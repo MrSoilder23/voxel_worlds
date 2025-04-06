@@ -117,27 +117,6 @@ void InitializeBaseEntities() {
 
     auto playerPhysics = gEntityManager.GetComponent<PhysicsComponent>("Player");
     playerPhysics->mFriction = 2.0f;
-
-
-    // Test entity1
-    gEntityManager.CreateEntity("Test");
-    gEntityManager.AddComponent<BoundingBoxComponent>("Test");
-    gEntityManager.AddComponent<PositionComponent>("Test");
-    gEntityManager.AddComponent<ModelComponent>("Test");
-
-    auto boundingBox = gEntityManager.GetComponent<BoundingBoxComponent>("Test");
-    boundingBox->mLocalMin = glm::vec3(0.0f,0.0f,0.0f);
-    boundingBox->mLocalMax = glm::vec3(1.0f,1.0f,1.0f);
-
-
-    // Test entity2
-    gEntityManager.CreateEntity("Test1");
-    gEntityManager.AddComponent<BoundingBoxComponent>("Test1");
-    gEntityManager.AddComponent<PositionComponent>("Test1");
-
-    auto boundingBox1 = gEntityManager.GetComponent<BoundingBoxComponent>("Test1");
-    boundingBox->mLocalMin = glm::vec3(-0.5f,-1.5f,-0.5f);
-    boundingBox->mLocalMax = glm::vec3(0.5f,0.4f,0.5f);
 }
 
 void InitializeWorld() {
@@ -288,7 +267,6 @@ void MainLoop(float deltaTime) {
     static std::vector<std::pair<int, int>> coords = cLoop.Loop(radius);
 
     if(cameraX != gCameraOldX || cameraY != gCameraOldY || cameraZ != gCameraOldZ) {
-        coords = {};
         radius = generationSpeed;
     }
 
@@ -337,11 +315,11 @@ void System(float deltaTime) {
     static PositionUpdateSystem posUpdateSystem;
     static VertexSetupSystem vSetupSystem;
     static BoundingBoxSystem boundingBoxSystem;
-    static ChunkVertexSetupSystem chunkVSS;
     static CollisionSystem collisionSystem;
     static PhysicsSystem physSystem;
-    static ChunkMeshingSystem chunkMeshSystem;
     static BlockEventSystem blockEventSystem;
+    static ChunkMeshingSystem chunkMeshSystem;
+    static ChunkVertexSetupSystem chunkVSS;
     static ChunkUnloadSystem chunkUnloadSystem;
 
     gPlayerControllerSys.Update(gEntityManager);
