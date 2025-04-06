@@ -106,10 +106,6 @@ void PlayerControllerSystem::Update(EntityManager& entityManager) {
 
     playerCamera->mViewMatrix = glm::lookAt(playerPosition->mPosition, playerPosition->mPosition + playerCamera->mViewDirection, playerCamera->mUpVector);
 
-    if (glm::length(playerVelocity->mVelocity) > player->mSpeed) {
-        playerVelocity->mVelocity = glm::normalize(playerVelocity->mVelocity) * player->mSpeed;
-    }
-
     glm::mat4 viewProj = playerCamera->mProjectionMatrix * playerCamera->mViewMatrix;
 
     physics::ExtractInfiniteFrustumPlanes(viewProj, playerCamera->frustumPlanes);
@@ -119,7 +115,6 @@ void PlayerControllerSystem::RegisterMovementEvent(EventManager& eventManager, E
 
     eventManager.RegisterEvent(action, [&eventManager, &entityManager, movementDirection](float deltaTime) mutable {
         auto player = entityManager.GetComponent<PlayerControllerComponent>("Player");
-        auto playerPosition = entityManager.GetComponent<PositionComponent>("Player");
         auto playerCamera = entityManager.GetComponent<CameraComponent>("Player");
         auto playerVelocity = entityManager.GetComponent<PhysicsComponent>("Player");
 
@@ -135,6 +130,24 @@ void PlayerControllerSystem::RegisterMovementEvent(EventManager& eventManager, E
                              (movementDirection.y * upMovement) + 
                              (movementDirection.z * forwardMovement);
 
-        playerVelocity->mVelocity += movement * deltaTime;
+        glm::vec3 inputVelocity = movement * deltaTime;
+
+        if(glm::length(inputVelocity) > 0) {
+            glm::vec3 direction = glm::normalize(inputVelocity);
+            float currentSpeedInDirection = glm::dot(playerVelocity->mVelocity, inputVelocity);
+
+            float allowableAccel = player->mSpeed - currentSpeedInDirection;
+
+            if(allowableAccel <= 0.0f) {
+                inputVelocity = glm::vec3(0.0f);
+            } else {
+                float inputMagnitude = glm::length(inputVelocity);
+                if(inputMagnitude > allowableAccel) {
+                    inputVelocity = direction * allowableAccel;
+                }
+            }
+        }
+
+        playerVelocity->mVelocity += inputVelocity;
     });
 }
