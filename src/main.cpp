@@ -280,14 +280,16 @@ void MainLoop(float deltaTime) {
     int cameraY = static_cast<int>(std::floor(camera.y/VoxelWorlds::CHUNK_SIZE));
     int cameraZ = static_cast<int>(std::floor(camera.z/VoxelWorlds::CHUNK_SIZE));
     
-    static int radius = 4;
+    constexpr int generationSpeed = 6;
+
+    static int radius = generationSpeed;
     static int i = 0;
     cLoop.SetCenter(cameraX, cameraZ);
     static std::vector<std::pair<int, int>> coords = cLoop.Loop(radius);
 
     if(cameraX != gCameraOldX || cameraY != gCameraOldY || cameraZ != gCameraOldZ) {
         coords = {};
-        radius = 4;
+        radius = generationSpeed;
     }
 
     gCameraOldX = cameraX;
@@ -321,9 +323,9 @@ void MainLoop(float deltaTime) {
             i++;
         } else {
             if(radius < VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET) {
-                radius += 4;
+                radius += generationSpeed;
             } else {
-                radius = 4;
+                radius = generationSpeed;
             }
             i = 0;
             coords = cLoop.Loop(radius);
