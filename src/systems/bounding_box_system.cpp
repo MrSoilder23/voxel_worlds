@@ -4,8 +4,7 @@ void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
     auto boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
     auto positions = entityManager.GetComponentArray<PositionComponent>();
 
-    for(const auto& entityPair : entityManager.GetEntities()) {
-        const size_t& entityID = entityPair.second;
+    for(size_t entityID = 0; entityID < boundingBoxes.size(); entityID++) {
 
         if(entityID >= boundingBoxes.size() || entityID >= positions.size()) {
             continue;
@@ -22,8 +21,8 @@ void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
         glm::vec3 worldMin = boundingBox->mLocalMin + position->mPosition;
 
         if(boundingBox->mWorldMax != worldMax || boundingBox->mWorldMin != worldMin) {
-            boundingBox->mWorldMax = std::move(worldMax);
-            boundingBox->mWorldMin = std::move(worldMin);
+            boundingBox->mWorldMax = worldMax;
+            boundingBox->mWorldMin = worldMin;
 
             boundingBox->mModel = std::move(physics::CreateBoundingModel(*boundingBox));
         }

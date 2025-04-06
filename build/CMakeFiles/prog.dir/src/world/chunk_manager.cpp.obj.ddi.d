@@ -345,6 +345,14 @@ CMakeFiles\prog.dir\src\world\chunk_manager.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/world/transform.hpp \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/array \
+ C:/Projects/voxel_worlds/include/utility/spline.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/algorithm \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
  C:/Projects/voxel_worlds/include/blocks/block_texture_creator.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/unordered_map \
  C:/msys64/mingw64/include/c++/14.2.0/bits/unordered_map.h \
@@ -515,11 +523,4 @@ CMakeFiles\prog.dir\src\world\chunk_manager.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_version.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_locale.h \
  C:/Projects/voxel_worlds/third_party/include/SDL2/SDL_misc.h \
- C:/Projects/voxel_worlds/include/graphics/texture.hpp \
- C:/msys64/mingw64/include/c++/14.2.0/algorithm \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
- C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
- C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h
+ C:/Projects/voxel_worlds/include/graphics/texture.hpp

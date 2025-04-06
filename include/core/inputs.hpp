@@ -30,5 +30,6 @@ enum class InputAction {
 
     toggle_debug,
     toggle_debug2,
+    toggle_debug3,
     exit,
 };

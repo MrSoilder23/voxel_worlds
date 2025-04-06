@@ -19,13 +19,15 @@ build CMakeFiles/prog.dir/src/main.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/mesh_data.cpp.obj: dyndep
 
-build CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj: dyndep
+build CMakeFiles/prog.dir/src/systems/block_event_system.cpp.obj: dyndep
 
-build CMakeFiles/prog.dir/src/systems/camera.cpp.obj: dyndep
+build CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj: dyndep
 
-build CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj: dyndep
+build CMakeFiles/prog.dir/src/systems/chunk_meshing_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/chunk_unload_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj: dyndep
 
@@ -47,11 +49,17 @@ build CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj: dyndep
 
+build CMakeFiles/prog.dir/src/utility/circle_loop.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/open_simplex_noise2.cpp.obj: dyndep
+
 build CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/utility/physics.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/spline.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj: dyndep
 

@@ -4,7 +4,6 @@
 #include <typeindex>
 
 // Own libraries
-#include "./graphics/graphics.hpp"
 #include "./graphics/shader.hpp"
 #include "./core/entity_manager.hpp"
 #include "./utility/physics.hpp"
@@ -14,6 +13,7 @@
 #include "./components/camera_component.hpp"
 #include "./components/model_component.hpp"
 #include "./components/chunk_model_component.hpp"
+#include "./graphics/graphics.hpp"
 
 class RendererSystem {
     public:

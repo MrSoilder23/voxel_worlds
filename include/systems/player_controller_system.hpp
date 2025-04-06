@@ -20,7 +20,7 @@ class PlayerControllerSystem {
     public:
         void SetFov(float fov);
         void SetScreenSize(float screenWidth, float screenHeight);
-        void SetCamera(EntityManager& entityManager, float near);
+        void SetCamera(EntityManager& entityManager, float zNear);
 
         void InitializeMovement(EntityManager& entityManager);
         void Update(EntityManager& entityManager);

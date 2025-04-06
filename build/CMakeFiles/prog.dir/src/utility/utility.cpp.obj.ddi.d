@@ -497,4 +497,11 @@ CMakeFiles\prog.dir\src\utility\utility.cpp.obj.ddi: \
  C:/Projects/voxel_worlds/include/components/position_component.hpp \
  C:/Projects/voxel_worlds/include/utility/constant.hpp \
  C:/msys64/mingw64/include/c++/14.2.0/array \
+ C:/Projects/voxel_worlds/include/utility/spline.hpp \
+ C:/msys64/mingw64/include/c++/14.2.0/algorithm \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/stl_heap.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/ranges_algo.h \
+ C:/msys64/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
  C:/Projects/voxel_worlds/include/line.hpp

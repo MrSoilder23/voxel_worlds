@@ -43,4 +43,7 @@ namespace utility {
     void ScalePosition(PositionComponent& positionComponent, const glm::vec3& newScale);
 
     float Smooth(float t);
+
+    char* FastIntToString(char* ptr, int value);
+    void FastChunkName(char* ptr, int chunkX, int chunkY, int chunkZ);
 }

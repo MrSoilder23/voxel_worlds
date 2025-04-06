@@ -72,25 +72,30 @@
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/mesh_data.cpp"
 		},
+		"CMakeFiles/prog.dir/src/systems/block_event_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/block_event_system.cpp"
+		},
 		"CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj" : 
 		{
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/bounding_box_system.cpp"
-		},
-		"CMakeFiles/prog.dir/src/systems/camera.cpp.obj" : 
-		{
-			"language" : "CXX",
-			"source" : "C:/Projects/voxel_worlds/src/systems/camera.cpp"
 		},
 		"CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj" : 
 		{
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_bounding_creation_system.cpp"
 		},
-		"CMakeFiles/prog.dir/src/systems/chunk_renderer_system.cpp.obj" : 
+		"CMakeFiles/prog.dir/src/systems/chunk_meshing_system.cpp.obj" : 
 		{
 			"language" : "CXX",
-			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_renderer_system.cpp"
+			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_meshing_system.cpp"
+		},
+		"CMakeFiles/prog.dir/src/systems/chunk_unload_system.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/systems/chunk_unload_system.cpp"
 		},
 		"CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj" : 
 		{
@@ -142,6 +147,16 @@
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/systems/world_generation_system.cpp"
 		},
+		"CMakeFiles/prog.dir/src/utility/circle_loop.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/utility/circle_loop.cpp"
+		},
+		"CMakeFiles/prog.dir/src/utility/open_simplex_noise2.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/utility/open_simplex_noise2.cpp"
+		},
 		"CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj" : 
 		{
 			"language" : "CXX",
@@ -156,6 +171,11 @@
 		{
 			"language" : "CXX",
 			"source" : "C:/Projects/voxel_worlds/src/utility/spiral_loop.cpp"
+		},
+		"CMakeFiles/prog.dir/src/utility/spline.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/voxel_worlds/src/utility/spline.cpp"
 		},
 		"CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj" : 
 		{

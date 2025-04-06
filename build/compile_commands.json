@@ -67,15 +67,15 @@
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\systems\\bounding_box_system.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\systems\\bounding_box_system.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\systems\\bounding_box_system.cpp",
-  "file": "C:\\Projects\\voxel_worlds\\src\\systems\\bounding_box_system.cpp",
-  "output": "CMakeFiles\\prog.dir\\src\\systems\\bounding_box_system.cpp.obj"
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\systems\\block_event_system.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\systems\\block_event_system.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\systems\\block_event_system.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\systems\\block_event_system.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\systems\\block_event_system.cpp.obj"
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\systems\\camera.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\systems\\camera.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\systems\\camera.cpp",
-  "file": "C:\\Projects\\voxel_worlds\\src\\systems\\camera.cpp",
-  "output": "CMakeFiles\\prog.dir\\src\\systems\\camera.cpp.obj"
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\systems\\bounding_box_system.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\systems\\bounding_box_system.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\systems\\bounding_box_system.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\systems\\bounding_box_system.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\systems\\bounding_box_system.cpp.obj"
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",
@@ -85,9 +85,15 @@
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\systems\\chunk_renderer_system.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\systems\\chunk_renderer_system.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\systems\\chunk_renderer_system.cpp",
-  "file": "C:\\Projects\\voxel_worlds\\src\\systems\\chunk_renderer_system.cpp",
-  "output": "CMakeFiles\\prog.dir\\src\\systems\\chunk_renderer_system.cpp.obj"
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\systems\\chunk_meshing_system.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\systems\\chunk_meshing_system.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\systems\\chunk_meshing_system.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\systems\\chunk_meshing_system.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\systems\\chunk_meshing_system.cpp.obj"
+},
+{
+  "directory": "C:/Projects/voxel_worlds/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\systems\\chunk_unload_system.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\systems\\chunk_unload_system.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\systems\\chunk_unload_system.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\systems\\chunk_unload_system.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\systems\\chunk_unload_system.cpp.obj"
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",
@@ -151,6 +157,18 @@
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\circle_loop.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\circle_loop.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\circle_loop.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\utility\\circle_loop.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\utility\\circle_loop.cpp.obj"
+},
+{
+  "directory": "C:/Projects/voxel_worlds/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\open_simplex_noise2.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\open_simplex_noise2.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\open_simplex_noise2.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\utility\\open_simplex_noise2.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\utility\\open_simplex_noise2.cpp.obj"
+},
+{
+  "directory": "C:/Projects/voxel_worlds/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\perlin_noise.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\perlin_noise.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\perlin_noise.cpp",
   "file": "C:\\Projects\\voxel_worlds\\src\\utility\\perlin_noise.cpp",
   "output": "CMakeFiles\\prog.dir\\src\\utility\\perlin_noise.cpp.obj"
@@ -166,6 +184,12 @@
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\spiral_loop.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\spiral_loop.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\spiral_loop.cpp",
   "file": "C:\\Projects\\voxel_worlds\\src\\utility\\spiral_loop.cpp",
   "output": "CMakeFiles\\prog.dir\\src\\utility\\spiral_loop.cpp.obj"
+},
+{
+  "directory": "C:/Projects/voxel_worlds/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Projects/voxel_worlds/third_party/include -IC:/Projects/voxel_worlds/include  -g -O3 -g -std=gnu++20 -fmodules-ts -fmodule-mapper=CMakeFiles\\prog.dir\\src\\utility\\spline.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o CMakeFiles\\prog.dir\\src\\utility\\spline.cpp.obj -c C:\\Projects\\voxel_worlds\\src\\utility\\spline.cpp",
+  "file": "C:\\Projects\\voxel_worlds\\src\\utility\\spline.cpp",
+  "output": "CMakeFiles\\prog.dir\\src\\utility\\spline.cpp.obj"
 },
 {
   "directory": "C:/Projects/voxel_worlds/build",

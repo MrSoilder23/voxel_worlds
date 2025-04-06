@@ -14,12 +14,10 @@
 
 // Own libraries
 #include "./graphics/shader.hpp"
-#include "./graphics/graphics.hpp"
 #include "./core/entity_manager.hpp"
 #include "./core/game.hpp"
 
 #include "./systems/renderer_system.hpp"
-#include "./systems/chunk_renderer_system.hpp"
 #include "./systems/player_controller_system.hpp"
 #include "./systems/vertex_setup_system.hpp"
 #include "./systems/bounding_box_system.hpp"
@@ -30,11 +28,16 @@
 #include "./systems/collision_system.hpp"
 #include "./systems/physics_system.hpp"
 #include "./systems/player_target_system.hpp"
+#include "./systems/chunk_meshing_system.hpp"
+#include "./systems/block_event_system.hpp"
+#include "./systems/chunk_unload_system.hpp"
 
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
 #include "./utility/spiral_loop.hpp"
+#include "./utility/circle_loop.hpp"
 #include "./core/event_manager.hpp"
+#include "./graphics/graphics.hpp"
 
 #include "./components/player_controller_component.hpp"
 #include "./components/position_component.hpp"
@@ -54,6 +57,7 @@ struct Settings {
 
     bool mBoundingDebug = false;
     bool mPhysics = false;
+    bool mWorldGen = true;
 };
 Settings gSettings;
 Game gGame;
@@ -64,7 +68,6 @@ PlayerControllerSystem gPlayerControllerSys;
 ChunkBoundingCreationSystem gChunkbBoxCreationSys;
 
 RendererSystem& gRendererSystem = RendererSystem::GetInstance();
-ChunkRendererSystem& gChunkRendererSystem = ChunkRendererSystem::GetInstance();
 // ChunkManager& gChunkManager = ChunkManager::GetInstance();
 
 // ChunkSystem chunkSystem;
@@ -72,7 +75,7 @@ ThreadPool& gThreadPool = ThreadPool::GetInstance();
 WorldGenerationSystem gWorldGen;
 
 EventManager& gEventManager = EventManager::GetInstance();
-tbb::task_arena gArena(VoxelWorlds::THREAD_AMOUNT);
+tbb::task_arena gArena;
 
 // Initialization
 void InitializeKeys() {
@@ -81,6 +84,7 @@ void InitializeKeys() {
     gEventManager.RegisterEvent(InputAction::exit, [game = &gGame](float _){game->StopLoop();});
     gEventManager.RegisterEvent(InputAction::toggle_debug, [settings = &gSettings](float _){settings->mPhysics = !settings->mPhysics;});
     gEventManager.RegisterEvent(InputAction::toggle_debug2, [settings = &gSettings](float _){settings->mBoundingDebug = !settings->mBoundingDebug;});
+    gEventManager.RegisterEvent(InputAction::toggle_debug3, [settings = &gSettings](float _){settings->mWorldGen = !settings->mWorldGen;});
 
     pTarget.PlayerRaycast(gEntityManager);
 }
@@ -103,6 +107,9 @@ void InitializeBaseEntities() {
     gPlayerControllerSys.SetScreenSize(gSettings.mScreenWidth,gSettings.mScreenHeight);
     gPlayerControllerSys.SetCamera(gEntityManager, 0.01f);
     gPlayerControllerSys.InitializeMovement(gEntityManager);
+
+    auto playerPosition = gEntityManager.GetComponent<PositionComponent>("Player");
+    playerPosition->mPosition.y = gWorldGen.GenerateHeight(0,0)+1.1;
     
     auto playerBox = gEntityManager.GetComponent<BoundingBoxComponent>("Player");
     playerBox->mLocalMin = glm::vec3(-0.4, -1.5, -0.4);
@@ -147,17 +154,15 @@ void Initialize() {
     InitializeTextures();
     InitializeBlocks();
 
+    InitializeWorld();
+
     InitializeBaseEntities();
     InitializeKeys();
-
-    InitializeWorld();
 }
 
 void InitializeRender() {
     gRendererSystem.AddGraphicsApp(gGraphicsApp);
-    gChunkRendererSystem.AddGraphicsApp(gGraphicsApp);
 }
-
 
 void Input(float deltaTime) {
     SDL_Event e;
@@ -170,6 +175,9 @@ void Input(float deltaTime) {
                 gGame.StopLoop();
             }
 
+            if (e.key.keysym.sym == SDLK_F10) {
+                gEventManager.GetEvent(InputAction::toggle_debug3, deltaTime);
+            }
             if (e.key.keysym.sym == SDLK_F11) {
                 gEventManager.GetEvent(InputAction::toggle_debug, deltaTime);
             }
@@ -260,7 +268,7 @@ void FpsCounter(float deltaTime) {
 void MainLoop(float deltaTime) {
     FpsCounter(deltaTime);
 
-    static SpiralLoop loop;
+    static CircleLoop cLoop;
 
     static float gCameraOldX = 0;
     static float gCameraOldY = 0;
@@ -272,8 +280,14 @@ void MainLoop(float deltaTime) {
     int cameraY = static_cast<int>(std::floor(camera.y/VoxelWorlds::CHUNK_SIZE));
     int cameraZ = static_cast<int>(std::floor(camera.z/VoxelWorlds::CHUNK_SIZE));
     
+    static int radius = 4;
+    static int i = 0;
+    cLoop.SetCenter(cameraX, cameraZ);
+    static std::vector<std::pair<int, int>> coords = cLoop.Loop(radius);
+
     if(cameraX != gCameraOldX || cameraY != gCameraOldY || cameraZ != gCameraOldZ) {
-        loop.Reset();
+        coords = {};
+        radius = 4;
     }
 
     gCameraOldX = cameraX;
@@ -282,40 +296,38 @@ void MainLoop(float deltaTime) {
 
     {   
         
-        int loopX = loop.GetLoopX() + cameraX;
+        int loopX = coords[i].first;
         int loopY = cameraY;
-        int loopZ = loop.GetLoopZ() + cameraZ;
-        
-        // gThreadPool.enqueue([ptr = &gWorldGen, bBox = &gChunkbBoxCreationSys, loopX, loopY, loopZ]() {
-        //     // std::lock_guard<std::mutex> lock(gWorldMutex);
-        //     for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
-        //         int newY = loopY + y;
-        //         ptr->GenerateChunk(loopX, newY, loopZ);
-        //         ptr->GenerateModel(loopX, newY, loopZ);
-        //     }
-        // });
-        gArena.execute([ptr = &gWorldGen, loopX, loopY, loopZ](){
-            tbb::parallel_for(-VoxelWorlds::RENDER_DISTANCE, VoxelWorlds::RENDER_DISTANCE,
-            [ptr = &gWorldGen, loopX, loopY, loopZ](int y){
+        int loopZ = coords[i].second;
+
+        if(gSettings.mWorldGen) {
+            gArena.execute([ptr = &gWorldGen, loopX, loopY, loopZ](){
+                float heightMap[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE]; 
+                for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
+                    for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
+                        heightMap[blockX][blockZ] = gWorldGen.GenerateHeight(blockX + (loopX * VoxelWorlds::CHUNK_SIZE),blockZ + (loopZ * VoxelWorlds::CHUNK_SIZE));
+                    }
+                }
+                tbb::parallel_for(-VoxelWorlds::RENDER_DISTANCE, VoxelWorlds::RENDER_DISTANCE,
+                [ptr = &gWorldGen, &heightMap, loopX, loopY, loopZ](int y){
                     int newY = loopY + y;
-                    ptr->GenerateChunk(loopX, newY, loopZ);
-                    ptr->GenerateModel(loopX, newY, loopZ);
+                    ptr->GenerateChunk(heightMap, loopX, newY, loopZ);
+                });
             });
-        });
-        // for(int y = VoxelWorlds::RENDER_DISTANCE; y > -VoxelWorlds::RENDER_DISTANCE; y--) {
-        //     int newY = loopY + y;
-        //     gWorldGen.GenerateChunk(loopX, newY, loopZ);
-        //     gWorldGen.GenerateModel(loopX, newY, loopZ);
-        // }
 
-        // gWorldGen.GenerateChunk(loopX, loopY, loopZ);
-        // gWorldGen.GenerateModel(loopX, loopY, loopZ);
+        }
 
-            // if(delay <= 1) {
-            //     gWorldGen.GenerateModel(loopX1, loopY, loopZ1);
-            // }
-            
-        loop.Loop(VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET);
+        if(i < coords.size()) {
+            i++;
+        } else {
+            if(radius < VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET) {
+                radius += 4;
+            } else {
+                radius = 4;
+            }
+            i = 0;
+            coords = cLoop.Loop(radius);
+        }
     }
 }
 
@@ -326,8 +338,12 @@ void System(float deltaTime) {
     static ChunkVertexSetupSystem chunkVSS;
     static CollisionSystem collisionSystem;
     static PhysicsSystem physSystem;
+    static ChunkMeshingSystem chunkMeshSystem;
+    static BlockEventSystem blockEventSystem;
+    static ChunkUnloadSystem chunkUnloadSystem;
 
     gPlayerControllerSys.Update(gEntityManager);
+    chunkUnloadSystem.UnloadChunks(gEntityManager);
 
     if(gSettings.mPhysics) {
         collisionSystem.UpdateCollision(gEntityManager, deltaTime);
@@ -335,6 +351,10 @@ void System(float deltaTime) {
 
     physSystem.UpdatePosition(gEntityManager, deltaTime);
     posUpdateSystem.UpdatePositionTransform(gEntityManager);
+
+    blockEventSystem.UpdateChunks(gEntityManager);
+
+    chunkMeshSystem.CreateChunksMesh(gEntityManager);
     
     boundingBoxSystem.GenerateBoundingBox(gEntityManager);
     vSetupSystem.CreateVertexSpecification(gEntityManager);

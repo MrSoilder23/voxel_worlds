@@ -57168,7 +57168,8 @@ enum class BlockTypes : uint8_t {
     air,
     grass_block,
     dirt_block,
-    stone_block
+    stone_block,
+    sand_block
 };
 # 8 "C:/Projects/voxel_worlds/include/blocks/block_registry.hpp" 2
 # 1 "C:/Projects/voxel_worlds/include/model.hpp" 1

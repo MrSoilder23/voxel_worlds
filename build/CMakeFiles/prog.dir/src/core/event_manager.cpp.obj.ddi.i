@@ -45045,6 +45045,7 @@ enum class InputAction {
 
     toggle_debug,
     toggle_debug2,
+    toggle_debug3,
     exit,
 };
 # 10 "C:/Projects/voxel_worlds/include/core/event_manager.hpp" 2
