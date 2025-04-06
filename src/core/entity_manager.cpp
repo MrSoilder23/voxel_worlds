@@ -6,7 +6,12 @@ bool EntityManager::CreateEntity(const std::string& entityName) {
         return false;
     }
 
-    entityAccessor->second = mNextEntityID++;
+    size_t id;
+    if(mEntityIDQueue.try_pop(id)) {
+        entityAccessor->second = id;
+    } else {
+        entityAccessor->second = mNextEntityID++;
+    }
 
     return true;
 }
@@ -16,8 +21,13 @@ bool EntityManager::CreateEntity(const glm::ivec3& entityName) {
         return false;
     }
 
-    chunkAccessor->second = mNextEntityID++;
-    
+    size_t id;
+    if(mEntityIDQueue.try_pop(id)) {
+        chunkAccessor->second = id;
+    } else {
+        chunkAccessor->second = mNextEntityID++;
+    }
+
     return true;
 }
 
@@ -34,6 +44,7 @@ void EntityManager::DeleteEntity(const std::string& entityName) {
         }
     }
     
+    mEntityIDQueue.push(id);
     mIDs.erase(entityAccessor);
 }
 void EntityManager::DeleteEntity(const glm::ivec3& entityName) {
@@ -49,6 +60,7 @@ void EntityManager::DeleteEntity(const glm::ivec3& entityName) {
         }
     }
     
+    mEntityIDQueue.push(id);
     mChunkSpatialIndex.erase(chunkAccessor);
 }
 

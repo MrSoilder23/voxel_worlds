@@ -285,6 +285,7 @@ class EntityManager {
 
     private:
         std::atomic<size_t> mNextEntityID = 0;
+        tbb::concurrent_queue<size_t> mEntityIDQueue;
 
         tbb::concurrent_hash_map<std::type_index, tbb::concurrent_vector<std::shared_ptr<IComponent>>> mComponents;
         tbb::concurrent_hash_map<std::string, size_t> mIDs;
