@@ -136,14 +136,14 @@ void PlayerControllerSystem::RegisterMovementEvent(EventManager& eventManager, E
             glm::vec3 direction = glm::normalize(inputVelocity);
             float currentSpeedInDirection = glm::dot(playerVelocity->mVelocity, inputVelocity);
 
-            float allowableAccel = player->mSpeed - currentSpeedInDirection;
+            float allowableSpeed = player->mSpeed - currentSpeedInDirection;
 
-            if(allowableAccel <= 0.0f) {
+            if(allowableSpeed <= 0.0f) {
                 inputVelocity = glm::vec3(0.0f);
             } else {
                 float inputMagnitude = glm::length(inputVelocity);
-                if(inputMagnitude > allowableAccel) {
-                    inputVelocity = direction * allowableAccel;
+                if(inputMagnitude > allowableSpeed) {
+                    inputVelocity = direction * allowableSpeed;
                 }
             }
         }
