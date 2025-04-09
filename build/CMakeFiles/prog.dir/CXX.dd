@@ -25,6 +25,8 @@ build CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj: dyndep
 
+build CMakeFiles/prog.dir/src/systems/chunk_creation_system.cpp.obj: dyndep
+
 build CMakeFiles/prog.dir/src/systems/chunk_meshing_system.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/systems/chunk_unload_system.cpp.obj: dyndep
@@ -64,6 +66,8 @@ build CMakeFiles/prog.dir/src/utility/spline.cpp.obj: dyndep
 build CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/utility/utility.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/world_generation.cpp.obj: dyndep
 
 build CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj: dyndep
 

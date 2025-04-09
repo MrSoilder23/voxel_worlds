@@ -33,7 +33,7 @@ class WorldGenerationSystem {
         void SetEntityManager(EntityManager& entityManager);
         void SetSeed(unsigned int seed);
 
-        void GenerateChunk(float (&heightMap)[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE], int x, int y, int z);
+        void GenerateChunk(int x, int y, int z);
         
         float GenerateHeight(int x, int z);
     private:

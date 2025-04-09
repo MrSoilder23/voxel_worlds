@@ -31,6 +31,7 @@
 #include "./systems/chunk_meshing_system.hpp"
 #include "./systems/block_event_system.hpp"
 #include "./systems/chunk_unload_system.hpp"
+#include "./systems/chunk_creation_system.hpp"
 
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
@@ -77,6 +78,8 @@ WorldGenerationSystem gWorldGen;
 EventManager& gEventManager = EventManager::GetInstance();
 tbb::task_arena gArena;
 
+unsigned int gSeed;
+
 // Initialization
 void InitializeKeys() {
     static PlayerTargetSystem pTarget;
@@ -109,7 +112,7 @@ void InitializeBaseEntities() {
     gPlayerControllerSys.InitializeMovement(gEntityManager);
 
     auto playerPosition = gEntityManager.GetComponent<PositionComponent>("Player");
-    playerPosition->mPosition.y = gWorldGen.GenerateHeight(0,0)+1.2f;
+    playerPosition->mPosition.y = world_generation::GenerateHeight(gSeed, 0,0)+1.2f;
     
     auto playerBox = gEntityManager.GetComponent<BoundingBoxComponent>("Player");
     playerBox->mLocalMin = glm::vec3(-0.4, -1.5, -0.4);
@@ -121,11 +124,11 @@ void InitializeBaseEntities() {
 
 void InitializeWorld() {
     static std::random_device rndDevice;
-    unsigned int seed = rndDevice();
+    gSeed = rndDevice();
 
     gWorldGen.SetEntityManager(gEntityManager);
     gChunkbBoxCreationSys.SetEntityManager(gEntityManager);
-    gWorldGen.SetSeed(seed);
+    gWorldGen.SetSeed(gSeed);
 }
 
 void Initialize() {
@@ -281,20 +284,10 @@ void MainLoop(float deltaTime) {
         int loopZ = coords[i].second;
 
         if(gSettings.mWorldGen) {
-            gArena.execute([ptr = &gWorldGen, loopX, loopY, loopZ](){
-                float heightMap[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE]; 
-                for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
-                    for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
-                        heightMap[blockX][blockZ] = gWorldGen.GenerateHeight(blockX + (loopX * VoxelWorlds::CHUNK_SIZE),blockZ + (loopZ * VoxelWorlds::CHUNK_SIZE));
-                    }
-                }
-                tbb::parallel_for(-VoxelWorlds::RENDER_DISTANCE, VoxelWorlds::RENDER_DISTANCE,
-                [ptr = &gWorldGen, &heightMap, loopX, loopY, loopZ](int y){
-                    int newY = loopY + y;
-                    ptr->GenerateChunk(heightMap, loopX, newY, loopZ);
-                });
-            });
-
+            for(int y = -VoxelWorlds::RENDER_DISTANCE; y < VoxelWorlds::RENDER_DISTANCE; y++) {
+                int newY = loopY + y;
+                gWorldGen.GenerateChunk(loopX, newY, loopZ);
+            }
         }
 
         if(i < coords.size()) {
@@ -321,8 +314,11 @@ void System(float deltaTime) {
     static ChunkMeshingSystem chunkMeshSystem;
     static ChunkVertexSetupSystem chunkVSS;
     static ChunkUnloadSystem chunkUnloadSystem;
+    static ChunkCreationSystem chunkCreationSystem;
 
     gPlayerControllerSys.Update(gEntityManager);
+
+    chunkCreationSystem.CreateChunkData(gEntityManager, gSeed);
     chunkUnloadSystem.UnloadChunks(gEntityManager);
 
     if(gSettings.mPhysics) {
