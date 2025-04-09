@@ -25,7 +25,6 @@ struct ChunkModelComponent : public ModelComponent {
             glDeleteBuffers(1, &mVBO);
             glDeleteBuffers(1, &mEBO);
             glDeleteBuffers(1, &mTexId);
-            glDeleteBuffers(1, &mTexBO);
             glDeleteBuffers(1, &mTexCoords);
         }
     }
