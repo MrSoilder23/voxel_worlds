@@ -262,7 +262,7 @@ void MainLoop(float deltaTime) {
     int cameraY = static_cast<int>(std::floor(camera.y/VoxelWorlds::CHUNK_SIZE));
     int cameraZ = static_cast<int>(std::floor(camera.z/VoxelWorlds::CHUNK_SIZE));
     
-    constexpr int generationSpeed = 6;
+    constexpr int generationSpeed = 2;
 
     static int radius = generationSpeed;
     static int i = 0;
@@ -278,15 +278,19 @@ void MainLoop(float deltaTime) {
     gCameraOldZ = cameraZ;
 
     {   
-        
-        int loopX = coords[i].first;
-        int loopY = cameraY;
-        int loopZ = coords[i].second;
-
+    
         if(gSettings.mWorldGen) {
-            for(int y = -VoxelWorlds::RENDER_DISTANCE; y < VoxelWorlds::RENDER_DISTANCE; y++) {
-                int newY = loopY + y;
-                gWorldGen.GenerateChunk(loopX, newY, loopZ);
+            for(int iSpeed = 0; iSpeed < 2; iSpeed++) {
+                i += iSpeed;
+
+                int loopX = coords[i].first;
+                int loopY = cameraY;
+                int loopZ = coords[i].second;
+
+                for(int y = -VoxelWorlds::RENDER_DISTANCE; y < VoxelWorlds::RENDER_DISTANCE; y++) {
+                    int newY = loopY + y;
+                    gWorldGen.GenerateChunk(loopX, newY, loopZ);
+                }
             }
         }
 
@@ -294,7 +298,7 @@ void MainLoop(float deltaTime) {
             i++;
         } else {
             if(radius < VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET) {
-                radius += generationSpeed;
+                radius += std::min(generationSpeed, VoxelWorlds::RENDER_DISTANCE+VoxelWorlds::CHUNK_GENERATION_OFFSET-radius);
             } else {
                 radius = generationSpeed;
             }
