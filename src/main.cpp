@@ -56,7 +56,7 @@ struct Settings {
     float mSensitivity = 24.0f;
 
     bool mBoundingDebug = false;
-    bool mPhysics = false;
+    bool mPhysics = true;
     bool mWorldGen = true;
 };
 Settings gSettings;
@@ -109,7 +109,7 @@ void InitializeBaseEntities() {
     gPlayerControllerSys.InitializeMovement(gEntityManager);
 
     auto playerPosition = gEntityManager.GetComponent<PositionComponent>("Player");
-    playerPosition->mPosition.y = gWorldGen.GenerateHeight(0,0)+1.1;
+    playerPosition->mPosition.y = gWorldGen.GenerateHeight(0,0)+1.2f;
     
     auto playerBox = gEntityManager.GetComponent<BoundingBoxComponent>("Player");
     playerBox->mLocalMin = glm::vec3(-0.4, -1.5, -0.4);
