@@ -36,6 +36,10 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
     const auto& cameraComponent = entityManager.GetComponent<CameraComponent>("Player");
     glUseProgram(mGraphicsApp->mGraphicsPipeline);
 
+    const glm::mat4& perspective = cameraComponent->mProjectionMatrix;
+    glUniformMatrix4fv(mViewLocation, 1, false, &cameraComponent->mViewMatrix[0][0]);
+    glUniformMatrix4fv(mProjectionLocation, 1, false, &perspective[0][0]);
+
     const auto boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
     const auto positions = entityManager.GetComponentArray<PositionComponent>();
 
@@ -43,10 +47,6 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
     const auto models = entityManager.GetComponentArray<ModelComponent>();
 
     for(size_t entityID = 0; entityID < boundingBoxes.size(); entityID++) {
-
-        if(entityID >= boundingBoxes.size() || entityID >= positions.size() || entityID >= chunkModels.size() || entityID >= models.size()) {
-            continue;
-        }
 
         const auto& boundingBoxComponent = boundingBoxes[entityID];
         if(boundingBoxComponent && !physics::IsAABBInFrustum(*boundingBoxComponent, cameraComponent->frustumPlanes)) {
@@ -64,11 +64,6 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
 
         if(renderableModel->mVAO != 0) {
             glUniformMatrix4fv(mModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
-
-            glUniformMatrix4fv(mViewLocation, 1, false, &cameraComponent->mViewMatrix[0][0]);
-
-            const glm::mat4& perspective = cameraComponent->mProjectionMatrix;
-            glUniformMatrix4fv(mProjectionLocation, 1, false, &perspective[0][0]);
 
             glBindVertexArray(renderableModel->mVAO);
             // GLCheck(glDrawElements(GL_TRIANGLES, renderableModel->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);)
