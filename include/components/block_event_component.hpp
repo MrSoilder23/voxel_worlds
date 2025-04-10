@@ -1,4 +1,7 @@
 #pragma once
+// C++ standard libraries
+#include <chrono>
+
 // Third_party libraries
 #include <glm/glm.hpp>
 
