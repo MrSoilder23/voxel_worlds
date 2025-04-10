@@ -8,25 +8,25 @@ The engine demonstrates inifinitely generating 3D worlds using layered OpenSimpl
 
 ## **Features**
 
-### **Infinite World Generation**
+### **_Infinite World Generation_**
 
 - Layered multi noise, using OpenSimplex2 for terrain height.
 - Chunk based generation, with parallel mesh generation.
 - (Terrain generation performance boost in progress)
 
-### **Block Interactions**
+### **_Block Interactions_**
 
 - Ray-AABB raycast for block breaking and placing.
 - SweptAABB algorithm for block collisions.
 - Dynamic chunk updates when modifying terrain.
 
-### **Engine architecture**
+### **_Engine architecture_**
 
 - Custom ECS for entity management.
 - Glad/OpenGL 4.5 rendering using Frustum culling.
 - Bindless textures.
 
-### **Physics**
+### **_Physics_**
 
 - AABB world hitboxes.
 
@@ -38,3 +38,17 @@ Dependencies
 - CMake >= 3.3
 
 ### Build
+
+```
+git clone https://github.com/MrSoilder23/voxel_worlds
+cd voxel_worlds
+rmdir build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+```
+
+### Usage
+
+```
+./bin/prog
+```
