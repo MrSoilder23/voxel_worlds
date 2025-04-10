@@ -2,12 +2,12 @@
 
 Custom OpenGL engine with infinite terrain, ECS and parallized chunk mesh generation.
 
-
+&nbsp;
 ## **Description**
 
 The engine demonstrates inifinitely generating 3D worlds using layered OpenSimplex2 noise, with block interactions, and Entity-Component-System (ECS) architecture. Built from scratch using glad.
 
-
+&nbsp;
 ## **Features**
 
 ### **_Infinite World Generation_**
@@ -32,14 +32,13 @@ The engine demonstrates inifinitely generating 3D worlds using layered OpenSimpl
 
 - AABB world hitboxes.
 
-
+&nbsp;
 ## **Instalation**
 
 Dependencies
 
 - Compiler G++ >= 13 (C++20 required)
 - CMake >= 3.3
-
 
 ### Build
 
