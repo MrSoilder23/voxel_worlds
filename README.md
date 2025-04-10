@@ -1,0 +1,40 @@
+# **VoxelWorlds**
+
+Custom OpenGL engine with infinite terrain, ECS and parallized chunk mesh generation.
+
+## **Description**
+
+The engine demonstrates inifinitely generating 3D worlds using layered OpenSimplex2 noise, with block interactions, and Entity-Component-System (ECS) architecture. Built from scratch using glad.
+
+## **Features**
+
+### **Infinite World Generation**
+
+- Layered multi noise, using OpenSimplex2 for terrain height.
+- Chunk based generation, with parallel mesh generation.
+- (Terrain generation performance boost in progress)
+
+### **Block Interactions**
+
+- Ray-AABB raycast for block breaking and placing.
+- SweptAABB algorithm for block collisions.
+- Dynamic chunk updates when modifying terrain.
+
+### **Engine architecture**
+
+- Custom ECS for entity management.
+- Glad/OpenGL 4.5 rendering using Frustum culling.
+- Bindless textures.
+
+### **Physics**
+
+- AABB world hitboxes.
+
+## **Instalation**
+
+Dependencies
+
+- Compiler G++ >= 13 (C++20 required)
+- CMake >= 3.3
+
+### Build
