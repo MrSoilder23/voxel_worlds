@@ -52,3 +52,10 @@ cmake --build build
 ```
 ./bin/prog
 ```
+
+**Controls**
+- WASD: Move
+- Mouse: Look
+- Left Click: Break block
+- Right Click: Place current block
+- 1-4: Change current block
