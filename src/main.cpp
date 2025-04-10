@@ -1,9 +1,7 @@
 // C++ Standard libraries
-#include <iostream>
 #include <string>
 #include <memory>
 #include <random>
-#include <mutex>
 
 // Third_party libraries
 #define SDL_MAIN_HANDLED
@@ -35,7 +33,6 @@
 
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
-#include "./utility/spiral_loop.hpp"
 #include "./utility/circle_loop.hpp"
 #include "./core/event_manager.hpp"
 #include "./graphics/graphics.hpp"

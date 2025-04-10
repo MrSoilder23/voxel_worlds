@@ -1,6 +1,7 @@
 #pragma once
 // C++ standard libraries
 #include <array>
+#include <cassert>
 // Own libraries
 #include "./core/component.hpp"
 #include "./utility/constant.hpp"

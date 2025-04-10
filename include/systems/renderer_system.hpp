@@ -1,6 +1,8 @@
 #pragma once
 // C++ standard libraries
 #include <memory>
+#include <iostream>
+
 #include <typeindex>
 
 // Own libraries

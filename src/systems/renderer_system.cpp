@@ -1,8 +1,4 @@
 #include "./systems/renderer_system.hpp"
-#include <iostream>
-#include "./utility/utility.hpp"
-#include "./components/camera_component.hpp"
-#include "./components/position_component.hpp"
 
 // Error handling
 static void GLClearAllErrors() {

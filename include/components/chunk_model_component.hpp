@@ -4,10 +4,7 @@
 // Third_party libraries
 #include <glm/glm.hpp>
 // Own libraries
-#include "./core/component.hpp"
 #include "./components/model_component.hpp"
-#include "./model.hpp"
-#include "./graphics/texture.hpp"
 
 struct ChunkModelComponent : public ModelComponent {
     std::vector<glm::vec3> mTexturePositions;

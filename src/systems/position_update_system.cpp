@@ -1,5 +1,4 @@
 #include "./systems/position_update_system.hpp"
-#include <iostream>
 
 void PositionUpdateSystem::UpdatePositionTransform(EntityManager& entityManager) {
     auto positions = entityManager.GetComponentArray<PositionComponent>();

@@ -1,7 +1,4 @@
 #pragma once
-// C++ standard libraries
-#include <memory>
-
 // Third_party libraries
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -9,8 +6,6 @@
 
 // Own libraries
 #include "model.hpp"
-#include "./graphics/texture.hpp"
-#include "./graphics/shader.hpp"
 
 class MeshData {
     public:

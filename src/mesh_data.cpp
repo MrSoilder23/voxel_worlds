@@ -1,5 +1,4 @@
 #include "mesh_data.hpp"
-#include <iostream>
 
 MeshData::MeshData() : mVertexArrayObject(0),
             mVertexBufferObject(0), mVertexBufferObjectColor(0), mVertexBufferObjectPosition(0),
