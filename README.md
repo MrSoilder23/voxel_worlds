@@ -33,7 +33,7 @@ The engine demonstrates inifinitely generating 3D worlds using layered OpenSimpl
 - AABB world hitboxes.
 
 &nbsp;
-## **Instalation**
+## **Installation**
 
 Dependencies
 
