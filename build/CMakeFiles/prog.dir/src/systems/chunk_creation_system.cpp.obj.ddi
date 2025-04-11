@@ -1,0 +1,11 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles\\prog.dir\\src\\systems\\chunk_creation_system.cpp.obj",
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}

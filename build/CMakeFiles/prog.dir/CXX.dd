@@ -1,0 +1,73 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/prog.dir/src/blocks/block_registry.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/blocks/block_texture_creator.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/blocks/blocks.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/core/entity_manager.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/core/event_manager.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/core/game.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/graphics/model_manager.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/graphics/shader.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/main.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/mesh_data.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/block_event_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/bounding_box_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/chunk_bounding_creation_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/chunk_creation_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/chunk_meshing_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/chunk_unload_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/chunk_vertex_setup_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/collision_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/physics_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/player_controller_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/player_target_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/position_update_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/renderer_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/texture_manager.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/vertex_setup_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/systems/world_generation_system.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/circle_loop.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/open_simplex_noise2.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/perlin_noise.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/physics.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/spiral_loop.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/spline.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/thread_pool.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/utility.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/utility/world_generation.cpp.obj: dyndep
+
+build CMakeFiles/prog.dir/src/world/chunk_manager.cpp.obj: dyndep
+

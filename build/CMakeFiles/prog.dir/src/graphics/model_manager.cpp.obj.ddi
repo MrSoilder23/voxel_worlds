@@ -1,0 +1,11 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles\\prog.dir\\src\\graphics\\model_manager.cpp.obj",
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}
