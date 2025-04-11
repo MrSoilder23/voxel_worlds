@@ -1,4 +1,4 @@
 C:/Projects/voxel_worlds/build/CMakeFiles/glad.dir
 C:/Projects/voxel_worlds/build/CMakeFiles/voxel_worlds.dir
-C:/Projects/voxel_worlds/build/CMakeFiles/edit_cache.dir
-C:/Projects/voxel_worlds/build/CMakeFiles/rebuild_cache.dir
+C:/Projects/voxel_worlds/build/CMakeFiles/ALL_BUILD.dir
+C:/Projects/voxel_worlds/build/CMakeFiles/ZERO_CHECK.dir

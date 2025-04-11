@@ -37,7 +37,7 @@ The engine demonstrates inifinitely generating 3D worlds using layered OpenSimpl
 
 Dependencies
 
-- Compiler G++ >= 13 (C++20 required)
+- Compiler G++ >= 13 Clang >= 16 MSVC >= 19.29 (C++20 required)
 - CMake >= 3.3
 
 ### Build
@@ -46,8 +46,8 @@ Dependencies
 git clone https://github.com/MrSoilder23/voxel_worlds
 cd voxel_worlds
 rmdir build
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build
+cmake -S . -B build
+cmake --build build --config Release
 ```
 
 ### Usage
