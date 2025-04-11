@@ -43,7 +43,7 @@ Dependencies
 ### Build
 
 ```
-git clone https://github.com/MrSoilder23/voxel_worlds.git
+git clone https://github.com/MrSoilder23/voxel_worlds
 cd voxel_worlds
 rmdir build
 cmake -S . -B build
