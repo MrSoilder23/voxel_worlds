@@ -277,9 +277,13 @@ void MainLoop(float deltaTime) {
     {   
     
         if(gSettings.mWorldGen) {
-            for(int iSpeed = 0; iSpeed < 2; iSpeed++) {
-                i += iSpeed;
+            for(int iSpeed = 0; iSpeed < 4; iSpeed++) {
+                i += std::min(iSpeed, 1);
 
+                if(i >= coords.size()) {
+                    continue;
+                }
+                
                 int loopX = coords[i].first;
                 int loopY = cameraY;
                 int loopZ = coords[i].second;
