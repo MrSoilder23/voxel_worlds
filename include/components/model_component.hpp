@@ -9,7 +9,7 @@
 #include "./model.hpp"
 
 struct ModelComponent : public IComponent {
-    std::shared_ptr<Texture> mTexture;
+    GLuint mTexture;
     Model mModel;
     
     GLuint mVAO = 0;

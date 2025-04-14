@@ -10,36 +10,29 @@ BlockTextureCreator::~BlockTextureCreator() {
     std::cout << "BlockTextureCreator bye bye" << std::endl;
 }
 
-void BlockTextureCreator::CreateTexture(std::string name, std::vector<SDL_Surface*> faces) {
+void BlockTextureCreator::CreateTexture(std::string name, SDL_Surface* image) {
     GLuint texture;
     glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
 
-    for(unsigned int i = 0; i < faces.size(); i++) {
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, faces[i]->w, faces[i]->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, faces[i]->pixels);
-    }
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->w, image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
-    glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAX_LEVEL, 7);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-    glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_LOD_BIAS, 0.7);
-
-    mCubeTexture[name] = glGetTextureHandleARB(texture);
-    glMakeTextureHandleResidentARB(mCubeTexture[name]);
-    std::cout << name << ": " << mCubeTexture[name] << std::endl;
+    mTextureIDs[name] = texture;
 }
 
-GLuint64& BlockTextureCreator::GetTexture(std::string name) {
-    return mCubeTexture[name];
+GLuint& BlockTextureCreator::GetTexture(std::string name) {
+    return mTextureIDs[name];
 }
-std::unordered_map<std::string, GLuint64>& BlockTextureCreator::GetTextures() {
-    return mCubeTexture;
+std::unordered_map<std::string, GLuint>& BlockTextureCreator::GetTextures() {
+    return mTextureIDs;
 }
 
 BlockTextureCreator& BlockTextureCreator::GetInstance() {

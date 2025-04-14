@@ -61,6 +61,8 @@ void RendererSystem::DrawAll(EntityManager& entityManager) {
         if(renderableModel->mVAO != 0) {
             glUniformMatrix4fv(mModelMatrixLocation, 1, false, &modelPositionComponent->mTransform[0][0]);
 
+            glBindTexture(GL_TEXTURE_2D, renderableModel->mTexture);
+            
             glBindVertexArray(renderableModel->mVAO);
             // GLCheck(glDrawElements(GL_TRIANGLES, renderableModel->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);)
             glDrawElements(GL_TRIANGLES, renderableModel->mModel.indexBufferData.size(), GL_UNSIGNED_INT, (void*)0);

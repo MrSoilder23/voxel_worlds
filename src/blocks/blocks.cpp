@@ -6,17 +6,41 @@ void InitializeModels() {
     Model block;
 
     block.vertexPositions = {
-        // FrontFace
-        glm::vec3(-0.5f, -0.5f,  0.5f), // BotLeftVertex
-        glm::vec3( 0.5f, -0.5f,  0.5f), // BotRightVertex
-        glm::vec3(-0.5f,  0.5f,  0.5f), // TopLeftVertex
-        glm::vec3( 0.5f,  0.5f,  0.5f), // TopRightVertex
+        // Front Face
+        glm::vec3(-0.5f, -0.5f,  0.5f), // 0  - Bottom-left
+        glm::vec3( 0.5f, -0.5f,  0.5f), // 1  - Bottom-right
+        glm::vec3(-0.5f,  0.5f,  0.5f), // 2  - Top-left
+        glm::vec3( 0.5f,  0.5f,  0.5f), // 3  - Top-right
 
-        // BackFace
-        glm::vec3(-0.5f, -0.5f, -0.5f), // BackBotLeft
-        glm::vec3( 0.5f, -0.5f, -0.5f), // BackBotRight
-        glm::vec3(-0.5f,  0.5f, -0.5f), // BackTopLeft
-        glm::vec3( 0.5f,  0.5f, -0.5f), // BackTopRight
+        // Back Face
+        glm::vec3(-0.5f, -0.5f, -0.5f), // 4  - Bottom-left
+        glm::vec3( 0.5f, -0.5f, -0.5f), // 5  - Bottom-right
+        glm::vec3(-0.5f,  0.5f, -0.5f), // 6  - Top-left
+        glm::vec3( 0.5f,  0.5f, -0.5f), // 7  - Top-right
+
+        // Right Face
+        glm::vec3( 0.5f, -0.5f,  0.5f), //8
+        glm::vec3( 0.5f, -0.5f, -0.5f),
+        glm::vec3( 0.5f,  0.5f,  0.5f),
+        glm::vec3( 0.5f,  0.5f, -0.5f), //11
+
+        // Left Face
+        glm::vec3(-0.5f, -0.5f, -0.5f), //12
+        glm::vec3(-0.5f, -0.5f,  0.5f),
+        glm::vec3(-0.5f,  0.5f, -0.5f),
+        glm::vec3(-0.5f,  0.5f,  0.5f), //15
+
+        // Top Face
+        glm::vec3(-0.5f,  0.5f,  0.5f), //16
+        glm::vec3( 0.5f,  0.5f,  0.5f),
+        glm::vec3(-0.5f,  0.5f, -0.5f),
+        glm::vec3( 0.5f,  0.5f, -0.5f), //19
+
+        // Bottom Face
+        glm::vec3(-0.5f, -0.5f, -0.5f), //20
+        glm::vec3( 0.5f, -0.5f, -0.5f),
+        glm::vec3(-0.5f, -0.5f,  0.5f),
+        glm::vec3( 0.5f, -0.5f,  0.5f), //23
     };
 
     // block.indexBufferData = {
@@ -37,115 +61,73 @@ void InitializeTextures() {
     TextureManager& textureManager = TextureManager::GetInstance();
     BlockTextureCreator& blockTextureCreator = BlockTextureCreator::GetInstance();
 
-    SDL_Surface* grassTop = IMG_Load("./assets/grass_top.png");
-    SDL_Surface* grassSide = IMG_Load("./assets/grass_side.png");
-    SDL_Surface* grassBottom = IMG_Load("./assets/dirt.png");
-    SDL_Surface* stone = IMG_Load("./assets/stone.png");
-    SDL_Surface* sand = IMG_Load("./assets/sand.png");
+    SDL_Surface* chunkAtlas = IMG_Load("./assets/AtlasMap.png");
 
-    if (!grassTop || !grassSide || !grassBottom || !stone || !sand) {
+
+    if (!chunkAtlas) {
         std::cerr << "Failed to load textures!" << std::endl;
         return;
     }
 
-    textureManager.CreateNewTexture("grassTop", grassTop);
-    textureManager.CreateNewTexture("grassSide", grassSide);
-    textureManager.CreateNewTexture("grassBottom", grassBottom);
-    textureManager.CreateNewTexture("stone", stone);
-    textureManager.CreateNewTexture("sand", sand);
+    textureManager.CreateNewTexture("ChunkTexture", chunkAtlas);
 
-    std::vector<SDL_Surface*> grassBlockFaces;
-    grassBlockFaces.reserve(6); // Right Left Top Bottom Back Front
-    grassBlockFaces.push_back(textureManager.GetTexture("grassSide"));
-    grassBlockFaces.push_back(textureManager.GetTexture("grassSide"));
-    grassBlockFaces.push_back(textureManager.GetTexture("grassTop"));
-    grassBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
-    grassBlockFaces.push_back(textureManager.GetTexture("grassSide"));
-    grassBlockFaces.push_back(textureManager.GetTexture("grassSide"));
-
-    std::vector<SDL_Surface*> dirtBlockFaces;
-    dirtBlockFaces.reserve(6); // Right Left Top Bottom Back Front
-    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
-    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
-    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
-    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
-    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
-    dirtBlockFaces.push_back(textureManager.GetTexture("grassBottom"));
-
-    std::vector<SDL_Surface*> stoneBlockFaces;
-    stoneBlockFaces.reserve(6); // Right Left Top Bottom Back Front
-    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
-    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
-    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
-    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
-    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
-    stoneBlockFaces.push_back(textureManager.GetTexture("stone"));
-
-    std::vector<SDL_Surface*> sandBlockFaces;
-    sandBlockFaces.reserve(6); // Right Left Top Bottom Back Front
-    sandBlockFaces.push_back(textureManager.GetTexture("sand"));
-    sandBlockFaces.push_back(textureManager.GetTexture("sand"));
-    sandBlockFaces.push_back(textureManager.GetTexture("sand"));
-    sandBlockFaces.push_back(textureManager.GetTexture("sand"));
-    sandBlockFaces.push_back(textureManager.GetTexture("sand"));
-    sandBlockFaces.push_back(textureManager.GetTexture("sand"));
-
-    blockTextureCreator.CreateTexture("grass_block", grassBlockFaces);
-    blockTextureCreator.CreateTexture("dirt_block", dirtBlockFaces);
-    blockTextureCreator.CreateTexture("stone_block", stoneBlockFaces);
-    blockTextureCreator.CreateTexture("sand_block", sandBlockFaces);
+    blockTextureCreator.CreateTexture("ChunkTexture", chunkAtlas);
 }
 
 void InitializeBlocks() {
     BlockRegistry& blockRegistry = BlockRegistry::GetInstance();
     ModelManager& modelManager = ModelManager::GetInstance();
-    BlockTextureCreator& blockTextureCreator = BlockTextureCreator::GetInstance();
 
     // Grass block
     BlockTemplate grassBlock;
 
-    grassBlock.model = modelManager.GetModel("cube");
+    grassBlock.textureCoords[0] = glm::vec2(1,0);
+    grassBlock.textureCoords[1] = glm::vec2(1,0);
+    grassBlock.textureCoords[2] = glm::vec2(1,0);
+    grassBlock.textureCoords[3] = glm::vec2(1,0);
+    grassBlock.textureCoords[4] = glm::vec2(2,0);
+    grassBlock.textureCoords[5] = glm::vec2(0,0);
 
-    std::shared_ptr<Texture> grassBlockTexture = std::make_shared<Texture>();
-    grassBlockTexture->textureHandle = blockTextureCreator.GetTexture("grass_block");
-    grassBlock.textures = grassBlockTexture;
-    
+    grassBlock.model = modelManager.GetModel("cube");
     blockRegistry.RegisterBlock(BlockTypes::grass_block, grassBlock);
 
-    
     // Dirt Block    
     BlockTemplate dirtBlock;
 
+    dirtBlock.textureCoords[0] = glm::vec2(0,0);
+    dirtBlock.textureCoords[1] = glm::vec2(0,0);
+    dirtBlock.textureCoords[2] = glm::vec2(0,0);
+    dirtBlock.textureCoords[3] = glm::vec2(0,0);
+    dirtBlock.textureCoords[4] = glm::vec2(0,0);
+    dirtBlock.textureCoords[5] = glm::vec2(0,0);
+
     dirtBlock.model = modelManager.GetModel("cube");
-
-    std::shared_ptr<Texture> dirtBlockTexture = std::make_shared<Texture>();
-    dirtBlockTexture->textureHandle = blockTextureCreator.GetTexture("dirt_block");
-    dirtBlock.textures = dirtBlockTexture;
-
     blockRegistry.RegisterBlock(BlockTypes::dirt_block, dirtBlock);
 
-    
     // Stone Block    
     BlockTemplate stoneBlock;
 
+    stoneBlock.textureCoords[0] = glm::vec2(4,0);
+    stoneBlock.textureCoords[1] = glm::vec2(4,0);
+    stoneBlock.textureCoords[2] = glm::vec2(4,0);
+    stoneBlock.textureCoords[3] = glm::vec2(4,0);
+    stoneBlock.textureCoords[4] = glm::vec2(4,0);
+    stoneBlock.textureCoords[5] = glm::vec2(4,0);
+
     stoneBlock.model = modelManager.GetModel("cube");
-
-    std::shared_ptr<Texture> stoneBlockTexture = std::make_shared<Texture>();
-    stoneBlockTexture->textureHandle = blockTextureCreator.GetTexture("stone_block");
-    stoneBlock.textures = stoneBlockTexture;
-
     blockRegistry.RegisterBlock(BlockTypes::stone_block, stoneBlock);
 
-    
     // Sand Block    
     BlockTemplate sandBlock;
 
+    sandBlock.textureCoords[0] = glm::vec2(3,0);
+    sandBlock.textureCoords[1] = glm::vec2(3,0);
+    sandBlock.textureCoords[2] = glm::vec2(3,0);
+    sandBlock.textureCoords[3] = glm::vec2(3,0);
+    sandBlock.textureCoords[4] = glm::vec2(3,0);
+    sandBlock.textureCoords[5] = glm::vec2(3,0);
+
     sandBlock.model = modelManager.GetModel("cube");
-
-    std::shared_ptr<Texture> sandBlockTexture = std::make_shared<Texture>();
-    sandBlockTexture->textureHandle = blockTextureCreator.GetTexture("sand_block");
-    sandBlock.textures = sandBlockTexture;
-
     blockRegistry.RegisterBlock(BlockTypes::sand_block, sandBlock);
     
 }

@@ -91854,7 +91854,7 @@ struct Model {
 # 10 "C:/Projects/voxel_worlds/include/components/model_component.hpp" 2
 
 struct ModelComponent : public IComponent {
-    std::shared_ptr<Texture> mTexture;
+    GLuint mTexture;
     Model mModel;
 
     GLuint mVAO = 0;

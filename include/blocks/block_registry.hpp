@@ -2,6 +2,10 @@
 // C++ standard libraries
 #include <memory>
 #include <unordered_map>
+#include <array>
+
+// Third_party libraries
+#include <glm/glm.hpp>
 
 // Own libraries
 #include "block_types.hpp"
@@ -10,7 +14,9 @@
 
 struct BlockTemplate {    
     Model model;
-    std::shared_ptr<Texture> textures;
+
+    // Left Right Front Back Top Bottom
+    std::array<glm::vec2, 6> textureCoords;
 };
 
 class BlockRegistry {

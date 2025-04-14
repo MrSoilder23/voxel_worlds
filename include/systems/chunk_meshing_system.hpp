@@ -21,8 +21,6 @@ class ChunkMeshingSystem {
     public:
         void CreateChunksMesh(EntityManager& entityManager);
     private:
-        std::unordered_map<GLuint64, GLuint> TextureMap();
-        
         ChunkStorageComponent* GetNeighbouringChunk(EntityManager& entityManager, const tbb::concurrent_hash_map<glm::ivec3, size_t, Vec3Hash>& entityMap, 
         const std::vector<ChunkStorageComponent*>& storageComponents, int x, int y, int z);
 

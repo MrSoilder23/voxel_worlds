@@ -16,10 +16,10 @@ class BlockTextureCreator {
     public:
         ~BlockTextureCreator();
 
-        void CreateTexture(std::string name, std::vector<SDL_Surface*> faces);
+        void CreateTexture(std::string name, SDL_Surface* faces);
 
-        GLuint64& GetTexture(std::string name);
-        std::unordered_map<std::string, GLuint64>& GetTextures();
+        GLuint& GetTexture(std::string name);
+        std::unordered_map<std::string, GLuint>& GetTextures();
 
         static BlockTextureCreator& GetInstance();
         
@@ -29,5 +29,5 @@ class BlockTextureCreator {
         BlockTextureCreator operator=(BlockTextureCreator const& rhs);
     
     private:
-        std::unordered_map<std::string, GLuint64> mCubeTexture;
+        std::unordered_map<std::string, GLuint> mTextureIDs;
 };
