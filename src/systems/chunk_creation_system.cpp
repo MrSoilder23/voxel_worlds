@@ -4,22 +4,28 @@ void ChunkCreationSystem::CreateChunkData(EntityManager& entityManager, const un
     const auto chunkStorages = entityManager.GetComponentArray<ChunkStorageComponent>();
     const auto chunkPositions = entityManager.GetComponentArray<PositionComponent>();
 
-    float heightMap[static_cast<size_t>(VoxelWorlds::CHUNK_SIZE)][static_cast<size_t>(VoxelWorlds::CHUNK_SIZE)];
-    float perlinMap[static_cast<size_t>(VoxelWorlds::CHUNK_SIZE)][static_cast<size_t>(VoxelWorlds::CHUNK_SIZE)];
+    const int& size = chunkStorages.size();
+    static tbb::task_arena arena;
+    
+    arena.execute([&](){
 
-    float currentX = std::numeric_limits<float>::infinity();
-    float currentZ = std::numeric_limits<float>::infinity();
+    tbb::parallel_for(0, size, [&](const auto& entityID){
 
-    for(size_t entityID = 0; entityID < chunkStorages.size(); entityID++) {
+        thread_local float heightMap[static_cast<size_t>(VoxelWorlds::CHUNK_SIZE)][static_cast<size_t>(VoxelWorlds::CHUNK_SIZE)];
+        thread_local float perlinMap[static_cast<size_t>(VoxelWorlds::CHUNK_SIZE)][static_cast<size_t>(VoxelWorlds::CHUNK_SIZE)];
+    
+        thread_local float currentX = std::numeric_limits<float>::infinity();
+        thread_local float currentZ = std::numeric_limits<float>::infinity();
+
         auto& chunkStorage = chunkStorages[entityID];
         auto& chunkPosition = chunkPositions[entityID];
 
         if(!chunkStorage || !chunkPosition) {
-            continue;
+            return;
         }
 
         if(chunkStorage->mWasGenerated) {
-            continue;
+            return;
         }
 
         static float chunkCoords = VoxelWorlds::CHUNK_SIZE-1.0f;
@@ -66,8 +72,6 @@ void ChunkCreationSystem::CreateChunkData(EntityManager& entityManager, const un
                 float perlin = perlinMap[static_cast<size_t>(blockX)][static_cast<size_t>(blockZ)];
                 float height = heightMap[static_cast<size_t>(blockX)][static_cast<size_t>(blockZ)];
 
-                height = std::round(height);
-
                 int numChunks = static_cast<int>(height / VoxelWorlds::CHUNK_SIZE);
                 int remainder = static_cast<int>(height) % static_cast<int>(VoxelWorlds::CHUNK_SIZE); // Extra blocks for the top chunk
 
@@ -105,5 +109,7 @@ void ChunkCreationSystem::CreateChunkData(EntityManager& entityManager, const un
 
         tempChunkStorage.mWasGenerated = true;
         *chunkStorage = std::move(tempChunkStorage);
-    }
+    });
+
+    });
 }

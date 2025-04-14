@@ -32,5 +32,7 @@ float world_generation::GenerateHeight(const unsigned int& seed, int x, int z) {
     float erosionAdj = VoxelWorlds::EROSION_SPLINE.evaluate(erosion);
     float peaksValleysAdj = VoxelWorlds::PEAKS_VALLEYS_SPLINE.evaluate(peaksAndValleys);
 
-    return (continentalAdj * 0.5f) + (erosionAdj * 0.3f) + (peaksValleysAdj * 0.2f);
+    float height = std::round((continentalAdj * 0.5f) + (erosionAdj * 0.3f) + (peaksValleysAdj * 0.2f));
+
+    return height;
 }

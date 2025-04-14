@@ -6,9 +6,7 @@ void ChunkUnloadSystem::UnloadChunks(EntityManager& entityManager) {
 
     const auto positions = entityManager.GetComponentArray<PositionComponent>();
 
-    const auto chunkEntities = entityManager.GetChunkEntities();
-
-    const glm::vec2 playerPosition2D = {playerPos->mPosition.x, playerPos->mPosition.z};
+    const auto& chunkEntities = entityManager.GetChunkEntities();
 
     for(const auto& entityPair : chunkEntities) {
         const size_t entityID = entityPair.second;
