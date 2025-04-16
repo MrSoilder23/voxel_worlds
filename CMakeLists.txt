@@ -16,30 +16,23 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(TBB REQUIRED)
 
-add_custom_target(copy_assets ALL
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/assets
-        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    VERBATIM
-)
-
-add_custom_target(copy_shaders ALL
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/shaders
-        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    VERBATIM
-)
-
 add_library(glad STATIC ${CMAKE_SOURCE_DIR}/third_party/glad.c)
 target_include_directories(glad PRIVATE ${CMAKE_SOURCE_DIR}/third_party/include)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp" "src/**/*.cpp")
 add_executable(${PROG_NAME} ${SOURCES})
-add_dependencies(${PROG_NAME} copy_assets copy_shaders)
+
+add_custom_command(TARGET ${PROG_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROG_NAME}>/assets"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_SOURCE_DIR}/assets"
+    "$<TARGET_FILE_DIR:${PROG_NAME}>/assets"
+    COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROG_NAME}>/shaders"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_SOURCE_DIR}/shaders"
+    "$<TARGET_FILE_DIR:${PROG_NAME}>/shaders"
+    COMMENT "Copying assets and shaders to build directory"
+)
 
 target_include_directories(${PROG_NAME} PRIVATE 
     ${CMAKE_SOURCE_DIR}/include

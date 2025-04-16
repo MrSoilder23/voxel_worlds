@@ -1,5 +1,3 @@
-C:/Projects/voxel_worlds/build/CMakeFiles/copy_assets.dir
-C:/Projects/voxel_worlds/build/CMakeFiles/copy_shaders.dir
 C:/Projects/voxel_worlds/build/CMakeFiles/glad.dir
 C:/Projects/voxel_worlds/build/CMakeFiles/prog.dir
 C:/Projects/voxel_worlds/build/CMakeFiles/ALL_BUILD.dir
