@@ -43,7 +43,7 @@ Dependencies
 ### Build
 
 ```
-git clone https://github.com/MrSoilder23/voxel_worlds
+git clone --recurse-submodules https://github.com/MrSoilder23/voxel_worlds.git
 cd voxel_worlds
 ```
 
