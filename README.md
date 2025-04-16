@@ -43,9 +43,21 @@ Dependencies
 ### Build
 
 ```
-git clone https://github.com/MrSoilder23/voxel_worlds
+git clone --recurse-submodules https://github.com/MrSoilder23/voxel_worlds.git
 cd voxel_worlds
-rmdir build
+```
+
+For Linux
+```
+./vcpkg/bootstrap-vcpkg.sh
+```
+
+For Windows
+```
+vcpkg/bootstrap-vcpkg.bat
+```
+
+```
 cmake -S . -B build
 cmake --build build --config Release
 ```
@@ -53,7 +65,7 @@ cmake --build build --config Release
 ### Usage
 
 ```
-./bin/prog
+./bin/Release/prog
 ```
 
 **Controls**
@@ -61,4 +73,4 @@ cmake --build build --config Release
 - Mouse: Look
 - Left Click: Break block
 - Right Click: Place current block
-- 1-4: Change current block
+- 1-5: Change current block

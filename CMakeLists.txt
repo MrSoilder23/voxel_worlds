@@ -1,64 +1,53 @@
 cmake_minimum_required(VERSION 3.31)
-project(VoxelWorlds)
 
-set(CMAKE_FLAGS "-g -O3")
+if(EXISTS ${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake)
+    set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake)
+endif()
+
+project(VoxelWorlds)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_FLAGS}")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_FLAGS}")
 
 set(PROG_NAME prog)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-include_directories(${CMAKE_SOURCE_DIR}/third_party/include)
-include_directories(${CMAKE_SOURCE_DIR}/include)
-link_directories(${CMAKE_SOURCE_DIR}/lib)
-
-if(NOT DEFINED PLATFORM)
-    if(WIN32)
-        set(PLATFORM "Windows")
-    elseif(UNIX)
-        set(PLATFORM "Linux")
-    else()
-        message(FATAL_ERROR "Unsupported platform! Please specify PLATFORM=Windows or PLATFORM=Linux manually.")
-    endif()
-endif()
-
-find_library(SDL2_LIBRARY NAMES SDL2 PATHS ${CMAKE_SOURCE_DIR}/lib NO_DEFAULT_PATH)
-find_library(SDL2_IMAGE_LIB NAMES SDL2_image PATHS ${CMAKE_SOURCE_DIR}/lib NO_DEFAULT_PATH)
-
-if(PLATFORM STREQUAL "Windows")
-    message(STATUS "Configuring for windows")
-    find_library(SDL2_MAIN_LIB NAMES SDL2main PATHS ${CMAKE_SOURCE_DIR}/lib NO_DEFAULT_PATH)
-elseif(PLATFORM STREQUAL "Linux")
-    message(STATUS "Configuring for linux")
-endif()
-
-add_custom_target(copy_assets ALL
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/assets
-        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets
-)
-
-add_custom_target(copy_shaders ALL
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/shaders
-        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/shaders
-)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(TBB REQUIRED)
 
 add_library(glad STATIC ${CMAKE_SOURCE_DIR}/third_party/glad.c)
+target_include_directories(glad PRIVATE ${CMAKE_SOURCE_DIR}/third_party/include)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp" "src/**/*.cpp")
-
 add_executable(${PROG_NAME} ${SOURCES})
 
-add_dependencies(${PROG_NAME} copy_assets copy_shaders)
+add_custom_command(TARGET ${PROG_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROG_NAME}>/assets"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_SOURCE_DIR}/assets"
+    "$<TARGET_FILE_DIR:${PROG_NAME}>/assets"
+    COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROG_NAME}>/shaders"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_SOURCE_DIR}/shaders"
+    "$<TARGET_FILE_DIR:${PROG_NAME}>/shaders"
+    COMMENT "Copying assets and shaders to build directory"
+)
 
-set_target_properties(${PROG_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+target_include_directories(${PROG_NAME} PRIVATE 
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/third_party/include    
+)
 
-if(PLATFORM STREQUAL "Windows")
-    target_link_libraries(${PROG_NAME} mingw32 ${SDL2_MAIN_LIB} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIB} glad tbb)
-elseif(PLATFORM STREQUAL "Linux")
-    target_link_libraries(${PROG_NAME} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIB} glad)
+# Link libraries
+target_link_libraries(${PROG_NAME} PRIVATE
+    glad
+    SDL2::SDL2
+    SDL2_image::SDL2_image
+    TBB::tbb
+)
+
+# Windows-specific linking
+if(WIN32)
+    target_link_libraries(${PROG_NAME} PRIVATE SDL2::SDL2main)
 endif()
