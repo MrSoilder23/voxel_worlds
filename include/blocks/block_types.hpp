@@ -7,5 +7,6 @@ enum class BlockTypes : uint8_t {
     grass_block,
     dirt_block,
     stone_block,
-    sand_block
+    sand_block,
+    COUNT // Always last entry
 };

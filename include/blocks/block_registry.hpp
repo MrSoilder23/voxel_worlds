@@ -1,8 +1,7 @@
 #pragma once
 // C++ standard libraries
-#include <memory>
-#include <unordered_map>
 #include <array>
+#include <stdexcept>
 
 // Third_party libraries
 #include <glm/glm.hpp>
@@ -21,10 +20,13 @@ struct BlockTemplate {
 
 class BlockRegistry {
     public:
+        static constexpr size_t NUM_BLOCK_TYPES = static_cast<size_t>(BlockTypes::COUNT);
+
         void RegisterBlock(BlockTypes type, BlockTemplate block);
         const BlockTemplate& GetBlock(BlockTypes type) const;
 
         static BlockRegistry& GetInstance();
-    private:
-        std::unordered_map<BlockTypes, BlockTemplate> blocks;
+    private: 
+        std::array<BlockTemplate, NUM_BLOCK_TYPES> blocks;
+
 };

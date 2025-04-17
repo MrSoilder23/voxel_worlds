@@ -1,6 +1,8 @@
 #include "./systems/chunk_creation_system.hpp"
 
 void ChunkCreationSystem::CreateChunkData(EntityManager& entityManager, const unsigned int& seed) {
+    constexpr float chunkCoords = VoxelWorlds::CHUNK_SIZE-1.0f;
+
     const auto chunkStorages = entityManager.GetComponentArray<ChunkStorageComponent>();
     const auto chunkPositions = entityManager.GetComponentArray<PositionComponent>();
 
@@ -27,8 +29,6 @@ void ChunkCreationSystem::CreateChunkData(EntityManager& entityManager, const un
         if(chunkStorage->mWasGenerated) {
             return;
         }
-
-        static float chunkCoords = VoxelWorlds::CHUNK_SIZE-1.0f;
 
         float x = chunkPosition->mPosition.x / VoxelWorlds::CHUNK_SIZE;
         float z = chunkPosition->mPosition.z / VoxelWorlds::CHUNK_SIZE;

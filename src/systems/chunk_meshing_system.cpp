@@ -14,6 +14,389 @@ inline ChunkStorageComponent* ChunkMeshingSystem::GetNeighbouringChunk(
     return storageComponents[chunkEntityAccessor->second];
 }
 
+void GetBlockNeighbours(
+    ChunkModelComponent& chunkModel,
+    ChunkStorageComponent* storage,
+    const BlockTypes& block,
+    const GLuint vertexSize,
+    const auto& chunkRight, const auto& chunkLeft, 
+    const auto& chunkTop, const auto& chunkBot,  
+    const auto& chunkFront, const auto& chunkBack,
+    const int blockX, const int blockY, const int blockZ
+) {
+    static BlockRegistry& blockRegistry = BlockRegistry::GetInstance();
+
+    auto& blockObject = blockRegistry.GetBlock(block);
+    const glm::vec3 chunkOffset = glm::vec3(blockX,blockY,blockZ);
+
+    unsigned int size = 0;
+
+    // RightFace
+    if(blockX + 1 < VoxelWorlds::CHUNK_SIZE) {
+        if(ChunkStorage::GetBlock(*storage, blockX+1, blockY, blockZ) == BlockTypes::air){
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                2 + size + vertexSize, 0 + size + vertexSize, 1 + size + vertexSize,
+                2 + size + vertexSize, 1 + size + vertexSize, 3 + size + vertexSize
+            });
+            size += 4;
+
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[8] + chunkOffset,
+                blockObject.model.vertexPositions[9] + chunkOffset,
+                blockObject.model.vertexPositions[10] + chunkOffset,
+                blockObject.model.vertexPositions[11] + chunkOffset,
+            });
+            glm::vec2 pos = blockObject.textureCoords[1];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    } else if (chunkRight) {
+        if(ChunkStorage::GetBlock(*chunkRight, 0, blockY, blockZ) == BlockTypes::air) {
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                2 + size + vertexSize, 0 + size + vertexSize, 1 + size + vertexSize,
+                2 + size + vertexSize, 1 + size + vertexSize, 3 + size + vertexSize
+            });
+            size += 4;
+
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[8] + chunkOffset,
+                blockObject.model.vertexPositions[9] + chunkOffset,
+                blockObject.model.vertexPositions[10] + chunkOffset,
+                blockObject.model.vertexPositions[11] + chunkOffset,
+            });
+
+            glm::vec2 pos = blockObject.textureCoords[1];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    }
+
+    // LeftFace
+    if(blockX - 1 >= 0) {
+        if(ChunkStorage::GetBlock(*storage, blockX-1, blockY, blockZ) == BlockTypes::air){
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                2 + size + vertexSize, 0 + size + vertexSize, 1 + size + vertexSize,
+                2 + size + vertexSize, 1 + size + vertexSize, 3 + size + vertexSize
+            });
+            size += 4;
+
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[12] + chunkOffset,
+                blockObject.model.vertexPositions[13] + chunkOffset,
+                blockObject.model.vertexPositions[14] + chunkOffset,
+                blockObject.model.vertexPositions[15] + chunkOffset,
+            });
+
+            glm::vec2 pos = blockObject.textureCoords[0];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    } else if (chunkLeft) {
+        if(ChunkStorage::GetBlock(*chunkLeft, VoxelWorlds::CHUNK_SIZE-1, blockY, blockZ) == BlockTypes::air) {
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                2 + size + vertexSize, 0 + size + vertexSize, 1 + size + vertexSize,
+                2 + size + vertexSize, 1 + size + vertexSize, 3 + size + vertexSize
+            });
+            size += 4;
+
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[12] + chunkOffset,
+                blockObject.model.vertexPositions[13] + chunkOffset,
+                blockObject.model.vertexPositions[14] + chunkOffset,
+                blockObject.model.vertexPositions[15] + chunkOffset,
+            });
+
+            glm::vec2 pos = blockObject.textureCoords[0];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    }
+
+    // TopFace
+    if(blockY + 1 < VoxelWorlds::CHUNK_SIZE) {
+        if(ChunkStorage::GetBlock(*storage, blockX, blockY+1, blockZ) == BlockTypes::air){
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                2 + size + vertexSize, 0 + size + vertexSize, 1 + size + vertexSize,
+                2 + size + vertexSize, 1 + size + vertexSize, 3 + size + vertexSize
+            });
+            size += 4;
+
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[16] + chunkOffset,
+                blockObject.model.vertexPositions[17] + chunkOffset,
+                blockObject.model.vertexPositions[18] + chunkOffset,
+                blockObject.model.vertexPositions[19] + chunkOffset,
+            });
+
+            glm::vec2 pos = blockObject.textureCoords[4];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    } else if (chunkTop) {
+        if(ChunkStorage::GetBlock(*chunkTop, blockX, 0, blockZ) == BlockTypes::air) {
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                2 + size + vertexSize, 0 + size + vertexSize, 1 + size + vertexSize,
+                2 + size + vertexSize, 1 + size + vertexSize, 3 + size + vertexSize
+            });
+            size += 4;
+
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[16] + chunkOffset,
+                blockObject.model.vertexPositions[17] + chunkOffset,
+                blockObject.model.vertexPositions[18] + chunkOffset,
+                blockObject.model.vertexPositions[19] + chunkOffset,
+            });
+            
+            glm::vec2 pos = blockObject.textureCoords[4];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    }
+
+    // BotFace
+    if(blockY - 1 >= 0) {
+        if(ChunkStorage::GetBlock(*storage, blockX, blockY-1, blockZ) == BlockTypes::air){
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                2 + size + vertexSize, 0 + size + vertexSize, 1 + size + vertexSize,
+                2 + size + vertexSize, 1 + size + vertexSize, 3 + size + vertexSize
+            });
+            size += 4;
+
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[20] + chunkOffset,
+                blockObject.model.vertexPositions[21] + chunkOffset,
+                blockObject.model.vertexPositions[22] + chunkOffset,
+                blockObject.model.vertexPositions[23] + chunkOffset,
+            });
+
+            glm::vec2 pos = blockObject.textureCoords[5];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    } else if (chunkBot) {
+        if(ChunkStorage::GetBlock(*chunkBot, blockX, VoxelWorlds::CHUNK_SIZE-1, blockZ) == BlockTypes::air) {
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                2 + size + vertexSize, 0 + size + vertexSize, 1 + size + vertexSize,
+                2 + size + vertexSize, 1 + size + vertexSize, 3 + size + vertexSize
+            });
+            size += 4;
+
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[20] + chunkOffset,
+                blockObject.model.vertexPositions[21] + chunkOffset,
+                blockObject.model.vertexPositions[22] + chunkOffset,
+                blockObject.model.vertexPositions[23] + chunkOffset,
+            });
+
+            glm::vec2 pos = blockObject.textureCoords[5];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    }
+
+    // FrontFace
+    if(blockZ + 1 < VoxelWorlds::CHUNK_SIZE) {
+        if(ChunkStorage::GetBlock(*storage, blockX, blockY, blockZ+1) == BlockTypes::air){
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                2 + size + vertexSize, 0 + size + vertexSize, 1 + size + vertexSize,
+                2 + size + vertexSize, 1 + size + vertexSize, 3 + size + vertexSize
+            }); 
+            size += 4;
+
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[0] + chunkOffset,
+                blockObject.model.vertexPositions[1] + chunkOffset,
+                blockObject.model.vertexPositions[2] + chunkOffset,
+                blockObject.model.vertexPositions[3] + chunkOffset,
+            });
+
+            glm::vec2 pos = blockObject.textureCoords[2];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    } else if (chunkFront) {
+        if(ChunkStorage::GetBlock(*chunkFront, blockX, blockY, 0) == BlockTypes::air) {
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                2 + size + vertexSize, 0 + size + vertexSize, 1 + size + vertexSize,
+                2 + size + vertexSize, 1 + size + vertexSize, 3 + size + vertexSize
+            });
+            size += 4;
+            
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[0] + chunkOffset,
+                blockObject.model.vertexPositions[1] + chunkOffset,
+                blockObject.model.vertexPositions[2] + chunkOffset,
+                blockObject.model.vertexPositions[3] + chunkOffset,
+            });
+
+            glm::vec2 pos = blockObject.textureCoords[2];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    }
+
+    // BackFace
+    if(blockZ - 1 >= 0) {
+        if(ChunkStorage::GetBlock(*storage, blockX, blockY, blockZ-1) == BlockTypes::air){
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                3 + size + vertexSize, 1 + size + vertexSize, 0 + size + vertexSize,
+                3 + size + vertexSize, 0 + size + vertexSize, 2 + size + vertexSize
+            });
+            size += 4;
+
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[4] + chunkOffset,
+                blockObject.model.vertexPositions[5] + chunkOffset,
+                blockObject.model.vertexPositions[6] + chunkOffset,
+                blockObject.model.vertexPositions[7] + chunkOffset,
+            });
+
+            glm::vec2 pos = blockObject.textureCoords[3];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    } else if (chunkBack) {
+        if(ChunkStorage::GetBlock(*chunkBack, blockX, blockY, VoxelWorlds::CHUNK_SIZE-1) == BlockTypes::air) {
+            chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
+                3 + size + vertexSize, 1 + size + vertexSize, 0 + size + vertexSize,
+                3 + size + vertexSize, 0 + size + vertexSize, 2 + size + vertexSize
+            });
+            size += 4;
+
+            chunkModel.mModel.vertexPositions.insert(
+                chunkModel.mModel.vertexPositions.end(), {
+                blockObject.model.vertexPositions[4] + chunkOffset,
+                blockObject.model.vertexPositions[5] + chunkOffset,
+                blockObject.model.vertexPositions[6] + chunkOffset,
+                blockObject.model.vertexPositions[7] + chunkOffset,
+            });
+
+            glm::vec2 pos = blockObject.textureCoords[3];
+
+            glm::vec2 posBegin = pos * (1.0f/6.0f);
+            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
+
+            chunkModel.mTexturePositions.insert(
+                chunkModel.mTexturePositions.end(), {
+                glm::vec2(posEnd.x, posEnd.y),
+                glm::vec2(posBegin.x, posEnd.y),
+                glm::vec2(posEnd.x, posBegin.y),
+                glm::vec2(posBegin.x, posBegin.y),
+            });
+        }
+    }
+}
+
 void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
     const auto models = entityManager.GetComponentArray<ChunkModelComponent>();
     const auto states = entityManager.GetComponentArray<ChunkStateComponent>();
@@ -23,8 +406,6 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
     
     const auto& entities = entityManager.GetChunkEntities();
     const int& size = models.size();
-
-    static BlockRegistry& blockRegistry = BlockRegistry::GetInstance();
 
     static BlockTextureCreator& blockTextures = BlockTextureCreator::GetInstance();
     static GLuint textureID = blockTextures.GetTexture("ChunkTexture");
@@ -78,395 +459,21 @@ void ChunkMeshingSystem::CreateChunksMesh(EntityManager& entityManager) {
                     if(block == BlockTypes::air) {
                         continue;
                     }
-
-                    Model tempModel;
                     
-                    auto& blockObject = blockRegistry.GetBlock(block);
-                    const glm::vec3 chunkOffset = glm::vec3(blockX,blockY,blockZ);
+                    const GLuint vertexSize = chunkModel.mModel.vertexPositions.size();
 
-                    // RightFace
-                    if(blockX + 1 < VoxelWorlds::CHUNK_SIZE) {
-                        if(ChunkStorage::GetBlock(*storage, blockX+1, blockY, blockZ) == BlockTypes::air){
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                2 + size, 0 + size, 1 + size,
-                                2 + size, 1 + size, 3 + size
-                            });
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[8] + chunkOffset,
-                                blockObject.model.vertexPositions[9] + chunkOffset,
-                                blockObject.model.vertexPositions[10] + chunkOffset,
-                                blockObject.model.vertexPositions[11] + chunkOffset,
-                            });
-                            glm::vec2 pos = blockObject.textureCoords[1];
+                    GetBlockNeighbours(
+                        chunkModel,
+                        storage, block, vertexSize,
+                        chunkRight, chunkLeft, 
+                        chunkTop, chunkBot,
+                        chunkFront, chunkBack,
+                        blockX, blockY, blockZ
+                    );
 
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    } else if (chunkRight) {
-                        if(ChunkStorage::GetBlock(*chunkRight, 0, blockY, blockZ) == BlockTypes::air) {
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                2 + size, 0 + size, 1 + size,
-                                2 + size, 1 + size, 3 + size
-                            });
-
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[8] + chunkOffset,
-                                blockObject.model.vertexPositions[9] + chunkOffset,
-                                blockObject.model.vertexPositions[10] + chunkOffset,
-                                blockObject.model.vertexPositions[11] + chunkOffset,
-                            });
-
-                            glm::vec2 pos = blockObject.textureCoords[1];
-
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    }
-
-                    // LeftFace
-                    if(blockX - 1 >= 0) {
-                        if(ChunkStorage::GetBlock(*storage, blockX-1, blockY, blockZ) == BlockTypes::air){
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                2 + size, 0 + size, 1 + size,
-                                2 + size, 1 + size, 3 + size
-                            });
-
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[12] + chunkOffset,
-                                blockObject.model.vertexPositions[13] + chunkOffset,
-                                blockObject.model.vertexPositions[14] + chunkOffset,
-                                blockObject.model.vertexPositions[15] + chunkOffset,
-                            });
-
-                            glm::vec2 pos = blockObject.textureCoords[0];
-
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    } else if (chunkLeft) {
-                        if(ChunkStorage::GetBlock(*chunkLeft, VoxelWorlds::CHUNK_SIZE-1, blockY, blockZ) == BlockTypes::air) {
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                2 + size, 0 + size, 1 + size,
-                                2 + size, 1 + size, 3 + size
-                            });
-
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[12] + chunkOffset,
-                                blockObject.model.vertexPositions[13] + chunkOffset,
-                                blockObject.model.vertexPositions[14] + chunkOffset,
-                                blockObject.model.vertexPositions[15] + chunkOffset,
-                            });
-
-                            glm::vec2 pos = blockObject.textureCoords[0];
-
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    }
-
-                    // TopFace
-                    if(blockY + 1 < VoxelWorlds::CHUNK_SIZE) {
-                        if(ChunkStorage::GetBlock(*storage, blockX, blockY+1, blockZ) == BlockTypes::air){
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                2 + size, 0 + size, 1 + size,
-                                2 + size, 1 + size, 3 + size
-                            });
-
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[16] + chunkOffset,
-                                blockObject.model.vertexPositions[17] + chunkOffset,
-                                blockObject.model.vertexPositions[18] + chunkOffset,
-                                blockObject.model.vertexPositions[19] + chunkOffset,
-                            });
-
-                            glm::vec2 pos = blockObject.textureCoords[4];
-
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    } else if (chunkTop) {
-                        if(ChunkStorage::GetBlock(*chunkTop, blockX, 0, blockZ) == BlockTypes::air) {
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                2 + size, 0 + size, 1 + size,
-                                2 + size, 1 + size, 3 + size
-                            });
-
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[16] + chunkOffset,
-                                blockObject.model.vertexPositions[17] + chunkOffset,
-                                blockObject.model.vertexPositions[18] + chunkOffset,
-                                blockObject.model.vertexPositions[19] + chunkOffset,
-                            });
-                            
-                            glm::vec2 pos = blockObject.textureCoords[4];
-
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    }
-
-                    // BotFace
-                    if(blockY - 1 >= 0) {
-                        if(ChunkStorage::GetBlock(*storage, blockX, blockY-1, blockZ) == BlockTypes::air){
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                2 + size, 0 + size, 1 + size,
-                                2 + size, 1 + size, 3 + size
-                            });
-
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[20] + chunkOffset,
-                                blockObject.model.vertexPositions[21] + chunkOffset,
-                                blockObject.model.vertexPositions[22] + chunkOffset,
-                                blockObject.model.vertexPositions[23] + chunkOffset,
-                            });
-
-                            glm::vec2 pos = blockObject.textureCoords[5];
-
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    } else if (chunkBot) {
-                        if(ChunkStorage::GetBlock(*chunkBot, blockX, VoxelWorlds::CHUNK_SIZE-1, blockZ) == BlockTypes::air) {
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                2 + size, 0 + size, 1 + size,
-                                2 + size, 1 + size, 3 + size
-                            });
-
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[20] + chunkOffset,
-                                blockObject.model.vertexPositions[21] + chunkOffset,
-                                blockObject.model.vertexPositions[22] + chunkOffset,
-                                blockObject.model.vertexPositions[23] + chunkOffset,
-                            });
-
-                            glm::vec2 pos = blockObject.textureCoords[5];
-
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    }
-
-                    // FrontFace
-                    if(blockZ + 1 < VoxelWorlds::CHUNK_SIZE) {
-                        if(ChunkStorage::GetBlock(*storage, blockX, blockY, blockZ+1) == BlockTypes::air){
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                2 + size, 0 + size, 1 + size,
-                                2 + size, 1 + size, 3 + size
-                            }); 
-
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[0] + chunkOffset,
-                                blockObject.model.vertexPositions[1] + chunkOffset,
-                                blockObject.model.vertexPositions[2] + chunkOffset,
-                                blockObject.model.vertexPositions[3] + chunkOffset,
-                            });
-
-                            glm::vec2 pos = blockObject.textureCoords[2];
-
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    } else if (chunkFront) {
-                        if(ChunkStorage::GetBlock(*chunkFront, blockX, blockY, 0) == BlockTypes::air) {
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                2 + size, 0 + size, 1 + size,
-                                2 + size, 1 + size, 3 + size
-                            });
-                            
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[0] + chunkOffset,
-                                blockObject.model.vertexPositions[1] + chunkOffset,
-                                blockObject.model.vertexPositions[2] + chunkOffset,
-                                blockObject.model.vertexPositions[3] + chunkOffset,
-                            });
-
-                            glm::vec2 pos = blockObject.textureCoords[2];
-
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    }
-
-                    // BackFace
-                    if(blockZ - 1 >= 0) {
-                        if(ChunkStorage::GetBlock(*storage, blockX, blockY, blockZ-1) == BlockTypes::air){
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                3 + size, 1 + size, 0 + size,
-                                3 + size, 0 + size, 2 + size
-                            });
-
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[4] + chunkOffset,
-                                blockObject.model.vertexPositions[5] + chunkOffset,
-                                blockObject.model.vertexPositions[6] + chunkOffset,
-                                blockObject.model.vertexPositions[7] + chunkOffset,
-                            });
-
-                            glm::vec2 pos = blockObject.textureCoords[3];
-
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    } else if (chunkBack) {
-                        if(ChunkStorage::GetBlock(*chunkBack, blockX, blockY, VoxelWorlds::CHUNK_SIZE-1) == BlockTypes::air) {
-                            GLuint size = (tempModel.indexBufferData.size() / 6) * 4;
-                            tempModel.indexBufferData.insert(tempModel.indexBufferData.end(), {
-                                3 + size, 1 + size, 0 + size,
-                                3 + size, 0 + size, 2 + size
-                            });
-
-                            tempModel.vertexPositions.insert(
-                                tempModel.vertexPositions.end(), {
-                                blockObject.model.vertexPositions[4] + chunkOffset,
-                                blockObject.model.vertexPositions[5] + chunkOffset,
-                                blockObject.model.vertexPositions[6] + chunkOffset,
-                                blockObject.model.vertexPositions[7] + chunkOffset,
-                            });
-
-                            glm::vec2 pos = blockObject.textureCoords[3];
-
-                            glm::vec2 posBegin = pos * (1.0f/6.0f);
-                            glm::vec2 posEnd = posBegin + (1.0f/6.0f);
-
-                            chunkModel.mTexturePositions.insert(
-                                chunkModel.mTexturePositions.end(), {
-                                glm::vec2(posEnd.x, posEnd.y),
-                                glm::vec2(posBegin.x, posEnd.y),
-                                glm::vec2(posEnd.x, posBegin.y),
-                                glm::vec2(posBegin.x, posBegin.y),
-                            });
-                        }
-                    }
-
-                    if(tempModel.indexBufferData.empty()) {
+                    if(vertexSize == chunkModel.mModel.vertexPositions.size()) {
                         continue;
                     }
-    
-                    for(int i = 0; i < tempModel.indexBufferData.size(); i++) {
-                        tempModel.indexBufferData[i] += chunkModel.mModel.vertexPositions.size();
-                    }
-    
-                    chunkModel.mModel.indexBufferData.insert(
-                        chunkModel.mModel.indexBufferData.end(), 
-                        std::make_move_iterator(tempModel.indexBufferData.begin()),
-                        std::make_move_iterator(tempModel.indexBufferData.end())
-                    );
-
-                    chunkModel.mModel.vertexPositions.insert(
-                        chunkModel.mModel.vertexPositions.end(),
-                        std::make_move_iterator(tempModel.vertexPositions.begin()),
-                        std::make_move_iterator(tempModel.vertexPositions.end())
-                    );
     
                     thread_local BoundingBoxComponent bBox;
                     bBox.mWorldMin = glm::vec3(
