@@ -277,7 +277,7 @@ void MainLoop(float deltaTime) {
     {   
     
         if(gSettings.mWorldGen) {
-            for(int iSpeed = 0; iSpeed < 3; iSpeed++) {
+            for(int iSpeed = 0; iSpeed < 6; iSpeed++) {
                 i += (iSpeed == 0) ? 0 : 1;
 
                 if(i >= coords.size()) {
