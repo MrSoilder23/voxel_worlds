@@ -5,7 +5,7 @@ events:
     kind: "message-v1"
     backtrace:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:205 (message)"
-      - "CMakeLists.txt:7 (project)"
+      - "CMakeLists.txt:5 (project)"
     message: |
       The system is: Windows - 10.0.26100 - AMD64
   -
@@ -14,7 +14,7 @@ events:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
-      - "CMakeLists.txt:7 (project)"
+      - "CMakeLists.txt:5 (project)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
       Compiler:  
@@ -24,7 +24,7 @@ events:
       The output was:
       0
       Wersja programu MSBuild 17.9.5+33de0b227 dla .NET Framework
-      Kompilacja rozpocz\xa9\x88a si\xa9 16.04.2025 23:56:09.
+      Kompilacja rozpocz\xa9\x88a si\xa9 17.04.2025 15:53:02.
       
       Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\3.31.3\\CompilerIdC\\CompilerIdC.vcxproj" w w\xa9\xable 1 (domy\x98lne elementy docelowe).
       PrepareForBuild:
@@ -53,7 +53,7 @@ events:
           Ostrze\xbeenia: 0
           Liczba b\x88\xa9d\xa2w: 0
       
-      Czas, kt\xa2ry up\x88yn\xa5\x88: 00:00:00.82
+      Czas, kt\xa2ry up\x88yn\xa5\x88: 00:00:00.78
       
       
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -69,7 +69,7 @@ events:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
-      - "CMakeLists.txt:7 (project)"
+      - "CMakeLists.txt:5 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
       Compiler:  
@@ -79,7 +79,7 @@ events:
       The output was:
       0
       Wersja programu MSBuild 17.9.5+33de0b227 dla .NET Framework
-      Kompilacja rozpocz\xa9\x88a si\xa9 16.04.2025 23:56:10.
+      Kompilacja rozpocz\xa9\x88a si\xa9 17.04.2025 15:53:03.
       
       Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\3.31.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" w w\xa9\xable 1 (domy\x98lne elementy docelowe).
       PrepareForBuild:
@@ -108,7 +108,7 @@ events:
           Ostrze\xbeenia: 0
           Liczba b\x88\xa9d\xa2w: 0
       
-      Czas, kt\xa2ry up\x88yn\xa5\x88: 00:00:00.63
+      Czas, kt\xa2ry up\x88yn\xa5\x88: 00:00:00.67
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -123,12 +123,12 @@ events:
     backtrace:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:7 (project)"
+      - "CMakeLists.txt:5 (project)"
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ph1ohk"
-      binary: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ph1ohk"
+      source: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-rflc0f"
+      binary: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-rflc0f"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -141,40 +141,40 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ph1ohk'
+        Change Dir: 'C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-rflc0f'
         
-        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_a65a9.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_00c79.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         Wersja programu MSBuild 17.9.5+33de0b227 dla .NET Framework
-        Kompilacja rozpoczęła się 16.04.2025 23:56:11.
+        Kompilacja rozpoczęła się 17.04.2025 15:53:04.
         
-        Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ph1ohk\\cmTC_a65a9.vcxproj" w węźle 1 (domyślne elementy docelowe).
+        Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rflc0f\\cmTC_00c79.vcxproj" w węźle 1 (domyślne elementy docelowe).
         PrepareForBuild:
-          Tworzenie katalogu "cmTC_a65a9.dir\\Debug\\".
+          Tworzenie katalogu "cmTC_00c79.dir\\Debug\\".
           Dane wyjściowe ze strukturą są włączone. Formatowanie diagnostyki kompilatora będzie odzwierciedlać hierarchię błędów. Aby uzyskać więcej informacji, zobacz https://aka.ms/cpp/structured-output.
-          Tworzenie katalogu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ph1ohk\\Debug\\".
-          Tworzenie katalogu "cmTC_a65a9.dir\\Debug\\cmTC_a65a9.tlog\\".
+          Tworzenie katalogu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rflc0f\\Debug\\".
+          Tworzenie katalogu "cmTC_00c79.dir\\Debug\\cmTC_00c79.tlog\\".
         InitializeBuildStatus:
-          Trwa tworzenie "cmTC_a65a9.dir\\Debug\\cmTC_a65a9.tlog\\unsuccessfulbuild", ponieważ określono "AlwaysCreate".
-          Modyfikowanie "cmTC_a65a9.dir\\Debug\\cmTC_a65a9.tlog\\unsuccessfulbuild".
+          Trwa tworzenie "cmTC_00c79.dir\\Debug\\cmTC_00c79.tlog\\unsuccessfulbuild", ponieważ określono "AlwaysCreate".
+          Modyfikowanie "cmTC_00c79.dir\\Debug\\cmTC_00c79.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a65a9.dir\\Debug\\\\" /Fd"cmTC_a65a9.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_00c79.dir\\Debug\\\\" /Fd"cmTC_00c79.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
           Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.39.33522 dla x64
           Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a65a9.dir\\Debug\\\\" /Fd"cmTC_a65a9.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_00c79.dir\\Debug\\\\" /Fd"cmTC_00c79.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
           CMakeCCompilerABI.c
         Link:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ph1ohk\\Debug\\cmTC_a65a9.exe" /INCREMENTAL /ILK:"cmTC_a65a9.dir\\Debug\\cmTC_a65a9.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ph1ohk/Debug/cmTC_a65a9.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ph1ohk/Debug/cmTC_a65a9.lib" /MACHINE:X64  /machine:x64 cmTC_a65a9.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_a65a9.vcxproj -> C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ph1ohk\\Debug\\cmTC_a65a9.exe
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rflc0f\\Debug\\cmTC_00c79.exe" /INCREMENTAL /ILK:"cmTC_00c79.dir\\Debug\\cmTC_00c79.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-rflc0f/Debug/cmTC_00c79.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-rflc0f/Debug/cmTC_00c79.lib" /MACHINE:X64  /machine:x64 cmTC_00c79.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_00c79.vcxproj -> C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rflc0f\\Debug\\cmTC_00c79.exe
         FinalizeBuildStatus:
-          Usuwanie pliku "cmTC_a65a9.dir\\Debug\\cmTC_a65a9.tlog\\unsuccessfulbuild".
-          Modyfikowanie "cmTC_a65a9.dir\\Debug\\cmTC_a65a9.tlog\\cmTC_a65a9.lastbuildstate".
-        Kompilowanie projektu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ph1ohk\\cmTC_a65a9.vcxproj" wykonane (domyślne elementy docelowe).
+          Usuwanie pliku "cmTC_00c79.dir\\Debug\\cmTC_00c79.tlog\\unsuccessfulbuild".
+          Modyfikowanie "cmTC_00c79.dir\\Debug\\cmTC_00c79.tlog\\cmTC_00c79.lastbuildstate".
+        Kompilowanie projektu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rflc0f\\cmTC_00c79.vcxproj" wykonane (domyślne elementy docelowe).
         
         Kompilacja powiodła się.
             Ostrzeżenia: 0
             Liczba błędów: 0
         
-        Czas, który upłynął: 00:00:00.72
+        Czas, który upłynął: 00:00:00.65
         
       exitCode: 0
   -
@@ -182,7 +182,7 @@ events:
     backtrace:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:7 (project)"
+      - "CMakeLists.txt:5 (project)"
     message: |
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
@@ -200,7 +200,7 @@ events:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:7 (project)"
+      - "CMakeLists.txt:5 (project)"
     message: |
       Running the C compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.39.33519/bin/HostX64/x64/link.exe" "-v"
       Microsoft (R) Incremental Linker Version 14.39.33522.0
@@ -210,12 +210,12 @@ events:
     backtrace:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:7 (project)"
+      - "CMakeLists.txt:5 (project)"
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ujbcbv"
-      binary: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ujbcbv"
+      source: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-1xlmvb"
+      binary: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-1xlmvb"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -229,34 +229,34 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ujbcbv'
+        Change Dir: 'C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-1xlmvb'
         
-        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_9fc1c.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_63992.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         Wersja programu MSBuild 17.9.5+33de0b227 dla .NET Framework
-        Kompilacja rozpoczęła się 16.04.2025 23:56:12.
+        Kompilacja rozpoczęła się 17.04.2025 15:53:05.
         
-        Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ujbcbv\\cmTC_9fc1c.vcxproj" w węźle 1 (domyślne elementy docelowe).
+        Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1xlmvb\\cmTC_63992.vcxproj" w węźle 1 (domyślne elementy docelowe).
         PrepareForBuild:
-          Tworzenie katalogu "cmTC_9fc1c.dir\\Debug\\".
+          Tworzenie katalogu "cmTC_63992.dir\\Debug\\".
           Dane wyjściowe ze strukturą są włączone. Formatowanie diagnostyki kompilatora będzie odzwierciedlać hierarchię błędów. Aby uzyskać więcej informacji, zobacz https://aka.ms/cpp/structured-output.
-          Tworzenie katalogu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ujbcbv\\Debug\\".
-          Tworzenie katalogu "cmTC_9fc1c.dir\\Debug\\cmTC_9fc1c.tlog\\".
+          Tworzenie katalogu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1xlmvb\\Debug\\".
+          Tworzenie katalogu "cmTC_63992.dir\\Debug\\cmTC_63992.tlog\\".
         InitializeBuildStatus:
-          Trwa tworzenie "cmTC_9fc1c.dir\\Debug\\cmTC_9fc1c.tlog\\unsuccessfulbuild", ponieważ określono "AlwaysCreate".
-          Modyfikowanie "cmTC_9fc1c.dir\\Debug\\cmTC_9fc1c.tlog\\unsuccessfulbuild".
+          Trwa tworzenie "cmTC_63992.dir\\Debug\\cmTC_63992.tlog\\unsuccessfulbuild", ponieważ określono "AlwaysCreate".
+          Modyfikowanie "cmTC_63992.dir\\Debug\\cmTC_63992.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9fc1c.dir\\Debug\\\\" /Fd"cmTC_9fc1c.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_63992.dir\\Debug\\\\" /Fd"cmTC_63992.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
           Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.39.33522 dla x64
           Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9fc1c.dir\\Debug\\\\" /Fd"cmTC_9fc1c.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_63992.dir\\Debug\\\\" /Fd"cmTC_63992.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
           CMakeCXXCompilerABI.cpp
         Link:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ujbcbv\\Debug\\cmTC_9fc1c.exe" /INCREMENTAL /ILK:"cmTC_9fc1c.dir\\Debug\\cmTC_9fc1c.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ujbcbv/Debug/cmTC_9fc1c.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ujbcbv/Debug/cmTC_9fc1c.lib" /MACHINE:X64  /machine:x64 cmTC_9fc1c.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_9fc1c.vcxproj -> C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ujbcbv\\Debug\\cmTC_9fc1c.exe
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1xlmvb\\Debug\\cmTC_63992.exe" /INCREMENTAL /ILK:"cmTC_63992.dir\\Debug\\cmTC_63992.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-1xlmvb/Debug/cmTC_63992.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-1xlmvb/Debug/cmTC_63992.lib" /MACHINE:X64  /machine:x64 cmTC_63992.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_63992.vcxproj -> C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1xlmvb\\Debug\\cmTC_63992.exe
         FinalizeBuildStatus:
-          Usuwanie pliku "cmTC_9fc1c.dir\\Debug\\cmTC_9fc1c.tlog\\unsuccessfulbuild".
-          Modyfikowanie "cmTC_9fc1c.dir\\Debug\\cmTC_9fc1c.tlog\\cmTC_9fc1c.lastbuildstate".
-        Kompilowanie projektu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ujbcbv\\cmTC_9fc1c.vcxproj" wykonane (domyślne elementy docelowe).
+          Usuwanie pliku "cmTC_63992.dir\\Debug\\cmTC_63992.tlog\\unsuccessfulbuild".
+          Modyfikowanie "cmTC_63992.dir\\Debug\\cmTC_63992.tlog\\cmTC_63992.lastbuildstate".
+        Kompilowanie projektu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1xlmvb\\cmTC_63992.vcxproj" wykonane (domyślne elementy docelowe).
         
         Kompilacja powiodła się.
             Ostrzeżenia: 0
@@ -270,7 +270,7 @@ events:
     backtrace:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:7 (project)"
+      - "CMakeLists.txt:5 (project)"
     message: |
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
@@ -288,7 +288,7 @@ events:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
-      - "CMakeLists.txt:7 (project)"
+      - "CMakeLists.txt:5 (project)"
     message: |
       Running the CXX compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.39.33519/bin/HostX64/x64/link.exe" "-v"
       Microsoft (R) Incremental Linker Version 14.39.33522.0
@@ -304,12 +304,12 @@ events:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
       - "build/vcpkg_installed/x64-windows/share/tbb/TBBConfig.cmake:3 (find_dependency)"
       - "vcpkg/scripts/buildsystems/vcpkg.cmake:893 (_find_package)"
-      - "CMakeLists.txt:17 (find_package)"
+      - "CMakeLists.txt:16 (find_package)"
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-6v04sc"
-      binary: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-6v04sc"
+      source: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ogxk4w"
+      binary: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ogxk4w"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -323,40 +323,40 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: 'C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-6v04sc'
+        Change Dir: 'C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-ogxk4w'
         
-        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_d5755.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_42015.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         Wersja programu MSBuild 17.9.5+33de0b227 dla .NET Framework
-        Kompilacja rozpoczęła się 16.04.2025 23:56:13.
+        Kompilacja rozpoczęła się 17.04.2025 15:53:06.
         
-        Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6v04sc\\cmTC_d5755.vcxproj" w węźle 1 (domyślne elementy docelowe).
+        Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ogxk4w\\cmTC_42015.vcxproj" w węźle 1 (domyślne elementy docelowe).
         PrepareForBuild:
-          Tworzenie katalogu "cmTC_d5755.dir\\Debug\\".
+          Tworzenie katalogu "cmTC_42015.dir\\Debug\\".
           Dane wyjściowe ze strukturą są włączone. Formatowanie diagnostyki kompilatora będzie odzwierciedlać hierarchię błędów. Aby uzyskać więcej informacji, zobacz https://aka.ms/cpp/structured-output.
-          Tworzenie katalogu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6v04sc\\Debug\\".
-          Tworzenie katalogu "cmTC_d5755.dir\\Debug\\cmTC_d5755.tlog\\".
+          Tworzenie katalogu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ogxk4w\\Debug\\".
+          Tworzenie katalogu "cmTC_42015.dir\\Debug\\cmTC_42015.tlog\\".
         InitializeBuildStatus:
-          Trwa tworzenie "cmTC_d5755.dir\\Debug\\cmTC_d5755.tlog\\unsuccessfulbuild", ponieważ określono "AlwaysCreate".
-          Modyfikowanie "cmTC_d5755.dir\\Debug\\cmTC_d5755.tlog\\unsuccessfulbuild".
+          Trwa tworzenie "cmTC_42015.dir\\Debug\\cmTC_42015.tlog\\unsuccessfulbuild", ponieważ określono "AlwaysCreate".
+          Modyfikowanie "cmTC_42015.dir\\Debug\\cmTC_42015.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d5755.dir\\Debug\\\\" /Fd"cmTC_d5755.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6v04sc\\src.c"
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_42015.dir\\Debug\\\\" /Fd"cmTC_42015.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ogxk4w\\src.c"
           Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.39.33522 dla x64
           Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d5755.dir\\Debug\\\\" /Fd"cmTC_d5755.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6v04sc\\src.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_42015.dir\\Debug\\\\" /Fd"cmTC_42015.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ogxk4w\\src.c"
           src.c
-        C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6v04sc\\src.c(1,10): error C1083: Nie można otworzyć pliku dołącz: 'pthread.h': No such file or directory [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6v04sc\\cmTC_d5755.vcxproj]
-        Kompilowanie projektu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6v04sc\\cmTC_d5755.vcxproj" wykonane (domyślne elementy docelowe) - NIEPOWODZENIE.
+        C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ogxk4w\\src.c(1,10): error C1083: Nie można otworzyć pliku dołącz: 'pthread.h': No such file or directory [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ogxk4w\\cmTC_42015.vcxproj]
+        Kompilowanie projektu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ogxk4w\\cmTC_42015.vcxproj" wykonane (domyślne elementy docelowe) - NIEPOWODZENIE.
         
         Kompilacja NIE POWIODŁA SIĘ.
         
-        "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6v04sc\\cmTC_d5755.vcxproj" (domyślny element docelowy) (1)->
+        "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ogxk4w\\cmTC_42015.vcxproj" (domyślny element docelowy) (1)->
         (element docelowy ClCompile) -> 
-          C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6v04sc\\src.c(1,10): error C1083: Nie można otworzyć pliku dołącz: 'pthread.h': No such file or directory [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6v04sc\\cmTC_d5755.vcxproj]
+          C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ogxk4w\\src.c(1,10): error C1083: Nie można otworzyć pliku dołącz: 'pthread.h': No such file or directory [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ogxk4w\\cmTC_42015.vcxproj]
         
             Ostrzeżenia: 0
             Liczba błędów: 1
         
-        Czas, który upłynął: 00:00:00.45
+        Czas, który upłynął: 00:00:00.53
         
       exitCode: 1
   -
@@ -369,12 +369,12 @@ events:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
       - "build/vcpkg_installed/x64-windows/share/tbb/TBBConfig.cmake:3 (find_dependency)"
       - "vcpkg/scripts/buildsystems/vcpkg.cmake:893 (_find_package)"
-      - "CMakeLists.txt:17 (find_package)"
+      - "CMakeLists.txt:16 (find_package)"
     checks:
       - "Looking for pthread_create in pthreads"
     directories:
-      source: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-rbey3c"
-      binary: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-rbey3c"
+      source: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-nnsom9"
+      binary: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-nnsom9"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -388,42 +388,42 @@ events:
       variable: "CMAKE_HAVE_PTHREADS_CREATE"
       cached: true
       stdout: |
-        Change Dir: 'C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-rbey3c'
+        Change Dir: 'C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-nnsom9'
         
-        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_0e7e6.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_d73cf.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         Wersja programu MSBuild 17.9.5+33de0b227 dla .NET Framework
-        Kompilacja rozpoczęła się 16.04.2025 23:56:14.
+        Kompilacja rozpoczęła się 17.04.2025 15:53:07.
         
-        Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbey3c\\cmTC_0e7e6.vcxproj" w węźle 1 (domyślne elementy docelowe).
+        Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nnsom9\\cmTC_d73cf.vcxproj" w węźle 1 (domyślne elementy docelowe).
         PrepareForBuild:
-          Tworzenie katalogu "cmTC_0e7e6.dir\\Debug\\".
+          Tworzenie katalogu "cmTC_d73cf.dir\\Debug\\".
           Dane wyjściowe ze strukturą są włączone. Formatowanie diagnostyki kompilatora będzie odzwierciedlać hierarchię błędów. Aby uzyskać więcej informacji, zobacz https://aka.ms/cpp/structured-output.
-          Tworzenie katalogu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbey3c\\Debug\\".
-          Tworzenie katalogu "cmTC_0e7e6.dir\\Debug\\cmTC_0e7e6.tlog\\".
+          Tworzenie katalogu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nnsom9\\Debug\\".
+          Tworzenie katalogu "cmTC_d73cf.dir\\Debug\\cmTC_d73cf.tlog\\".
         InitializeBuildStatus:
-          Trwa tworzenie "cmTC_0e7e6.dir\\Debug\\cmTC_0e7e6.tlog\\unsuccessfulbuild", ponieważ określono "AlwaysCreate".
-          Modyfikowanie "cmTC_0e7e6.dir\\Debug\\cmTC_0e7e6.tlog\\unsuccessfulbuild".
+          Trwa tworzenie "cmTC_d73cf.dir\\Debug\\cmTC_d73cf.tlog\\unsuccessfulbuild", ponieważ określono "AlwaysCreate".
+          Modyfikowanie "cmTC_d73cf.dir\\Debug\\cmTC_d73cf.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_0e7e6.dir\\Debug\\\\" /Fd"cmTC_0e7e6.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbey3c\\CheckFunctionExists.c"
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d73cf.dir\\Debug\\\\" /Fd"cmTC_d73cf.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nnsom9\\CheckFunctionExists.c"
           Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.39.33522 dla x64
           Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_0e7e6.dir\\Debug\\\\" /Fd"cmTC_0e7e6.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbey3c\\CheckFunctionExists.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d73cf.dir\\Debug\\\\" /Fd"cmTC_d73cf.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nnsom9\\CheckFunctionExists.c"
           CheckFunctionExists.c
         Link:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbey3c\\Debug\\cmTC_0e7e6.exe" /INCREMENTAL /ILK:"cmTC_0e7e6.dir\\Debug\\cmTC_0e7e6.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-rbey3c/Debug/cmTC_0e7e6.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-rbey3c/Debug/cmTC_0e7e6.lib" /MACHINE:X64  /machine:x64 cmTC_0e7e6.dir\\Debug\\CheckFunctionExists.obj
-        LINK : fatal error LNK1104: nie można otworzyć pliku "pthreads.lib" [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbey3c\\cmTC_0e7e6.vcxproj]
-        Kompilowanie projektu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbey3c\\cmTC_0e7e6.vcxproj" wykonane (domyślne elementy docelowe) - NIEPOWODZENIE.
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nnsom9\\Debug\\cmTC_d73cf.exe" /INCREMENTAL /ILK:"cmTC_d73cf.dir\\Debug\\cmTC_d73cf.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-nnsom9/Debug/cmTC_d73cf.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-nnsom9/Debug/cmTC_d73cf.lib" /MACHINE:X64  /machine:x64 cmTC_d73cf.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: nie można otworzyć pliku "pthreads.lib" [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nnsom9\\cmTC_d73cf.vcxproj]
+        Kompilowanie projektu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nnsom9\\cmTC_d73cf.vcxproj" wykonane (domyślne elementy docelowe) - NIEPOWODZENIE.
         
         Kompilacja NIE POWIODŁA SIĘ.
         
-        "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbey3c\\cmTC_0e7e6.vcxproj" (domyślny element docelowy) (1)->
+        "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nnsom9\\cmTC_d73cf.vcxproj" (domyślny element docelowy) (1)->
         (element docelowy Link) -> 
-          LINK : fatal error LNK1104: nie można otworzyć pliku "pthreads.lib" [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbey3c\\cmTC_0e7e6.vcxproj]
+          LINK : fatal error LNK1104: nie można otworzyć pliku "pthreads.lib" [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nnsom9\\cmTC_d73cf.vcxproj]
         
             Ostrzeżenia: 0
             Liczba błędów: 1
         
-        Czas, który upłynął: 00:00:00.50
+        Czas, który upłynął: 00:00:00.53
         
       exitCode: 1
   -
@@ -436,12 +436,12 @@ events:
       - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
       - "build/vcpkg_installed/x64-windows/share/tbb/TBBConfig.cmake:3 (find_dependency)"
       - "vcpkg/scripts/buildsystems/vcpkg.cmake:893 (_find_package)"
-      - "CMakeLists.txt:17 (find_package)"
+      - "CMakeLists.txt:16 (find_package)"
     checks:
       - "Looking for pthread_create in pthread"
     directories:
-      source: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-u566of"
-      binary: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-u566of"
+      source: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-42v0d7"
+      binary: "C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-42v0d7"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -455,42 +455,42 @@ events:
       variable: "CMAKE_HAVE_PTHREAD_CREATE"
       cached: true
       stdout: |
-        Change Dir: 'C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-u566of'
+        Change Dir: 'C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-42v0d7'
         
-        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_3a8f8.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_d140f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         Wersja programu MSBuild 17.9.5+33de0b227 dla .NET Framework
-        Kompilacja rozpoczęła się 16.04.2025 23:56:15.
+        Kompilacja rozpoczęła się 17.04.2025 15:53:08.
         
-        Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u566of\\cmTC_3a8f8.vcxproj" w węźle 1 (domyślne elementy docelowe).
+        Projekt "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-42v0d7\\cmTC_d140f.vcxproj" w węźle 1 (domyślne elementy docelowe).
         PrepareForBuild:
-          Tworzenie katalogu "cmTC_3a8f8.dir\\Debug\\".
+          Tworzenie katalogu "cmTC_d140f.dir\\Debug\\".
           Dane wyjściowe ze strukturą są włączone. Formatowanie diagnostyki kompilatora będzie odzwierciedlać hierarchię błędów. Aby uzyskać więcej informacji, zobacz https://aka.ms/cpp/structured-output.
-          Tworzenie katalogu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u566of\\Debug\\".
-          Tworzenie katalogu "cmTC_3a8f8.dir\\Debug\\cmTC_3a8f8.tlog\\".
+          Tworzenie katalogu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-42v0d7\\Debug\\".
+          Tworzenie katalogu "cmTC_d140f.dir\\Debug\\cmTC_d140f.tlog\\".
         InitializeBuildStatus:
-          Trwa tworzenie "cmTC_3a8f8.dir\\Debug\\cmTC_3a8f8.tlog\\unsuccessfulbuild", ponieważ określono "AlwaysCreate".
-          Modyfikowanie "cmTC_3a8f8.dir\\Debug\\cmTC_3a8f8.tlog\\unsuccessfulbuild".
+          Trwa tworzenie "cmTC_d140f.dir\\Debug\\cmTC_d140f.tlog\\unsuccessfulbuild", ponieważ określono "AlwaysCreate".
+          Modyfikowanie "cmTC_d140f.dir\\Debug\\cmTC_d140f.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3a8f8.dir\\Debug\\\\" /Fd"cmTC_3a8f8.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u566of\\CheckFunctionExists.c"
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d140f.dir\\Debug\\\\" /Fd"cmTC_d140f.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-42v0d7\\CheckFunctionExists.c"
           Microsoft (R) C/C++ wersja kompilatora optymalizującego 19.39.33522 dla x64
           Copyright (C) Microsoft Corporation. Wszystkie prawa zastrzeżone.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3a8f8.dir\\Debug\\\\" /Fd"cmTC_3a8f8.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u566of\\CheckFunctionExists.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d140f.dir\\Debug\\\\" /Fd"cmTC_d140f.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-42v0d7\\CheckFunctionExists.c"
           CheckFunctionExists.c
         Link:
-          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u566of\\Debug\\cmTC_3a8f8.exe" /INCREMENTAL /ILK:"cmTC_3a8f8.dir\\Debug\\cmTC_3a8f8.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-u566of/Debug/cmTC_3a8f8.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-u566of/Debug/cmTC_3a8f8.lib" /MACHINE:X64  /machine:x64 cmTC_3a8f8.dir\\Debug\\CheckFunctionExists.obj
-        LINK : fatal error LNK1104: nie można otworzyć pliku "pthread.lib" [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u566of\\cmTC_3a8f8.vcxproj]
-        Kompilowanie projektu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u566of\\cmTC_3a8f8.vcxproj" wykonane (domyślne elementy docelowe) - NIEPOWODZENIE.
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.39.33519\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-42v0d7\\Debug\\cmTC_d140f.exe" /INCREMENTAL /ILK:"cmTC_d140f.dir\\Debug\\cmTC_d140f.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-42v0d7/Debug/cmTC_d140f.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Projects/voxel_worlds/build/CMakeFiles/CMakeScratch/TryCompile-42v0d7/Debug/cmTC_d140f.lib" /MACHINE:X64  /machine:x64 cmTC_d140f.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: nie można otworzyć pliku "pthread.lib" [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-42v0d7\\cmTC_d140f.vcxproj]
+        Kompilowanie projektu "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-42v0d7\\cmTC_d140f.vcxproj" wykonane (domyślne elementy docelowe) - NIEPOWODZENIE.
         
         Kompilacja NIE POWIODŁA SIĘ.
         
-        "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u566of\\cmTC_3a8f8.vcxproj" (domyślny element docelowy) (1)->
+        "C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-42v0d7\\cmTC_d140f.vcxproj" (domyślny element docelowy) (1)->
         (element docelowy Link) -> 
-          LINK : fatal error LNK1104: nie można otworzyć pliku "pthread.lib" [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u566of\\cmTC_3a8f8.vcxproj]
+          LINK : fatal error LNK1104: nie można otworzyć pliku "pthread.lib" [C:\\Projects\\voxel_worlds\\build\\CMakeFiles\\CMakeScratch\\TryCompile-42v0d7\\cmTC_d140f.vcxproj]
         
             Ostrzeżenia: 0
             Liczba błędów: 1
         
-        Czas, który upłynął: 00:00:00.50
+        Czas, który upłynął: 00:00:00.51
         
       exitCode: 1
 ...
