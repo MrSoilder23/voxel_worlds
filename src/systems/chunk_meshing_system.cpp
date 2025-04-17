@@ -19,12 +19,13 @@ inline void FillBlockSide(
     ChunkModelComponent& chunkModel,
     const int textureSide,
     const int vertexOffset, const GLuint& baseOffset, 
-    const glm::vec3& chunkOffset
+    const glm::vec3& chunkOffset,
+    GLuint a = 2, GLuint b = 0, GLuint c = 1, GLuint d = 3 
 ) {
             
     chunkModel.mModel.indexBufferData.insert(chunkModel.mModel.indexBufferData.end(), {
-        2 + baseOffset, 0 + baseOffset, 1 + baseOffset,
-        2 + baseOffset, 1 + baseOffset, 3 + baseOffset
+        a + baseOffset, b + baseOffset, c + baseOffset,
+        a + baseOffset, c + baseOffset, d + baseOffset
     }); 
 
     chunkModel.mModel.vertexPositions.insert(
@@ -152,7 +153,7 @@ inline void GetBlockNeighbours(
 
     baseOffset = size + vertexSize;
     if (targetChunk && ChunkStorage::GetBlock(*targetChunk, blockX, blockY, target) == BlockTypes::air) {
-        FillBlockSide(blockObject, chunkModel, 3, 4, baseOffset, chunkOffset);
+        FillBlockSide(blockObject, chunkModel, 3, 4, baseOffset, chunkOffset, 3,1,0,2);
         size += 4;
     }
 }

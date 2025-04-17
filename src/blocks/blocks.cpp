@@ -13,10 +13,10 @@ void InitializeModels() {
         glm::vec3( 0.5f,  0.5f,  0.5f), // 3  - Top-right
 
         // Back Face
-        glm::vec3(-0.5f,  0.5f, -0.5f), // 6  - Top-left
-        glm::vec3( 0.5f,  0.5f, -0.5f), // 7  - Top-right
         glm::vec3(-0.5f, -0.5f, -0.5f), // 4  - Bottom-left
         glm::vec3( 0.5f, -0.5f, -0.5f), // 5  - Bottom-right
+        glm::vec3(-0.5f,  0.5f, -0.5f), // 6  - Top-left
+        glm::vec3( 0.5f,  0.5f, -0.5f), // 7  - Top-right
 
         // Right Face
         glm::vec3( 0.5f, -0.5f,  0.5f), //8
