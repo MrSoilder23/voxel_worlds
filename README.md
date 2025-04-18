@@ -76,10 +76,14 @@ cmake --build build --config Release
 
 **Controls**
 - WASD: Move
+- Shift: fly down
+- Space: fly Up
 - Mouse: Look
 - Left Click: Break block
 - Right Click: Place current block
 - 1-5: Change current block
+  
 - F10: enables/disables world generation
 - F11: enables/disables collisions
 - F12: enables/disables debug bounding boxes
+- ESC: leave game
