@@ -33,7 +33,6 @@ The engine demonstrates inifinitely generating 3D worlds using layered OpenSimpl
 
 - Custom ECS for entity management.
 - Glad/OpenGL 4.5 rendering using Frustum culling.
-- Bindless textures.
 
 ### **_Physics_**
 
