@@ -41,6 +41,8 @@ The engine demonstrates inifinitely generating 3D worlds using layered OpenSimpl
 &nbsp;
 ## **Installation**
 
+Install already [released](https://github.com/MrSoilder23/voxel_worlds/releases) version or build it yourself.
+
 Dependencies
 
 - Compiler G++ >= 13 Clang >= 16 MSVC >= 19.29 (C++20 required)
