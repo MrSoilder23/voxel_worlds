@@ -34,6 +34,7 @@
 #include "./blocks/blocks.hpp"
 #include "./utility/thread_pool.hpp"
 #include "./utility/circle_loop.hpp"
+#include "utility/settings.hpp"
 #include "./core/event_manager.hpp"
 #include "./graphics/graphics.hpp"
 
@@ -44,19 +45,6 @@
 #include "./components/physics_component.hpp"
 #include "./components/inventory_component.hpp"
 
-struct Settings {
-    GLuint mGraphicsShaderProgram = 0;
-
-    int mScreenWidth = 1366;
-    int mScreenHeight = 768;
-
-    float mSpeed = 100.0f;
-    float mSensitivity = 24.0f;
-
-    bool mBoundingDebug = false;
-    bool mPhysics = true;
-    bool mWorldGen = true;
-};
 Settings gSettings;
 Game gGame;
 
@@ -82,9 +70,9 @@ void InitializeKeys() {
     static PlayerTargetSystem pTarget;
 
     gEventManager.RegisterEvent(InputAction::exit, [game = &gGame](float _){game->StopLoop();});
-    gEventManager.RegisterEvent(InputAction::toggle_debug, [settings = &gSettings](float _){settings->mPhysics = !settings->mPhysics;});
-    gEventManager.RegisterEvent(InputAction::toggle_debug2, [settings = &gSettings](float _){settings->mBoundingDebug = !settings->mBoundingDebug;});
-    gEventManager.RegisterEvent(InputAction::toggle_debug3, [settings = &gSettings](float _){settings->mWorldGen = !settings->mWorldGen;});
+    gEventManager.RegisterEvent(InputAction::toggle_debug, [settings = &gSettings](float _){settings->physics = !settings->physics;});
+    gEventManager.RegisterEvent(InputAction::toggle_debug2, [settings = &gSettings](float _){settings->boundingDebug = !settings->boundingDebug;});
+    gEventManager.RegisterEvent(InputAction::toggle_debug3, [settings = &gSettings](float _){settings->worldGen = !settings->worldGen;});
 
     pTarget.PlayerRaycast(gEntityManager);
 }
@@ -100,11 +88,11 @@ void InitializeBaseEntities() {
     gEntityManager.AddComponent<InventoryComponent>("Player");
 
     auto player = gEntityManager.GetComponent<PlayerControllerComponent>("Player");
-    player->mSensitivity = gSettings.mSensitivity;
-    player->mSpeed = gSettings.mSpeed;
+    player->mSensitivity = gSettings.sensitivity;
+    player->mSpeed = gSettings.speed;
 
     gPlayerControllerSys.SetFov(45.0f);
-    gPlayerControllerSys.SetScreenSize(gSettings.mScreenWidth,gSettings.mScreenHeight);
+    gPlayerControllerSys.SetScreenSize(gSettings.screenWidth,gSettings.screenHeight);
     gPlayerControllerSys.SetCamera(gEntityManager, 0.01f);
     gPlayerControllerSys.InitializeMovement(gEntityManager);
 
@@ -276,7 +264,7 @@ void MainLoop(float deltaTime) {
 
     {   
     
-        if(gSettings.mWorldGen) {
+        if(gSettings.worldGen) {
             for(int iSpeed = 0; iSpeed < 6; iSpeed++) {
                 i += (iSpeed == 0) ? 0 : 1;
 
@@ -326,7 +314,7 @@ void System(float deltaTime) {
     chunkCreationSystem.CreateChunkData(gEntityManager, gSeed);
     chunkUnloadSystem.UnloadChunks(gEntityManager);
 
-    if(gSettings.mPhysics) {
+    if(gSettings.physics) {
         collisionSystem.UpdateCollision(gEntityManager, deltaTime);
     }
 
@@ -342,14 +330,14 @@ void System(float deltaTime) {
     chunkVSS.CreateVertexSpecification(gEntityManager);
 
     gRendererSystem.DrawAll(gEntityManager);
-    if(gSettings.mBoundingDebug) {
+    if(gSettings.boundingDebug) {
         gRendererSystem.DrawAllDebug(gEntityManager);
     }
 }
 
 int main() {
 
-    gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gSettings.mScreenWidth, gSettings.mScreenHeight);
+    gGame.InitializeProgram("Giera", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gSettings.screenWidth, gSettings.screenHeight);
 
     shader::CreateGraphicsPipeline(gSettings.mGraphicsShaderProgram, "./shaders/vert.glsl", "./shaders/frag.glsl");
     gGraphicsApp->mGraphicsPipeline = gSettings.mGraphicsShaderProgram;
