@@ -3,9 +3,10 @@
 Game::Game() :  mOpenGLContext(nullptr), mWindow(nullptr), mScreenWidth(640), mScreenHeight(480), 
                 r(0.0510f),g(0.1255f),b(0.1490f), 
                 mEventCallback([](float deltaTime){}), mUpdateCallback([](float deltaTime){}),
-                lastTime(std::chrono::steady_clock::now()) {
-
-}
+                lastTime(std::chrono::steady_clock::now()),
+                mQuit(false),
+                mDebug(false) 
+{}
 Game::~Game() {
     SDL_DestroyWindow(mWindow);
     mWindow = nullptr;

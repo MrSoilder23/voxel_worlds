@@ -3,13 +3,17 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 
 // Third_party libraries
 #include <glad/glad.h>
 
 namespace shader {
 
-    void CreateGraphicsPipeline(GLuint& shaderProgram, const std::string& _vertexShaderSource, const std::string& _fragmentShaderSource);
+    GLuint CompileShader(GLuint type, const std::string& shaderPath);
+    GLuint LinkProgram(GLuint& shader);
+
+    GLuint CreateGraphicsPipeline(const std::string& _vertexShaderSource, const std::string& _fragmentShaderSource);
 
     int FindUniformLocation(GLuint pipeline, const GLchar* name);
 

@@ -1,4 +1,4 @@
-#include "./graphics/shader.hpp"
+#include "graphics/shader.hpp"
 
 namespace {
     std::string LoadShaderAsString(const std::string& src) {
@@ -16,49 +16,80 @@ namespace {
 
         return result;
     }
+}
 
-    GLuint CompileShader(GLuint type, const std::string& source) {
-        GLuint shaderObject;
+GLuint shader::CompileShader(GLuint type, const std::string& shaderPath) {
+    GLuint shaderObject;
 
-        shaderObject = glCreateShader(type);
+    shaderObject = glCreateShader(type);
 
-        const char* src = source.c_str();
-        glShaderSource(shaderObject, 1, &src, nullptr);
-        glCompileShader(shaderObject);
+    std::string shaderCode = LoadShaderAsString(shaderPath);
+    
+    const char* src = shaderCode.c_str();
+    glShaderSource(shaderObject, 1, &src, nullptr);
+    glCompileShader(shaderObject);
 
-        return shaderObject;
+    GLint success;
+    glGetShaderiv(shaderObject, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        GLint length;
+        glGetShaderiv(shaderObject, GL_INFO_LOG_LENGTH, &length);
+        std::vector<GLchar> log(length);
+        glGetShaderInfoLog(shaderObject, length, &length, log.data());
         
+        std::cerr << "SHADER COMPILE ERROR (" << shaderPath << "):\n"
+                  << log.data() << std::endl;
+        return 0; // Return 0 to indicate failure
     }
 
-    GLuint CreateShaderProgram(const std::string& vertexShaderSource, const std::string& fragmentShaderSource) {
-        GLuint programObject = glCreateProgram();
-
-        GLuint myVertexShader = CompileShader(GL_VERTEX_SHADER, vertexShaderSource);
-        GLuint myFragmentShader = CompileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-
-        glAttachShader(programObject ,myVertexShader);
-        glAttachShader(programObject ,myFragmentShader);
-        glLinkProgram(programObject);
-
-        glValidateProgram(programObject);
-
-        return programObject;
-    }
+    return shaderObject;
 
 }
 
-void shader::CreateGraphicsPipeline(GLuint& shaderProgram, const std::string& _vertexShaderSource, const std::string& _fragmentShaderSource) {
-    std::string vertexShaderSource = LoadShaderAsString(_vertexShaderSource);
-    std::string fragmentShaderSource = LoadShaderAsString(_fragmentShaderSource);
+GLuint shader::LinkProgram(GLuint& shader) {
+    GLuint programObject = glCreateProgram();
 
-    shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
+    glAttachShader(programObject, shader);
+    glLinkProgram(programObject);
+
+    
+    GLint success;
+    glGetProgramiv(programObject, GL_LINK_STATUS, &success);
+    if (!success) {
+        GLint length;
+        glGetProgramiv(programObject, GL_INFO_LOG_LENGTH, &length);
+        std::vector<GLchar> log(length);
+        glGetProgramInfoLog(programObject, length, &length, log.data());
+        
+        std::cerr << "PROGRAM LINK ERROR:\n"
+                  << log.data() << std::endl;
+        return 0; // Return 0 to indicate failure
+    }
+
+
+    return programObject;
+}
+
+GLuint shader::CreateGraphicsPipeline(const std::string& vertexShaderPath, const std::string& fragmentShaderPath) {
+    GLuint programObject = glCreateProgram();
+
+    GLuint myVertexShader =   shader::CompileShader(GL_VERTEX_SHADER, vertexShaderPath);
+    GLuint myFragmentShader = shader::CompileShader(GL_FRAGMENT_SHADER, fragmentShaderPath);
+
+    glAttachShader(programObject, myVertexShader);
+    glAttachShader(programObject, myFragmentShader);
+    glLinkProgram(programObject);
+
+    glValidateProgram(programObject);
+
+    return programObject;
 }
 
 int shader::FindUniformLocation(GLuint pipeline, const GLchar* name) {
     GLint uniformLocation = glGetUniformLocation(pipeline,name);
     if(uniformLocation < 0) {
         std::cerr << "Could not find location of: " << name << std::endl;
-        exit(1); // Change to exit failure
+        // exit(1); // Change to exit failure
     }
 
     return uniformLocation;
