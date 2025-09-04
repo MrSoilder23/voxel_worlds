@@ -8,10 +8,10 @@
 #include <cstdint>
 
 namespace bismuth {
+using EntityID = uint32_t;
 
 class ISparseSet {
     public:
-        using EntityID = uint32_t;
 
         virtual ~ISparseSet() = default;
         virtual void removeComponent(const EntityID& entity) = 0;
@@ -20,7 +20,6 @@ class ISparseSet {
 template<typename ComponentType>
 class ComponentPool : public ISparseSet{
     public:
-        using EntityID = uint32_t;
         static constexpr uint32_t INVALID_INDEX = std::numeric_limits<uint32_t>::max();
 
         inline ComponentType& getComponent(const EntityID& entity) {
