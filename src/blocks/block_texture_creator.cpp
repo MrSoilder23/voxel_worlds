@@ -10,10 +10,13 @@ BlockTextureCreator::~BlockTextureCreator() {
     std::cout << "BlockTextureCreator bye bye" << std::endl;
 }
 
-void BlockTextureCreator::CreateTexture(std::string name, SDL_Surface* image) {
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+void BlockTextureCreator::createTexture(std::string name, SDL_Surface* image) {
+    Texture texture;
+    texture.height = image->h;
+    texture.width  = image->w;
+
+    glGenTextures(1, &texture.id);
+    glBindTexture(GL_TEXTURE_2D, texture.id);
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->w, image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
 
@@ -25,17 +28,17 @@ void BlockTextureCreator::CreateTexture(std::string name, SDL_Surface* image) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-    mTextureIDs[name] = texture;
+    mTextureIDs[name] = std::make_shared<Texture>(texture);
 }
 
-GLuint& BlockTextureCreator::GetTexture(std::string name) {
+std::shared_ptr<Texture> BlockTextureCreator::getTexture(std::string name) {
     return mTextureIDs[name];
 }
-std::unordered_map<std::string, GLuint>& BlockTextureCreator::GetTextures() {
+std::unordered_map<std::string, std::shared_ptr<Texture>>& BlockTextureCreator::getTextures() {
     return mTextureIDs;
 }
 
-BlockTextureCreator& BlockTextureCreator::GetInstance() {
+BlockTextureCreator& BlockTextureCreator::getInstance() {
     static BlockTextureCreator sInstance;
     return sInstance;
 }

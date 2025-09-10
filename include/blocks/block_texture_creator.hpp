@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <memory>
 
 // Third_party libraries
 #include <glad/glad.h>
@@ -11,17 +12,18 @@
 
 // Own libraries
 #include "./graphics/texture.hpp"
+#include "components/core/material.hpp"
 
 class BlockTextureCreator {
     public:
         ~BlockTextureCreator();
 
-        void CreateTexture(std::string name, SDL_Surface* faces);
+        void createTexture(std::string name, SDL_Surface* faces);
 
-        GLuint& GetTexture(std::string name);
-        std::unordered_map<std::string, GLuint>& GetTextures();
+        std::shared_ptr<Texture> getTexture(std::string name);
+        std::unordered_map<std::string, std::shared_ptr<Texture>>& getTextures();
 
-        static BlockTextureCreator& GetInstance();
+        static BlockTextureCreator& getInstance();
         
     private:
         BlockTextureCreator();
@@ -29,5 +31,5 @@ class BlockTextureCreator {
         BlockTextureCreator operator=(BlockTextureCreator const& rhs);
     
     private:
-        std::unordered_map<std::string, GLuint> mTextureIDs;
+        std::unordered_map<std::string, std::shared_ptr<Texture>> mTextureIDs;
 };
