@@ -4,11 +4,13 @@
 #include <glm/glm.hpp>
 
 // Own libraries
-#include "./core/entity_manager.hpp"
-#include "./components/position_component.hpp"
-#include "./utility/constant.hpp"
+#include "bismuth/registry.hpp"
+#include "components/position_component.hpp"
+#include "components/chunk_tag.hpp"
+#include "components/player_tag.hpp"
+#include "utility/constant.hpp"
 
 class ChunkUnloadSystem {
     public:
-        void UnloadChunks(EntityManager& entityManager);
+        void update(bismuth::Registry& registry);
 };

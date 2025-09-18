@@ -26,5 +26,4 @@ namespace physics {
 
     // Bounding box model creation
     void ExtractInfiniteFrustumPlanes(const glm::mat4& viewProj, std::array<glm::vec4, 5>& planes);
-    Model CreateBoundingModel(BoundingBoxComponent& boundingBox);
 };

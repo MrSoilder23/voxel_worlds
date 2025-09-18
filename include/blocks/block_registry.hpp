@@ -9,24 +9,23 @@
 // Own libraries
 #include "block_types.hpp"
 #include "model.hpp"
-#include "./graphics/texture.hpp"
-
-struct BlockTemplate {    
-    Model model;
-
-    // Left Right Front Back Top Bottom
-    std::array<glm::vec2, 6> textureCoords;
-};
+#include "components/core/mesh.hpp"
+#include "components/core/material.hpp"
 
 class BlockRegistry {
     public:
         static constexpr size_t NUM_BLOCK_TYPES = static_cast<size_t>(BlockTypes::COUNT);
 
-        void RegisterBlock(BlockTypes type, BlockTemplate block);
-        const BlockTemplate& GetBlock(BlockTypes type) const;
+        void registerBlock(
+            BlockTypes    type,
+            MeshComponent mesh
+        );
+        const MeshComponent& getMesh(BlockTypes type) const;
 
-        static BlockRegistry& GetInstance();
+        static MeshComponent createCubeMesh(const std::array<glm::vec2, 6>& faceTexCoords);
+
+        static BlockRegistry& getInstance();
     private: 
-        std::array<BlockTemplate, NUM_BLOCK_TYPES> blocks;
+        std::array<MeshComponent, NUM_BLOCK_TYPES> mMesh;
 
 };

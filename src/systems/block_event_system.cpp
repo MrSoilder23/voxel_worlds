@@ -1,113 +1,79 @@
 #include "./systems/block_event_system.hpp"
 
-void BlockEventSystem::UpdateChunks(EntityManager& entityManager){ 
-    auto blockBreakEvents = entityManager.GetComponentArray<BlockBreakEventComponent>();
-    auto blockPlaceEvents = entityManager.GetComponentArray<BlockPlaceEventComponent>();
-    auto blockEvents = entityManager.GetComponentArray<BlockEventComponent>();
-
-    auto chunkStorage = entityManager.GetComponentArray<ChunkStorageComponent>();
-    auto chunkStates = entityManager.GetComponentArray<ChunkStateComponent>();
-
-    const auto& chunkEntities = entityManager.GetChunkEntities();
-    const auto& entities = entityManager.GetEntities();
-
-    for(const auto& entity : entities) {
-        size_t entityID = entity.second;
-
-        if(entityID >= blockEvents.size()) {
-            continue;
-        }
-
-        auto blockEvent = blockEvents[entityID];
+void BlockEventSystem::update(bismuth::Registry& registry) {
+    auto chunkView = registry.getView<ChunkTagComponent, PositionComponent>();
+    std::unordered_map<glm::ivec3, bismuth::EntityID, IVec3Hash> chunkMap;
+    
+    for (auto [entity, chunkTag, position] : chunkView) {
+        glm::ivec3 chunkCoords = position.position;
+        chunkMap[chunkCoords] = entity;
+    }
+    
+    auto eventView = registry.getView<BlockEventComponent>();
+    
+    for (auto [entity, blockEvent] : eventView) {
+        int chunkX = static_cast<int>(std::floor(std::round(blockEvent.position.x)/VoxelWorlds::CHUNK_SIZE));
+        int chunkY = static_cast<int>(std::floor(std::round(blockEvent.position.y)/VoxelWorlds::CHUNK_SIZE));
+        int chunkZ = static_cast<int>(std::floor(std::round(blockEvent.position.z)/VoxelWorlds::CHUNK_SIZE));
         
-        if(!blockEvent) {
+        glm::ivec3 chunkName = {chunkX, chunkY, chunkZ};
+        
+        auto chunkIt = chunkMap.find(chunkName);
+        if (chunkIt == chunkMap.end()) {
             continue;
         }
-
-        // Translating global to local
-        int chunkX = static_cast<int>(std::floor(std::round(blockEvent->mPosition.x)/VoxelWorlds::CHUNK_SIZE));
-        int chunkY = static_cast<int>(std::floor(std::round(blockEvent->mPosition.y)/VoxelWorlds::CHUNK_SIZE));
-        int chunkZ = static_cast<int>(std::floor(std::round(blockEvent->mPosition.z)/VoxelWorlds::CHUNK_SIZE));
-
-        glm::vec3 chunkName = {chunkX, chunkY, chunkZ};
-
-        glm::vec3 chunkWorldPos = chunkName * VoxelWorlds::CHUNK_SIZE;
-        glm::vec3 localBlockCoordinates = blockEvent->mPosition - chunkWorldPos;
-
+        
+        uint32_t chunkEntity = chunkIt->second;
+        
+        auto& chunkStorage = registry.getComponentPool<ChunkStorageComponent>().getComponent(chunkEntity);
+        auto& chunkState = registry.getComponentPool<ChunkStateComponent>().getComponent(chunkEntity);
+        
+        glm::ivec3 chunkWorldPos = chunkName * static_cast<int>(VoxelWorlds::CHUNK_SIZE);
+        glm::ivec3 localBlockCoordinates = glm::ivec3(blockEvent.position) - chunkWorldPos;
+        
         int localBlockX = static_cast<int>(std::round(localBlockCoordinates.x));
         int localBlockY = static_cast<int>(std::round(localBlockCoordinates.y));
         int localBlockZ = static_cast<int>(std::round(localBlockCoordinates.z));
-
-        // Updating chunk data
-        chunkEntityIDs::const_accessor chunkIDAccessor;
-        chunkEntities.find(chunkIDAccessor, chunkName);
-
-        ChunkStateComponent* currentChunk = chunkStates[chunkIDAccessor->second];
-        ChunkStateComponent* currentChunkX = nullptr;
-        ChunkStateComponent* currentChunkY = nullptr;
-        ChunkStateComponent* currentChunkZ = nullptr;
-
-        auto& chunkData = chunkStorage[chunkIDAccessor->second];
-        if(!currentChunk) {
-            return;
-        }
-
-        glm::ivec3 neigbourChunkName = chunkName;
-        if(localBlockX == 0) {
-            neigbourChunkName.x = neigbourChunkName.x - 1;
-            chunkEntities.find(chunkIDAccessor, neigbourChunkName);
-        } else if(localBlockX == VoxelWorlds::CHUNK_SIZE-1) {
-            neigbourChunkName.x = neigbourChunkName.x + 1;
-            chunkEntities.find(chunkIDAccessor, neigbourChunkName);
-        }
-        currentChunkX = chunkStates[chunkIDAccessor->second];
-
-        neigbourChunkName = chunkName;
-        if(localBlockY == 0) {
-            neigbourChunkName.y = neigbourChunkName.y - 1;
-            chunkEntities.find(chunkIDAccessor, neigbourChunkName);
-        } else if(localBlockY == VoxelWorlds::CHUNK_SIZE-1) {
-            neigbourChunkName.y = neigbourChunkName.y + 1;
-            chunkEntities.find(chunkIDAccessor, neigbourChunkName);
-        }
-        currentChunkY = chunkStates[chunkIDAccessor->second];
-
-        neigbourChunkName = chunkName;
-        if(localBlockZ == 0) {
-            neigbourChunkName.z = neigbourChunkName.z - 1;
-            chunkEntities.find(chunkIDAccessor, neigbourChunkName);
-        } else if(localBlockZ == VoxelWorlds::CHUNK_SIZE-1) {
-            neigbourChunkName.z = neigbourChunkName.z + 1;
-            chunkEntities.find(chunkIDAccessor, neigbourChunkName);
-        }
-        currentChunkZ = chunkStates[chunkIDAccessor->second];
-
-        if(currentChunk->mProgress == ChunkProgress::fully_generated) {
-            currentChunk->mProgress = ChunkProgress::partially_generated;
-        }
-        if(currentChunkX && currentChunkX->mProgress == ChunkProgress::fully_generated) {
-            currentChunkX->mProgress = ChunkProgress::partially_generated;
-        }
-        if(currentChunkY && currentChunkY->mProgress == ChunkProgress::fully_generated) {
-            currentChunkY->mProgress = ChunkProgress::partially_generated;
-        }
-        if(currentChunkZ && currentChunkZ->mProgress == ChunkProgress::fully_generated) {
-            currentChunkZ->mProgress = ChunkProgress::partially_generated;
-        }
-
-        auto blockBreakEvent = blockBreakEvents[entityID];
-        auto blockPlaceEvent = blockPlaceEvents[entityID];
-
-        auto& currentBlock = ChunkStorage::GetBlock(*chunkData, localBlockX, localBlockY, localBlockZ);
         
-        if(blockBreakEvent) {
-            currentBlock = BlockTypes::air;
+        std::array<ChunkStateComponent*, 3> neighborStates = {nullptr, nullptr, nullptr};
+        std::array<glm::ivec3, 3> neighborOffsets = {
+            glm::ivec3(-1, 0, 0),
+            glm::ivec3(0, -1, 0),
+            glm::ivec3(0, 0, -1) 
+        };
+        
+        if (localBlockX == 0) {
+            glm::ivec3 neighborName = chunkName + neighborOffsets[0];
+            if (auto it = chunkMap.find(neighborName); it != chunkMap.end())
+                neighborStates[0] = &registry.getComponentPool<ChunkStateComponent>().getComponent(it->second);
+        } else if (localBlockX == VoxelWorlds::CHUNK_SIZE-1) {
+            glm::ivec3 neighborName = chunkName - neighborOffsets[0];
+            if (auto it = chunkMap.find(neighborName); it != chunkMap.end())
+                neighborStates[0] = &registry.getComponentPool<ChunkStateComponent>().getComponent(it->second);
         }
-
-        if(blockPlaceEvent) {
-            currentBlock = blockPlaceEvent->mBlockPlaced;
+        
+        if (chunkState.progress == ChunkProgress::fully_generated) {
+            chunkState.progress = ChunkProgress::partially_generated;
         }
-
-        entityManager.DeleteEntity(entity.first);
+        
+        for (auto* neighborState : neighborStates) {
+            if (neighborState && neighborState->progress == ChunkProgress::fully_generated) {
+                neighborState->progress = ChunkProgress::partially_generated;
+            }
+        }
+        
+        // Handle block events
+        if (registry.hasComponent<BlockBreakEventComponent>(entity)) {
+            auto& block = ChunkStorage::getBlock(chunkStorage, localBlockX, localBlockY, localBlockZ);
+            block = BlockTypes::air;
+        }
+        
+        if (registry.hasComponent<BlockPlaceEventComponent>(entity)) {
+            auto& placeEvent = registry.getComponentPool<BlockPlaceEventComponent>().getComponent(entity);
+            auto& block = ChunkStorage::getBlock(chunkStorage, localBlockX, localBlockY, localBlockZ);
+            block = placeEvent.blockPlaced;
+        }
+        
+        registry.removeEntity(entity);
     }
 }

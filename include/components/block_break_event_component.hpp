@@ -1,7 +1,7 @@
 #pragma once
 // Own libraries
-#include "./core/component.hpp"
+#include "bismuth/registry.hpp"
 
-struct BlockBreakEventComponent : public IComponent {
-    size_t mEntityID; // Action done by
+struct BlockBreakEventComponent {
+    bismuth::EntityID entityID; // Action done by
 };

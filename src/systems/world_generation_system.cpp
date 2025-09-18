@@ -1,38 +1,93 @@
 #include "./systems/world_generation_system.hpp"
 
-void WorldGenerationSystem::SetEntityManager(EntityManager& entityManager) {
-    mEntityManager = &entityManager;
-}
-void WorldGenerationSystem::SetSeed(unsigned int seed) {
-    mSeed = seed;
-}
-void WorldGenerationSystem::GenerateChunk(int x, int y, int z) {
-    glm::ivec3 chunkName = {x, y, z};
+WorldGenerationSystem::WorldGenerationSystem(unsigned int seed) : mSeed(seed) {}
 
-    if(!mEntityManager->CreateEntity(chunkName)) {
+void WorldGenerationSystem::update(bismuth::Registry& registry) {
+    auto playerView = registry.getView<PlayerTagComponent, PositionComponent>();
+    if (playerView.begin() == playerView.end()) {
         return;
     }
     
-    BoundingBoxComponent bBoxComponent;
-    bBoxComponent.group = Group::render;
-    bBoxComponent.mLocalMin = glm::vec3(-0.5f,-0.5f,-0.5f);
-    bBoxComponent.mLocalMax = glm::vec3(VoxelWorlds::CHUNK_SIZE-0.5f,
-                                   VoxelWorlds::CHUNK_SIZE-0.5f,
-                                   VoxelWorlds::CHUNK_SIZE-0.5f);
+    auto [playerEntity, player, position] = *playerView.begin();
     
-    PositionComponent posComponent;
-    utility::MovePosition(posComponent, glm::vec3(x*VoxelWorlds::CHUNK_SIZE,
-        y*VoxelWorlds::CHUNK_SIZE, z*VoxelWorlds::CHUNK_SIZE));
+    findChunksToGenerate(position.position);
+    
+    const int maxChunksPerFrame = 5;
+    int chunksGenerated = 0;
+    
+    while (!mChunksToGenerate.empty() && chunksGenerated < maxChunksPerFrame) {
+        glm::ivec3 chunkCoord = mChunksToGenerate.back();
+        mChunksToGenerate.pop_back();
+        
+        generateChunk(registry, chunkCoord.x, chunkCoord.y, chunkCoord.z);
+        chunksGenerated++;
+    }
 
-    mEntityManager->AddComponent<PositionComponent>(chunkName, posComponent);
-    mEntityManager->AddComponent<ChunkStorageComponent>(chunkName);
-    mEntityManager->AddComponent<ChunkModelComponent>(chunkName);
-    mEntityManager->AddComponent<BoundingBoxComponent>(chunkName, bBoxComponent);
-    mEntityManager->AddComponent<BoundingBoxCollectionComponent>(chunkName);
-    mEntityManager->AddComponent<ChunkStateComponent>(chunkName);
 }
 
-float WorldGenerationSystem::GenerateHeight(int x, int z) {
+void WorldGenerationSystem::findChunksToGenerate(const glm::vec3& playerPosition) {
+    int playerChunkX = static_cast<int>(std::floor(playerPosition.x / VoxelWorlds::CHUNK_SIZE));
+    int playerChunkY = static_cast<int>(std::floor(playerPosition.y / VoxelWorlds::CHUNK_SIZE));
+    int playerChunkZ = static_cast<int>(std::floor(playerPosition.z / VoxelWorlds::CHUNK_SIZE));
+    
+    int renderDistanceChunks = static_cast<int>(mRenderDistance / VoxelWorlds::CHUNK_SIZE);
+    
+    for (int x = playerChunkX - renderDistanceChunks; x <= playerChunkX + renderDistanceChunks; x++) {
+        for (int y = playerChunkY - 1; y <= playerChunkY + 1; y++) { // Limit vertical range
+            for (int z = playerChunkZ - renderDistanceChunks; z <= playerChunkZ + renderDistanceChunks; z++) {
+                glm::ivec3 chunkCoord(x, y, z);
+                
+                if (mChunkEntities.find(chunkCoord) != mChunkEntities.end()) {
+                    continue;
+                }
+                
+                if (std::find(mChunksToGenerate.begin(), mChunksToGenerate.end(), chunkCoord) != mChunksToGenerate.end()) {
+                    continue;
+                }
+                
+                mChunksToGenerate.push_back(chunkCoord);
+            }
+        }
+    }
+}
+
+
+
+void WorldGenerationSystem::generateChunk(bismuth::Registry& registry, int x, int y, int z) {
+    glm::ivec3 chunkCoord = {x, y, z};
+
+    bismuth::EntityID entity = registry.createEntity();
+    mChunkEntities[chunkCoord] = entity;
+    
+    BoundingBoxComponent bBoxComponent;
+    bBoxComponent.group = Group::render;
+    bBoxComponent.localMin = glm::vec3(-0.5f, -0.5f, -0.5f);
+    bBoxComponent.localMax = glm::vec3(
+        VoxelWorlds::CHUNK_SIZE - 0.5f,
+        VoxelWorlds::CHUNK_SIZE - 0.5f,
+        VoxelWorlds::CHUNK_SIZE - 0.5f
+    );
+    registry.emplaceComponent<BoundingBoxComponent>(entity, bBoxComponent);
+    
+    PositionComponent posComponent;
+    utility::MovePosition(posComponent, glm::vec3(
+        x * VoxelWorlds::CHUNK_SIZE,
+        y * VoxelWorlds::CHUNK_SIZE,
+        z * VoxelWorlds::CHUNK_SIZE
+    ));
+    registry.emplaceComponent<PositionComponent>(entity, posComponent);
+    
+    registry.emplaceComponent<ChunkStorageComponent>(entity);
+    registry.emplaceComponent<BoundingBoxCollectionComponent>(entity);
+    registry.emplaceComponent<ChunkStateComponent>(entity);
+    registry.emplaceComponent<MeshComponent>(entity);
+    registry.emplaceComponent<MaterialComponent>(entity);
+    
+    generateNoise(registry, entity, chunkCoord);
+
+}
+
+float WorldGenerationSystem::generateHeight(int x, int z) {
     x = x + 1343;
     z = z + 343;
     float continentalness = open_simplex_noise::LayeredNoise2D(
@@ -68,10 +123,26 @@ float WorldGenerationSystem::GenerateHeight(int x, int z) {
 }
 
 // Private functions
-void WorldGenerationSystem::GenerateNoise(float (&heightMap)[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE], int x, int y, int z) {
-    glm::ivec3 chunkName = {x,y,z};
+void WorldGenerationSystem::generateNoise(
+    bismuth::Registry& registry,
+    bismuth::EntityID  entity,
+    glm::ivec3  const& chunkCoord
+) {
+    int x = chunkCoord.x;
+    int y = chunkCoord.y;
+    int z = chunkCoord.z;
 
-    auto chunkData = mEntityManager->GetComponent<ChunkStorageComponent>(chunkName);
+    auto& chunkStorage = registry.getComponentPool<ChunkStorageComponent>().getComponent(entity);
+    float heightMap[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE];
+
+    for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
+        for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
+            int globalX = x * VoxelWorlds::CHUNK_SIZE + blockX;
+            int globalZ = z * VoxelWorlds::CHUNK_SIZE + blockZ;
+            heightMap[blockX][blockZ] = generateHeight(globalX, globalZ);
+        }
+    }
+
     static float chunkCoords = VoxelWorlds::CHUNK_SIZE-1.0f;
 
     // Perlin chunk size
@@ -80,9 +151,6 @@ void WorldGenerationSystem::GenerateNoise(float (&heightMap)[WorldGeneration::CH
 
     const int xOffset = (x % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
     const int zOffset = (z % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
-
-    ChunkStorageComponent chunkStorage;
-    chunkStorage = *chunkData;
 
     for(float blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
         for(float blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
@@ -136,6 +204,4 @@ void WorldGenerationSystem::GenerateNoise(float (&heightMap)[WorldGeneration::CH
             }
         }
     }
-    chunkStorage.mWasGenerated = true;
-    *chunkData = std::move(chunkStorage);
 }

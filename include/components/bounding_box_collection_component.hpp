@@ -3,11 +3,10 @@
 #include <vector>
 
 // Own libraries
-#include "./core/component.hpp"
-#include "./components/bounding_box_component.hpp"
-#include "./group.hpp"
+#include "components/bounding_box_component.hpp"
+#include "group.hpp"
 
-struct BoundingBoxCollectionComponent : public IComponent{
+struct BoundingBoxCollectionComponent {
     std::vector<BoundingBoxComponent> boundingBoxes;
 
     Group group;

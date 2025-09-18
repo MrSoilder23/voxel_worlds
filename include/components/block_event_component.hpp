@@ -5,10 +5,7 @@
 // Third_party libraries
 #include <glm/glm.hpp>
 
-// Own libraries
-#include "./core/component.hpp"
-
-struct BlockEventComponent : public IComponent {
-    glm::vec3 mPosition;
-    std::chrono::system_clock::time_point mTimestamp;
+struct BlockEventComponent {
+    glm::vec3 position;
+    std::chrono::system_clock::time_point timestamp;
 };

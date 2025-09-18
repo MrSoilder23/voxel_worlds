@@ -1,38 +1,18 @@
 #include "./systems/position_update_system.hpp"
 
-void PositionUpdateSystem::UpdatePositionTransform(EntityManager& entityManager) {
-    auto positions = entityManager.GetComponentArray<PositionComponent>();
+void PositionUpdateSystem::update(bismuth::Registry& entityManager) {
+    auto& positionPool = entityManager.getComponentPool<PositionComponent>();
+    
+    auto itEnd = positionPool.componentEnd();
+    for(auto position = positionPool.componentBegin(); position != itEnd; ++position) {
+        if(position->dirty) {
+            glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position->position);
+            glm::mat4 rotationMatrix = glm::toMat4(position->rotation);
+            glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), position->scale);
 
-    for(size_t entityID = 0; entityID < positions.size(); entityID++) {
-        
-        if(entityID >= positions.size()) {
-            continue;
+            position->transform = translationMatrix * rotationMatrix * scaleMatrix;
+
+            position->dirty = false; 
         }
-        
-        auto position = positions[entityID];
-        
-        if(position && position->mDirty) {
-            glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position->mPosition);
-            glm::mat4 rotationMatrix = glm::toMat4(position->mRotation);
-            glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), position->mScale);
-
-            position->mTransform = translationMatrix * rotationMatrix * scaleMatrix;
-
-            position->mDirty = false; 
-        }
-    }
-}
-
-void PositionUpdateSystem::UpdatePositionTransformSingle(EntityManager& entityManager, std::string entityName) {
-    auto position = entityManager.GetComponent<PositionComponent>(entityName);
-
-    if(position && position->mDirty) {
-        glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position->mPosition);
-        glm::mat4 rotationMatrix = glm::toMat4(position->mRotation);
-        glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), position->mScale);
-
-        position->mTransform = translationMatrix * rotationMatrix * scaleMatrix;
-
-        position->mDirty = false; 
     }
 }

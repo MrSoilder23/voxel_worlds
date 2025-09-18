@@ -1,90 +1,49 @@
 #include "./systems/vertex_setup_system.hpp"
 
-void VertexSetupSystem::CreateVertexSpecification(EntityManager& entityManager) {
-    auto models = entityManager.GetComponentArray<ModelComponent>();
-    auto boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
+void VertexSetupSystem::update(bismuth::Registry& registry) {
+    auto& meshPool      = registry.getComponentPool<MeshComponent>();
+    auto& modelDenseIDs = meshPool.getDenseEntities();
 
-    for(size_t entityID = 0; entityID < models.size(); entityID++) {
+    for(auto& entityID : modelDenseIDs) {
+        auto& mesh = meshPool.getComponent(entityID);
 
-        if(entityID >= models.size() || entityID >= boundingBoxes.size()) {
+        if(mesh.VAO != 0) {
             continue;
         }
 
-        auto model = models[entityID];
-        auto boundingBox = boundingBoxes[entityID];
-
-        if(model && model->mVAO == 0) {
-            
-            glGenVertexArrays(1, &model->mVAO);
-            glBindVertexArray(model->mVAO);
-            
-            glGenBuffers(1, &model->mVBO);
-            glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
-            glBufferData(GL_ARRAY_BUFFER, model->mModel.vertexPositions.size()*sizeof(glm::vec3), model->mModel.vertexPositions.data(), GL_STATIC_DRAW);
-            
-            glGenBuffers(1, &model->mEBO);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mEBO);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->mModel.indexBufferData.size()*sizeof(GLuint), model->mModel.indexBufferData.data(), GL_STATIC_DRAW);
-            
-            glEnableVertexAttribArray(0);
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
-            glBindVertexArray(0);
-            
+        if (mesh.vertices.empty()) {
+            continue;
         }
-        if(boundingBox && boundingBox->mVAO == 0) {
-            glGenVertexArrays(1, &boundingBox->mVAO);
-            glBindVertexArray(boundingBox->mVAO);
-            
-            glGenBuffers(1, &boundingBox->mVBO);
-            glBindBuffer(GL_ARRAY_BUFFER, boundingBox->mVBO);
-            glBufferData(GL_ARRAY_BUFFER, boundingBox->mModel.vertexPositions.size()*sizeof(glm::vec3), boundingBox->mModel.vertexPositions.data(), GL_STATIC_DRAW);
-            
-            glGenBuffers(1, &boundingBox->mEBO);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, boundingBox->mEBO);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, boundingBox->mModel.indexBufferData.size()*sizeof(GLuint), boundingBox->mModel.indexBufferData.data(), GL_STATIC_DRAW);
-            
-            glEnableVertexAttribArray(0);
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
-            glBindVertexArray(0);
+
+        glGenVertexArrays(1, &mesh.VAO);
+        glBindVertexArray(mesh.VAO);
+        
+        glGenBuffers(1, &mesh.VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, mesh.VBO);
+        glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(Vertex), mesh.vertices.data(), GL_STATIC_DRAW);
+        
+        if (!mesh.indices.empty()) {
+            glGenBuffers(1, &mesh.EBO);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.EBO);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(GLuint), mesh.indices.data(), GL_STATIC_DRAW);
         }
-    }
-}
 
-void VertexSetupSystem::CreateVertexSpecificationSingle(EntityManager& entityManager, std::string entityName) {
-    auto model = entityManager.GetComponent<ModelComponent>(entityName);
-    auto boundingBox = entityManager.GetComponent<BoundingBoxComponent>(entityName);
+        // Position attribute (location = 0)
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 
-    if(model && model->mVAO == 0) {
-            
-        glGenVertexArrays(1, &model->mVAO);
-        glBindVertexArray(model->mVAO);
+        // Normal attribute (location = 1)
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+
+        // Texture coordinate attribute (location = 2)
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
         
-        glGenBuffers(1, &model->mVBO);
-        glBindBuffer(GL_ARRAY_BUFFER, model->mVBO);
-        glBufferData(GL_ARRAY_BUFFER, model->mModel.vertexPositions.size()*sizeof(glm::vec3), model->mModel.vertexPositions.data(), GL_STATIC_DRAW);
-        
-        glGenBuffers(1, &model->mEBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->mEBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->mModel.indexBufferData.size()*sizeof(GLuint), model->mModel.indexBufferData.data(), GL_STATIC_DRAW);
-        
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
-        glBindVertexArray(0);
-        
-    } else if(boundingBox && boundingBox->mVAO == 0) {
-        glGenVertexArrays(1, &boundingBox->mVAO);
-        glBindVertexArray(boundingBox->mVAO);
-        
-        glGenBuffers(1, &boundingBox->mVBO);
-        glBindBuffer(GL_ARRAY_BUFFER, boundingBox->mVBO);
-        glBufferData(GL_ARRAY_BUFFER, boundingBox->mModel.vertexPositions.size()*sizeof(glm::vec3), boundingBox->mModel.vertexPositions.data(), GL_STATIC_DRAW);
-        
-        glGenBuffers(1, &boundingBox->mEBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, boundingBox->mEBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, boundingBox->mModel.indexBufferData.size()*sizeof(GLuint), boundingBox->mModel.indexBufferData.data(), GL_STATIC_DRAW);
-        
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+        // Color attribute (location = 3)
+        glEnableVertexAttribArray(3);
+        glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+
         glBindVertexArray(0);
     }
 }

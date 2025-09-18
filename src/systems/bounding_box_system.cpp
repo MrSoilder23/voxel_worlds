@@ -1,48 +1,28 @@
 #include "./systems/bounding_box_system.hpp"
 
-void BoundingBoxSystem::GenerateBoundingBox(EntityManager& entityManager) {
-    auto boundingBoxes = entityManager.GetComponentArray<BoundingBoxComponent>();
-    auto positions = entityManager.GetComponentArray<PositionComponent>();
+void BoundingBoxSystem::update(bismuth::Registry& entityManager) {
+    auto& boundingPool = entityManager.getComponentPool<BoundingBoxComponent>();
+    auto& positionPool = entityManager.getComponentPool<PositionComponent>();
 
-    for(size_t entityID = 0; entityID < boundingBoxes.size(); entityID++) {
+    auto& boundingDenseIDs  = boundingPool.getDenseEntities();
+    auto& positionLocations = positionPool.getDenseEntities();
 
-        if(entityID >= boundingBoxes.size() || entityID >= positions.size()) {
+    for(auto& entityID : boundingDenseIDs) {
+        if(entityID >= positionLocations.size()) {
             continue;
         }
 
-        auto boundingBox = boundingBoxes[entityID];
-        auto position = positions[entityID];
+        auto& boundingBox = boundingPool.getComponent(entityID);
+        auto& position    = positionPool.getComponent(entityID);
 
-        if(!boundingBox || !position) {
-            continue;
-        }
-        
-        glm::vec3 worldMax = boundingBox->mLocalMax + position->mPosition;
-        glm::vec3 worldMin = boundingBox->mLocalMin + position->mPosition;
+        glm::vec3 worldMax = boundingBox.localMax + position.position;
+        glm::vec3 worldMin = boundingBox.localMin + position.position;
 
-        if(boundingBox->mWorldMax != worldMax || boundingBox->mWorldMin != worldMin) {
-            boundingBox->mWorldMax = worldMax;
-            boundingBox->mWorldMin = worldMin;
+        if(boundingBox.worldMax != worldMax || boundingBox.worldMin != worldMin) {
+            boundingBox.worldMax = worldMax;
+            boundingBox.worldMin = worldMin;
 
-            boundingBox->mModel = std::move(physics::CreateBoundingModel(*boundingBox));
+            // boundingBox.model = std::move(physics::CreateBoundingModel(boundingBox));
         }
     }
-}
-
-void BoundingBoxSystem::GenerateBoundingBoxSingle(EntityManager& entityManager, std::string entityName) {
-    auto boundingBox = entityManager.GetComponent<BoundingBoxComponent>(entityName);
-    if(!boundingBox) {
-        return;
-    }
-
-    auto position = entityManager.GetComponent<PositionComponent>(entityName);
-    if(!position) {
-        return;
-    }
-
-    boundingBox->mWorldMax = boundingBox->mLocalMax + position->mPosition;
-    boundingBox->mWorldMin = boundingBox->mLocalMin + position->mPosition;
-    
-    boundingBox->mModel = std::move(physics::CreateBoundingModel(*boundingBox));
-    
 }

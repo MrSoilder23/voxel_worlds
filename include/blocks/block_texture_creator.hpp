@@ -11,7 +11,6 @@
 #include <SDL2/SDL_image.h>
 
 // Own libraries
-#include "./graphics/texture.hpp"
 #include "components/core/material.hpp"
 
 class BlockTextureCreator {

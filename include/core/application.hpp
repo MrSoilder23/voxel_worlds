@@ -10,17 +10,17 @@
 #include <SDL2/SDL_image.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <tbb/tbb.h>
 
 // Own libraries
-#include "core/entity_manager.hpp"
+#include "bismuth/registry.hpp"
 #include "core/game.hpp"
 #include "core/event_manager.hpp"
 #include "utility/settings.hpp"
 #include "utility/thread_pool.hpp"
 #include "utility/circle_loop.hpp"
 #include "graphics/graphics.hpp"
-#include "graphics/model_manager.hpp"
 
 #include "blocks/block_texture_creator.hpp"
 #include "blocks/block_types.hpp"
@@ -31,9 +31,7 @@
 #include "systems/vertex_setup_system.hpp"
 #include "systems/bounding_box_system.hpp"
 #include "systems/position_update_system.hpp"
-#include "systems/chunk_vertex_setup_system.hpp"
 #include "systems/world_generation_system.hpp"
-#include "systems/chunk_bounding_creation_system.hpp"
 #include "systems/collision_system.hpp"
 #include "systems/physics_system.hpp"
 #include "systems/player_target_system.hpp"
@@ -49,14 +47,11 @@
 #include "components/bounding_box_component.hpp"
 #include "components/physics_component.hpp"
 #include "components/inventory_component.hpp"
-#include "components/model_component.hpp"
 #include "components/position_component.hpp"
 
 class Application {
     public:
-        Application() : 
-            mEntityManager(EntityManager::GetInstance()),
-            mRendererSystem(RendererSystem::GetInstance()),
+        Application() :
             mThreadPool(ThreadPool::GetInstance()),
             mEventManager(EventManager::GetInstance()),
             mGraphicsApp(std::make_shared<GraphicsApp>())
@@ -75,8 +70,6 @@ class Application {
         void initializeWorld();
         void initializeKeys();
         void initializeBaseEntities();
-        void initializeRender();
-        void initializeModels();
         void initializeTextures();
         void initializeBlocks();
 
@@ -85,16 +78,13 @@ class Application {
         Game mGame;
 
         std::shared_ptr<GraphicsApp> mGraphicsApp;
-        EntityManager& mEntityManager;
+        bismuth::Registry mRegistry;
         PlayerControllerSystem mPlayerControllerSys;
-        ChunkBoundingCreationSystem mChunkbBoxCreationSys;
 
-        RendererSystem& mRendererSystem;
         // ChunkManager& gChunkManager = ChunkManager::GetInstance();
 
         // ChunkSystem chunkSystem;
         ThreadPool& mThreadPool;
-        WorldGenerationSystem mWorldGen;
 
         EventManager& mEventManager;
         tbb::task_arena mArena;

@@ -1,48 +1,15 @@
 #include "./systems/physics_system.hpp"
 
-void PhysicsSystem::UpdatePosition(EntityManager& entityManager, float deltaTime) {
-    auto physics = entityManager.GetComponentArray<PhysicsComponent>();
-    auto positions = entityManager.GetComponentArray<PositionComponent>();
+void PhysicsSystem::update(bismuth::Registry& registry, float deltaTime) {
+    auto physicsView = registry.getView<PhysicsComponent, PositionComponent>();
 
-    for(size_t entityID = 0; entityID < physics.size(); entityID++) {
+    for(auto [entity, physics, position] : physicsView) {
+        physics.velocity *= 1.0f - physics.friction * deltaTime;
 
-        if(entityID >= physics.size() || entityID >= positions.size()) {
-            continue;
-        }
-
-        auto entityPhysics = physics[entityID];
-        auto entityPosition = positions[entityID];
-
-        if(!entityPhysics || !entityPosition) {
-            continue;
+        if (glm::length(physics.velocity) < 0.001f) {
+            physics.velocity = glm::vec3(0.0f);
         }
         
-        entityPhysics->mVelocity *= 1.0f - entityPhysics->mFriction * deltaTime;
-
-        if (glm::length(entityPhysics->mVelocity) < 0.001f) {
-            entityPhysics->mVelocity = glm::vec3(0.0f);
-        }
-        
-        utility::MovePosition(*entityPosition, entityPosition->mPosition + (entityPhysics->mVelocity * deltaTime));
+        utility::MovePosition(position, position.position + (physics.velocity * deltaTime));
     }
-}
-
-void PhysicsSystem::UpdatePositionSingle(EntityManager& entityManager, std::string entityName, float deltaTime) {
-    auto entityPhysics = entityManager.GetComponent<PhysicsComponent>(entityName);
-    if(!entityPhysics) {
-        return;
-    }
-
-    auto entityPosition = entityManager.GetComponent<PositionComponent>(entityName);
-    if(!entityPosition) {
-        return;
-    }
-
-    entityPhysics->mVelocity *= 1.0f - entityPhysics->mFriction * deltaTime;
-
-    if (glm::length(entityPhysics->mVelocity) < 0.001f) {
-        entityPhysics->mVelocity = glm::vec3(0.0f);
-    }
-    
-    utility::MovePosition(*entityPosition, entityPosition->mPosition + (entityPhysics->mVelocity * deltaTime));
 }

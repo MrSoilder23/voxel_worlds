@@ -1,33 +1,33 @@
 #include "./utility/physics.hpp"
 
 bool physics::Instersects(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
-    return (box1.mWorldMin.x <= box2.mWorldMax.x && box1.mWorldMax.x >= box2.mWorldMin.x) &&
-            (box1.mWorldMin.y <= box2.mWorldMax.y && box1.mWorldMax.y >= box2.mWorldMin.y) &&
-            (box1.mWorldMin.z <= box2.mWorldMax.z && box1.mWorldMax.z >= box2.mWorldMin.z);
+    return (box1.worldMin.x <= box2.worldMax.x && box1.worldMax.x >= box2.worldMin.x) &&
+            (box1.worldMin.y <= box2.worldMax.y && box1.worldMax.y >= box2.worldMin.y) &&
+            (box1.worldMin.z <= box2.worldMax.z && box1.worldMax.z >= box2.worldMin.z);
 }
 bool physics::IfPointInAABB(const glm::vec3& point, const BoundingBoxComponent& box) {
-    return (box.mWorldMin.x <= point.x && point.x <= box.mWorldMax.x) &&
-            (box.mWorldMin.y <= point.y && point.y <= box.mWorldMax.y) &&
-            (box.mWorldMin.z <= point.z && point.z <= box.mWorldMax.z);
+    return (box.worldMin.x <= point.x && point.x <= box.worldMax.x) &&
+            (box.worldMin.y <= point.y && point.y <= box.worldMax.y) &&
+            (box.worldMin.z <= point.z && point.z <= box.worldMax.z);
 }
 
 glm::vec3 physics::mtv(const BoundingBoxComponent& box1, const BoundingBoxComponent& box2) {
     constexpr float epsilon = 0.001f;
 
-    const float overlapX = std::min(box1.mWorldMax.x, box2.mWorldMax.x) - std::max(box1.mWorldMin.x, box2.mWorldMin.x);
-    const float overlapY = std::min(box1.mWorldMax.y, box2.mWorldMax.y) - std::max(box1.mWorldMin.y, box2.mWorldMin.y);
-    const float overlapZ = std::min(box1.mWorldMax.z, box2.mWorldMax.z) - std::max(box1.mWorldMin.z, box2.mWorldMin.z);
+    const float overlapX = std::min(box1.worldMax.x, box2.worldMax.x) - std::max(box1.worldMin.x, box2.worldMin.x);
+    const float overlapY = std::min(box1.worldMax.y, box2.worldMax.y) - std::max(box1.worldMin.y, box2.worldMin.y);
+    const float overlapZ = std::min(box1.worldMax.z, box2.worldMax.z) - std::max(box1.worldMin.z, box2.worldMin.z);
 
     glm::vec3 mtv(0.0f); // Minimum Translation Vector
 
     if (overlapX < overlapY && overlapX < overlapZ) {
-        float direction = (box1.mWorldMin.x < box2.mWorldMin.x) ? 1.0f : -1.0f;
+        float direction = (box1.worldMin.x < box2.worldMin.x) ? 1.0f : -1.0f;
         mtv = glm::vec3(direction * (overlapX+epsilon), 0.0f, 0.0f);
     } else if (overlapY < overlapZ) {
-        float direction = (box1.mWorldMin.y < box2.mWorldMin.y) ? 1.0f : -1.0f;
+        float direction = (box1.worldMin.y < box2.worldMin.y) ? 1.0f : -1.0f;
         mtv = glm::vec3(0.0f, direction * (overlapY+epsilon), 0.0f);
     } else {
-        float direction = (box1.mWorldMin.z < box2.mWorldMin.z) ? 1.0f : -1.0f;
+        float direction = (box1.worldMin.z < box2.worldMin.z) ? 1.0f : -1.0f;
         mtv = glm::vec3(0.0f, 0.0f, direction * (overlapZ+epsilon));
     }
 
@@ -36,9 +36,9 @@ glm::vec3 physics::mtv(const BoundingBoxComponent& box1, const BoundingBoxCompon
 
 // Works for only one object moving (first box)
 float physics::SweptAABB(const BoundingBoxComponent& box1, const glm::vec3& velocity, const BoundingBoxComponent& box2, glm::vec3& normals) {
-    if ((velocity.x == 0.0f && (box1.mWorldMax.x < box2.mWorldMin.x || box1.mWorldMin.x > box2.mWorldMax.x)) ||
-        (velocity.y == 0.0f && (box1.mWorldMax.y < box2.mWorldMin.y || box1.mWorldMin.y > box2.mWorldMax.y)) ||
-        (velocity.z == 0.0f && (box1.mWorldMax.z < box2.mWorldMin.z || box1.mWorldMin.z > box2.mWorldMax.z))) {
+    if ((velocity.x == 0.0f && (box1.worldMax.x < box2.worldMin.x || box1.worldMin.x > box2.worldMax.x)) ||
+        (velocity.y == 0.0f && (box1.worldMax.y < box2.worldMin.y || box1.worldMin.y > box2.worldMax.y)) ||
+        (velocity.z == 0.0f && (box1.worldMax.z < box2.worldMin.z || box1.worldMin.z > box2.worldMax.z))) {
         normals = glm::vec3(0.0f);
         return 1.0f;
     }
@@ -48,27 +48,27 @@ float physics::SweptAABB(const BoundingBoxComponent& box1, const glm::vec3& velo
 
     // Calculate entry and exit distances
     if (velocity.x > 0.0f) {
-        xBoxEntry = box2.mWorldMin.x - box1.mWorldMax.x;
-        xBoxExit = box2.mWorldMax.x - box1.mWorldMin.x;
+        xBoxEntry = box2.worldMin.x - box1.worldMax.x;
+        xBoxExit = box2.worldMax.x - box1.worldMin.x;
     } else {
-        xBoxEntry = box2.mWorldMax.x - box1.mWorldMin.x;
-        xBoxExit = box2.mWorldMin.x - box1.mWorldMax.x;
+        xBoxEntry = box2.worldMax.x - box1.worldMin.x;
+        xBoxExit = box2.worldMin.x - box1.worldMax.x;
     }
 
     if (velocity.y > 0.0f) {
-        yBoxEntry = box2.mWorldMin.y - box1.mWorldMax.y;
-        yBoxExit = box2.mWorldMax.y - box1.mWorldMin.y;
+        yBoxEntry = box2.worldMin.y - box1.worldMax.y;
+        yBoxExit = box2.worldMax.y - box1.worldMin.y;
     } else {
-        yBoxEntry = box2.mWorldMax.y - box1.mWorldMin.y;
-        yBoxExit = box2.mWorldMin.y - box1.mWorldMax.y;
+        yBoxEntry = box2.worldMax.y - box1.worldMin.y;
+        yBoxExit = box2.worldMin.y - box1.worldMax.y;
     }
 
     if (velocity.z > 0.0f) {
-        zBoxEntry = box2.mWorldMin.z - box1.mWorldMax.z;
-        zBoxExit = box2.mWorldMax.z - box1.mWorldMin.z;
+        zBoxEntry = box2.worldMin.z - box1.worldMax.z;
+        zBoxExit = box2.worldMax.z - box1.worldMin.z;
     } else {
-        zBoxEntry = box2.mWorldMax.z - box1.mWorldMin.z;
-        zBoxExit = box2.mWorldMin.z - box1.mWorldMax.z;
+        zBoxEntry = box2.worldMax.z - box1.worldMin.z;
+        zBoxExit = box2.worldMin.z - box1.worldMax.z;
     }
 
     // Calculate entry/exit times
@@ -127,8 +127,8 @@ float physics::LineIntersectsAABB(const Line& line, const BoundingBoxComponent& 
         float linePos = (&line.mPosition.x)[i];
         float lineDir = (&line.mDirection.x)[i];
 
-        float boxMin = (&box.mWorldMin.x)[i];
-        float boxMax = (&box.mWorldMax.x)[i];
+        float boxMin = (&box.worldMin.x)[i];
+        float boxMax = (&box.worldMax.x)[i];
 
         if(lineDir != 0) {
             float scale1 = (boxMin - linePos) / lineDir;
@@ -144,8 +144,8 @@ float physics::LineIntersectsAABB(const Line& line, const BoundingBoxComponent& 
 }
 
 bool physics::IsAABBInFrustum(const BoundingBoxComponent& box, const std::array<glm::vec4, 5>& frustumPlanes) {
-    glm::vec3 center = (box.mWorldMin + box.mWorldMax) * 0.5f;
-    glm::vec3 halfExtents = (box.mWorldMax - box.mWorldMin) * 0.5f;
+    glm::vec3 center = (box.worldMin + box.worldMax) * 0.5f;
+    glm::vec3 halfExtents = (box.worldMax - box.worldMin) * 0.5f;
 
     for (int i = 0; i < 5; i++) {
         glm::vec3 normal = glm::vec3(frustumPlanes[i]);
@@ -174,38 +174,4 @@ void physics::ExtractInfiniteFrustumPlanes(const glm::mat4& viewProj, std::array
         float length = glm::length(glm::vec3(plane));
         plane /= length;
     }
-}
-Model physics::CreateBoundingModel(BoundingBoxComponent& boundingBox) {
-    Model model;
-    model.vertexPositions = {
-        glm::vec3(boundingBox.mLocalMin.x, boundingBox.mLocalMin.y, boundingBox.mLocalMin.z),  // Bottom-left-back
-        glm::vec3(boundingBox.mLocalMax.x, boundingBox.mLocalMin.y, boundingBox.mLocalMin.z),  // Bottom-right-back
-        glm::vec3(boundingBox.mLocalMax.x, boundingBox.mLocalMax.y, boundingBox.mLocalMin.z),  // Top-right-back
-        glm::vec3(boundingBox.mLocalMin.x, boundingBox.mLocalMax.y, boundingBox.mLocalMin.z),  // Top-left-back
-        glm::vec3(boundingBox.mLocalMin.x, boundingBox.mLocalMin.y, boundingBox.mLocalMax.z),  // Bottom-left-front
-        glm::vec3(boundingBox.mLocalMax.x, boundingBox.mLocalMin.y, boundingBox.mLocalMax.z),  // Bottom-right-front
-        glm::vec3(boundingBox.mLocalMax.x, boundingBox.mLocalMax.y, boundingBox.mLocalMax.z),  // Top-right-front
-        glm::vec3(boundingBox.mLocalMin.x, boundingBox.mLocalMax.y, boundingBox.mLocalMax.z)   // Top-left-front
-    };
-
-    model.indexBufferData = {
-        0, 1,  // Bottom edge
-        1, 2,  // Right edge
-        2, 3,  // Top edge
-        3, 0,  // Left edge
-    
-        // Front face edges
-        4, 5,  // Bottom edge
-        5, 6,  // Right edge
-        6, 7,  // Top edge
-        7, 4,  // Left edge
-    
-        // Connecting edges between back and front faces
-        0, 4,  // Bottom-left edge
-        1, 5,  // Bottom-right edge
-        2, 6,  // Top-right edge
-        3, 7   // Top-left edge
-    };
-
-    return model;
 }

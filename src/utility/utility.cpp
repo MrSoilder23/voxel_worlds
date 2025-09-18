@@ -25,18 +25,18 @@ void utility::MeshScale(Transform& transform, float x, float y, float z) {
 
 // Position Component tools
 void utility::MovePosition(PositionComponent& positionComponent, const glm::vec3& newPosition) {
-    positionComponent.mPosition = newPosition;
-    positionComponent.mDirty = true;
+    positionComponent.position = newPosition;
+    positionComponent.dirty = true;
 }
 
 void utility::RotatePosition(PositionComponent& positionComponent, const glm::quat& newRotation) {
-    positionComponent.mRotation = newRotation;
-    positionComponent.mDirty = true;
+    positionComponent.rotation = newRotation;
+    positionComponent.dirty = true;
 }
 
 void utility::ScalePosition(PositionComponent& positionComponent, const glm::vec3& newScale) {
-    positionComponent.mScale = newScale;
-    positionComponent.mDirty = true;
+    positionComponent.scale = newScale;
+    positionComponent.dirty = true;
 }
 
 float utility::Smooth(float t) {

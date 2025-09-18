@@ -1,10 +1,6 @@
 #pragma once
-// Own libraries
-#include "./core/component.hpp"
 
-struct PlayerControllerComponent : public IComponent {
-    PlayerControllerComponent() : mSpeed(20.0f), mSensitivity(10.0f) {}
-
-    float mSpeed;
-    float mSensitivity;
+struct PlayerControllerComponent {
+    float speed       = 20.0f;
+    float sensitivity = 10.0f;
 };

@@ -5,11 +5,10 @@
 #include <glm/gtx/quaternion.hpp>
 
 // Own libraries
-#include "./components/position_component.hpp"
-#include "./core/entity_manager.hpp"
+#include "components/position_component.hpp"
+#include "bismuth/registry.hpp"
 
 class PositionUpdateSystem {
     public:
-        void UpdatePositionTransform(EntityManager& entityManager);
-        void UpdatePositionTransformSingle(EntityManager& entityManager, std::string entityName);
+        void update(bismuth::Registry& entityManager);
 };
