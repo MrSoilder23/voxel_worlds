@@ -180,47 +180,6 @@ void Application::initializeKeys() {
     mEventManager.RegisterEvent(InputAction::toggle_debug3, [settings = &mSettings](float _){settings->worldGen = !settings->worldGen;});
 }
 
-// void RegisterMovementEvent(EventManager& eventManager, bismuth::Registry& entityManager, InputAction action, glm::vec3 movementDirection) {
-
-//     eventManager.RegisterEvent(action, [&eventManager, &entityManager, movementDirection](float deltaTime) mutable {
-//         auto player = entityManager.GetComponent<PlayerControllerComponent>("Player");
-//         auto playerCamera = entityManager.GetComponent<CameraComponent>("Player");
-//         auto playerVelocity = entityManager.GetComponent<PhysicsComponent>("Player");
-
-//         glm::vec3 forwardVector = glm::normalize(glm::vec3(playerCamera->mViewDirection.x, 0.0f, playerCamera->mViewDirection.z));
-//         glm::vec3 rightVector = glm::cross(playerCamera->mViewDirection, playerCamera->mUpVector);
-//         rightVector = glm::normalize(rightVector);
-        
-//         glm::vec3 forwardMovement = forwardVector * player->mSpeed;
-//         glm::vec3 sidewaysMovement = rightVector * player->mSpeed;
-//         glm::vec3 upMovement = playerCamera->mUpVector * player->mSpeed;
-
-//         glm::vec3 movement = (movementDirection.x * sidewaysMovement) + 
-//                              (movementDirection.y * upMovement) + 
-//                              (movementDirection.z * forwardMovement);
-
-//         glm::vec3 inputVelocity = movement * deltaTime;
-
-//         if(glm::length(inputVelocity) > 0) {
-//             glm::vec3 direction = glm::normalize(inputVelocity);
-//             float currentSpeedInDirection = glm::dot(playerVelocity->mVelocity, inputVelocity);
-
-//             float allowableSpeed = player->mSpeed - currentSpeedInDirection;
-
-//             if(allowableSpeed <= 0.0f) {
-//                 inputVelocity = glm::vec3(0.0f);
-//             } else {
-//                 float inputMagnitude = glm::length(inputVelocity);
-//                 if(inputMagnitude > allowableSpeed) {
-//                     inputVelocity = direction * allowableSpeed;
-//                 }
-//             }
-//         }
-
-//         playerVelocity->mVelocity += inputVelocity;
-//     });
-// }
-
 void Application::initializeBaseEntities() {
     // Player Entity
     const auto& playerEntityID = mRegistry.createEntity();
@@ -233,6 +192,13 @@ void Application::initializeBaseEntities() {
 
     PhysicsComponent physics;
     physics.friction = 2.0f;
+
+    InventoryComponent inventory;
+    inventory.inventory[0].item = BlockTypes::dirt_block;
+    inventory.inventory[1].item = BlockTypes::grass_block;
+    inventory.inventory[2].item = BlockTypes::stone_block;
+    inventory.inventory[3].item = BlockTypes::dirt_block;
+    inventory.inventory[4].item = BlockTypes::sand_block;
     
     mRegistry.emplaceComponent<PlayerTagComponent>(playerEntityID);
     mRegistry.emplaceComponent<PlayerControllerComponent>(playerEntityID, mSettings.speed, mSettings.sensitivity);
@@ -240,83 +206,95 @@ void Application::initializeBaseEntities() {
     mRegistry.emplaceComponent<CameraComponent>(playerEntityID,      camera);
     mRegistry.emplaceComponent<BoundingBoxComponent>(playerEntityID, glm::vec3(-0.4, -1.5, -0.4), glm::vec3( 0.4,  0.4,  0.4));
     mRegistry.emplaceComponent<PhysicsComponent>(playerEntityID,     physics);
-    mRegistry.emplaceComponent<InventoryComponent>(playerEntityID);
+    mRegistry.emplaceComponent<InventoryComponent>(playerEntityID,   inventory);
     
 
-    // EventManager& eventManager = EventManager::GetInstance();
+    EventManager& eventManager = EventManager::GetInstance();
 
-    // playerInventory->mInventory[0].mItem = BlockTypes::dirt_block;
-    // playerInventory->mInventory[1].mItem = BlockTypes::grass_block;
-    // playerInventory->mInventory[2].mItem = BlockTypes::stone_block;
-    // playerInventory->mInventory[3].mItem = BlockTypes::dirt_block;
-    // playerInventory->mInventory[4].mItem = BlockTypes::sand_block;
+    for (int i = 0; i <= 9; i++) {
+        eventManager.RegisterEvent(static_cast<InputAction>(static_cast<int>(InputAction::hotbar_0) + i), 
+            [this, i, playerEntityID](float _) {
+                if (mRegistry.hasComponent<InventoryComponent>(playerEntityID)) {
+                    auto& inventory = mRegistry.getComponentPool<InventoryComponent>().getComponent(playerEntityID);
+                    inventory.currentSlot = i;
+                }
+            });
+    }
 
-    // eventManager.RegisterEvent(InputAction::hotbar_0, [&entityManager](...){
-    //     auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
-    //     playerInventory->mCurrentSlot = 0;
-    // });
-    // eventManager.RegisterEvent(InputAction::hotbar_1, [&entityManager](...){
-    //     auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
-    //     playerInventory->mCurrentSlot = 1;
-    // });
-    // eventManager.RegisterEvent(InputAction::hotbar_2, [&entityManager](...){
-    //     auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
-    //     playerInventory->mCurrentSlot = 2;
-    // });
-    // eventManager.RegisterEvent(InputAction::hotbar_3, [&entityManager](...){
-    //     auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
-    //     playerInventory->mCurrentSlot = 3;
-    // });
-    // eventManager.RegisterEvent(InputAction::hotbar_4, [&entityManager](...){
-    //     auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
-    //     playerInventory->mCurrentSlot = 4;
-    // });
-    // eventManager.RegisterEvent(InputAction::hotbar_5, [&entityManager](...){
-    //     auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
-    //     playerInventory->mCurrentSlot = 5;
-    // });
-    // eventManager.RegisterEvent(InputAction::hotbar_6, [&entityManager](...){
-    //     auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
-    //     playerInventory->mCurrentSlot = 6;
-    // });
-    // eventManager.RegisterEvent(InputAction::hotbar_7, [&entityManager](...){
-    //     auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
-    //     playerInventory->mCurrentSlot = 7;
-    // });
-    // eventManager.RegisterEvent(InputAction::hotbar_8, [&entityManager](...){
-    //     auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
-    //     playerInventory->mCurrentSlot = 8;
-    // });
-    // eventManager.RegisterEvent(InputAction::hotbar_9, [&entityManager](...){
-    //     auto playerInventory = entityManager.GetComponent<InventoryComponent>("Player");
-    //     playerInventory->mCurrentSlot = 9;
-    // });
+    auto registerMovementEvent = [this, playerEntityID](InputAction action, glm::vec3 direction) {
+        mEventManager.RegisterEvent(action, [this, playerEntityID, direction](float deltaTime) {
+            // Access components through registry
+            auto& player = mRegistry.getComponentPool<PlayerControllerComponent>().getComponent(playerEntityID);
+            auto& camera = mRegistry.getComponentPool<CameraComponent>().getComponent(playerEntityID);
+            auto& physics = mRegistry.getComponentPool<PhysicsComponent>().getComponent(playerEntityID);
 
-    // RegisterMovementEvent(eventManager, entityManager, InputAction::move_forward,   glm::vec3(0,0,1));
-    // RegisterMovementEvent(eventManager, entityManager, InputAction::move_backwards, glm::vec3(0,0,-1));
-    // RegisterMovementEvent(eventManager, entityManager, InputAction::move_left,      glm::vec3(-1,0,0));
-    // RegisterMovementEvent(eventManager, entityManager, InputAction::move_right,     glm::vec3(1,0,0));
-    // RegisterMovementEvent(eventManager, entityManager, InputAction::move_up,        glm::vec3(0,1,0));
-    // RegisterMovementEvent(eventManager, entityManager, InputAction::move_down,      glm::vec3(0,-1,0));
+            glm::vec3 forwardVector = glm::normalize(glm::vec3(camera.viewDirection.x, 0.0f, camera.viewDirection.z));
+            glm::vec3 rightVector = glm::cross(camera.viewDirection, camera.upVector);
+            rightVector = glm::normalize(rightVector);
+            
+            glm::vec3 forwardMovement = forwardVector * player.speed;
+            glm::vec3 sidewaysMovement = rightVector * player.speed;
+            glm::vec3 upMovement = camera.upVector * player.speed;
 
-    // eventManager.RegisterMouseMotionEvent(InputAction::mouse_motion, [playerPosition, player, playerCamera](float deltaTime, int mouseX, int mouseY){
-    //     glm::quat rotation = playerPosition->mRotation;
+            glm::vec3 movement = (direction.x * sidewaysMovement) +
+                                 (direction.y * upMovement) +
+                                 (direction.z * forwardMovement);
 
-    //     float yaw = -glm::radians(mouseX * player->mSensitivity * deltaTime);
-    //     float pitch = -glm::radians(mouseY * player->mSensitivity * deltaTime);
+            glm::vec3 inputVelocity = movement * deltaTime;
+
+            if(glm::length(inputVelocity) > 0) {
+                glm::vec3 direction = glm::normalize(inputVelocity);
+                float currentSpeedInDirection = glm::dot(physics.velocity, inputVelocity);
+
+                float allowableSpeed = player.speed - currentSpeedInDirection;
+
+                if(allowableSpeed <= 0.0f) {
+                    inputVelocity = glm::vec3(0.0f);
+                } else {
+                    float inputMagnitude = glm::length(inputVelocity);
+                    if(inputMagnitude > allowableSpeed) {
+                        inputVelocity = direction * allowableSpeed;
+                    }
+                }
+            }
+
+            physics.velocity += inputVelocity;
+        });
+    };
+
+    registerMovementEvent(InputAction::move_forward,   glm::vec3(0,0,1));
+    registerMovementEvent(InputAction::move_backwards, glm::vec3(0,0,-1));
+    registerMovementEvent(InputAction::move_left,      glm::vec3(-1,0,0));
+    registerMovementEvent(InputAction::move_right,     glm::vec3(1,0,0));
+    registerMovementEvent(InputAction::move_up,        glm::vec3(0,1,0));
+    registerMovementEvent(InputAction::move_down,      glm::vec3(0,-1,0));
+
+    eventManager.RegisterMouseMotionEvent(InputAction::mouse_motion, [this](float deltaTime, int mouseX, int mouseY){
+        auto playerView = mRegistry.getView<PlayerTagComponent, PlayerControllerComponent, PositionComponent, CameraComponent>();
+
+        if (playerView.begin() == playerView.end()) {
+            return;
+        }
+
+        auto [entity, playerTag, player, position, camera] = *playerView.begin();
+
+        glm::quat rotation = position.rotation;
+
+        float yaw = -glm::radians(mouseX * player.sensitivity * deltaTime);
+        float pitch = -glm::radians(mouseY * player.sensitivity * deltaTime);
     
-    //     glm::quat yawRotation = glm::angleAxis(yaw, glm::vec3(0.0f, 1.0f, 0.0f));
-    //     glm::quat pitchRotation = glm::angleAxis(pitch, glm::vec3(1.0f, 0.0f, 0.0f));
+        glm::quat yawRotation = glm::angleAxis(yaw, glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::quat pitchRotation = glm::angleAxis(pitch, glm::vec3(1.0f, 0.0f, 0.0f));
     
-    //     rotation = yawRotation * rotation;
-    //     rotation = rotation * pitchRotation;
+        rotation = yawRotation * rotation;
+        rotation = rotation * pitchRotation;
     
-    //     rotation = glm::normalize(rotation);
+        rotation = glm::normalize(rotation);
 
-    //     utility::RotatePosition(*playerPosition, rotation);
+        utility::RotatePosition(position, rotation);
     
-    //     playerCamera->mViewDirection = glm::rotate(playerPosition->mRotation, glm::vec3(0.0f, 0.0f, -1.0f));
-    // });
+        camera.viewDirection = glm::rotate(position.rotation, glm::vec3(0.0f, 0.0f, -1.0f));
+    });
 
 }
 void Application::initializeTextures() {
