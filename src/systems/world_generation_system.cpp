@@ -78,6 +78,7 @@ void WorldGenerationSystem::generateChunk(bismuth::Registry& registry, int x, in
     registry.emplaceComponent<PositionComponent>(entity, posComponent);
     
     registry.emplaceComponent<ChunkStorageComponent>(entity);
+    registry.emplaceComponent<ChunkTagComponent>(entity);
     registry.emplaceComponent<BoundingBoxCollectionComponent>(entity);
     registry.emplaceComponent<ChunkStateComponent>(entity);
     registry.emplaceComponent<MeshComponent>(entity);

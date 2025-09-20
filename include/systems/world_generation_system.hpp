@@ -19,6 +19,7 @@
 #include "components/chunk_state_component.hpp"
 #include "components/bounding_box_component.hpp"
 #include "components/player_tag.hpp"
+#include "components/chunk_tag.hpp"
 #include "utility/perlin_noise.hpp"
 #include "blocks/block_registry.hpp"
 #include "blocks/block_texture_creator.hpp"

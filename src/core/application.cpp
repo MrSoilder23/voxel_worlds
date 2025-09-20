@@ -126,8 +126,10 @@ void Application::system(float deltaTime) {
     mPlayerControllerSys.update(mRegistry);
     playerTargetSystem.update(mRegistry);
 
+    if(mSettings.worldGen) {
+        worldGenSystem.update(mRegistry);
+    }
     chunkCreationSystem.update(mRegistry);
-    worldGenSystem.update(mRegistry);
     chunkUnloadSystem.update(mRegistry);
 
     if(mSettings.physics) {
