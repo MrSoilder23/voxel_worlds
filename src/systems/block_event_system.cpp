@@ -5,7 +5,7 @@ void BlockEventSystem::update(bismuth::Registry& registry) {
     std::unordered_map<glm::ivec3, bismuth::EntityID, IVec3Hash> chunkMap;
     
     for (auto [entity, chunkTag, position] : chunkView) {
-        glm::ivec3 chunkCoords = position.position;
+        glm::ivec3 chunkCoords = position.position/VoxelWorlds::CHUNK_SIZE;
         chunkMap[chunkCoords] = entity;
     }
     
@@ -23,13 +23,13 @@ void BlockEventSystem::update(bismuth::Registry& registry) {
             continue;
         }
         
-        uint32_t chunkEntity = chunkIt->second;
+        bismuth::EntityID chunkEntity = chunkIt->second;
         
         auto& chunkStorage = registry.getComponentPool<ChunkStorageComponent>().getComponent(chunkEntity);
         auto& chunkState = registry.getComponentPool<ChunkStateComponent>().getComponent(chunkEntity);
         
-        glm::ivec3 chunkWorldPos = chunkName * static_cast<int>(VoxelWorlds::CHUNK_SIZE);
-        glm::ivec3 localBlockCoordinates = glm::ivec3(blockEvent.position) - chunkWorldPos;
+        glm::vec3 chunkWorldPos = chunkName * static_cast<int>(VoxelWorlds::CHUNK_SIZE);
+        glm::vec3 localBlockCoordinates = blockEvent.position - chunkWorldPos;
         
         int localBlockX = static_cast<int>(std::round(localBlockCoordinates.x));
         int localBlockY = static_cast<int>(std::round(localBlockCoordinates.y));
@@ -50,6 +50,26 @@ void BlockEventSystem::update(bismuth::Registry& registry) {
             glm::ivec3 neighborName = chunkName - neighborOffsets[0];
             if (auto it = chunkMap.find(neighborName); it != chunkMap.end())
                 neighborStates[0] = &registry.getComponentPool<ChunkStateComponent>().getComponent(it->second);
+        }
+
+        if (localBlockY == 0) {
+            glm::ivec3 neighborName = chunkName + neighborOffsets[1];
+            if (auto it = chunkMap.find(neighborName); it != chunkMap.end())
+                neighborStates[1] = &registry.getComponentPool<ChunkStateComponent>().getComponent(it->second);
+        } else if (localBlockY == VoxelWorlds::CHUNK_SIZE-1) {
+            glm::ivec3 neighborName = chunkName - neighborOffsets[1];
+            if (auto it = chunkMap.find(neighborName); it != chunkMap.end())
+                neighborStates[1] = &registry.getComponentPool<ChunkStateComponent>().getComponent(it->second);
+        }
+
+        if (localBlockZ == 0) {
+            glm::ivec3 neighborName = chunkName + neighborOffsets[2];
+            if (auto it = chunkMap.find(neighborName); it != chunkMap.end())
+                neighborStates[2] = &registry.getComponentPool<ChunkStateComponent>().getComponent(it->second);
+        } else if (localBlockZ == VoxelWorlds::CHUNK_SIZE-1) {
+            glm::ivec3 neighborName = chunkName - neighborOffsets[2];
+            if (auto it = chunkMap.find(neighborName); it != chunkMap.end())
+                neighborStates[2] = &registry.getComponentPool<ChunkStateComponent>().getComponent(it->second);
         }
         
         if (chunkState.progress == ChunkProgress::fully_generated) {

@@ -33,7 +33,7 @@ namespace ChunkStorage {
     inline BlockTypes& getBlock(ChunkStorageComponent& chunk, const int x, const int y, const int z) {
         assert(x >= 0 && x < VoxelWorlds::CHUNK_SIZE);
         assert(y >= 0 && y < VoxelWorlds::CHUNK_SIZE);
-        assert(z >= 0 && z < VoxelWorlds::CHUNK_SIZE);    
+        assert(z >= 0 && z < VoxelWorlds::CHUNK_SIZE);
 
         return chunk.blocks[getIndex(x,y,z)];
     }

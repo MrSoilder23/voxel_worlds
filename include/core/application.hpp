@@ -34,7 +34,6 @@
 #include "systems/world_generation_system.hpp"
 #include "systems/collision_system.hpp"
 #include "systems/physics_system.hpp"
-#include "systems/player_target_system.hpp"
 #include "systems/chunk_meshing_system.hpp"
 #include "systems/block_event_system.hpp"
 #include "systems/chunk_unload_system.hpp"
@@ -48,6 +47,9 @@
 #include "components/physics_component.hpp"
 #include "components/inventory_component.hpp"
 #include "components/position_component.hpp"
+#include "components/block_break_event_component.hpp"
+#include "components/block_place_event_component.hpp"
+#include "components/block_event_component.hpp"
 
 class Application {
     public:
@@ -72,6 +74,13 @@ class Application {
         void initializeBaseEntities();
         void initializeTextures();
         void initializeBlocks();
+
+        glm::vec3 getBlock(
+            bismuth::Registry      & registry, 
+            PositionComponent const& playerPos, 
+            CameraComponent   const& playerCam, 
+            float                    epsilon
+        );
 
     private:
         Settings mSettings;
