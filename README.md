@@ -87,5 +87,5 @@ cmake --build build --config Release
   
 - F10: enables/disables world generation
 - F11: enables/disables collisions
-- F12: enables/disables debug bounding boxes
+- F12: ~~enables/disables debug bounding boxes~~
 - ESC: leave game
