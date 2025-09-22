@@ -1,9 +1,12 @@
 #pragma once
 // C++ standard libraries
 #include <sstream>
+#include <queue>
+#include <unordered_set>
 #include <algorithm>
 #include <unordered_map>
 #include <mutex>
+#include <array>
 
 // Third_party libraries
 #include <glad/glad.h>
@@ -52,6 +55,7 @@ class WorldGenerationSystem {
         float mRenderDistance = 10 * VoxelWorlds::CHUNK_SIZE;
         std::mutex mWorldGenLock;
 
-        std::unordered_map<glm::ivec3, bismuth::EntityID, IVec3Hash> mChunkEntities;
-        std::vector<glm::ivec3> mChunksToGenerate;
+        std::unordered_set<glm::ivec3, IVec3Hash> mGeneratedChunks;
+        std::unordered_set<glm::ivec3, IVec3Hash> mQueuedChunks;
+        std::queue<glm::ivec3> mChunksToGenerate;
 };

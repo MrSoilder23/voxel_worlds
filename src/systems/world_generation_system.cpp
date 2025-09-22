@@ -16,8 +16,8 @@ void WorldGenerationSystem::update(bismuth::Registry& registry) {
     int chunksGenerated = 0;
     
     while (!mChunksToGenerate.empty() && chunksGenerated < maxChunksPerFrame) {
-        glm::ivec3 chunkCoord = mChunksToGenerate.back();
-        mChunksToGenerate.pop_back();
+        glm::ivec3 chunkCoord = mChunksToGenerate.front();
+        mChunksToGenerate.pop();
         
         generateChunk(registry, chunkCoord.x, chunkCoord.y, chunkCoord.z);
         chunksGenerated++;
@@ -37,15 +37,14 @@ void WorldGenerationSystem::findChunksToGenerate(const glm::vec3& playerPosition
             for (int z = playerChunkZ - renderDistanceChunks; z <= playerChunkZ + renderDistanceChunks; z++) {
                 glm::ivec3 chunkCoord(x, y, z);
                 
-                if (mChunkEntities.find(chunkCoord) != mChunkEntities.end()) {
+                if (mGeneratedChunks.contains(chunkCoord) || 
+                    mQueuedChunks.contains(chunkCoord)) {
                     continue;
                 }
                 
-                if (std::find(mChunksToGenerate.begin(), mChunksToGenerate.end(), chunkCoord) != mChunksToGenerate.end()) {
-                    continue;
-                }
-                
-                mChunksToGenerate.push_back(chunkCoord);
+                mChunksToGenerate.push(chunkCoord);
+                mQueuedChunks.insert(chunkCoord);
+
             }
         }
     }
@@ -57,7 +56,6 @@ void WorldGenerationSystem::generateChunk(bismuth::Registry& registry, int x, in
     glm::ivec3 chunkCoord = {x, y, z};
 
     bismuth::EntityID entity = registry.createEntity();
-    mChunkEntities[chunkCoord] = entity;
     
     BoundingBoxComponent bBoxComponent;
     bBoxComponent.group = Group::render;
@@ -86,6 +84,8 @@ void WorldGenerationSystem::generateChunk(bismuth::Registry& registry, int x, in
     
     generateNoise(registry, entity, chunkCoord);
 
+    mGeneratedChunks.insert(chunkCoord);
+    mQueuedChunks.erase(chunkCoord);
 }
 
 float WorldGenerationSystem::generateHeight(int x, int z) {
@@ -129,20 +129,14 @@ void WorldGenerationSystem::generateNoise(
     bismuth::EntityID  entity,
     glm::ivec3  const& chunkCoord
 ) {
+    constexpr size_t CHUNK_SIZE = VoxelWorlds::CHUNK_SIZE;
+    auto& chunkStorage = registry.getComponentPool<ChunkStorageComponent>().getComponent(entity);
+    std::array<std::array<int, CHUNK_SIZE>, CHUNK_SIZE> heightMap;
+    std::array<std::array<float, CHUNK_SIZE>, CHUNK_SIZE> perlinMap;
+
     int x = chunkCoord.x;
     int y = chunkCoord.y;
     int z = chunkCoord.z;
-
-    auto& chunkStorage = registry.getComponentPool<ChunkStorageComponent>().getComponent(entity);
-    float heightMap[WorldGeneration::CHUNK_SIZE][WorldGeneration::CHUNK_SIZE];
-
-    for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
-        for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
-            int globalX = x * VoxelWorlds::CHUNK_SIZE + blockX;
-            int globalZ = z * VoxelWorlds::CHUNK_SIZE + blockZ;
-            heightMap[blockX][blockZ] = generateHeight(globalX, globalZ);
-        }
-    }
 
     static float chunkCoords = VoxelWorlds::CHUNK_SIZE-1.0f;
 
@@ -153,28 +147,33 @@ void WorldGenerationSystem::generateNoise(
     const int xOffset = (x % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
     const int zOffset = (z % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
 
+    for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
+        for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
+            int globalX = x * VoxelWorlds::CHUNK_SIZE + blockX;
+            int globalZ = z * VoxelWorlds::CHUNK_SIZE + blockZ;
+
+            heightMap[blockX][blockZ] = static_cast<int>(std::round(generateHeight(globalX, globalZ)));
+
+            perlinMap[blockX][blockZ] = perlin_noise::LayeredNoise2D(
+                chunkCoordinateX, chunkCoordinateZ,
+                (blockX + (xOffset * chunkCoords)) / (chunkCoords * VoxelWorlds::PERLIN_SCALE),
+                (blockZ + (zOffset * chunkCoords)) / (chunkCoords * VoxelWorlds::PERLIN_SCALE),
+                mSeed, 3, VoxelWorlds::PERSISTANCE + 0.3f, VoxelWorlds::LACUNARITY + 2);
+
+        }
+    }
+
     for(float blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
         for(float blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
             
-            float perlin = perlin_noise::LayeredNoise2D(
-                chunkCoordinateX,
-                chunkCoordinateZ,
-                (blockX+(xOffset*chunkCoords))/(chunkCoords*VoxelWorlds::PERLIN_SCALE),
-                (blockZ+(zOffset*chunkCoords))/(chunkCoords*VoxelWorlds::PERLIN_SCALE),
-                mSeed,
-                3,
-                VoxelWorlds::PERSISTANCE + 0.3f,
-                VoxelWorlds::LACUNARITY + 2
-            );
 
-            float height = heightMap[static_cast<size_t>(blockX)][static_cast<size_t>(blockZ)];
+            int height = heightMap[blockX][blockZ];
+            float perlin = perlinMap[blockX][blockZ];
 
-            height = std::round(height);
-
-            int numChunks = static_cast<int>(height / VoxelWorlds::CHUNK_SIZE);
-            int remainder = static_cast<int>(height) % static_cast<int>(VoxelWorlds::CHUNK_SIZE); // Extra blocks for the top chunk
-
+            int numChunks = height / CHUNK_SIZE;
+            int remainder = height % CHUNK_SIZE; // Extra blocks for the top chunk
             int blocksToPlace = (y < numChunks) ? VoxelWorlds::CHUNK_SIZE : 0;
+
             if(y == numChunks) {
                 blocksToPlace = remainder;
             }
