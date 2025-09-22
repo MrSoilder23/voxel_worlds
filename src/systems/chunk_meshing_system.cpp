@@ -246,7 +246,7 @@ inline void ChunkMeshingSystem::getBlockNeighbours(
     leftBoundary(targetChunk, target, storage, chunkBot);
 
     baseOffset = size + vertexSize;
-    if (targetChunk && ChunkStorage::getBlock(const_cast<ChunkStorageComponent&>(*targetChunk), target, blockY, blockZ) == BlockTypes::air) {
+    if (targetChunk && ChunkStorage::getBlock(const_cast<ChunkStorageComponent&>(*targetChunk), blockX, target, blockZ) == BlockTypes::air) {
         fillBlockSide(blockObject, chunkModel, 5, 20, baseOffset, chunkOffset);
         size += 4;
     }
