@@ -98,5 +98,5 @@ class Application {
         EventManager& mEventManager;
         tbb::task_arena mArena;
 
-        unsigned int mSeed;
+        unsigned int mSeed = 123456789;
 };

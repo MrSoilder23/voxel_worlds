@@ -165,12 +165,9 @@ inline void ChunkMeshingSystem::rightBoundary(
     ChunkStorageComponent const* currentStorage,
     ChunkStorageComponent const* neigbourStorage
 ) {
-    if (target < VoxelWorlds::CHUNK_SIZE) {
-        targetChunk = currentStorage;
-    } else if (neigbourStorage) {
-        targetChunk = neigbourStorage;
-        target = 0;
-    }
+    targetChunk = (target < VoxelWorlds::CHUNK_SIZE) ? currentStorage : 
+              (neigbourStorage ? neigbourStorage : nullptr);
+    if (target >= VoxelWorlds::CHUNK_SIZE && neigbourStorage) target = 0;
 }
 inline void ChunkMeshingSystem::leftBoundary(
     ChunkStorageComponent const*& targetChunk,
@@ -178,12 +175,9 @@ inline void ChunkMeshingSystem::leftBoundary(
     ChunkStorageComponent const* currentStorage,
     ChunkStorageComponent const* neigbourStorage
 ) {
-    if (target >= 0) {
-        targetChunk = currentStorage;
-    } else if (neigbourStorage) {
-        targetChunk = neigbourStorage;
-        target = VoxelWorlds::CHUNK_SIZE-1;
-    }
+    targetChunk = (target >= 0) ? currentStorage :
+                     (neigbourStorage ? neigbourStorage : targetChunk);
+    target = (target < 0 && neigbourStorage) ? (VoxelWorlds::CHUNK_SIZE - 1) : target;
 }
 
 inline void ChunkMeshingSystem::getBlockNeighbours(

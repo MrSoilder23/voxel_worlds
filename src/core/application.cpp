@@ -170,8 +170,8 @@ void Application::initialize() {
     initializeKeys();
 }
 void Application::initializeWorld() {
-    static std::random_device rndDevice;
-    mSeed = rndDevice();
+    // static std::random_device rndDevice;
+    // mSeed = rndDevice();
 }
 void Application::initializeKeys() {
     mEventManager.RegisterEvent(InputAction::exit, [game = &mGame](float _){game->StopLoop();});
