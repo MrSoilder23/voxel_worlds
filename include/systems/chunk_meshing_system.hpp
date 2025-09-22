@@ -34,18 +34,6 @@ class ChunkMeshingSystem {
             int z
         );
 
-        bool checkBlock(
-            bismuth::ComponentPool<ChunkStorageComponent>& chunkStoragePool,
-            entityMap3      const& entityMap,
-            ChunkStorageComponent& currentChunkData,
-            int chunkX,
-            int chunkY,
-            int chunkZ,
-            int x,
-            int y,
-            int z
-        );
-
         void fillBlockSide(
             MeshComponent const& blockObject,
             MeshComponent      & chunkModel,
