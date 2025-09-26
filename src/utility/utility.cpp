@@ -39,7 +39,7 @@ void utility::ScalePosition(PositionComponent& positionComponent, const glm::vec
     positionComponent.dirty = true;
 }
 
-float utility::Smooth(float t) {
+float utility::smooth(float t) {
     return t * t * t * (t * (t * 6 - 15) + 10);
 }
 

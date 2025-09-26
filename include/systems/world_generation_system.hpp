@@ -23,12 +23,14 @@
 #include "components/bounding_box_component.hpp"
 #include "components/player_tag.hpp"
 #include "components/chunk_tag.hpp"
+#include "components/chunk_height_map.hpp"
 #include "utility/perlin_noise.hpp"
 #include "blocks/block_registry.hpp"
 #include "blocks/block_texture_creator.hpp"
 #include "utility/open_simplex_noise2.hpp"
 #include "utility/spline.hpp"
 #include "utility/ivec3_hash.hpp"
+#include "utility/world_generation.hpp"
 
 namespace WorldGeneration {
     constexpr size_t CHUNK_SIZE = static_cast<size_t>(VoxelWorlds::CHUNK_SIZE);
@@ -41,14 +43,17 @@ class WorldGenerationSystem {
         void update(bismuth::Registry& registry);
                 
     private:
-        void findChunksToGenerate(const glm::vec3& playerPosition);
+        void findChunksToGenerate(
+            bismuth::Registry& registry,
+            glm::vec3   const& playerPosition
+        );
         void generateNoise(
             bismuth::Registry& registry,
             bismuth::EntityID  entity,
-            glm::ivec3  const& chunkCoord
+            glm::ivec2  const& chunkCoord
         );
         void generateChunk(bismuth::Registry& registry, int x, int y, int z);
-        float generateHeight(int x, int z);
+        void generateHeight(bismuth::Registry& registry, int x, int z);
 
     private:
         unsigned int mSeed;
@@ -57,5 +62,7 @@ class WorldGenerationSystem {
 
         std::unordered_set<glm::ivec3, IVec3Hash> mGeneratedChunks;
         std::unordered_set<glm::ivec3, IVec3Hash> mQueuedChunks;
+        std::unordered_set<glm::ivec2, IVec2Hash> mGeneratedHeightMaps;
+        
         std::queue<glm::ivec3> mChunksToGenerate;
 };

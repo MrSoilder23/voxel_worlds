@@ -126,8 +126,8 @@ void Application::system(float deltaTime) {
 
     if(mSettings.worldGen) {
         worldGenSystem.update(mRegistry);
+        chunkCreationSystem.update(mRegistry);
     }
-    chunkCreationSystem.update(mRegistry);
     chunkUnloadSystem.update(mRegistry);
 
     if(mSettings.physics) {
@@ -202,7 +202,7 @@ void Application::initializeBaseEntities() {
     
     mRegistry.emplaceComponent<PlayerTagComponent>(playerEntityID);
     mRegistry.emplaceComponent<PlayerControllerComponent>(playerEntityID, mSettings.speed, mSettings.sensitivity);
-    mRegistry.emplaceComponent<PositionComponent>(playerEntityID,    glm::vec3(0.0f, world_generation::GenerateHeight(mSeed, 0,0)+1.2f, 0.0f));
+    mRegistry.emplaceComponent<PositionComponent>(playerEntityID,    glm::vec3(0.0f, world_generation::generateHeight(mSeed, 0,0)+1.2f, 0.0f));
     mRegistry.emplaceComponent<CameraComponent>(playerEntityID,      camera);
     mRegistry.emplaceComponent<BoundingBoxComponent>(playerEntityID, glm::vec3(-0.4, -1.5, -0.4), glm::vec3( 0.4,  0.4,  0.4));
     mRegistry.emplaceComponent<PhysicsComponent>(playerEntityID,     physics);

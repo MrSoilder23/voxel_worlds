@@ -6,10 +6,8 @@
 #include "utility/constant.hpp"
 #include "blocks/block_types.hpp"
 
-constexpr size_t TOTAL_CHUNK_SIZE = static_cast<size_t>(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE);
-
 struct ChunkStorageComponent {
-    std::array<BlockTypes, TOTAL_CHUNK_SIZE> blocks;
+    std::array<BlockTypes, VoxelWorlds::TOTAL_CHUNK_SIZE> blocks;
     bool wasGenerated = false;
 };
 

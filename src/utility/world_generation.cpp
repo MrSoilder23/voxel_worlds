@@ -1,6 +1,6 @@
 #include "./utility/world_generation.hpp"
 
-float world_generation::GenerateHeight(const unsigned int& seed, int x, int z) {
+float world_generation::generateHeight(const unsigned int& seed, int x, int z) {
     x = x + 1343;
     z = z + 343;
     float continentalness = open_simplex_noise::LayeredNoise2D(

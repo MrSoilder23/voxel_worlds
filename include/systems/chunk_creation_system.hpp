@@ -6,8 +6,10 @@
 #include "bismuth/registry.hpp"
 #include "utility/perlin_noise.hpp"
 #include "utility/world_generation.hpp"
+#include "utility/ivec3_hash.hpp"
 #include "components/chunk_storage_component.hpp"
 #include "components/position_component.hpp"
+#include "components/chunk_height_map.hpp"
 
 class ChunkCreationSystem {
     public:

@@ -10,7 +10,7 @@ void WorldGenerationSystem::update(bismuth::Registry& registry) {
     
     auto [playerEntity, player, position] = *playerView.begin();
     
-    findChunksToGenerate(position.position);
+    findChunksToGenerate(registry, position.position);
     
     const int maxChunksPerFrame = 5;
     int chunksGenerated = 0;
@@ -25,7 +25,10 @@ void WorldGenerationSystem::update(bismuth::Registry& registry) {
 
 }
 
-void WorldGenerationSystem::findChunksToGenerate(const glm::vec3& playerPosition) {
+void WorldGenerationSystem::findChunksToGenerate(
+    bismuth::Registry& registry,
+    glm::vec3   const& playerPosition
+) {
     int playerChunkX = static_cast<int>(std::floor(playerPosition.x / VoxelWorlds::CHUNK_SIZE));
     int playerChunkY = static_cast<int>(std::floor(playerPosition.y / VoxelWorlds::CHUNK_SIZE));
     int playerChunkZ = static_cast<int>(std::floor(playerPosition.z / VoxelWorlds::CHUNK_SIZE));
@@ -44,6 +47,10 @@ void WorldGenerationSystem::findChunksToGenerate(const glm::vec3& playerPosition
                 
                 mChunksToGenerate.push(chunkCoord);
                 mQueuedChunks.insert(chunkCoord);
+
+                if(!mGeneratedHeightMaps.contains(glm::ivec2(x,z))) {
+                    generateHeight(registry, x, z);
+                }
 
             }
         }
@@ -82,126 +89,54 @@ void WorldGenerationSystem::generateChunk(bismuth::Registry& registry, int x, in
     registry.emplaceComponent<MeshComponent>(entity);
     registry.emplaceComponent<MaterialComponent>(entity);
     
-    generateNoise(registry, entity, chunkCoord);
-
     mGeneratedChunks.insert(chunkCoord);
     mQueuedChunks.erase(chunkCoord);
 }
 
-float WorldGenerationSystem::generateHeight(int x, int z) {
-    x = x + 1343;
-    z = z + 343;
-    float continentalness = open_simplex_noise::LayeredNoise2D(
-        x * (0.005f / (4 * VoxelWorlds::SCALE)),
-        z * (0.005f / (4 * VoxelWorlds::SCALE)),
-        mSeed,
-        4,
-        0.5f,
-        2.5f
-    );
-    float erosion = open_simplex_noise::LayeredNoise2D(
-        x * (0.004f / (4 * VoxelWorlds::SCALE)),
-        z * (0.004f / (4 * VoxelWorlds::SCALE)),
-        mSeed,
-        4,
-        0.4f,
-        2.4f
-    );
-    float peaksAndValleys = open_simplex_noise::LayeredNoise2D(
-        x * (0.025f / (10 * VoxelWorlds::SCALE)),
-        z * (0.025f / (10 * VoxelWorlds::SCALE)),
-        mSeed,
-        6,
-        0.4f,
-        1.8f
-    );
+void WorldGenerationSystem::generateHeight(bismuth::Registry& registry, int x, int z) {
+    bismuth::EntityID entity = registry.createEntity();
+    glm::ivec2 chunkCoord(x, z);
 
-    float continentalAdj = VoxelWorlds::CONTINENTAL_SPLINE.evaluate(continentalness);
-    float erosionAdj = VoxelWorlds::EROSION_SPLINE.evaluate(erosion);
-    float peaksValleysAdj = VoxelWorlds::PEAKS_VALLEYS_SPLINE.evaluate(peaksAndValleys);
+    PositionComponent posComponent;
+    utility::MovePosition(posComponent, glm::vec3(
+        x * VoxelWorlds::CHUNK_SIZE,
+        0,
+        z * VoxelWorlds::CHUNK_SIZE
+    ));
 
-    return (continentalAdj * 0.5f) + (erosionAdj * 0.3f) + (peaksValleysAdj * 0.2f);
+    registry.emplaceComponent<ChunkHeightMapComponent>(entity);
+    registry.emplaceComponent<PositionComponent>(entity, posComponent);
+
+    generateNoise(registry, entity, chunkCoord);
+
+    mGeneratedHeightMaps.insert(chunkCoord);
 }
 
 // Private functions
 void WorldGenerationSystem::generateNoise(
     bismuth::Registry& registry,
     bismuth::EntityID  entity,
-    glm::ivec3  const& chunkCoord
+    glm::ivec2  const& chunkCoord
 ) {
-    constexpr size_t CHUNK_SIZE = VoxelWorlds::CHUNK_SIZE;
-    auto& chunkStorage = registry.getComponentPool<ChunkStorageComponent>().getComponent(entity);
-    std::array<std::array<int, CHUNK_SIZE>, CHUNK_SIZE> heightMap;
-    std::array<std::array<float, CHUNK_SIZE>, CHUNK_SIZE> perlinMap;
+    auto& chunkMap = registry.getComponentPool<ChunkHeightMapComponent>().getComponent(entity);
 
-    int x = chunkCoord.x;
-    int y = chunkCoord.y;
-    int z = chunkCoord.z;
-
-    static float chunkCoords = VoxelWorlds::CHUNK_SIZE-1.0f;
+    float x = chunkCoord.x ;
+    float z = chunkCoord.y ;
 
     // Perlin chunk size
-    const int chunkCoordinateX = static_cast<int>(std::floor(static_cast<float>(x)/VoxelWorlds::PERLIN_SCALE));
-    const int chunkCoordinateZ = static_cast<int>(std::floor(static_cast<float>(z)/VoxelWorlds::PERLIN_SCALE));
+    const int chunkCoordinateX = static_cast<int>(std::floor(x/VoxelWorlds::PERLIN_SCALE));
+    const int chunkCoordinateZ = static_cast<int>(std::floor(z/VoxelWorlds::PERLIN_SCALE));
 
-    const int xOffset = (x % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
-    const int zOffset = (z % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+    const int xOffset = (static_cast<int>(x) % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+    const int zOffset = (static_cast<int>(z) % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
 
     for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
-        for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
-            int globalX = x * VoxelWorlds::CHUNK_SIZE + blockX;
-            int globalZ = z * VoxelWorlds::CHUNK_SIZE + blockZ;
-
-            heightMap[blockX][blockZ] = static_cast<int>(std::round(generateHeight(globalX, globalZ)));
-
-            perlinMap[blockX][blockZ] = perlin_noise::LayeredNoise2D(
-                chunkCoordinateX, chunkCoordinateZ,
-                (blockX + (xOffset * chunkCoords)) / (chunkCoords * VoxelWorlds::PERLIN_SCALE),
-                (blockZ + (zOffset * chunkCoords)) / (chunkCoords * VoxelWorlds::PERLIN_SCALE),
-                mSeed, 3, VoxelWorlds::PERSISTANCE + 0.3f, VoxelWorlds::LACUNARITY + 2);
-
-        }
-    }
-
-    for(float blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
         for(float blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
-            
-
-            int height = heightMap[blockX][blockZ];
-            float perlin = perlinMap[blockX][blockZ];
-
-            int numChunks = height / CHUNK_SIZE;
-            int remainder = height % CHUNK_SIZE; // Extra blocks for the top chunk
-            int blocksToPlace = (y < numChunks) ? VoxelWorlds::CHUNK_SIZE : 0;
-
-            if(y == numChunks) {
-                blocksToPlace = remainder;
-            }
-
-            for(float blockY = 0; blockY < blocksToPlace; blockY++) {
-
-                int globalY = (y * VoxelWorlds::CHUNK_SIZE) + blockY;
-
-                if(globalY == height-1) {
-                    if(globalY < 100.0f) {
-                        if(perlin >= 0.0f && perlin <= 0.6f) {
-                            ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::dirt_block, blockX, blockY, blockZ);
-                        } else {
-                            ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::sand_block, blockX, blockY, blockZ);
-                        }
-         
-                    } else if(globalY < 110.0f) {
-                        ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::sand_block, blockX, blockY, blockZ);
-                    } else {
-                        ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::grass_block, blockX, blockY, blockZ);
-                    }
-
-                } else if(globalY <= height-2 && globalY >= height-5){
-                    ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::dirt_block, blockX, blockY, blockZ);
-                } else {
-                    ChunkStorage::InsertToChunk(chunkStorage, BlockTypes::stone_block, blockX, blockY, blockZ);
-                }
-            }
+            chunkMap.heightMap[blockX * VoxelWorlds::CHUNK_SIZE + blockZ] = std::round(world_generation::generateHeight(
+                mSeed, 
+                static_cast<int>(blockX + (chunkCoord.x * VoxelWorlds::CHUNK_SIZE)),
+                static_cast<int>(blockZ + (chunkCoord.y * VoxelWorlds::CHUNK_SIZE))
+            ));
         }
     }
 }

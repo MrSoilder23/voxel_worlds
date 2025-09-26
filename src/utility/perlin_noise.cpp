@@ -27,8 +27,8 @@ float perlin_noise::Noise2DNormalized(int chunkX, int chunkY,float x, float y, u
     float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x,1.0f-y));
     float dot4 = glm::dot(Gradient(chunkX+1,chunkY+1, seed), glm::vec2(x-1.0f,1.0f-y));
 
-    x = utility::Smooth(x);
-    y = utility::Smooth(y);
+    x = utility::smooth(x);
+    y = utility::smooth(y);
 
     float AB = dot1 + (x * (dot2-dot1));
     float CD = dot3 + (x * (dot4-dot3));
@@ -45,8 +45,8 @@ float perlin_noise::Noise2D(int chunkX, int chunkY,float x, float y, unsigned in
     float dot3 = glm::dot(Gradient(chunkX,chunkY+1, seed), glm::vec2(x, y-1.0f));
     float dot4 = glm::dot(Gradient(chunkX+1,chunkY+1, seed), glm::vec2(x-1.0f, y-1.0f));
 
-    x = utility::Smooth(x);
-    y = utility::Smooth(y);
+    x = utility::smooth(x);
+    y = utility::smooth(y);
 
     float AB = dot1 + (x * (dot2-dot1));
     float CD = dot3 + (x * (dot4-dot3));
