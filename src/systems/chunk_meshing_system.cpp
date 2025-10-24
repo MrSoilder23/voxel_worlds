@@ -34,7 +34,6 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
         }
 
         BoundingBoxCollectionComponent bBoxCollection;
-        MeshComponent chunkModel;
         
         for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
             for(int blockY = 0; blockY < VoxelWorlds::CHUNK_SIZE; blockY++) {
@@ -45,11 +44,11 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
                         continue;
                     }
                     
-                    const GLuint vertexSize = chunkModel.vertices.size();
+                    const GLuint vertexSize = mesh.vertices.size();
 
                     getBlockNeighbours(
                         &storage, 
-                        chunkModel,
+                        mesh,
                         block, 
                         vertexSize,
                         chunkRight, 
@@ -61,7 +60,7 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
                         blockX, blockY, blockZ
                     );
 
-                    if(vertexSize == chunkModel.vertices.size()) {
+                    if(vertexSize == mesh.vertices.size()) {
                         continue;
                     }
     
@@ -84,8 +83,6 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
         }
         
         material.textureAtlas = texture;
-
-        mesh = std::move(chunkModel);
         
         boundingCollection = std::move(bBoxCollection);
         if(state.progress == ChunkProgress::pending) {
