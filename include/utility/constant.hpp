@@ -11,8 +11,9 @@ namespace VoxelWorlds {
     static constexpr float CHUNK_SIZE      = 32;
     static constexpr int LATTICE_SIZE      = 4;
 
-    static constexpr size_t TOTAL_CHUNK_SIZE = static_cast<size_t>(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE);
-    static constexpr size_t CHUNK_SIZE_2D    = static_cast<size_t>(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE);
+    static constexpr size_t CHUNK_SIZE_2D      = static_cast<size_t>(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE);
+    static constexpr size_t TOTAL_CHUNK_SIZE   = static_cast<size_t>(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE);
+    static constexpr int    CHUNK_SIZE_PADDING = CHUNK_SIZE + 2;
     
     // Noise paint settings
     static constexpr int PERLIN_SCALE =  4;

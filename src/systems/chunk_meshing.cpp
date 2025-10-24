@@ -22,10 +22,10 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
         // zamien chunk na binarny uzyj uint64 jeden bit odpowiada blokowi 0 air 1 block, pamietaj o paddingu sasiadow, bede potrzebowal 32^2 * 3 array
         std::vector<uint64_t> bitChunk(VoxelWorlds::CHUNK_SIZE_2D * 3);
         
-        for(int z = 0; z < VoxelWorlds::CHUNK_SIZE; z++) {
-            for(int y = 0; y < VoxelWorlds::CHUNK_SIZE; y++) {
-                for(int x = 0; x < VoxelWorlds::CHUNK_SIZE; x++) {
-                    
+        for(int z = 0; z < VoxelWorlds::CHUNK_SIZE_PADDING; z++) {
+            for(int y = 0; y < VoxelWorlds::CHUNK_SIZE_PADDING; y++) {
+                for(int x = 0; x < VoxelWorlds::CHUNK_SIZE_PADDING; x++) {
+
                 }
             }
         }
