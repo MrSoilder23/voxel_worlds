@@ -20,7 +20,7 @@ class ChunkMeshingSystem {
         void update(bismuth::Registry& registry);
 
     private:
-        using entityMap3 = std::unordered_map<glm::ivec3, bismuth::EntityID, IVec3Hash>;
+        using entityMap3 = std::unordered_map<glm::ivec3, ChunkStorageComponent*, IVec3Hash>;
 
         struct NeighboringChunks {
             ChunkStorageComponent* center= nullptr;
@@ -40,7 +40,6 @@ class ChunkMeshingSystem {
         );
 
         ChunkStorageComponent* getStorage(
-            bismuth::Registry& registry, 
             entityMap3  const& storageComponents,
             int x,
             int y,
@@ -50,6 +49,8 @@ class ChunkMeshingSystem {
         // If solid block True if Air False
         bool checkBlock(
             NeighboringChunks const& chunks,
-            glm::ivec3        const& localBlockPos
+            int               const& localPosX,
+            int               const& localPosY,
+            int               const& localPosZ
         );
 };

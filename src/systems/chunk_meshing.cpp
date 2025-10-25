@@ -10,29 +10,35 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
     entityMap3 chunkMap;
     for(auto [entity, mesh, position, storage, material, bBox, state] : chunkView) {
         glm::ivec3 chunkCoords = position.position / VoxelWorlds::CHUNK_SIZE;
-        chunkMap[chunkCoords] = entity;
+        chunkMap[chunkCoords] = &storage;
     }
+
+    std::array<uint64_t, VoxelWorlds::CHUNK_SIZE_2D * 3> bitChunk;
+    std::array<uint64_t, VoxelWorlds::CHUNK_SIZE_2D * 3 * 2> faceMask;
 
     for(auto [entity, mesh, position, storage, material, bBox, state] : chunkView) {
 
         NeighboringChunks neighboringChunks = {
-            getStorage(registry, chunkMap, position.position.x, position.position.y, position.position.z),   // Center
-            getStorage(registry, chunkMap, position.position.x+1, position.position.y, position.position.z), // Right
-            getStorage(registry, chunkMap, position.position.x-1, position.position.y, position.position.z), // Left
-            getStorage(registry, chunkMap, position.position.x, position.position.y+1, position.position.z), // Top
-            getStorage(registry, chunkMap, position.position.x, position.position.y-1, position.position.z), // Bottom
-            getStorage(registry, chunkMap, position.position.x, position.position.y, position.position.z+1), // Front
-            getStorage(registry, chunkMap, position.position.x, position.position.y, position.position.z-1)  // Back
+            &storage, // Center
+            getStorage(chunkMap, position.position.x+1, position.position.y, position.position.z), // Right
+            getStorage(chunkMap, position.position.x-1, position.position.y, position.position.z), // Left
+            getStorage(chunkMap, position.position.x, position.position.y+1, position.position.z), // Top
+            getStorage(chunkMap, position.position.x, position.position.y-1, position.position.z), // Bottom
+            getStorage(chunkMap, position.position.x, position.position.y, position.position.z+1), // Front
+            getStorage(chunkMap, position.position.x, position.position.y, position.position.z-1)  // Back
         };
 
-        std::vector<uint64_t> bitChunk(VoxelWorlds::CHUNK_SIZE_2D * 3);
-        std::vector<uint64_t> faceMask(VoxelWorlds::CHUNK_SIZE_2D * 3 * 2);
+        bitChunk.fill(0);
+        faceMask.fill(0);
         
         for(int z = 0; z < VoxelWorlds::CHUNK_SIZE_PADDING; z++) {
             for(int y = 0; y < VoxelWorlds::CHUNK_SIZE_PADDING; y++) {
                 for(int x = 0; x < VoxelWorlds::CHUNK_SIZE_PADDING; x++) {
-                    glm::ivec3 blockPos = glm::ivec3(x,y,z) - glm::ivec3(1);
-                    bool isBlock = checkBlock(neighboringChunks, blockPos);
+                    int posX = x - 1;
+                    int posY = y - 1;
+                    int posZ = z - 1;
+                    
+                    bool isBlock = checkBlock(neighboringChunks, posX, posY, posZ);
 
                     if (isBlock) {
                         if((z < 32) && (y < 32) && (z > 0) && (y > 0)) {
@@ -91,20 +97,20 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
                         
                         addFace(mesh, currentBlock, pos, axis);
                             
-                        BoundingBoxComponent bBox;
-                        bBox.worldMin = glm::vec3(
+                        BoundingBoxComponent boundingBox;
+                        boundingBox.worldMin = glm::vec3(
                             -0.5f + pos.x + position.position.x,
                             -0.5f + pos.y + position.position.y,
                             -0.5f + pos.z + position.position.z
                         );
         
-                        bBox.worldMax = glm::vec3(
+                        boundingBox.worldMax = glm::vec3(
                             0.5f + pos.x + position.position.x,
                             0.5f + pos.y + position.position.y,
                             0.5f + pos.z + position.position.z
                         );
                         
-                        bBoxCollection.boundingBoxes.push_back(std::move(bBox));
+                        bBoxCollection.boundingBoxes.push_back(std::move(boundingBox));
                     }
                 }
             }
@@ -173,14 +179,11 @@ inline void ChunkMeshingSystem::addFace(
 }
 
 inline ChunkStorageComponent* ChunkMeshingSystem::getStorage(
-    bismuth::Registry& registry, 
     entityMap3  const& storageComponents,
     int x,
     int y,
     int z
-) {
-    auto& storagePool = registry.getComponentPool<ChunkStorageComponent>();
-    
+) {    
     glm::ivec3 coords = {x,y,z};
     coords = coords / static_cast<int>(VoxelWorlds::CHUNK_SIZE);
     
@@ -189,25 +192,21 @@ inline ChunkStorageComponent* ChunkMeshingSystem::getStorage(
         return nullptr;
     }
     
-    return &storagePool.getComponent(it->second);
+    return it->second;
 }
 
-bool ChunkMeshingSystem::checkBlock(
+inline bool ChunkMeshingSystem::checkBlock(
     NeighboringChunks const& chunks,
-    glm::ivec3        const& localBlockPos
+    int               const& localPosX,
+    int               const& localPosY,
+    int               const& localPosZ
 ) {
-    int chunkX = 0, chunkY = 0, chunkZ = 0;
     ChunkStorageComponent* target = nullptr;
-
-    if(localBlockPos.x < 0)                            chunkX = -1;
-    else if(localBlockPos.x >= VoxelWorlds::CHUNK_SIZE) chunkX = 1;
-    if(localBlockPos.y < 0)                            chunkY = -1;
-    else if(localBlockPos.y >= VoxelWorlds::CHUNK_SIZE) chunkY = 1;
-    if(localBlockPos.z < 0)                            chunkZ = -1;
-    else if(localBlockPos.z >= VoxelWorlds::CHUNK_SIZE) chunkZ = 1;
-
+    int chunkX = (localPosX >= VoxelWorlds::CHUNK_SIZE) - (localPosX < 0);
+    int chunkY = (localPosY >= VoxelWorlds::CHUNK_SIZE) - (localPosY < 0);
+    int chunkZ = (localPosZ >= VoxelWorlds::CHUNK_SIZE) - (localPosZ < 0);    
     
-    if(((chunkX != 0) + (chunkY != 0) + (chunkZ != 0)) > 1) {
+    if((chunkX && chunkY) || (chunkX && chunkZ) || (chunkY && chunkZ)) {
         return false;
     }
     
@@ -223,9 +222,11 @@ bool ChunkMeshingSystem::checkBlock(
         return true;
     }
 
-    int localX = localBlockPos.x < 0 ? VoxelWorlds::CHUNK_SIZE-1 : (localBlockPos.x >= VoxelWorlds::CHUNK_SIZE ? 0 : localBlockPos.x);
-    int localY = localBlockPos.y < 0 ? VoxelWorlds::CHUNK_SIZE-1 : (localBlockPos.y >= VoxelWorlds::CHUNK_SIZE ? 0 : localBlockPos.y);
-    int localZ = localBlockPos.z < 0 ? VoxelWorlds::CHUNK_SIZE-1 : (localBlockPos.z >= VoxelWorlds::CHUNK_SIZE ? 0 : localBlockPos.z);
+    constexpr int CHUNK_MASK = VoxelWorlds::CHUNK_SIZE - 1;
+
+    int localX = localPosX & CHUNK_MASK;
+    int localY = localPosY & CHUNK_MASK;
+    int localZ = localPosZ & CHUNK_MASK;
 
     return ChunkStorage::getBlock(*target, localX, localY, localZ) != BlockTypes::air;
 }
