@@ -9,7 +9,7 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
 
     entityMap3 chunkMap;
     for(auto [entity, mesh, position, storage, material, bBox, state] : chunkView) {
-        glm::ivec3 chunkCoords = position.position;
+        glm::ivec3 chunkCoords = position.position / VoxelWorlds::CHUNK_SIZE;
         chunkMap[chunkCoords] = entity;
     }
 
@@ -182,6 +182,7 @@ inline ChunkStorageComponent* ChunkMeshingSystem::getStorage(
     auto& storagePool = registry.getComponentPool<ChunkStorageComponent>();
     
     glm::ivec3 coords = {x,y,z};
+    coords = coords / static_cast<int>(VoxelWorlds::CHUNK_SIZE);
     
     auto it = storageComponents.find(coords);
     if(it == storageComponents.end()) {
@@ -198,34 +199,26 @@ bool ChunkMeshingSystem::checkBlock(
     int chunkX = 0, chunkY = 0, chunkZ = 0;
     ChunkStorageComponent* target = nullptr;
 
-    if(localBlockPos.x < 0) chunkX = -1;
-    else if(localBlockPos.x > VoxelWorlds::CHUNK_SIZE) chunkX = 1;
-    if(localBlockPos.y < 0) chunkY = -1;
-    else if(localBlockPos.y > VoxelWorlds::CHUNK_SIZE) chunkY = 1;
-    if(localBlockPos.z < 0) chunkZ = -1;
-    else if(localBlockPos.z > VoxelWorlds::CHUNK_SIZE) chunkZ = 1;
+    if(localBlockPos.x < 0)                            chunkX = -1;
+    else if(localBlockPos.x >= VoxelWorlds::CHUNK_SIZE) chunkX = 1;
+    if(localBlockPos.y < 0)                            chunkY = -1;
+    else if(localBlockPos.y >= VoxelWorlds::CHUNK_SIZE) chunkY = 1;
+    if(localBlockPos.z < 0)                            chunkZ = -1;
+    else if(localBlockPos.z >= VoxelWorlds::CHUNK_SIZE) chunkZ = 1;
 
     
-    if(((chunkZ != 0) + (chunkY != 0) + (chunkZ != 0)) > 1) {
+    if(((chunkX != 0) + (chunkY != 0) + (chunkZ != 0)) > 1) {
         return false;
     }
     
-    if(chunkX == 0 && chunkY == 0 && chunkZ == 0) {
-        target = chunks.center;
-    } else if(chunkX == -1) {
-        target = chunks.left;
-    } else if(chunkX == 1) {
-        target = chunks.right;
-    } else if(chunkY == -1) {
-        target = chunks.bot;
-    } else if(chunkY == 1) {
-        target = chunks.top;
-    } else if(chunkZ == -1) {
-        target = chunks.back;
-    } else if(chunkZ == 1) {
-        target = chunks.front;
-    }
-    
+    if(chunkX == 0 && chunkY == 0 && chunkZ == 0) target = chunks.center;
+    else if(chunkX == -1) target = chunks.left;
+    else if(chunkX == 1)  target = chunks.right;
+    else if(chunkY == -1) target = chunks.bot;
+    else if(chunkY == 1)  target = chunks.top;
+    else if(chunkZ == -1) target = chunks.back;
+    else if(chunkZ == 1)  target = chunks.front;
+        
     if(!target) {
         return true;
     }
