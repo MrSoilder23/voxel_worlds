@@ -57,7 +57,7 @@ class WorldGenerationSystem {
 
     private:
         unsigned int mSeed;
-        float mRenderDistance = 10 * VoxelWorlds::CHUNK_SIZE;
+        float mRenderDistance = VoxelWorlds::RENDER_DISTANCE * VoxelWorlds::CHUNK_SIZE;
         std::mutex mWorldGenLock;
 
         std::unordered_set<glm::ivec3, IVec3Hash> mGeneratedChunks;
