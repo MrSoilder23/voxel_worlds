@@ -12,10 +12,9 @@ void WorldGenerationSystem::update(bismuth::Registry& registry) {
     
     findChunksToGenerate(registry, position.position);
     
-    const int maxChunksPerFrame = 5;
     int chunksGenerated = 0;
     
-    while (!mChunksToGenerate.empty() && chunksGenerated < maxChunksPerFrame) {
+    while (!mChunksToGenerate.empty() && chunksGenerated < VoxelWorlds::CHUNK_GEN_SPEED) {
         glm::ivec3 chunkCoord = mChunksToGenerate.front();
         mChunksToGenerate.pop();
         
@@ -36,7 +35,7 @@ void WorldGenerationSystem::findChunksToGenerate(
     int renderDistanceChunks = static_cast<int>(mRenderDistance / VoxelWorlds::CHUNK_SIZE);
     
     for (int x = playerChunkX - renderDistanceChunks; x <= playerChunkX + renderDistanceChunks; x++) {
-        for (int y = playerChunkY - 1; y <= playerChunkY + 1; y++) { // Limit vertical range
+        for (int y = playerChunkY - 1; y <= playerChunkY + renderDistanceChunks; y++) { // Limit vertical range
             for (int z = playerChunkZ - renderDistanceChunks; z <= playerChunkZ + renderDistanceChunks; z++) {
                 glm::ivec3 chunkCoord(x, y, z);
                 
