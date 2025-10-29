@@ -18,6 +18,10 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
 
     for(auto [entity, mesh, position, storage, material, bBox, state] : chunkView) {
 
+        if(state.progress == ChunkProgress::fully_generated) {
+            continue;
+        }
+
         NeighboringChunks neighboringChunks = {
             &storage, // Center
             getStorage(chunkMap, position.position.x+1, position.position.y, position.position.z), // Right
@@ -27,6 +31,9 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
             getStorage(chunkMap, position.position.x, position.position.y, position.position.z+1), // Front
             getStorage(chunkMap, position.position.x, position.position.y, position.position.z-1)  // Back
         };
+
+        mesh.vertices.clear();
+        mesh.indices.clear();
 
         bitChunk.fill(0);
         faceMask.fill(0);
@@ -41,14 +48,14 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
                     bool isBlock = checkBlock(neighboringChunks, posX, posY, posZ);
 
                     if (isBlock) {
-                        if((z < 32) && (y < 32) && (z > 0) && (y > 0)) {
-                            bitChunk[z + (y * VoxelWorlds::CHUNK_SIZE) + VoxelWorlds::CHUNK_SIZE_2D]   |= (uint64_t(1) << uint64_t(x)); // X Left Right
+                        if((posX < 32) && (posZ < 32) && (posX >= 0) && (posZ >= 0)) {
+                            bitChunk[posX + (posZ * VoxelWorlds::CHUNK_SIZE)]                                |= (uint64_t(1) << uint64_t(y)); // Y Left Right
                         }
-                        if((x < 32) && (z < 32) && (x > 0) && (z > 0)) {
-                            bitChunk[x + (z * VoxelWorlds::CHUNK_SIZE)]                                |= (uint64_t(1) << uint64_t(y)); // Y
+                        if((posZ < 32) && (posY < 32) && (posZ >= 0) && (posY >= 0)) {
+                            bitChunk[posZ + (posY * VoxelWorlds::CHUNK_SIZE) + VoxelWorlds::CHUNK_SIZE_2D]   |= (uint64_t(1) << uint64_t(x)); // X
                         }
-                        if((x < 32) && (y < 32) && (x > 0) && (y > 0)) {
-                            bitChunk[x + (y * VoxelWorlds::CHUNK_SIZE) + VoxelWorlds::CHUNK_SIZE_2D*2] |= (uint64_t(1) << uint64_t(z)); // Z
+                        if((posX < 32) && (posY < 32) && (posX >= 0) && (posY >= 0)) {
+                            bitChunk[posX + (posY * VoxelWorlds::CHUNK_SIZE) + VoxelWorlds::CHUNK_SIZE_2D*2] |= (uint64_t(1) << uint64_t(z)); // Z
                         }
                     }
                 }
@@ -71,12 +78,15 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
                 for(int x = 0; x < VoxelWorlds::CHUNK_SIZE; x++) {
                     int columnIndex = x + (z * VoxelWorlds::CHUNK_SIZE) + (VoxelWorlds::CHUNK_SIZE_2D * axis);
 
-                    uint64_t column = faceMask[columnIndex] >> 1;                // Delete right padding
-                    column = column & ~(1 << uint64_t(VoxelWorlds::CHUNK_SIZE-1)); // Delete left padding
+                    uint64_t column = faceMask[columnIndex] >> 1;                  // Delete right padding
+                    column = column & ~(1ULL << uint64_t(VoxelWorlds::CHUNK_SIZE)); // Delete left padding
 
                     while(column != 0) {
-                        int y = std::countr_zero(column);
+                        unsigned int y = std::countr_zero(column);
                         column &= column - 1;
+                        // if(axis == 4) {
+                        //     std::cout << "Y: " << y << std::endl;
+                        // }
 
                         glm::ivec3 pos;
                         switch(axis) {
@@ -86,16 +96,18 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
                                 break;
                             case 2:
                             case 3:
-                                pos = glm::ivec3(y,z,x);
+                                pos = glm::ivec3(y,z,x); // First doesnt move
                                 break;
                             default:
-                                pos = glm::ivec3(x,z,y);
+                                pos = glm::ivec3(x,z,y); // UP Last doesnt move
                                 break;
-                            }
+                        }
 
                         auto& currentBlock = ChunkStorage::getBlock(*neighboringChunks.center, pos.x, pos.y, pos.z);
                         
-                        addFace(mesh, currentBlock, pos, axis);
+                        if(currentBlock != BlockTypes::air) {
+                            addFace(mesh, currentBlock, pos, axis);
+                        }
                             
                         BoundingBoxComponent boundingBox;
                         boundingBox.worldMin = glm::vec3(
@@ -136,18 +148,14 @@ inline void ChunkMeshingSystem::addFace(
     };
     
     static std::array<FaceInfo, 6> FACE_INFOS = {
-        // Right, Left, Front, Back, Top, Bottom faces
-        FaceInfo{2, 8,  {0, 1, 2, 0, 2, 3}},  // Axis 0: Right (texture 2, vertices 8-11)
-        FaceInfo{3, 12, {0, 1, 2, 0, 2, 3}},  // Axis 1: Left (texture 3, vertices 12-15)
-        FaceInfo{0, 0,  {0, 1, 2, 0, 2, 3}},  // Axis 2: Front (texture 0, vertices 0-3)
-        FaceInfo{1, 4,  {0, 1, 2, 0, 2, 3}},  // Axis 3: Back (texture 1, vertices 4-7)
-        FaceInfo{4, 16, {0, 1, 2, 0, 2, 3}},  // Axis 4: Top (texture 4, vertices 16-19)
-        FaceInfo{5, 20, {0, 1, 2, 0, 2, 3}}   // Axis 5: Bottom (texture 5, vertices 20-23)
-    };
+        FaceInfo{5, 20, {2, 0, 1, 2, 1, 3}},  // Bottom (texture 5, vertices 20-23)
+        FaceInfo{4, 16, {2, 0, 1, 2, 1, 3}},  // Top (texture 4, vertices 16-19)
+        FaceInfo{3, 12, {2, 0, 1, 2, 1, 3}},  // Left (texture 3, vertices 12-15)
+        FaceInfo{2, 8,  {2, 0, 1, 2, 1, 3}},  // Right (texture 2, vertices 8-11)
+        FaceInfo{1, 4,  {3, 1, 0, 3, 0, 2}},  // Back (texture 1, vertices 4-7)
+        FaceInfo{0, 0,  {2, 0, 1, 2, 1, 3}},  // Front (texture 0, vertices 0-3)
 
-    if(blockType == BlockTypes::air) {
-        return;
-    }
+    };
 
     static BlockRegistry& blockRegistry = BlockRegistry::getInstance();
     const auto& blockMesh = blockRegistry.getMesh(blockType);
@@ -207,7 +215,7 @@ inline bool ChunkMeshingSystem::checkBlock(
     int chunkZ = (localPosZ >= VoxelWorlds::CHUNK_SIZE) - (localPosZ < 0);    
     
     if((chunkX && chunkY) || (chunkX && chunkZ) || (chunkY && chunkZ)) {
-        return false;
+        return true;
     }
     
     if(chunkX == 0 && chunkY == 0 && chunkZ == 0) target = chunks.center;
