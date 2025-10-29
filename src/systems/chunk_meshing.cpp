@@ -78,15 +78,12 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
                 for(int x = 0; x < VoxelWorlds::CHUNK_SIZE; x++) {
                     int columnIndex = x + (z * VoxelWorlds::CHUNK_SIZE) + (VoxelWorlds::CHUNK_SIZE_2D * axis);
 
-                    uint64_t column = faceMask[columnIndex] >> 1;                  // Delete right padding
+                    uint64_t column = faceMask[columnIndex] >> 1;                   // Delete right padding
                     column = column & ~(1ULL << uint64_t(VoxelWorlds::CHUNK_SIZE)); // Delete left padding
 
                     while(column != 0) {
                         unsigned int y = std::countr_zero(column);
                         column &= column - 1;
-                        // if(axis == 4) {
-                        //     std::cout << "Y: " << y << std::endl;
-                        // }
 
                         glm::ivec3 pos;
                         switch(axis) {
@@ -96,10 +93,10 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
                                 break;
                             case 2:
                             case 3:
-                                pos = glm::ivec3(y,z,x); // First doesnt move
+                                pos = glm::ivec3(y,z,x);
                                 break;
                             default:
-                                pos = glm::ivec3(x,z,y); // UP Last doesnt move
+                                pos = glm::ivec3(x,z,y);
                                 break;
                         }
 
@@ -140,9 +137,9 @@ inline void ChunkMeshingSystem::addFace(
     int axis
 ) {
     struct FaceInfo {
-        int textureIndex;              // Which texture in the atlas (0-5)
-        int vertexOffset;              // Starting vertex index in the block mesh
-        std::array<GLuint, 6> indices; // Two triangles (6 indices)
+        int textureIndex;
+        int vertexOffset;
+        std::array<GLuint, 6> indices;
     };
     
     static std::array<FaceInfo, 6> FACE_INFOS = {
