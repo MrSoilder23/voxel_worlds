@@ -105,9 +105,7 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
 
                         auto& currentBlock = ChunkStorage::getBlock(*neighboringChunks.center, pos.x, pos.y, pos.z);
                         
-                        if(currentBlock != BlockTypes::air) {
-                            addFace(mesh, currentBlock, pos, axis);
-                        }
+                        addFace(mesh, currentBlock, pos, axis);
                             
                         BoundingBoxComponent boundingBox;
                         boundingBox.worldMin = glm::vec3(
