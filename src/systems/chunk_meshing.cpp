@@ -79,7 +79,7 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
                     int columnIndex = x + (z * VoxelWorlds::CHUNK_SIZE) + (VoxelWorlds::CHUNK_SIZE_2D * axis);
 
                     uint64_t column = faceMask[columnIndex] >> 1;                   // Delete right padding
-                    column = column & ~(1ULL << uint64_t(VoxelWorlds::CHUNK_SIZE)); // Delete left padding
+                    column = column & ~(uint64_t(1) << uint64_t(VoxelWorlds::CHUNK_SIZE)); // Delete left padding
 
                     while(column != 0) {
                         unsigned int y = std::countr_zero(column);
@@ -123,8 +123,8 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
             }
         }
         material.textureAtlas = texture;
-
         bBox = std::move(bBoxCollection);
+
         state.progress = ChunkProgress::fully_generated;
         
     }
