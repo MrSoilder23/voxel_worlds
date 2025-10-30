@@ -1,5 +1,4 @@
 #include "systems/chunk_meshing.hpp"
-#include <iostream>
 
 void ChunkMeshingSystem::update(bismuth::Registry& registry) {
     auto chunkView = registry.getView<MeshComponent, PositionComponent, ChunkStorageComponent, MaterialComponent, BoundingBoxCollectionComponent, ChunkStateComponent>();
@@ -48,13 +47,13 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
                     bool isBlock = checkBlock(neighboringChunks, posX, posY, posZ);
 
                     if (isBlock) {
-                        if((posX < 32) && (posZ < 32) && (posX >= 0) && (posZ >= 0)) {
+                        if((posX < VoxelWorlds::CHUNK_SIZE) && (posZ < VoxelWorlds::CHUNK_SIZE) && (posX >= 0) && (posZ >= 0)) {
                             bitChunk[posX + (posZ * VoxelWorlds::CHUNK_SIZE)]                                |= (uint64_t(1) << uint64_t(y)); // Y Left Right
                         }
-                        if((posZ < 32) && (posY < 32) && (posZ >= 0) && (posY >= 0)) {
+                        if((posZ < VoxelWorlds::CHUNK_SIZE) && (posY < VoxelWorlds::CHUNK_SIZE) && (posZ >= 0) && (posY >= 0)) {
                             bitChunk[posZ + (posY * VoxelWorlds::CHUNK_SIZE) + VoxelWorlds::CHUNK_SIZE_2D]   |= (uint64_t(1) << uint64_t(x)); // X
                         }
-                        if((posX < 32) && (posY < 32) && (posX >= 0) && (posY >= 0)) {
+                        if((posX < VoxelWorlds::CHUNK_SIZE) && (posY < VoxelWorlds::CHUNK_SIZE) && (posX >= 0) && (posY >= 0)) {
                             bitChunk[posX + (posY * VoxelWorlds::CHUNK_SIZE) + VoxelWorlds::CHUNK_SIZE_2D*2] |= (uint64_t(1) << uint64_t(z)); // Z
                         }
                     }
@@ -204,15 +203,17 @@ inline bool ChunkMeshingSystem::checkBlock(
     int               const& localPosY,
     int               const& localPosZ
 ) {
-    ChunkStorageComponent* target = nullptr;
+    constexpr int CHUNK_MASK = VoxelWorlds::CHUNK_SIZE - 1;
+
     int chunkX = (localPosX >= VoxelWorlds::CHUNK_SIZE) - (localPosX < 0);
     int chunkY = (localPosY >= VoxelWorlds::CHUNK_SIZE) - (localPosY < 0);
     int chunkZ = (localPosZ >= VoxelWorlds::CHUNK_SIZE) - (localPosZ < 0);    
     
     if((chunkX && chunkY) || (chunkX && chunkZ) || (chunkY && chunkZ)) {
-        return true;
+        return false;
     }
     
+    ChunkStorageComponent* target = nullptr;
     if(chunkX == 0 && chunkY == 0 && chunkZ == 0) target = chunks.center;
     else if(chunkX == -1) target = chunks.left;
     else if(chunkX == 1)  target = chunks.right;
@@ -222,10 +223,8 @@ inline bool ChunkMeshingSystem::checkBlock(
     else if(chunkZ == 1)  target = chunks.front;
         
     if(!target) {
-        return true;
+        return false;
     }
-
-    constexpr int CHUNK_MASK = VoxelWorlds::CHUNK_SIZE - 1;
 
     int localX = localPosX & CHUNK_MASK;
     int localY = localPosY & CHUNK_MASK;
