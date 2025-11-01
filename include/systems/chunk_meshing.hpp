@@ -40,10 +40,8 @@ class ChunkMeshingSystem {
         );
 
         ChunkStorageComponent* getStorage(
-            entityMap3  const& storageComponents,
-            int x,
-            int y,
-            int z
+            entityMap3 const& storageComponents,
+            glm::ivec3        coords
         );
 
         // If solid block True if Air False

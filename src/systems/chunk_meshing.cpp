@@ -21,15 +21,21 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
             continue;
         }
 
+        glm::ivec3 chunkPos = position.position / VoxelWorlds::CHUNK_SIZE;
+
         NeighboringChunks neighboringChunks = {
             &storage, // Center
-            getStorage(chunkMap, position.position.x+1, position.position.y, position.position.z), // Right
-            getStorage(chunkMap, position.position.x-1, position.position.y, position.position.z), // Left
-            getStorage(chunkMap, position.position.x, position.position.y+1, position.position.z), // Top
-            getStorage(chunkMap, position.position.x, position.position.y-1, position.position.z), // Bottom
-            getStorage(chunkMap, position.position.x, position.position.y, position.position.z+1), // Front
-            getStorage(chunkMap, position.position.x, position.position.y, position.position.z-1)  // Back
+            getStorage(chunkMap, glm::ivec3(chunkPos.x+1, chunkPos.y, chunkPos.z)), // Right
+            getStorage(chunkMap, glm::ivec3(chunkPos.x-1, chunkPos.y, chunkPos.z)), // Left
+            getStorage(chunkMap, glm::ivec3(chunkPos.x, chunkPos.y+1, chunkPos.z)), // Top
+            getStorage(chunkMap, glm::ivec3(chunkPos.x, chunkPos.y-1, chunkPos.z)), // Bottom
+            getStorage(chunkMap, glm::ivec3(chunkPos.x, chunkPos.y, chunkPos.z+1)), // Front
+            getStorage(chunkMap, glm::ivec3(chunkPos.x, chunkPos.y, chunkPos.z-1))  // Back
         };
+
+        if(!neighboringChunks.back || !neighboringChunks.bot || !neighboringChunks.front || !neighboringChunks.left || !neighboringChunks.right || !neighboringChunks.top) {
+            continue;
+        }
 
         mesh.vertices.clear();
         mesh.indices.clear();
@@ -182,13 +188,9 @@ inline void ChunkMeshingSystem::addFace(
 }
 
 inline ChunkStorageComponent* ChunkMeshingSystem::getStorage(
-    entityMap3  const& storageComponents,
-    int x,
-    int y,
-    int z
-) {    
-    glm::ivec3 coords = {x,y,z};
-    coords = coords / static_cast<int>(VoxelWorlds::CHUNK_SIZE);
+    entityMap3 const& storageComponents,
+    glm::ivec3        coords
+) {
     
     auto it = storageComponents.find(coords);
     if(it == storageComponents.end()) {
