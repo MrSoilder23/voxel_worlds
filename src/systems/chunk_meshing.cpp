@@ -33,6 +33,7 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
 
         mesh.vertices.clear();
         mesh.indices.clear();
+        mesh.isDirty = true;
 
         bitChunk.fill(0);
         faceMask.fill(0);
