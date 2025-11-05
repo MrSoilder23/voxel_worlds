@@ -7,23 +7,31 @@ void VertexSetupSystem::update(bismuth::Registry& registry) {
     for(auto& entityID : modelDenseIDs) {
         auto& mesh = meshPool.getComponent(entityID);
 
-        if(mesh.VAO != 0) {
+        if(!mesh.isDirty) {
             continue;
         }
 
+        mesh.isDirty = false;
+        
         if (mesh.vertices.empty()) {
             continue;
         }
 
-        glGenVertexArrays(1, &mesh.VAO);
+        if(mesh.VAO == 0) {
+            glGenVertexArrays(1, &mesh.VAO);
+        }
         glBindVertexArray(mesh.VAO);
         
-        glGenBuffers(1, &mesh.VBO);
+        if(mesh.VBO == 0) {
+            glGenBuffers(1, &mesh.VBO);
+        }
         glBindBuffer(GL_ARRAY_BUFFER, mesh.VBO);
         glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(Vertex), mesh.vertices.data(), GL_STATIC_DRAW);
         
         if (!mesh.indices.empty()) {
-            glGenBuffers(1, &mesh.EBO);
+            if(mesh.EBO == 0) {
+                glGenBuffers(1, &mesh.EBO);
+            }
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.EBO);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(GLuint), mesh.indices.data(), GL_STATIC_DRAW);
         }

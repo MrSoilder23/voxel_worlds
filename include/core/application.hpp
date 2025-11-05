@@ -34,7 +34,7 @@
 #include "systems/world_generation_system.hpp"
 #include "systems/collision_system.hpp"
 #include "systems/physics_system.hpp"
-#include "systems/chunk_meshing_system.hpp"
+#include "systems/chunk_meshing.hpp"
 #include "systems/block_event_system.hpp"
 #include "systems/chunk_unload_system.hpp"
 #include "systems/chunk_creation_system.hpp"

@@ -20,4 +20,6 @@ struct MeshComponent {
     GLuint VAO = 0;
     GLuint VBO = 0;
     GLuint EBO = 0;
+
+    bool isDirty = true;
 };

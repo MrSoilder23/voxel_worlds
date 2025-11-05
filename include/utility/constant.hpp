@@ -6,13 +6,15 @@
 #include "./utility/spline.hpp"
 
 namespace VoxelWorlds {
-    static constexpr int   CHUNK_GENERATION_OFFSET = 12;
+    static constexpr int   CHUNK_GENERATION_OFFSET = 4;
     static constexpr int   RENDER_DISTANCE = 8;
     static constexpr float CHUNK_SIZE      = 32;
+    static constexpr int   CHUNK_GEN_SPEED = 8;
     static constexpr int LATTICE_SIZE      = 4;
 
-    static constexpr size_t TOTAL_CHUNK_SIZE = static_cast<size_t>(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE);
-    static constexpr size_t CHUNK_SIZE_2D    = static_cast<size_t>(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE);
+    static constexpr size_t CHUNK_SIZE_2D      = static_cast<size_t>(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE);
+    static constexpr size_t TOTAL_CHUNK_SIZE   = static_cast<size_t>(VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE*VoxelWorlds::CHUNK_SIZE);
+    static constexpr int    CHUNK_SIZE_PADDING = CHUNK_SIZE + 2; // 1 Additional block for a side
     
     // Noise paint settings
     static constexpr int PERLIN_SCALE =  4;
