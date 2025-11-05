@@ -57,7 +57,7 @@ void WorldGenerationSystem::generateRing(
 
                 int x = playerChunkX + dx;
                 int y = playerChunkY + dy;
-                int z = playerChunkY + dz;
+                int z = playerChunkZ + dz;
 
                 glm::ivec3 chunkCoord(x,y,z);
 
