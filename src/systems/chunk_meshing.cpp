@@ -150,12 +150,12 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
 }
 
 inline bool ChunkMeshingSystem::isInRenderDistance(glm::vec3 playerPos, glm::vec3 chunkPos) {
-    static double RENDER_DISTANCE_SQUARED = VoxelWorlds::RENDER_DISTANCE * VoxelWorlds::RENDER_DISTANCE * VoxelWorlds::CHUNK_SIZE;
+    static double RENDER_DISTANCE_CHUNK = VoxelWorlds::RENDER_DISTANCE * VoxelWorlds::CHUNK_SIZE;
 
     glm::vec3 difference = chunkPos - playerPos;
     float distance = glm::length(glm::vec3(difference));
     
-    return distance <= RENDER_DISTANCE_SQUARED;
+    return distance <= RENDER_DISTANCE_CHUNK;
 }
 
 inline void ChunkMeshingSystem::addFace(
