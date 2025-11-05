@@ -10,6 +10,7 @@
 #include "components/chunk_storage_component.hpp"
 #include "components/bounding_box_collection_component.hpp"
 #include "components/chunk_state_component.hpp"
+#include "components/player_tag.hpp"
 #include "blocks/block_registry.hpp"
 #include "blocks/block_texture_creator.hpp"
 #include "utility/utility.hpp"
@@ -31,6 +32,8 @@ class ChunkMeshingSystem {
             ChunkStorageComponent* front = nullptr;
             ChunkStorageComponent* back  = nullptr;
         };
+
+        bool isInRenderDistance(glm::vec3 playerPos, glm::vec3 chunkPos);
 
         void addFace(
             MeshComponent  & chunkModel,

@@ -1,7 +1,13 @@
 #include "systems/chunk_meshing.hpp"
 
 void ChunkMeshingSystem::update(bismuth::Registry& registry) {
-    auto chunkView = registry.getView<MeshComponent, PositionComponent, ChunkStorageComponent, MaterialComponent, BoundingBoxCollectionComponent, ChunkStateComponent>();
+    auto chunkView  = registry.getView<MeshComponent, PositionComponent, ChunkStorageComponent, MaterialComponent, BoundingBoxCollectionComponent, ChunkStateComponent>();
+    auto playerView = registry.getView<PlayerTagComponent, PositionComponent>();
+    if (playerView.begin() == playerView.end()) {
+        return;
+    }
+    
+    auto [playerEntity, player, playerPosition] = *playerView.begin();
 
     static BlockTextureCreator& blockTextures = BlockTextureCreator::getInstance();
     static auto texture = blockTextures.getTexture("ChunkTexture");
@@ -16,6 +22,10 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
     std::array<uint64_t, VoxelWorlds::CHUNK_SIZE_2D * 3 * 2> faceMask;
 
     for(auto [entity, mesh, position, storage, material, bBox, state] : chunkView) {
+
+        if(!isInRenderDistance(playerPosition.position, position.position)) {
+            continue;
+        }
 
         if(state.progress == ChunkProgress::fully_generated) {
             continue;
@@ -33,8 +43,13 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
             getStorage(chunkMap, glm::ivec3(chunkPos.x, chunkPos.y, chunkPos.z-1))  // Back
         };
 
-        if(!neighboringChunks.back || !neighboringChunks.bot || !neighboringChunks.front || !neighboringChunks.left || !neighboringChunks.right || !neighboringChunks.top) {
-            continue;
+        if(state.progress == ChunkProgress::partially_generated) {
+            if(!neighboringChunks.back || !neighboringChunks.bot || !neighboringChunks.front || !neighboringChunks.left || !neighboringChunks.right || !neighboringChunks.top) {
+                continue;
+            }
+            state.progress = ChunkProgress::fully_generated;
+        } else {
+            state.progress = ChunkProgress::partially_generated;
         }
 
         mesh.vertices.clear();
@@ -130,10 +145,17 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
         }
         material.textureAtlas = texture;
         bBox = std::move(bBoxCollection);
-
-        state.progress = ChunkProgress::fully_generated;
         
     }
+}
+
+inline bool ChunkMeshingSystem::isInRenderDistance(glm::vec3 playerPos, glm::vec3 chunkPos) {
+    static double RENDER_DISTANCE_SQUARED = VoxelWorlds::RENDER_DISTANCE * VoxelWorlds::RENDER_DISTANCE * VoxelWorlds::CHUNK_SIZE;
+
+    glm::vec3 difference = chunkPos - playerPos;
+    float distance = glm::length(glm::vec3(difference));
+    
+    return distance <= RENDER_DISTANCE_SQUARED;
 }
 
 inline void ChunkMeshingSystem::addFace(
