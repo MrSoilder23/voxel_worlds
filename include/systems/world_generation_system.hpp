@@ -47,6 +47,14 @@ class WorldGenerationSystem {
             bismuth::Registry& registry,
             glm::vec3   const& playerPosition
         );
+        void generateRing(
+            bismuth::Registry& registry,
+            int playerChunkX,
+            int playerChunkY,
+            int playerChunkZ,
+            int currentDistance
+        );
+
         void generateNoise(
             bismuth::Registry& registry,
             bismuth::EntityID  entity,

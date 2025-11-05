@@ -28,37 +28,54 @@ void WorldGenerationSystem::findChunksToGenerate(
     bismuth::Registry& registry,
     glm::vec3   const& playerPosition
 ) {
-    using VoxelWorlds::CHUNK_GENERATION_OFFSET;
-
-    static int RENDER_DISTANCE_CHUNK = VoxelWorlds::RENDER_DISTANCE;
+    static int maxDistance = VoxelWorlds::RENDER_DISTANCE + VoxelWorlds::CHUNK_GENERATION_OFFSET;
 
     int playerChunkX = static_cast<int>(std::floor(playerPosition.x / VoxelWorlds::CHUNK_SIZE));
     int playerChunkY = static_cast<int>(std::floor(playerPosition.y / VoxelWorlds::CHUNK_SIZE));
     int playerChunkZ = static_cast<int>(std::floor(playerPosition.z / VoxelWorlds::CHUNK_SIZE));
     
-    for (int x = playerChunkX - RENDER_DISTANCE_CHUNK - CHUNK_GENERATION_OFFSET; x <= playerChunkX + RENDER_DISTANCE_CHUNK + CHUNK_GENERATION_OFFSET; x++) {
-        for (int y = playerChunkY - RENDER_DISTANCE_CHUNK - CHUNK_GENERATION_OFFSET; y <= playerChunkY + RENDER_DISTANCE_CHUNK + CHUNK_GENERATION_OFFSET; y++) {
-            for (int z = playerChunkZ - RENDER_DISTANCE_CHUNK - CHUNK_GENERATION_OFFSET; z <= playerChunkZ + RENDER_DISTANCE_CHUNK + CHUNK_GENERATION_OFFSET; z++) {
-                glm::ivec3 chunkCoord(x, y, z);
-                
+    for(int distance = 0; distance <= maxDistance; distance++) {
+        generateRing(registry, playerChunkX, playerChunkY, playerChunkZ, distance);
+    }
+}
+
+void WorldGenerationSystem::generateRing(
+    bismuth::Registry& registry,
+    int playerChunkX,
+    int playerChunkY,
+    int playerChunkZ,
+    int currentDistance
+) {
+    static int maxDistance = VoxelWorlds::RENDER_DISTANCE + VoxelWorlds::CHUNK_GENERATION_OFFSET;
+
+    for(int dx = -maxDistance; dx <= maxDistance; dx++) {
+        for(int dy = -maxDistance; dy <= maxDistance; dy++) {
+            for(int dz = -maxDistance; dz <= maxDistance; dz++) {
+                if (std::abs(dx) + std::abs(dy) + std::abs(dz) != currentDistance) {
+                    continue;
+                }
+
+                int x = playerChunkX + dx;
+                int y = playerChunkY + dy;
+                int z = playerChunkY + dz;
+
+                glm::ivec3 chunkCoord(x,y,z);
+
                 if (mGeneratedChunks.contains(chunkCoord) || 
                     mQueuedChunks.contains(chunkCoord)) {
                     continue;
                 }
-                
+
                 mChunksToGenerate.push(chunkCoord);
                 mQueuedChunks.insert(chunkCoord);
 
                 if(!mGeneratedHeightMaps.contains(glm::ivec2(x,z))) {
                     generateHeight(registry, x, z);
                 }
-
             }
         }
     }
-}
-
-
+} 
 
 void WorldGenerationSystem::generateChunk(bismuth::Registry& registry, int x, int y, int z) {
     glm::ivec3 chunkCoord = {x, y, z};
