@@ -6,7 +6,7 @@
 #include "./utility/spline.hpp"
 
 namespace VoxelWorlds {
-    static constexpr int   CHUNK_GENERATION_OFFSET = 12;
+    static constexpr int   CHUNK_GENERATION_OFFSET = 4;
     static constexpr int   RENDER_DISTANCE = 8;
     static constexpr float CHUNK_SIZE      = 32;
     static constexpr int   CHUNK_GEN_SPEED = 4;

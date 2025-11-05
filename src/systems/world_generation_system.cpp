@@ -28,15 +28,17 @@ void WorldGenerationSystem::findChunksToGenerate(
     bismuth::Registry& registry,
     glm::vec3   const& playerPosition
 ) {
+    using VoxelWorlds::CHUNK_GENERATION_OFFSET;
+
+    static int RENDER_DISTANCE_CHUNK = VoxelWorlds::RENDER_DISTANCE;
+
     int playerChunkX = static_cast<int>(std::floor(playerPosition.x / VoxelWorlds::CHUNK_SIZE));
     int playerChunkY = static_cast<int>(std::floor(playerPosition.y / VoxelWorlds::CHUNK_SIZE));
     int playerChunkZ = static_cast<int>(std::floor(playerPosition.z / VoxelWorlds::CHUNK_SIZE));
     
-    int renderDistanceChunks = static_cast<int>(mRenderDistance / VoxelWorlds::CHUNK_SIZE);
-    
-    for (int x = playerChunkX - renderDistanceChunks; x <= playerChunkX + renderDistanceChunks; x++) {
-        for (int y = playerChunkY - renderDistanceChunks; y <= playerChunkY + renderDistanceChunks; y++) {
-            for (int z = playerChunkZ - renderDistanceChunks; z <= playerChunkZ + renderDistanceChunks; z++) {
+    for (int x = playerChunkX - RENDER_DISTANCE_CHUNK - CHUNK_GENERATION_OFFSET; x <= playerChunkX + RENDER_DISTANCE_CHUNK + CHUNK_GENERATION_OFFSET; x++) {
+        for (int y = playerChunkY - RENDER_DISTANCE_CHUNK - CHUNK_GENERATION_OFFSET; y <= playerChunkY + RENDER_DISTANCE_CHUNK + CHUNK_GENERATION_OFFSET; y++) {
+            for (int z = playerChunkZ - RENDER_DISTANCE_CHUNK - CHUNK_GENERATION_OFFSET; z <= playerChunkZ + RENDER_DISTANCE_CHUNK + CHUNK_GENERATION_OFFSET; z++) {
                 glm::ivec3 chunkCoord(x, y, z);
                 
                 if (mGeneratedChunks.contains(chunkCoord) || 
