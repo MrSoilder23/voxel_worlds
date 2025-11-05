@@ -35,7 +35,7 @@ void WorldGenerationSystem::findChunksToGenerate(
     int renderDistanceChunks = static_cast<int>(mRenderDistance / VoxelWorlds::CHUNK_SIZE);
     
     for (int x = playerChunkX - renderDistanceChunks; x <= playerChunkX + renderDistanceChunks; x++) {
-        for (int y = playerChunkY - 1; y <= playerChunkY + renderDistanceChunks; y++) { // Limit vertical range
+        for (int y = playerChunkY - renderDistanceChunks; y <= playerChunkY + renderDistanceChunks; y++) {
             for (int z = playerChunkZ - renderDistanceChunks; z <= playerChunkZ + renderDistanceChunks; z++) {
                 glm::ivec3 chunkCoord(x, y, z);
                 
