@@ -30,7 +30,7 @@ void ChunkCreationSystem::update(bismuth::Registry& registry) {
 
         // For Painting
         for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
-            for(float blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
+            for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
                 perlinMap[static_cast<size_t>(blockX)][static_cast<size_t>(blockZ)] = perlin_noise::LayeredNoise2D(
                     chunkCoordinateX,
                     chunkCoordinateZ,
