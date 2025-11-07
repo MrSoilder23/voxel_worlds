@@ -138,22 +138,15 @@ void WorldGenerationSystem::generateNoise(
 ) {
     auto& chunkMap = registry.getComponentPool<ChunkHeightMapComponent>().getComponent(entity);
 
-    float x = chunkCoord.x ;
-    float z = chunkCoord.y ;
-
-    // Perlin chunk size
-    const int chunkCoordinateX = static_cast<int>(std::floor(x/VoxelWorlds::PERLIN_SCALE));
-    const int chunkCoordinateZ = static_cast<int>(std::floor(z/VoxelWorlds::PERLIN_SCALE));
-
-    const int xOffset = (static_cast<int>(x) % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
-    const int zOffset = (static_cast<int>(z) % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
+    float x = chunkCoord.x;
+    float z = chunkCoord.y;
 
     for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
-        for(float blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
+        for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
             chunkMap.heightMap[blockX * VoxelWorlds::CHUNK_SIZE + blockZ] = std::round(world_generation::generateHeight(
                 mSeed, 
-                static_cast<int>(blockX + (chunkCoord.x * VoxelWorlds::CHUNK_SIZE)),
-                static_cast<int>(blockZ + (chunkCoord.y * VoxelWorlds::CHUNK_SIZE))
+                static_cast<int>(blockX + (x * VoxelWorlds::CHUNK_SIZE)),
+                static_cast<int>(blockZ + (z * VoxelWorlds::CHUNK_SIZE))
             ));
         }
     }
