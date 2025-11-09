@@ -28,8 +28,9 @@ void ChunkCreationSystem::update(bismuth::Registry& registry) {
         const int xOffset = (static_cast<int>(x) % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
         const int zOffset = (static_cast<int>(z) % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
 
+        // For Painting
         for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
-            for(float blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
+            for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
                 perlinMap[static_cast<size_t>(blockX)][static_cast<size_t>(blockZ)] = perlin_noise::LayeredNoise2D(
                     chunkCoordinateX,
                     chunkCoordinateZ,
@@ -42,12 +43,17 @@ void ChunkCreationSystem::update(bismuth::Registry& registry) {
                 );
             }
         }
-            
-        for(float blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
-            for(float blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
+        
+        auto heightMapIt = heightMaps.find(glm::ivec2(position.position.x, position.position.z));
+        if(heightMapIt == heightMaps.end()) {
+            continue;
+        }
+        auto& heightMap = heightMapIt->second;
 
-                float perlin    = perlinMap[static_cast<size_t>(blockX)][static_cast<size_t>(blockZ)];
-                auto& heightMap = heightMaps[glm::ivec2(position.position.x, position.position.z)];
+        for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
+            for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
+
+                float perlin = perlinMap[blockX][blockZ];
                 int height = heightMap->heightMap[static_cast<size_t>(blockX) * VoxelWorlds::CHUNK_SIZE + static_cast<size_t>(blockZ)];
 
                 int numChunks = static_cast<int>(height / VoxelWorlds::CHUNK_SIZE);

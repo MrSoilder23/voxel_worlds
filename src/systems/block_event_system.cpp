@@ -72,13 +72,11 @@ void BlockEventSystem::update(bismuth::Registry& registry) {
                 neighborStates[2] = &registry.getComponentPool<ChunkStateComponent>().getComponent(it->second);
         }
         
-        if (chunkState.progress == ChunkProgress::fully_generated) {
-            chunkState.progress = ChunkProgress::partially_generated;
-        }
+        chunkState.progress = ChunkProgress::pending;
         
         for (auto* neighborState : neighborStates) {
-            if (neighborState && neighborState->progress == ChunkProgress::fully_generated) {
-                neighborState->progress = ChunkProgress::partially_generated;
+            if (neighborState) {
+                neighborState->progress = ChunkProgress::pending;
             }
         }
         

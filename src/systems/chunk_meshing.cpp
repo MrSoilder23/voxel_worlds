@@ -27,6 +27,10 @@ void ChunkMeshingSystem::update(bismuth::Registry& registry) {
             continue;
         }
 
+        if(!storage.wasGenerated) {
+            continue;
+        }
+
         if(state.progress == ChunkProgress::fully_generated) {
             continue;
         }
