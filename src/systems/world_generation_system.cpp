@@ -15,7 +15,7 @@ void WorldGenerationSystem::update(bismuth::Registry& registry) {
     mGeneratedHeightMaps.clear();
 
     for(auto [entity, chunk, position] : chunkView) {
-        glm::ivec3 chunkCoords = position.position / VoxelWorlds::CHUNK_SIZE;
+        glm::ivec3 chunkCoords = glm::floor(position.position / (float)VoxelWorlds::CHUNK_SIZE);
         mExistingChunks.insert(chunkCoords);
     }
     
@@ -61,9 +61,12 @@ void WorldGenerationSystem::generateRing(
     static int maxDistance = VoxelWorlds::RENDER_DISTANCE + VoxelWorlds::CHUNK_GENERATION_OFFSET;
 
     for(int dx = -maxDistance; dx <= maxDistance; dx++) {
+        int adx = dx < 0 ? -dx : dx;
         for(int dy = -maxDistance; dy <= maxDistance; dy++) {
+            int ady = dy < 0 ? -dy : dy;
             for(int dz = -maxDistance; dz <= maxDistance; dz++) {
-                if (std::abs(dx) + std::abs(dy) + std::abs(dz) != currentDistance) {
+                int adz = dz < 0 ? -dz : dz;
+                if (adx + ady + adz != currentDistance) {
                     continue;
                 }
 
@@ -77,6 +80,8 @@ void WorldGenerationSystem::generateRing(
                     mQueuedChunks.contains(chunkCoord)) {
                     continue;
                 }
+
+                std::cout << "ASDASD" << std::endl;
 
                 mChunksToGenerate.push(chunkCoord);
                 mQueuedChunks.insert(chunkCoord);
@@ -119,7 +124,6 @@ void WorldGenerationSystem::generateChunk(bismuth::Registry& registry, int x, in
     registry.emplaceComponent<MeshComponent>(entity);
     registry.emplaceComponent<MaterialComponent>(entity);
     
-    mExistingChunks.insert(chunkCoord);
     mQueuedChunks.erase(chunkCoord);
 }
 

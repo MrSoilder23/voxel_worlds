@@ -28,6 +28,12 @@ void ChunkCreationSystem::update(bismuth::Registry& registry) {
         const int xOffset = (static_cast<int>(x) % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
         const int zOffset = (static_cast<int>(z) % VoxelWorlds::PERLIN_SCALE + VoxelWorlds::PERLIN_SCALE) % VoxelWorlds::PERLIN_SCALE;
 
+        auto heightMapIt = heightMaps.find(glm::ivec2(position.position.x, position.position.z));
+        if(heightMapIt == heightMaps.end()) {
+            continue;
+        }
+        auto& heightMap = heightMapIt->second;
+
         // For Painting
         for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
             for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
@@ -43,12 +49,6 @@ void ChunkCreationSystem::update(bismuth::Registry& registry) {
                 );
             }
         }
-        
-        auto heightMapIt = heightMaps.find(glm::ivec2(position.position.x, position.position.z));
-        if(heightMapIt == heightMaps.end()) {
-            continue;
-        }
-        auto& heightMap = heightMapIt->second;
 
         for(int blockX = 0; blockX < VoxelWorlds::CHUNK_SIZE; blockX++) {
             for(int blockZ = 0; blockZ < VoxelWorlds::CHUNK_SIZE; blockZ++) {
