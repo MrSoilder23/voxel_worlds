@@ -4,8 +4,24 @@ WorldGenerationSystem::WorldGenerationSystem(unsigned int seed) : mSeed(seed) {}
 
 void WorldGenerationSystem::update(bismuth::Registry& registry) {
     auto playerView = registry.getView<PlayerTagComponent, PositionComponent>();
+    auto chunkView  = registry.getView<ChunkTagComponent, PositionComponent>();
+    auto heightView = registry.getView<ChunkHeightMapComponent, PositionComponent>();
+
     if (playerView.begin() == playerView.end()) {
         return;
+    }
+
+    mExistingChunks.clear();
+    mGeneratedHeightMaps.clear();
+
+    for(auto [entity, chunk, position] : chunkView) {
+        glm::ivec3 chunkCoords = position.position / VoxelWorlds::CHUNK_SIZE;
+        mExistingChunks.insert(chunkCoords);
+    }
+    
+    for(auto [entity, chunk, position] : heightView) {
+        glm::ivec2 chunkCoords = glm::ivec2(position.position.x / VoxelWorlds::CHUNK_SIZE, position.position.z / VoxelWorlds::CHUNK_SIZE);
+        mGeneratedHeightMaps.insert(chunkCoords);
     }
     
     auto [playerEntity, player, position] = *playerView.begin();
@@ -39,8 +55,8 @@ void WorldGenerationSystem::findChunksToGenerate(
 
 void WorldGenerationSystem::generateRing(
     bismuth::Registry& registry,
-    glm::ivec3 playerChunk,
-    int currentDistance
+    glm::ivec3         playerChunk,
+    int                currentDistance
 ) {
     static int maxDistance = VoxelWorlds::RENDER_DISTANCE + VoxelWorlds::CHUNK_GENERATION_OFFSET;
 
@@ -57,7 +73,7 @@ void WorldGenerationSystem::generateRing(
 
                 glm::ivec3 chunkCoord(x,y,z);
 
-                if (mGeneratedChunks.contains(chunkCoord) || 
+                if (mExistingChunks.contains(chunkCoord) || 
                     mQueuedChunks.contains(chunkCoord)) {
                     continue;
                 }
@@ -103,7 +119,7 @@ void WorldGenerationSystem::generateChunk(bismuth::Registry& registry, int x, in
     registry.emplaceComponent<MeshComponent>(entity);
     registry.emplaceComponent<MaterialComponent>(entity);
     
-    mGeneratedChunks.insert(chunkCoord);
+    mExistingChunks.insert(chunkCoord);
     mQueuedChunks.erase(chunkCoord);
 }
 

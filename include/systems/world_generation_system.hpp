@@ -49,8 +49,8 @@ class WorldGenerationSystem {
         );
         void generateRing(
             bismuth::Registry& registry,
-            glm::ivec3 playerChunk,
-            int currentDistance
+            glm::ivec3         playerChunk,
+            int                currentDistance
         );
 
         void generateNoise(
@@ -64,10 +64,11 @@ class WorldGenerationSystem {
     private:
         unsigned int mSeed;
         std::mutex mWorldGenLock;
-
-        std::unordered_set<glm::ivec3, IVec3Hash> mGeneratedChunks;
+        
+        std::unordered_set<glm::ivec3, IVec3Hash> mExistingChunks;
         std::unordered_set<glm::ivec3, IVec3Hash> mQueuedChunks;
         std::unordered_set<glm::ivec2, IVec2Hash> mGeneratedHeightMaps;
-        
+
+
         std::queue<glm::ivec3> mChunksToGenerate;
 };
