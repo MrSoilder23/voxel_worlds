@@ -69,6 +69,5 @@ class WorldGenerationSystem {
         std::unordered_set<glm::ivec3, IVec3Hash> mQueuedChunks;
         std::unordered_set<glm::ivec2, IVec2Hash> mGeneratedHeightMaps;
 
-
         std::queue<glm::ivec3> mChunksToGenerate;
 };

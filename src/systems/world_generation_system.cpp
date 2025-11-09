@@ -14,6 +14,9 @@ void WorldGenerationSystem::update(bismuth::Registry& registry) {
     mExistingChunks.clear();
     mGeneratedHeightMaps.clear();
 
+    mExistingChunks.reserve(chunkView.sizeHint());
+    mGeneratedHeightMaps.reserve(heightView.sizeHint());
+
     for(auto [entity, chunk, position] : chunkView) {
         glm::ivec3 chunkCoords = glm::floor(position.position / (float)VoxelWorlds::CHUNK_SIZE);
         mExistingChunks.insert(chunkCoords);
