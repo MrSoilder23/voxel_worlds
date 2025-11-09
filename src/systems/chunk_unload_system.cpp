@@ -5,18 +5,12 @@ void ChunkUnloadSystem::update(bismuth::Registry& registry) {
     auto chunkView  = registry.getView<ChunkTagComponent, PositionComponent>();
     auto playerView = registry.getView<PlayerTagComponent, PositionComponent>();
 
-    glm::vec3 playerPos(0.0f);
-    for (auto [entity, player, pos] : playerView) {
-        playerPos = pos.position;
-        break;
-    }
+    auto [playerEntity, player, playerPos] = *playerView.begin();
 
     std::vector<bismuth::EntityID> entitiesToRemove;
     for(auto [entity, chunk, position] : chunkView) {
-        float distance = glm::distance(
-            glm::vec2(position.position.x, position.position.z),
-            glm::vec2(playerPos.x, playerPos.z)
-        );
+        glm::vec3 difference = position.position - playerPos.position;
+        float distance = glm::length(difference);
         
         if (distance > RenderDistance) {
             entitiesToRemove.push_back(entity);
