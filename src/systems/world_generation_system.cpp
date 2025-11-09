@@ -81,8 +81,6 @@ void WorldGenerationSystem::generateRing(
                     continue;
                 }
 
-                std::cout << "ASDASD" << std::endl;
-
                 mChunksToGenerate.push(chunkCoord);
                 mQueuedChunks.insert(chunkCoord);
 
