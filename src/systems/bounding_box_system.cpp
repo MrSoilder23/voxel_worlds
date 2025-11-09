@@ -8,10 +8,6 @@ void BoundingBoxSystem::update(bismuth::Registry& entityManager) {
     auto& positionLocations = positionPool.getDenseEntities();
 
     for(auto& entityID : boundingDenseIDs) {
-        if(entityID >= positionLocations.size()) {
-            continue;
-        }
-
         auto& boundingBox = boundingPool.getComponent(entityID);
         auto& position    = positionPool.getComponent(entityID);
 
