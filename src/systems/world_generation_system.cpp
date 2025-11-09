@@ -30,20 +30,16 @@ void WorldGenerationSystem::findChunksToGenerate(
 ) {
     static int maxDistance = VoxelWorlds::RENDER_DISTANCE + VoxelWorlds::CHUNK_GENERATION_OFFSET;
 
-    int playerChunkX = static_cast<int>(std::floor(playerPosition.x / VoxelWorlds::CHUNK_SIZE));
-    int playerChunkY = static_cast<int>(std::floor(playerPosition.y / VoxelWorlds::CHUNK_SIZE));
-    int playerChunkZ = static_cast<int>(std::floor(playerPosition.z / VoxelWorlds::CHUNK_SIZE));
+    glm::ivec3 playerChunk = glm::floor(playerPosition / float(VoxelWorlds::CHUNK_SIZE));
     
     for(int distance = 0; distance <= maxDistance; distance++) {
-        generateRing(registry, playerChunkX, playerChunkY, playerChunkZ, distance);
+        generateRing(registry, playerChunk, distance);
     }
 }
 
 void WorldGenerationSystem::generateRing(
     bismuth::Registry& registry,
-    int playerChunkX,
-    int playerChunkY,
-    int playerChunkZ,
+    glm::ivec3 playerChunk,
     int currentDistance
 ) {
     static int maxDistance = VoxelWorlds::RENDER_DISTANCE + VoxelWorlds::CHUNK_GENERATION_OFFSET;
@@ -55,9 +51,9 @@ void WorldGenerationSystem::generateRing(
                     continue;
                 }
 
-                int x = playerChunkX + dx;
-                int y = playerChunkY + dy;
-                int z = playerChunkZ + dz;
+                int x = playerChunk.x + dx;
+                int y = playerChunk.y + dy;
+                int z = playerChunk.z + dz;
 
                 glm::ivec3 chunkCoord(x,y,z);
 
