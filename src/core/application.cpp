@@ -280,8 +280,8 @@ void Application::initializeBaseEntities() {
 
         glm::quat rotation = position.rotation;
 
-        float yaw = -glm::radians(mouseX * player.sensitivity * deltaTime);
-        float pitch = -glm::radians(mouseY * player.sensitivity * deltaTime);
+        float yaw = -glm::radians(mouseX * player.sensitivity);
+        float pitch = -glm::radians(mouseY * player.sensitivity);
     
         glm::quat yawRotation = glm::angleAxis(yaw, glm::vec3(0.0f, 1.0f, 0.0f));
         glm::quat pitchRotation = glm::angleAxis(pitch, glm::vec3(1.0f, 0.0f, 0.0f));

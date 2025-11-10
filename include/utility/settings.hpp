@@ -8,7 +8,7 @@ struct Settings {
     int screenWidth  = 1366;
     int screenHeight = 768;
 
-    float sensitivity = 24.0f;
+    float sensitivity = 0.25f;
 
     float speed        = 100.0f;    
     bool boundingDebug = false;
