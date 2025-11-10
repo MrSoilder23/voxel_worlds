@@ -358,10 +358,10 @@ void Application::initializeBlocks() {
         BlockTypes::grass_block,
         blockRegistry.createCubeMesh({
             glm::vec2(1,0), // Side
+            glm::vec2(1,0), // Side
+            glm::vec2(1,0), // Side
+            glm::vec2(1,0), // Side
             glm::vec2(2,0), // Top
-            glm::vec2(1,0), // Side
-            glm::vec2(1,0), // Side
-            glm::vec2(1,0), // Side
             glm::vec2(0,0)  // Bot
         })
     );

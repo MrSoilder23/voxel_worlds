@@ -169,19 +169,17 @@ inline void ChunkMeshingSystem::addFace(
     int axis
 ) {
     struct FaceInfo {
-        int textureIndex;
         int vertexOffset;
         std::array<GLuint, 6> indices;
     };
     
     static std::array<FaceInfo, 6> FACE_INFOS = {
-        FaceInfo{5, 20, {2, 0, 1, 2, 1, 3}},  // Bottom (texture 5, vertices 20-23)
-        FaceInfo{4, 16, {2, 0, 1, 2, 1, 3}},  // Top (texture 4, vertices 16-19)
-        FaceInfo{3, 12, {2, 0, 1, 2, 1, 3}},  // Left (texture 3, vertices 12-15)
-        FaceInfo{2, 8,  {2, 0, 1, 2, 1, 3}},  // Right (texture 2, vertices 8-11)
-        FaceInfo{1, 4,  {3, 1, 0, 3, 0, 2}},  // Back (texture 1, vertices 4-7)
-        FaceInfo{0, 0,  {2, 0, 1, 2, 1, 3}},  // Front (texture 0, vertices 0-3)
-
+        FaceInfo{20, {2, 0, 1, 2, 1, 3}},  // Bottom (texture 5, vertices 20-23)
+        FaceInfo{16, {2, 0, 1, 2, 1, 3}},  // Top (texture 4, vertices 16-19)
+        FaceInfo{12, {2, 0, 1, 2, 1, 3}},  // Left (texture 3, vertices 12-15)
+        FaceInfo{8,  {2, 0, 1, 2, 1, 3}},  // Right (texture 2, vertices 8-11)
+        FaceInfo{4,  {3, 1, 0, 3, 0, 2}},  // Back (texture 1, vertices 4-7)
+        FaceInfo{0,  {2, 0, 1, 2, 1, 3}}   // Front (texture 0, vertices 0-3)
     };
 
     static BlockRegistry& blockRegistry = BlockRegistry::getInstance();
@@ -194,7 +192,7 @@ inline void ChunkMeshingSystem::addFace(
         Vertex vertex = blockMesh.vertices[face.vertexOffset + i];
         vertex.position += glm::vec3(blockPos);
 
-        const glm::vec2& texCoord = blockMesh.vertices[face.textureIndex].texCoords;
+        const glm::vec2& texCoord = blockMesh.vertices[face.vertexOffset].texCoords;
         const glm::vec2 texBegin  = texCoord * (1.0f / 6.0f);
         const glm::vec2 texEnd    = texBegin + (1.0f / 6.0f);
 
