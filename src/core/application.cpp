@@ -197,8 +197,13 @@ void Application::initializeBaseEntities() {
     inventory.inventory[0].item = BlockTypes::dirt_block;
     inventory.inventory[1].item = BlockTypes::grass_block;
     inventory.inventory[2].item = BlockTypes::stone_block;
-    inventory.inventory[3].item = BlockTypes::dirt_block;
-    inventory.inventory[4].item = BlockTypes::sand_block;
+    inventory.inventory[3].item = BlockTypes::sand_block;
+    inventory.inventory[4].item = BlockTypes::dirt_block;
+    inventory.inventory[5].item = BlockTypes::dirt_block;
+    inventory.inventory[6].item = BlockTypes::dirt_block;
+    inventory.inventory[7].item = BlockTypes::dirt_block;
+    inventory.inventory[8].item = BlockTypes::dirt_block;
+    inventory.inventory[9].item = BlockTypes::dirt_block;
     
     mRegistry.emplaceComponent<PlayerTagComponent>(playerEntityID);
     mRegistry.emplaceComponent<PlayerControllerComponent>(playerEntityID, mSettings.speed, mSettings.sensitivity);

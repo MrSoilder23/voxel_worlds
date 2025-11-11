@@ -13,5 +13,5 @@ struct ItemSlot {
 
 struct InventoryComponent {
     std::array<ItemSlot, 10> inventory;
-    unsigned int currentSlot = 0;
+    uint8_t currentSlot = 0;
 };
