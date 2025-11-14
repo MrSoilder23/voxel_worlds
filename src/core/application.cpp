@@ -118,7 +118,7 @@ void Application::system(float deltaTime) {
     static BlockEventSystem blockEventSystem;
     static ChunkMeshingSystem chunkMeshSystem;
     static ChunkUnloadSystem chunkUnloadSystem;
-    static ChunkCreationSystem chunkCreationSystem(mSeed);
+    static StoneGenerationSystem stoneGenerationSystem(mSeed);
     static WorldGenerationSystem worldGenSystem(mSeed);
     static RendererSystem rendererSystem(mGraphicsApp);
 
@@ -126,9 +126,9 @@ void Application::system(float deltaTime) {
 
     if(mSettings.worldGen) {
         worldGenSystem.update(mRegistry);
-        chunkCreationSystem.update(mRegistry);
+        stoneGenerationSystem.update(mRegistry);
+        chunkUnloadSystem.update(mRegistry);
     }
-    chunkUnloadSystem.update(mRegistry);
 
     if(mSettings.physics) {
         collisionSystem.update(mRegistry, deltaTime);

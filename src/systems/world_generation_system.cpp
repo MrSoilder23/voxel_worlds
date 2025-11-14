@@ -109,7 +109,7 @@ void WorldGenerationSystem::generateChunk(bismuth::Registry& registry, int x, in
         VoxelWorlds::CHUNK_SIZE - 0.5f
     );
     registry.emplaceComponent<BoundingBoxComponent>(entity, bBoxComponent);
-    
+     
     PositionComponent posComponent;
     utility::MovePosition(posComponent, glm::vec3(
         x * VoxelWorlds::CHUNK_SIZE,

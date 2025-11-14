@@ -1,7 +1,4 @@
 #pragma once
-// Third_party libraries
-#include <tbb/tbb.h>
-
 // Own libraries
 #include "bismuth/registry.hpp"
 #include "utility/perlin_noise.hpp"
@@ -11,9 +8,9 @@
 #include "components/position_component.hpp"
 #include "components/chunk_height_map.hpp"
 
-class ChunkCreationSystem {
+class DirtGenerationSystem {
     public:
-        ChunkCreationSystem(const unsigned int& seed) : mSeed(seed) {}
+        DirtGenerationSystem(const unsigned int& seed) : mSeed(seed) {}
         
         void update(bismuth::Registry& registry);
 
