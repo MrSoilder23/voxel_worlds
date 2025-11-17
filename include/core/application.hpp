@@ -38,6 +38,7 @@
 #include "systems/block_event_system.hpp"
 #include "systems/chunk_unload_system.hpp"
 #include "systems/stone_generation.hpp"
+#include "systems/dirt_generation.hpp"
 #include "systems/texture_manager.hpp"
 
 #include "components/player_controller_component.hpp"

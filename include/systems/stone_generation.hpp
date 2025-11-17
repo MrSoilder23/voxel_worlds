@@ -10,6 +10,7 @@
 #include "components/chunk_storage_component.hpp"
 #include "components/position_component.hpp"
 #include "components/chunk_height_map.hpp"
+#include "components/chunk_state_component.hpp"
 
 class StoneGenerationSystem {
     public:

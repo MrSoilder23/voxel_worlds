@@ -2,7 +2,7 @@
 
 void StoneGenerationSystem::update(bismuth::Registry& registry) {
     constexpr float chunkCoords = VoxelWorlds::CHUNK_SIZE-1.0f;
-    auto chunkView       = registry.getView<ChunkStorageComponent,   PositionComponent>();
+    auto chunkView       = registry.getView<ChunkStorageComponent,   PositionComponent, ChunkStateComponent>();
     auto chunkHeightView = registry.getView<ChunkHeightMapComponent, PositionComponent>();
     std::unordered_map<glm::ivec2, ChunkHeightMapComponent*, IVec2Hash> heightMaps;
 
@@ -11,7 +11,11 @@ void StoneGenerationSystem::update(bismuth::Registry& registry) {
     }
 
 
-    for(auto [entity, storage, position] : chunkView) {
+    for(auto [entity, storage, position, state] : chunkView) {
+        if(state.progress != ChunkProgress::pending) {
+            continue;
+        }
+
         if(storage.wasGenerated) {
             continue;
         }
@@ -41,6 +45,6 @@ void StoneGenerationSystem::update(bismuth::Registry& registry) {
             }
         }
 
-        storage.wasGenerated = true;
+        state.progress = ChunkProgress::stone_stage;
     }
 }

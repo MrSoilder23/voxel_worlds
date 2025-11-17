@@ -119,6 +119,7 @@ void Application::system(float deltaTime) {
     static ChunkMeshingSystem chunkMeshSystem;
     static ChunkUnloadSystem chunkUnloadSystem;
     static StoneGenerationSystem stoneGenerationSystem(mSeed);
+    static DirtGenerationSystem dirtGenSystem(mSeed);
     static WorldGenerationSystem worldGenSystem(mSeed);
     static RendererSystem rendererSystem(mGraphicsApp);
 
@@ -126,7 +127,10 @@ void Application::system(float deltaTime) {
 
     if(mSettings.worldGen) {
         worldGenSystem.update(mRegistry);
+
         stoneGenerationSystem.update(mRegistry);
+        dirtGenSystem.update(mRegistry);
+
         chunkUnloadSystem.update(mRegistry);
     }
 

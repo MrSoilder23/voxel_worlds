@@ -1,4 +1,8 @@
 #pragma once
+// C++ standard libraries
+#include <tuple>
+#include <queue>
+
 // Own libraries
 #include "bismuth/registry.hpp"
 #include "utility/perlin_noise.hpp"
@@ -6,7 +10,7 @@
 #include "utility/ivec3_hash.hpp"
 #include "components/chunk_storage_component.hpp"
 #include "components/position_component.hpp"
-#include "components/chunk_height_map.hpp"
+#include "components/chunk_state_component.hpp"
 
 class DirtGenerationSystem {
     public:
